@@ -16,7 +16,7 @@ class Zone(models.Model):
 
 class Character(models.Model):
     name = models.CharField(max_length=100)
-    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="characters")
+    group = models.ForeignKey(Group, on_delete=models.CASCADE, related_name="characters", blank=True, null=True)
 
     def __str__(self):
         return self.name

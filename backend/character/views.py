@@ -9,7 +9,7 @@ from .models import Character, Group, Achievement, Quest, Zone
 from .serializers import CharacterSerializer, GroupSerializer, AchievementSerializer, QuestSerializer, ZoneSerializer
 
 def Index(request):
-    return HttpResponse("Index Page")
+    return HttpResponse("Characters index page")
 
 class CharacterViewSet(viewsets.ModelViewSet):
     queryset = Character.objects.all()

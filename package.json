@@ -2,16 +2,13 @@
   "name": "gpodofus",
   "version": "0.1.0",
   "main": "main.js",
-  
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-
   "author": "Shiinasan",
   "license": "ISC",
   "description": "Guide de progression optimisée pour Dofus",
-
   "devDependencies": {
     "electron": "^33.0.2"
   }

@@ -15,6 +15,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders', 
     'compressor',
+    'fontawesomefree'
 ]
 
 MIDDLEWARE = [
@@ -122,7 +124,20 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(ROOT_DIR, 'Lib', 'site-packages', 'fontawesomefree', 'static'),  # Chemin vers Font Awesome
+]
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    "compressor.finders.CompressorFinder",  # Ajoutez ceci
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -133,20 +148,15 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # URL du serveur React
 ]
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
-]
 
-STATICFILES_FINDERS = [
-    'compressor.finders.CompressorFinder',
-]
+# Django Compressor
 
 COMPRESS_ENABLED = True
-# COMPRESS_OFFLINE = True  # Si vous voulez compresser les fichiers à l'avance
+
 COMPRESS_ROOT = STATIC_ROOT
+
 COMPRESS_URL = STATIC_URL
+
 COMPRESS_PRECOMPILERS = (
-    ('text/less', 'lessc {infile} {outfile}'),  # Ajoutez ce précompilateur si vous utilisez Less
+    ('text/less', 'lessc {infile} {outfile}'),
 )

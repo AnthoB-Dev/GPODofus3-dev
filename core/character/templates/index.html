@@ -1,16 +1,17 @@
 {% load static %}
-{% comment %} {% load compress %} {% endcomment %}
+{% load compress %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% comment %} {% compress css %} {% endcomment %}
+    {% compress css %}
     <link rel="stylesheet" type="text/less" href="{% static 'css/styles.less' %}">
-    {% comment %} {% endcompress %} {% endcomment %}
-    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
-    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
-    <title>Document</title>
+    {% endcompress %}
+    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <title>Menu</title>
 </head>
 <body>
     <video id="backgroundVideo" autoplay muted loop>
@@ -31,7 +32,8 @@
                     <p>shiinasan.</p>
                 </div>
             </div>
-            <div>Logo Toggle theme</div>
+            <i class="fa-solid fa-sun themeToggle"></i>
+            <i class="fa-solid fa-moon themeToggle"></i>
         </div>
     </div>
     <div id="body">

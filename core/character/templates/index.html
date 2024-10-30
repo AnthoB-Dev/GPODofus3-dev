@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    {% load compress %}
+    {% compress css %}
+    <link rel="stylesheet" type="text/less" href="{% static 'css/styles.less' %}">
+    {% endcompress %}
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li><a href="#">Test</a></li>
+        <li><a href="#">Test</a></li>
+        <li><a href="#">Test</a></li>
+        <li><a href="#">Test</a></li>
+    </ul>
+</body>
+</html>

@@ -3,6 +3,7 @@
 	--clr-blue2: #134074;
 	--clr-blue3: #13315C;
 	--clr-blue4: #0B2545;
+	--clr-discord: #7289DA;
 	--clr-light: #EEF4ED;
 	--clr-grey: #999DA1;
 
@@ -13,19 +14,20 @@
 }
 
 * {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-	text-decoration: none;
 	box-sizing: border-box;
 	color: var(--clr-light);
 	font-family: "Roboto-Regular";
+	margin: 0;
+	list-style: none;
+	padding: 0;
+	text-decoration: none;
 }
 
 body {
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
+	padding: 10px;
 
 	#backgroundVideo {
 		position: fixed;
@@ -38,49 +40,100 @@ body {
 	}
 
 	#header {
-		align-items: center;
+		align-items: flex-start;
 		display: flex;
 		flex: 1;
 		height: 100%;
 
 		h1 {
 			display: flex;
+			font-size: 2.5em;
 			flex: 1;
+		}
+
+		i {
+			font-size: 1.5em;
 		}
 
 		div {
 			align-items: center;
 			display: flex;
-			flex: 1;
+			font-size: 1.1em;
 
 			#credentials {
-				align-items: flex-start;
-				display: flex;
-				flex: 2;
 				flex-direction: column;
+				align-items: flex-start;
+				margin-right: 2em;
 			}
 
 			#contacts {
-				align-items: center;
-				display: flex;
-				flex: 1;
+				align-items: flex-start;
+				flex-direction: column;
+				margin-left: 5px;					
+				
+				i {
+					color: #7289DA;
+					font-size: 0.8em;
+					margin-right: 5px;
+				}
+			}
 
-				// i {
-				// 	height: 24px;
-				// 	object-fit: contain;
-				// 	color: red;
-				// }
+			i {
+				font-size: 1em;
+			}
 
-				#discordName {
-					flex-direction: column;
+			.themeToggle {
+				margin-left: 0;
+				
+				&:first-of-type {
+					margin-left: 2em;
 				}
 			}
 		}
 	}
 
 	#body {
+		align-items: center;
 		display: flex;
 		flex: 6;
 		height: 100%;
+		justify-content: center;
+
+	}
+	
+	.button {
+		border: none;
+		border-radius: 8px;
+		cursor: pointer;
+		font-size: 16px;
+		font-weight: 600;
+		left: 50%;
+		padding: 24px 0px;
+		position: absolute;
+		top: 50%;
+		text-align: center;
+		transition: all 0.3s ease;
+		transform: translate(-50%, -50%);
+		width: 50vw;
+	}
+	
+	.button:focus {
+		outline: 2px solid var(--clr-blue4);
+		outline-offset: 2px;
+	}
+	
+	.button--glass {
+		background-color: #13315c00;
+		backdrop-filter: blur(5px);
+		color: var(--clr-light);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		box-shadow: 0 2px 5px 0 #0b254587;
+	}
+	
+	.button--glass:hover {
+		background-color: #13315c00;
+		box-shadow: 0 2px 5px 0 #0b254587;
+		backdrop-filter: blur(10px);
+		border: 1px solid rgb(255 255 255 / 46%);
 	}
 }

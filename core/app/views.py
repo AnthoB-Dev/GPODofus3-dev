@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from .models import Character, Group, Achievement, Quest, Zone
 from .serializers import CharacterSerializer, GroupSerializer, AchievementSerializer, QuestSerializer, ZoneSerializer
 
-def Index(request):
+def Menu(request):
     return render(request, 'index.html')
 
 class CharacterViewSet(viewsets.ModelViewSet):

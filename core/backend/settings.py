@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders', 
+    'compressor',
 ]
 
 MIDDLEWARE = [
@@ -52,10 +54,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-]
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # URL du serveur React
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -130,3 +128,25 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",  # URL du serveur React
+]
+
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+STATICFILES_FINDERS = [
+    'compressor.finders.CompressorFinder',
+]
+
+COMPRESS_ENABLED = True
+# COMPRESS_OFFLINE = True  # Si vous voulez compresser les fichiers à l'avance
+COMPRESS_ROOT = STATIC_ROOT
+COMPRESS_URL = STATIC_URL
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),  # Ajoutez ce précompilateur si vous utilisez Less
+)

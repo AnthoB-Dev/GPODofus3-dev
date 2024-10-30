@@ -1,21 +1,41 @@
+{% load static %}
+{% comment %} {% load compress %} {% endcomment %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {% load static %}
-    {% load compress %}
-    {% compress css %}
+    {% comment %} {% compress css %} {% endcomment %}
     <link rel="stylesheet" type="text/less" href="{% static 'css/styles.less' %}">
-    {% endcompress %}
+    {% comment %} {% endcompress %} {% endcomment %}
+    <link href="{% static 'fontawesomefree/css/all.min.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'fontawesomefree/js/all.min.js' %}"></script>
     <title>Document</title>
 </head>
 <body>
-    <ul>
-        <li><a href="#">Test</a></li>
-        <li><a href="#">Test</a></li>
-        <li><a href="#">Test</a></li>
-        <li><a href="#">Test</a></li>
-    </ul>
+    <video id="backgroundVideo" autoplay muted loop>
+        <source src="../static/medias/bg-animated.mp4" type="video/mp4">
+    </video>
+
+    <div id="header">
+        <h1>Guide de progression optimisée</h1>
+        <div>
+            <div id="credentials">
+                <p>Inspiré du guide de <strong>Skyzio</strong></p>
+                <p>Application développée par <strong>Shiinasan</strong></p>
+            </div>
+            <div id="contacts">
+                <i class="fa-brands fa-discord"></i>
+                <div id="discordName">
+                    <p>_skyzio</p>
+                    <p>shiinasan.</p>
+                </div>
+            </div>
+            <div>Logo Toggle theme</div>
+        </div>
+    </div>
+    <div id="body">
+
+    </div>
 </body>
 </html>

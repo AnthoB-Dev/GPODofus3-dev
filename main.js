@@ -12,14 +12,14 @@ function createWindow() {
         resizable: true,
         minWidth: 1280,
         minHeight: 720,
-        autoHideMenuBar: false,
+        autoHideMenuBar: true,
         webPreferences: {
             nodeIntegration: true,
         },
     })
     
     // Load the React frontend served by Django at http://localhost:8000
-    // win.loadURL('http://127.0.0.1:8000/character/');
+    win.loadURL('http://127.0.0.1:8000/app/');
 
     // win.loadURL(url.format({
     //     pathname: path.join(__dirname, "main.html"),
@@ -35,8 +35,8 @@ function createWindow() {
 }
 
 const startDjango = () => {
-    const pythonPath = path.join(__dirname, 'Scripts', 'python.exe');
-    const djangoProjectPath = path.join(__dirname, 'backend');
+    const pythonPath = path.join(__dirname, 'venv', 'Scripts', 'python.exe');
+    const djangoProjectPath = path.join(__dirname, 'core');
     
     const djangoProcess = exec(`${pythonPath} ${djangoProjectPath}/manage.py runserver`);
 

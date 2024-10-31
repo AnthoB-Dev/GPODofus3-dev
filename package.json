@@ -11,5 +11,8 @@
   "description": "Guide de progression optimisée pour Dofus",
   "devDependencies": {
     "electron": "^33.0.2"
+  },
+  "dependencies": {
+    "@hotwired/turbo": "^8.0.12"
   }
 }

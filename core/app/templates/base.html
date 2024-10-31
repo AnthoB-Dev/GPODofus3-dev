@@ -11,13 +11,14 @@
     <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'turbo.es2017-esm.js' %}"></script>
+    <script src="{% static 'turbo.es2017-umd.js' %}"></script>
     <title>Menu</title>
 </head>
 <body>
     <video id="backgroundVideo" autoplay muted loop>
         <source src="{% static 'medias/V3.1.2_Full.mp4' %}" type="video/mp4">
     </video>
-
     <div id="header">
         <h1>Guide de progression optimisée</h1>
         <div>
@@ -34,7 +35,10 @@
         </div>
     </div>
     <div id="body">
-        <a href="#" class="button button--glass">Personnages</a>
+        <turbo-frame id="content">
+            <a href="{% url 'characters' %}" class="button button--glass" data-turbo-frame="content">Commencer</a>
+            {% block content %}{% endblock %}
+        </turbo-frame>
     </div>
 </body>
 </html>

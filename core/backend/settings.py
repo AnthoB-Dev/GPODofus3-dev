@@ -111,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'fr-FR'
 
 TIME_ZONE = 'UTC'
 
@@ -127,7 +127,7 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-    os.path.join(ROOT_DIR, 'Lib', 'site-packages', 'fontawesomefree', 'static'),  # Chemin vers Font Awesome
+    os.path.join(ROOT_DIR, 'venv', 'Lib', 'site-packages', 'fontawesomefree', 'static'),  # Chemin vers Font Awesome
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')

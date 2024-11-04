@@ -1,44 +1,50 @@
-{% load static %}
-{% load compress %}
+{% load static %} {% load compress %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% compress css %}
-    <link rel="stylesheet" type="text/less" href="{% static 'css/styles.less' %}">
+    <link
+      rel="stylesheet"
+      type="text/less"
+      href="{% static 'css/styles.less' %}" />
     {% endcompress %}
-    <link href="{% static 'fontawesomefree/css/fontawesome.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'fontawesomefree/css/brands.css' %}" rel="stylesheet" type="text/css">
-    <link href="{% static 'fontawesomefree/css/solid.css' %}" rel="stylesheet" type="text/css">
+    <link
+      href="{% static 'fontawesomefree/css/fontawesome.css' %}"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="{% static 'fontawesomefree/css/brands.css' %}"
+      rel="stylesheet"
+      type="text/css" />
+    <link
+      href="{% static 'fontawesomefree/css/solid.css' %}"
+      rel="stylesheet"
+      type="text/css" />
     <script src="{% static 'turbo.es2017-esm.js' %}"></script>
     <script src="{% static 'turbo.es2017-umd.js' %}"></script>
     <title>Menu</title>
-</head>
-<body>
+  </head>
+  <body>
     <video id="backgroundVideo" autoplay muted loop>
-        <source src="{% static 'medias/V3.1.2_Full.mp4' %}" type="video/mp4">
+      <source src="{% static 'medias/V3.1.2_Full.mp4' %}" type="video/mp4" />
     </video>
     <div id="header">
-        <h1>Guide de progression optimisée</h1>
-        <div>
-            <div id="credentials">
-                <p>Inspiré du guide de <strong>Skyzio</strong></p>
-                <p>Application développée par <strong>Shiinasan</strong></p>
-            </div>
-            <div id="contacts">
-                <p><i class="fa-brands fa-discord"></i>_skyzio</p>
-                <p><i class="fa-brands fa-discord"></i>shiinasan.</p>
-            </div>
-            <i class="fa-solid fa-sun themeToggle"></i>
-            <i class="fa-solid fa-moon themeToggle"></i>
+      <h1>Guide de progression optimisée</h1>
+      <div>
+        <div id="credentials">
+          <p>Inspiré du guide de <strong>Skyzio</strong></p>
+          <p>Application développée par <strong>Shiinasan</strong></p>
         </div>
+        <div id="contacts">
+          <p><i class="fa-brands fa-discord"></i>_skyzio</p>
+          <p><i class="fa-brands fa-discord"></i>shiinasan.</p>
+        </div>
+        <i class="fa-solid fa-sun themeToggle"></i>
+        <i class="fa-solid fa-moon themeToggle"></i>
+      </div>
     </div>
-    <div id="body">
-        <turbo-frame id="content">
-            {% comment %} <a href="{% url 'characters' %}" class="button button--glass" data-turbo-frame="content">Commencer</a> {% endcomment %}
-            {% block content %}{% endblock %}
-        </turbo-frame>
-    </div>
-</body>
+    <turbo-frame id="content"> {% block content %}{% endblock %} </turbo-frame>
+  </body>
 </html>

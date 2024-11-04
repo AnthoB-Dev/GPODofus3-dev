@@ -1,0 +1,24 @@
+<!-- templates/app/main.html -->
+{% extends "base.html" %} {% block content %}
+<turbo-frame id="main">
+  <h1>Debug</h1>
+  <a
+    href="{% url 'app:debug_view' %}"
+    class="button button--glass"
+    data-turbo-frame="content"
+    >Commencer</a
+  >
+  <div class="achievements-container">
+    {% if achievements %} {% for achievement in achievements %}
+    <div class="achievement-card">
+      <small>ID: {{ achievement.id }}</small>
+      <h2>{{ achievement.title }}</h2>
+      <a href="{{ achievement.url }}">{{ achievement.url }}</a>
+      <p>Points de succès: {{ achievement.completion_points }}</p>
+    </div>
+    {% endfor %} {% else %}
+    <p>Aucun achievement trouvé</p>
+    {% endif %}
+  </div>
+</turbo-frame>
+{% endblock %}

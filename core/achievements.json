@@ -8739,7 +8739,7 @@
   },
   {
     "model": "app.achievement",
-    "pk": 145,
+    "pk": 160,
     "fields": {
       "title": "Vampyre, vous avez dit vampyre ?",
       "url": "https://www.dofuspourlesnoobs.com/vampyre-vous-avez-dit-vampyre.html",

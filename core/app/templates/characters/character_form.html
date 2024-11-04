@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{% if character %}Modifier le personnage{% else %}Créer un nouveau personnage{% endif %}</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Enregistrer</button>
+</form>
+<a href="{% url 'character_list' %}">Annuler</a>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Supprimer {{ character.name }} ?</h2>
+<p>Êtes-vous sûr de vouloir supprimer ce personnage ? Cette action est irréversible.</p>
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="delete" value="true">  <!-- Champ pour identifier la suppression -->
+    <input type="hidden" name="character_id" value="{{ character.pk }}">  <!-- ID du personnage à supprimer -->
+    <button type="submit">Supprimer</button>
+</form>
+<a href="{% url 'character_list' %}">Annuler</a>
+{% endblock %}

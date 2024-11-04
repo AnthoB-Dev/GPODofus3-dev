@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Liste des Personnages</h2>
+<a href="{% url 'character_create' %}">Ajouter un nouveau personnage</a>
+<ul>
+    {% for character in characters %}
+        <li>
+            <a href="{% url 'character_detail' character.pk %}">{{ character.name }}</a>
+            (<a href="{% url 'character_update' character.pk %}">Modifier</a> |
+             <a href="{% url 'character_delete' character.pk %}">Supprimer</a>)
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

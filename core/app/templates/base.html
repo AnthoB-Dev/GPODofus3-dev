@@ -36,7 +36,7 @@
     </div>
     <div id="body">
         <turbo-frame id="content">
-            <a href="{% url 'characters' %}" class="button button--glass" data-turbo-frame="content">Commencer</a>
+            {% comment %} <a href="{% url 'characters' %}" class="button button--glass" data-turbo-frame="content">Commencer</a> {% endcomment %}
             {% block content %}{% endblock %}
         </turbo-frame>
     </div>

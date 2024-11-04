@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>{{ character.name }}</h2>
+<a href="{% url 'character_list' %}">Retour à la liste</a>
+{% endblock %}

@@ -1,5 +1,6 @@
-- [ ] Finir le peuplement des quêtes dans achievements.json
-- [ ] Peupler la BDD avec le contenu de achievements.json
-- [ ] Peupler la BDD avec le contenu de guides.json
+- [x] Finir le peuplement des quêtes dans achievements.json
+- [x] Peupler la BDD avec le contenu de achievements.json
+- [x] Peupler la BDD avec le contenu de guides.json
+- [ ] Mettre en place les routes
+- [ ] Mettre en place Turbo
 - [ ] Attaquer le front
-- [ ] Mettre en place les routes en rélflechissant à Turbo

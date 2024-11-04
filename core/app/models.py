@@ -3,6 +3,7 @@ from django.db import models
 
 
 GAME_VERSION = Decimal("2.73")
+DEFAULT_ALIGNMENT_ID = 3
 
 
 class Alignment(models.Model):
@@ -23,11 +24,6 @@ class Alignment(models.Model):
         ordering = ["id"]
         verbose_name = "Alignement"
         verbose_name_plural = "Alignements"
-
-
-def get_default_alignment():
-    """Retourne l'alignement neutre par défaut"""
-    return Alignment.objects.get(id=3)
 
 
 class Quest(models.Model):
@@ -53,7 +49,7 @@ class Quest(models.Model):
         Alignment,
         on_delete=models.CASCADE,
         related_name="quests",
-        default=get_default_alignment,
+        default=DEFAULT_ALIGNMENT_ID,
         verbose_name="Alignement",
         help_text="L'alignement requis pour cette quête",
     )
@@ -65,7 +61,10 @@ class Quest(models.Model):
         default=GAME_VERSION, verbose_name="Créer en version"
     )
     updated_for_version = models.FloatField(
-        blank=True, null=True, verbose_name="Mis à jour lors de la version"
+        default=GAME_VERSION,
+        blank=True,
+        null=True,
+        verbose_name="Mis à jour lors de la version",
     )
     completed = models.BooleanField(
         default=False,
@@ -120,7 +119,10 @@ class Achievement(models.Model):
         default=GAME_VERSION, verbose_name="Créer en version"
     )
     updated_for_version = models.FloatField(
-        blank=True, null=True, verbose_name="Mis à jour lors de la version"
+        default=GAME_VERSION,
+        blank=True,
+        null=True,
+        verbose_name="Mis à jour lors de la version",
     )
     quests = models.ManyToManyField(
         Quest, through="AchievementQuest", related_name="achievements"
@@ -172,7 +174,7 @@ class AchievementQuest(models.Model):
 
 class Guide(models.Model):
     title = models.CharField(max_length=255, verbose_name="Titre")
-    objectives = models.CharField(max_length=255, verbose_name="Objectifs")
+    objectives = models.TextField(max_length=255, verbose_name="Objectifs")
     explanations = models.TextField(null=True, blank=True, verbose_name="Guide")
     page = models.FloatField()
     recommended_level = models.IntegerField(verbose_name="Niveau recommandé")
@@ -192,7 +194,10 @@ class Guide(models.Model):
         default=GAME_VERSION, verbose_name="Créer en version"
     )
     updated_for_version = models.FloatField(
-        blank=True, null=True, verbose_name="Mis à jour lors de la version"
+        default=GAME_VERSION,
+        blank=True,
+        null=True,
+        verbose_name="Mis à jour lors de la version",
     )
     achievement = models.ManyToManyField(
         Achievement, through="GuideAchievement", related_name="guides"

@@ -3,9 +3,10 @@ import os
 from django.db import transaction
 from django.conf import settings
 from django.apps import apps
-from app.models import *
+from app.models import Guide, Achievement, Quest, AchievementQuest, Alignment
 from collections import Counter
 from django.core import serializers
+
 
 def parse_txt_to_json(input_file, output_file):
     # Vérification de l'existence du fichier d'entrée
@@ -18,7 +19,7 @@ def parse_txt_to_json(input_file, output_file):
     seen_titles = set()
 
     # Ouverture du fichier texte en lecture
-    with open(input_file, 'r', encoding='utf-8') as file:
+    with open(input_file, "r", encoding="utf-8") as file:
         for line in file:
             # Nettoyage de la ligne en supprimant les espaces et les sauts de ligne
             cleaned_line = line.strip()
@@ -26,7 +27,9 @@ def parse_txt_to_json(input_file, output_file):
                 if cleaned_line in seen_titles:
                     print(f"Doublon trouvé : {cleaned_line}. Il ne sera pas ajouté.")
                     continue  # Ignore les doublons
-                seen_titles.add(cleaned_line)  # Ajoute le titre à l'ensemble des titres vus
+                seen_titles.add(
+                    cleaned_line
+                )  # Ajoute le titre à l'ensemble des titres vus
 
                 # Création d'un dictionnaire pour la ligne
                 entry = {
@@ -36,51 +39,15 @@ def parse_txt_to_json(input_file, output_file):
                     "expect_ressource": False,
                     "expect_item": False,
                     "expect_fight": True,
-                    "expect_dungeon": False
+                    "expect_dungeon": False,
                 }
                 # Ajout du dictionnaire à la liste
                 parsed_data.append(entry)
 
     # Écriture des données parsées dans un fichier JSON
-    with open(output_file, 'w', encoding='utf-8') as json_file:
+    with open(output_file, "w", encoding="utf-8") as json_file:
         json.dump(parsed_data, json_file, ensure_ascii=False, indent=4)
-        
 
-def coda(data1=None, data2=None):
-    if data1 is None and data2 is None:
-        modelData = Achievement.objects.all()
-        jsonData = os.path.join(settings.BASE_DIR.parent, 'achievements.json')
-        md = []
-        jd = []
-        
-    with open(jsonData, 'r', encoding='utf-8') as file:
-        dataJson = json.load(file)
-        
-    for a in modelData: 
-        md.append(a.title)
-        
-    for i in dataJson:
-        jd.append(i['title'])
-        
-
-    count_entity = jd
-    
-    count = Counter(count_entity)
-    duplicates = [title for title, cnt in count.items() if cnt > 1]
-    
-    if count_entity == jd and duplicates:
-        print(f"Doublons dans le JSON : {duplicates}")
-    elif count_entity == md and duplicates:
-        print(f"Doublons en BDD : {duplicates}")
-
-    for x in jd:
-        if x not in md:
-            print(f"Achievement '{x}' non trouvé dans la base de données.")   
-            
-    if set(jd) == set(md):
-        print('Aucune différences entre les data fournies detecté.')
-    
-            
 
 def maj_fields_of_model(model_input=None, field_name=None, new_value=None):
     # model_name = model_input.capitalize()
@@ -104,7 +71,7 @@ def maj_fields_of_model(model_input=None, field_name=None, new_value=None):
     # except Exception as e:
     #     print(f"Une erreur s'est produite lors de la récupération du champ : {e}")
     #     return
-    
+
     try:
         for d in data:
             d.created_in_version = 2.73
@@ -112,55 +79,133 @@ def maj_fields_of_model(model_input=None, field_name=None, new_value=None):
         print("Versions modifiées")
     except Exception as e:
         raise e
-    
+
     print("Versions sauvegardées")
-    
 
-def iafj(json_path=None):
+
+def export_guides_to_json(output_file=None):
+    try:
+        guides = Guide.objects.all()
+
+        if not output_file:
+            output_file = "guides.json"
+
+        data = serializers.serialize("json", guides)
+
+        with open(output_file, "w", encoding="utf-8") as f:
+            f.write(data)
+
+        print(f"Export des guides réussi vers {output_file}")
+
+    except Exception as e:
+        print(f"Erreur lors de l'export: {str(e)}")
+
+
+# Exemple d'utilisation
+# export_model_to_json(Guide)
+
+
+def import_achievements_from_json(json_path=None):
+    """Import des achievements depuis le format JSON Django avec leurs quêtes."""
     if json_path is None:
-        json_path = os.path.join(settings.BASE_DIR.parent, 'achievements.json')
-    
-    with open(json_path, 'r') as file:
-        data = json.load(file)
+        json_path = os.path.join(settings.BASE_DIR, "achievements.json")
 
-    for item in data:
-        try:
-            # Créer ou mettre à jour un Achievement
+    try:
+        with open(json_path, "r", encoding="utf-8") as file:
+            data = json.load(file)
+
+        for item in data:
+            if item["model"] != "app.achievement":
+                continue
+
+            fields = item["fields"]
             achievement, created = Achievement.objects.update_or_create(
-                title=item['title'].encode('latin1').decode('utf-8'),
+                id=item["pk"],
                 defaults={
-                    'url': item['url'],
-                    'completion_points': item['completion_points'],
-                    'objectives': item.get('objectives', ''),  # Utiliser un champ vide si non spécifié
-                    "expect_ressource": item['expect_ressource'],
-                    "expect_item": item['expect_item'],
-                    "expect_fight": item['expect_fight'],
-                    "expect_dungeon": item['expect_dungeon'],
-                    "expect_job": item['expect_job'],
-                    "expect_other": item['expect_other'],
-                    "expect_alignment": item['expect_alignment'],
-                    'created_in_version': 2.73  # Version par défaut
-                }
+                    "title": fields["title"],
+                    "url": fields["url"],
+                    "completion_points": fields["completion_points"],
+                    "objectives": fields["objectives"],
+                    "expect_ressource": fields["expect_ressource"],
+                    "expect_item": fields["expect_item"],
+                    "expect_fight": fields["expect_fight"],
+                    "expect_dungeon": fields["expect_dungeon"],
+                    "expect_job": fields["expect_job"],
+                    "expect_other": fields["expect_other"],
+                    "expect_alignment": fields["expect_alignment"],
+                    "created_in_version": fields["created_in_version"],
+                    "updated_for_version": fields["updated_for_version"],
+                },
             )
-            
-            # Sauvegarder les changements pour cet achievement
-            achievement.save()
-            print(f"Achievement '{achievement.title}' importé avec succès.")
-        except Exception as e:
-            print(f"Erreur lors de l'importation de l'achievement '{item.get('title', '')}': {e}")
+
+            # Gestion des quêtes
+            if "quests" in item:
+                for quest_data in item["quests"]:
+                    # Récupérer l'objet Alignment
+                    alignment = Alignment.objects.get(id=quest_data["alignment"])
+
+                    quest, _ = Quest.objects.get_or_create(
+                        title=quest_data["title"],
+                        defaults={
+                            "url": quest_data["url"],
+                            "alignment": alignment,  # Assigner l'objet, pas l'ID
+                            "completed": quest_data["completed"],
+                        },
+                    )
+
+                    AchievementQuest.objects.get_or_create(
+                        achievement=achievement, quest=quest
+                    )
+
+            status = "créé" if created else "mis à jour"
+            print(f"Achievement '{achievement.title}' {status} avec succès.")
+
+    except Exception as e:
+        print(f"Erreur lors de l'importation: {str(e)}")
 
 
-def export_achievements_to_json():
-    # Récupérer tous les objets Achievement
-    achievements = Achievement.objects.all()
+def import_guides_from_json(json_path=None):
+    """
+    Import des guides depuis un JSON simple.
+    Format attendu:
+    {
+        "title": "Nom du guide",
+        "recommended_level": 200,
+        "alignment_id": 3
+    }
+    """
+    if json_path is None:
+        json_path = os.path.join(settings.BASE_DIR, "guides.json")
 
-    # Utiliser le sérialiseur de Django pour convertir en JSON
-    achievements_json = serializers.serialize('json', achievements)
+    try:
+        with open(json_path, "r", encoding="utf-8") as file:
+            guides_data = json.load(file)
 
-    # Écrire le JSON dans un fichier
-    with open('achievements.json', 'w', encoding="utf-8") as file:
-        file.write(achievements_json)
+        for guide_data in guides_data:
+            # Récupérer l'alignement
+            alignment = None
+            if "alignment_id" in guide_data:
+                alignment = Alignment.objects.get(id=guide_data["alignment_id"])
 
-    print("Les achievements ont été exportés avec succès en JSON.")
+            guide, created = Guide.objects.get_or_create(
+                title=guide_data["title"],
+                defaults={
+                    "objectives": "",  # Champ vide par défaut
+                    "explanations": "",  # Champ vide par défaut
+                    "page": 1.0,  # Valeur par défaut
+                    "recommended_level": guide_data.get("recommended_level", 1),
+                    "alignment": alignment,
+                    # Les champs created_at, updated_at seront gérés automatiquement
+                    # created_in_version et updated_for_version utilisent GAME_VERSION par défaut
+                },
+            )
 
-# parse_txt_to_json('achi.txt', 'output.json')
+            status = "créé" if created else "existant"
+            print(f"Guide '{guide.title}' {status}")
+
+    except FileNotFoundError:
+        print(f"Erreur: Le fichier {json_path} n'existe pas")
+    except json.JSONDecodeError:
+        print("Erreur: Format JSON invalide")
+    except Exception as e:
+        print(f"Erreur lors de l'importation: {str(e)}")

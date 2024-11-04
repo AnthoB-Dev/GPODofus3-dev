@@ -23,6 +23,10 @@
 	text-decoration: none;
 }
 
+button, input {
+	color: var(--clr-blue3);
+}
+
 body {
 	display: flex;
 	flex-direction: column;
@@ -103,7 +107,7 @@ body {
 	
 	.button {
 		border: none;
-		border-radius: 8px;
+		border-radius: 10px;
 		cursor: pointer;
 		font-size: 16px;
 		font-weight: 600;
@@ -114,7 +118,8 @@ body {
 		text-align: center;
 		transition: all 0.3s ease;
 		transform: translate(-50%, -50%);
-		width: 50vw;
+		width: 20vw;
+		animation: glassbreath 3.5s infinite;
 	}
 	
 	.button:focus {
@@ -126,8 +131,6 @@ body {
 		background-color: #13315c00;
 		backdrop-filter: blur(5px);
 		color: var(--clr-light);
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		box-shadow: 0 2px 5px 0 #0b254587;
 	}
 	
 	.button--glass:hover {
@@ -135,5 +138,23 @@ body {
 		box-shadow: 0 2px 5px 0 #0b254587;
 		backdrop-filter: blur(10px);
 		border: 1px solid rgb(255 255 255 / 46%);
+	}
+}
+
+@keyframes glassbreath {
+	from {
+		backdrop-filter: blur(0px);
+		border: 1px solid rgba(255, 255, 255, 0.0);
+		box-shadow: 0 0px 0px 0 #0b254587;
+	}
+	50% {
+		backdrop-filter: blur(5px);
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		box-shadow: 0 2px 5px 0 #0b254587;
+	}
+	to {
+		backdrop-filter: blur(0px);
+		border: 1px solid rgba(255, 255, 255, 0.0);
+		box-shadow: 0 0px 0px 0 #0b254587;
 	}
 }

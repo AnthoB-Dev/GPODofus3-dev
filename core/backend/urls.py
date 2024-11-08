@@ -19,6 +19,7 @@ from django.conf import settings
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, include
+from django.conf.urls.static import static
 
 
 def redirect_to_app(request):
@@ -32,6 +33,10 @@ urlpatterns = [
     # Routes de l'application
     path("app/", include("app.urls")),
 ]
+
+urlpatterns += [
+    path("ckeditor5/", include("django_ckeditor_5.urls")),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     import debug_toolbar

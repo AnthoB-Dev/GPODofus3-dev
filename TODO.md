@@ -4,3 +4,4 @@
 - [ ] Mettre en place les routes
 - [ ] Mettre en place Turbo
 - [ ] Attaquer le front
+- [ ] Faire le README

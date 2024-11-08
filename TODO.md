@@ -2,6 +2,7 @@
 - [x] Peupler la BDD avec le contenu de achievements.json
 - [x] Peupler la BDD avec le contenu de guides.json
 - [x] Attaquer le front
+- [ ] Définir les succès concernés sur chaque Guide (actuellement à "A travers le Krosmoz")
 - [ ] Peupler le front avec les données du back
 - [ ] Mettre en place les routes
 - [ ] Mettre en place Turbo

@@ -151,5 +151,3 @@ README.md
 core/static/CACHE/
 core/staticfiles/CACHE/
 !admin/css/**/*.css
-
-core/backend/settings.py

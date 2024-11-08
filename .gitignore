@@ -144,5 +144,10 @@ dmypy.json
 
 Ressources_utiles.md
 README.md
+# LESS cache files
+*.css.map
+.sass-cache/
+*.css.less
 core/static/CACHE/
 core/staticfiles/CACHE/
+!admin/css/**/*.css

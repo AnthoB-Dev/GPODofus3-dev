@@ -143,3 +143,6 @@ dmypy.json
 .DS_Store
 
 Ressources_utiles.md
+README.md
+core/static/CACHE/
+core/staticfiles/CACHE/

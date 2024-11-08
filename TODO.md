@@ -1,7 +1,9 @@
 - [x] Finir le peuplement des quêtes dans achievements.json
 - [x] Peupler la BDD avec le contenu de achievements.json
 - [x] Peupler la BDD avec le contenu de guides.json
+- [x] Attaquer le front
+- [ ] Peupler le front avec les données du back
 - [ ] Mettre en place les routes
 - [ ] Mettre en place Turbo
-- [ ] Attaquer le front
+- [ ] Media queries
 - [ ] Faire le README

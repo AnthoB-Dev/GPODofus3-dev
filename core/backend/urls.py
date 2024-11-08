@@ -15,6 +15,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
+from django.conf import settings
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, include
@@ -31,3 +32,10 @@ urlpatterns = [
     # Routes de l'application
     path("app/", include("app.urls")),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+
+    urlpatterns += [
+        path("__debug__/", include(debug_toolbar.urls)),
+    ]

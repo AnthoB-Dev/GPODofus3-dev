@@ -1,14 +1,31 @@
 from django.contrib import admin
 
 from .models import (
+    Achievement,
     AchievementQuest,
     Alignment,
+    CommonSpell,
+    Dungeon,
+    DungeonQuest,
+    Guide,
     GuideAchievement,
     Quest,
-    Achievement,
-    Guide,
-    CommonSpell,
 )
+
+
+class AchievementQuestInline(admin.TabularInline):
+    model = AchievementQuest
+    extra = 1
+
+
+class DungeonQuestInline(admin.TabularInline):
+    model = DungeonQuest
+    extra = 1
+
+
+class DungeonGuideInline(admin.TabularInline):
+    model = Dungeon
+    extra = 1
 
 
 class GuideAchievementInline(admin.TabularInline):
@@ -16,29 +33,7 @@ class GuideAchievementInline(admin.TabularInline):
     extra = 1
 
 
-class GuideAdmin(admin.ModelAdmin):
-    inlines = [GuideAchievementInline]
-    list_display = [
-        "title",
-        "id",
-    ]
-    search_fields = ("title",)
-    inlines = [GuideAchievementInline]
-
-
 class QuestAchievementInline(admin.TabularInline):
-    model = AchievementQuest
-    extra = 1
-
-
-class QuestAdmin(admin.ModelAdmin):
-    inlines = [QuestAchievementInline]
-    list_display = ["title", "id"]
-    search_fields = ("title",)
-    inlines = [QuestAchievementInline]
-
-
-class AchievementQuestInline(admin.TabularInline):
     model = AchievementQuest
     extra = 1
 
@@ -61,8 +56,31 @@ class AlignmentAdmin(admin.ModelAdmin):
     list_display = ["name", "id"]
 
 
-admin.site.register(Alignment, AlignmentAdmin)
-admin.site.register(Quest, QuestAdmin)
+class DungeonAdmin(admin.ModelAdmin):
+    list_display = ["name", "id"]
+    search_fields = ("name",)
+    inlines = [DungeonQuestInline]
+
+
+class GuideAdmin(admin.ModelAdmin):
+    inlines = [GuideAchievementInline, DungeonGuideInline]
+    list_display = [
+        "title",
+        "id",
+        "recommended_level",
+    ]
+    search_fields = ("title",)
+
+
+class QuestAdmin(admin.ModelAdmin):
+    inlines = [QuestAchievementInline, DungeonQuestInline]
+    list_display = ["title", "id"]
+    search_fields = ("title",)
+
+
 admin.site.register(Achievement, AchievementAdmin)
-admin.site.register(Guide, GuideAdmin)
+admin.site.register(Alignment, AlignmentAdmin)
+admin.site.register(Dungeon, DungeonAdmin)
 admin.site.register(CommonSpell)
+admin.site.register(Guide, GuideAdmin)
+admin.site.register(Quest, QuestAdmin)

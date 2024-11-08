@@ -1,5 +1,6 @@
 from decimal import Decimal
 from django.db import models
+from django_ckeditor_5.fields import CKEditor5Field
 
 
 GAME_VERSION = Decimal("2.73")
@@ -52,6 +53,9 @@ class Quest(models.Model):
         default=DEFAULT_ALIGNMENT_ID,
         verbose_name="Alignement",
         help_text="L'alignement requis pour cette quête",
+    )
+    dungeon = models.ManyToManyField(
+        "Dungeon", through="DungeonQuest", related_name="quests"
     )
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name="Date de création"
@@ -174,8 +178,8 @@ class AchievementQuest(models.Model):
 
 class Guide(models.Model):
     title = models.CharField(max_length=255, verbose_name="Titre")
-    objectives = models.TextField(max_length=255, verbose_name="Objectifs")
-    explanations = models.TextField(null=True, blank=True, verbose_name="Guide")
+    objectives = CKEditor5Field("Objectifs", max_length=255)
+    explanations = CKEditor5Field("Guide", null=True, blank=True)
     page = models.FloatField()
     recommended_level = models.IntegerField(verbose_name="Niveau recommandé")
     alignment = models.ForeignKey(
@@ -243,3 +247,46 @@ class CommonSpell(models.Model):
         ordering = ["name"]
         verbose_name = "Sort commun"
         verbose_name_plural = "Sorts communs"
+
+
+class Dungeon(models.Model):
+    name = models.CharField(max_length=100, verbose_name="Nom")
+    level = models.IntegerField(verbose_name="Niveau")
+    url = models.URLField(null=True, blank=True)
+    guide = models.ForeignKey(
+        "Guide", on_delete=models.CASCADE, related_name="dungeons_guide", null=True
+    )
+    captured = models.BooleanField(
+        default=False,
+        verbose_name="Capturé ?",
+        help_text="Le donjon a-t-il été capturé ?",
+    )
+    completed = models.BooleanField(
+        default=False,
+        verbose_name="Complété ?",
+        help_text="Le donjon a-t-il été complété ?",
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ["name"]
+        verbose_name = "Donjon"
+        verbose_name_plural = "Donjons"
+
+
+class DungeonQuest(models.Model):
+    dungeon = models.ForeignKey(
+        "Dungeon", on_delete=models.CASCADE, verbose_name="Donjon"
+    )
+    quest = models.ForeignKey("Quest", on_delete=models.CASCADE, verbose_name="Quête")
+
+    class Meta:
+        unique_together = ("dungeon", "quest")
+        db_table = "dungeon_quest"
+        verbose_name = "Donjon - Quête"
+        verbose_name_plural = "Donjon - Quêtes"
+
+    def __str__(self):
+        return f"{self.dungeon.name} - {self.quest.title}"

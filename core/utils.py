@@ -49,38 +49,15 @@ def parse_txt_to_json(input_file, output_file):
         json.dump(parsed_data, json_file, ensure_ascii=False, indent=4)
 
 
-def maj_fields_of_model(model_input=None, field_name=None, new_value=None):
-    # model_name = model_input.capitalize()
-    # field = field_name.lower()
-
-    # try:
-    #     model = apps.get_model('app', model_name)  # Remplacez 'app' par le nom de votre application
-    # except LookupError:
-    #     print(f"Le modèle '{model_name}' n'existe pas.")
-    #     return
-
+def maj_page_of_guide():
     try:
-        data = Achievement.objects.all()
+        guides = Guide.objects.all().order_by("id")  # Get all guides ordered by id
+        for index, guide in enumerate(guides, start=1):
+            guide.page = float(index)  # Set page to 1.0, 2.0, 3.0 etc.
+            guide.save()
+        print(f"Updated {guides.count()} guides with sequential page numbers")
     except Exception as e:
-        print(f"Une erreur s'est produite lors de la récupération des données : {e}")
-        return
-
-    # try:
-    #     if data.get(field):
-    #         print(f"Champ '{field}' trouvé")
-    # except Exception as e:
-    #     print(f"Une erreur s'est produite lors de la récupération du champ : {e}")
-    #     return
-
-    try:
-        for d in data:
-            d.created_in_version = 2.73
-            d.save()
-        print("Versions modifiées")
-    except Exception as e:
-        raise e
-
-    print("Versions sauvegardées")
+        print(f"An error occurred: {e}")
 
 
 def export_guides_to_json(output_file=None):
@@ -99,10 +76,6 @@ def export_guides_to_json(output_file=None):
 
     except Exception as e:
         print(f"Erreur lors de l'export: {str(e)}")
-
-
-# Exemple d'utilisation
-# export_model_to_json(Guide)
 
 
 def import_achievements_from_json(json_path=None):

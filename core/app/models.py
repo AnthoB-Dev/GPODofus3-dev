@@ -1,6 +1,5 @@
 from decimal import Decimal
 from django.db import models
-from django_ckeditor_5.fields import CKEditor5Field
 
 
 GAME_VERSION = Decimal("2.73")
@@ -178,8 +177,9 @@ class AchievementQuest(models.Model):
 
 class Guide(models.Model):
     title = models.CharField(max_length=255, verbose_name="Titre")
-    objectives = CKEditor5Field("Objectifs", max_length=255)
-    explanations = CKEditor5Field("Guide", null=True, blank=True)
+    objectives = models.TextField("Objectifs", max_length=255)
+    important_info = models.TextField("A prévoir", null=True, blank=True)
+    explanations = models.TextField("Guide", null=True, blank=True)
     page = models.FloatField()
     recommended_level = models.IntegerField(verbose_name="Niveau recommandé")
     alignment = models.ForeignKey(

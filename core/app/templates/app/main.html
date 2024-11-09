@@ -6,7 +6,7 @@
       <div class="imgBackground">
         <img src="{% static 'medias/icons/book.png' %}" alt="book icon" />
       </div>
-      <h2>Incarnam : Premiers mécanismes et premiers niveaux</h2>
+      <h2>{{ guide.title|safe }}</h2>
       <i class="fa-solid fa-caret-down"></i>
     </div>
     <div id="centerContent">
@@ -19,44 +19,16 @@
           <p>Complété à <strong>45%</strong></p>
         </div>
         <div class="content">
+          {% if guide.important_info %}
           <div id="previsions">
             <h4>A prévoir dans les succès qui arrivent :</h4>
-            <ul>
-              <li>
-                <img src="{% static 'medias/icons/job.png' %}" alt="" />
-                <p>
-                  N’importe quel métier niveau 50 pour le succès Vert Emeraude
-                </p>
-              </li>
-              <li>
-                <img src="{% static 'medias/icons/resources.png' %}" alt="" />
-                <p>
-                  Des ressources de tel zone un peu chiante à avoir mais j’en
-                  dis pas plus car c’est un exemple.
-                </p>
-              </li>
-            </ul>
+
+            {{ guide.important_info|safe }}
           </div>
-          <div>
-            <p>
-              On attend que le joueur ait pu tester sa classe et l'intro du jeu
-              puis on détaille un peu plus le futur de la classe de manière plus
-              précise (objectifs de stuffs, stats à monter, façons de jouer,
-              etc...)
-            </p>
-            <br />
-            <p>
-              L'objectif : Le faire pour les 18 Classes sous forme de balises
-              type spoiler intégré au tutoriel pour que le lecteur n'ait qu'à
-              dérouler le fil de sa classe pour avoir sa progression
-              classe/classe sans perdre le squelette.
-            </p>
-            <br />
-            <p>
-              Penser à lancer la quête Aventure Miniature en parlant à la
-              Croquette en sortie du Donjon Kankreblath pour initier la série
-              des quêtes de la Fratrie des Oubliés
-            </p>
+          {% endif %}
+
+          <div id="guide">
+            {% if guide.explanations %} {{ guide.explanations|safe }} {% endif%}
           </div>
         </div>
         <div class="interactable">
@@ -79,62 +51,24 @@
         </div>
         <div class="content">
           <h4>En route pour l'aventure</h4>
+
+          {% if quests %}
           <ul>
+            {% for quest in quests %}
             <li>
               <div>
-                <i class="fa-solid fa-up-right-from-square"></i>
+                <a href="{{quest.url}}" target="_blank">
+                  <i class="fa-solid fa-up-right-from-square"></i>
+                </a>
               </div>
-              <p>L’anneau de tous les dangers</p>
+              <p>{{quest.title}}</p>
               <div class="box-checkbox">
                 <input type="checkbox" name="check-quest" id="" />
               </div>
             </li>
-            <li>
-              <div>
-                <i class="fa-solid fa-up-right-from-square"></i>
-              </div>
-              <p>Sous le regard des dieux</p>
-              <div class="box-checkbox">
-                <input type="checkbox" name="check-quest" id="" />
-              </div>
-            </li>
-            <li>
-              <div>
-                <i class="fa-solid fa-up-right-from-square"></i>
-              </div>
-              <p>Réponses à tout</p>
-              <div class="box-checkbox">
-                <input type="checkbox" name="check-quest" id="" />
-              </div>
-            </li>
-            <li>
-              <div>
-                <i class="fa-solid fa-up-right-from-square"></i>
-              </div>
-              <p>Le village dans les nuages</p>
-              <div class="box-checkbox">
-                <input type="checkbox" name="check-quest" id="" />
-              </div>
-            </li>
-            <li>
-              <div>
-                <i class="fa-solid fa-up-right-from-square"></i>
-              </div>
-              <p>Espoirs et tragédies</p>
-              <div class="box-checkbox">
-                <input type="checkbox" name="check-quest" id="" />
-              </div>
-            </li>
-            <li>
-              <div>
-                <i class="fa-solid fa-up-right-from-square"></i>
-              </div>
-              <p>Dans la gueule du Milimilou</p>
-              <div class="box-checkbox">
-                <input type="checkbox" name="check-quest" id="" />
-              </div>
-            </li>
+            {% endfor %}
           </ul>
+          {% endif %}
         </div>
         <div class="interactable">
           <div>
@@ -161,12 +95,7 @@
         <h3>Objectifs</h3>
       </div>
       <div class="content">
-        <div>
-          <p>
-            Permettre d'avoir une base, découvrir sa classe, les métiers, les
-            caractéristiques, les donjons, etc...
-          </p>
-        </div>
+        <div>{{ guide.objectives|safe }}</div>
       </div>
     </div>
     <div id="achievements">
@@ -177,131 +106,22 @@
         <h3>Succès Concernés</h3>
       </div>
       <div class="content">
+        {% for achievement in achievements %}
         <ul>
           <li>
             <div>
               <i class="fa-solid fa-up-right-from-square"></i>
             </div>
             <div class="achievementName">
-              <p>En route pour l'aventure</p>
+              <p>{{achievement.title}}</p>
               <span class="expectIcons">
                 <img src="{% static 'medias/icons/fight.png' %}" alt="" />
               </span>
             </div>
             <span>33%</span>
           </li>
-          <li>
-            <div>
-              <i class="fa-solid fa-up-right-from-square"></i>
-            </div>
-            <div class="achievementName">
-              <p>Poussé par le vent</p>
-              <span class="expectIcons"> </span>
-            </div>
-            <span>100%</span>
-          </li>
-          <li>
-            <div>
-              <i class="fa-solid fa-up-right-from-square"></i>
-            </div>
-            <div class="achievementName">
-              <p>Service dans la milice</p>
-              <span class="expectIcons">
-                <img src="{% static 'medias/icons/fight.png' %}" alt="" />
-              </span>
-            </div>
-            <span>90%</span>
-          </li>
-          <li>
-            <div>
-              <i class="fa-solid fa-up-right-from-square"></i>
-            </div>
-            <div class="achievementName">
-              <p>Le village dans les nuages</p>
-              <span class="expectIcons">
-                <img src="{% static 'medias/icons/job.png' %}" alt="" />
-              </span>
-            </div>
-            <span>50%</span>
-          </li>
-          <li>
-            <div>
-              <i class="fa-solid fa-up-right-from-square"></i>
-            </div>
-            <div class="achievementName">
-              <p>C’est le métier qui rentre</p>
-              <span class="expectIcons">
-                <img src="{% static 'medias/icons/fight.png' %}" alt="" />
-              </span>
-            </div>
-            <span>0%</span>
-          </li>
-          <li>
-            <div>
-              <i class="fa-solid fa-up-right-from-square"></i>
-            </div>
-            <div class="achievementName">
-              <p>Ramdam sur Incarnam</p>
-              <span class="expectIcons">
-                <img src="{% static 'medias/icons/resource.png' %}" alt="" />
-                <img src="{% static 'medias/icons/fight.png' %}" alt="" />
-                <img src="{% static 'medias/icons/dungeon.png' %}" alt="" />
-              </span>
-            </div>
-            <span>0%</span>
-          </li>
-          <li>
-            <div>
-              <i class="fa-solid fa-up-right-from-square"></i>
-            </div>
-            <div class="achievementName">
-              <p>Vert Emeraude</p>
-              <span class="expectIcons">
-                <img src="{% static 'medias/icons/resource.png' %}" alt="" />
-                <img src="{% static 'medias/icons/fight.png' %}" alt="" />
-                <img src="{% static 'medias/icons/item.png' %}" alt="" />
-                <img src="{% static 'medias/icons/dungeon.png' %}" alt="" />
-                <img src="{% static 'medias/icons/job.png' %}" alt="" />
-                <img src="{% static 'medias/icons/alignment.png' %}" alt="" />
-              </span>
-            </div>
-            <span>0%</span>
-          </li>
-          <li>
-            <div>
-              <i class="fa-solid fa-up-right-from-square"></i>
-            </div>
-            <p>Vert Emeraude</p>
-            <span>0%</span>
-          </li>
-          <li>
-            <div>
-              <i class="fa-solid fa-up-right-from-square"></i>
-            </div>
-            <p>Vert Emeraude</p>
-            <span>0%</span>
-          </li>
-          <li>
-            <div>
-              <i class="fa-solid fa-up-right-from-square"></i>
-            </div>
-            <p>Vert Emeraude</p>
-            <span>0%</span>
-          </li>
-          <li>
-            <div>
-              <i class="fa-solid fa-up-right-from-square"></i>
-            </div>
-            <p>Vert Emeraude</p>
-            <span>0%</span>
-          </li>
-          <li>
-            <div>
-              <i class="fa-solid fa-up-right-from-square"></i>
-            </div>
-            <p>Vert Emeraude</p>
-            <span>0%</span>
-          </li>
+
+          {% endfor %}
         </ul>
       </div>
     </div>

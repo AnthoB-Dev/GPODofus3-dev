@@ -16,6 +16,21 @@ from app.models import Achievement, Guide
 class AppView(TemplateView):
     """Vue principale de l'application utilisant Turbo"""
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Utiliser prefetch_related pour précharger les succès et les quêtes associées
+        guide = Guide.objects.prefetch_related("achievement__quests").first()
+        context["guide"] = guide
+        context["achievements"] = guide.achievement.all() if guide else []
+        # Accéder aux quêtes via les succès associés
+        quests = set()
+        if guide:
+            for achievement in guide.achievement.all():
+                for quest in achievement.quests.all():
+                    quests.add(quest)
+        context["quests"] = quests
+        return context
+
     template_name = "app/main.html"
 
 

@@ -1,0 +1,29 @@
+{% load static %}
+<turbo-frame id="frame_quests">
+  <div class="title">
+    <div class="imgBackground">
+      <img src="{% static 'medias/icons/quests.png' %}" alt="" />
+    </div>
+    <h3>Quêtes</h3>
+  </div>
+  <div class="content">
+    {% if quests %}
+    <h4>{{ achievement.title }}</h4>
+    <ul>
+      {% for quest in quests %}
+      <li>
+        <div>
+          <a href="{{quest.url}}" target="_blank">
+            <i class="fa-solid fa-up-right-from-square"></i>
+          </a>
+        </div>
+        <p>{{quest.title}}</p>
+        <div class="box-checkbox">
+          <input type="checkbox" name="check-quest" id="" />
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+</turbo-frame>

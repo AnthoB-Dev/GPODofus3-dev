@@ -1,0 +1,44 @@
+{% extends "base.html" %} {% load static %} {% block content %}
+<div id="main">
+  <main>
+    <div id="topNav">
+      <div class="imgBackground">
+        <img src="{% static 'medias/icons/book.png' %}" alt="book icon" />
+      </div>
+      <form id="guide-form" action="" method="get">
+        <select
+          id="guide-selector"
+          data-turbo-frame="main"
+          onchange="this.form.action=this.value; this.form.submit()">
+          {% for guide in guides %}
+          <option value="{% url 'app:guide_view' guide.id %}">
+            {{ guide.title }}
+          </option>
+          {% endfor %}
+        </select>
+      </form>
+      <i class="fa-solid fa-caret-down"></i>
+    </div>
+    <div id="centerContent">
+      <turbo-frame id="frame_guide">
+        {%include "sections/guide_explanations.html"%}
+      </turbo-frame>
+      <turbo-frame
+        id="frame_quests"
+        src="{% url 'app:guide_quests_partial' guide.id %}">
+        <!-- Le contenu sera chargé dynamiquement via Turbo -->
+        <div class="loading">Chargement des quêtes...</div>
+      </turbo-frame>
+    </div>
+  </main>
+
+  <aside>
+    <turbo-frame id="frame_objectives">
+      {%include "sections/objectives.html"%}
+    </turbo-frame>
+    <turbo-frame id="frame_achievements">
+      {%include "sections/achievements.html" %}
+    </turbo-frame>
+  </aside>
+</div>
+{% endblock %}

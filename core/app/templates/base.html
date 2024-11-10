@@ -11,19 +11,11 @@
       href="{% static 'css/styles.less' %}" />
     {% endcompress %}
     <link
-      href="{% static 'fontawesomefree/css/fontawesome.css' %}"
+      href="{% static 'fontawesomefree/css/all.min.css' %}"
       rel="stylesheet"
       type="text/css" />
-    <link
-      href="{% static 'fontawesomefree/css/brands.css' %}"
-      rel="stylesheet"
-      type="text/css" />
-    <link
-      href="{% static 'fontawesomefree/css/solid.css' %}"
-      rel="stylesheet"
-      type="text/css" />
-    <script src="{% static 'turbo.es2017-esm.js' %}" defer></script>
-    <script src="{% static 'turbo.es2017-umd.js' %}" defer></script>
+    <script src="{% static 'js/turbo.es2017-umd.js' %}"></script>
+    <script src="{% static 'js/nav.js' %}" defer></script>
     <title>Menu</title>
   </head>
   <body id="theme-emeraude">
@@ -41,8 +33,6 @@
           <p><i class="fa-brands fa-discord"></i>_skyzio</p>
           <p><i class="fa-brands fa-discord"></i>shiinasan.</p>
         </div>
-        <i class="fa-solid fa-sun themeToggle"></i>
-        <i class="fa-solid fa-moon themeToggle"></i>
       </div>
     </div>
     <div id="content">{% block content %}{% endblock %}</div>

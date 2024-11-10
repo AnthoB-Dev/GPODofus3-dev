@@ -1,33 +1,62 @@
 {% load static %}
-<div class="title">
-  <div class="imgBackground">
-    <img src="{% static 'medias/icons/map.png' %}" alt="" />
+<turbo-frame id="frame_guide">
+  <div class="title">
+    <div class="imgBackground">
+      <img src="{% static 'medias/icons/map.png' %}" alt="" />
+    </div>
+    <h3>Guide</h3>
+    {% comment %}
+    <p>Complété à <strong>45%</strong></p>
+    {% endcomment %}
   </div>
-  <h3>Guide</h3>
-  {% comment %}
-  <p>Complété à <strong>45%</strong></p>
-  {% endcomment %}
-</div>
-<div class="content">
-  {% if guide.important_info %}
-  <div id="previsions">
-    <h4>A prévoir dans les succès qui arrivent :</h4>
+  <div class="content">
+    {% if guide.important_info %}
+    <div id="previsions">
+      <h4>A prévoir dans les succès qui arrivent :</h4>
 
-    {{ guide.important_info|safe }}
-  </div>
-  {% endif %}
+      {{ guide.important_info|safe }}
+    </div>
+    {% endif %}
 
-  <div id="guide">
-    {% if guide.explanations %} {{ guide.explanations|safe }} {% endif%}
+    <div id="guide">
+      {% if guide.explanations %} {{ guide.explanations|safe }} {% endif%}
+    </div>
   </div>
-</div>
-<div class="interactable">
-  <button>
-    <i class="fa-solid fa-backward-step"></i>
-    Tutoriel
-  </button>
-  <button>
-    Astrub : Introduction au background et avancée du personnage
-    <i class="fa-solid fa-forward-step"></i>
-  </button>
-</div>
+  <div class="interactable">
+    <button 
+      {% if previous_guide.id|default:'' %}
+      onclick="Turbo.visit('{% url 'app:guide_detail' previous_guide.id %}', { 
+        frame: 'frame_main',
+        action: 'replace'
+      })"
+      {% else %}
+      disabled
+      {% endif %}
+    >
+      <i class="fa-solid fa-backward-step"></i>
+      {% if previous_guide %}
+        {{ previous_guide.title }}
+      {% else %}
+        Aucun guide précédent
+      {% endif %}
+    </button>
+  
+    <button 
+      {% if next_guide.id|default:'' %}
+      onclick="Turbo.visit('{% url 'app:guide_detail' next_guide.id %}', { 
+        frame: 'frame_main',
+        action: 'replace'
+      })"
+      {% else %}
+      disabled
+      {% endif %}
+    >
+      {% if next_guide %}
+        {{ next_guide.title }}
+      {% else %}
+        Aucun guide suivant
+      {% endif %}
+      <i class="fa-solid fa-forward-step"></i>
+    </button>
+  </div>
+</turbo-frame>

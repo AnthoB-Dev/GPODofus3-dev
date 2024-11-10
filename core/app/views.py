@@ -9,59 +9,65 @@ from django.views.generic import (
     TemplateView,
 )
 from django.urls import reverse_lazy
-
+from django.core.cache import cache
+from django.db.models import Prefetch
 from app.models import Achievement, Guide
 
 
-class AppView(TemplateView):
-    """Vue principale de l'application utilisant Turbo"""
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Utiliser prefetch_related pour précharger les succès et les quêtes associées
-        guides = Guide.objects.prefetch_related("achievement__quests").all()
-        context["guides"] = guides
-
-        achievements = set()
-        quests = set()
-        for guide in guides:
-            for achievement in guide.achievement.all():
-                achievements.add(achievement)
-                for quest in achievement.quests.all():
-                    quests.add(quest)
-
-        context["achievements"] = achievements
-        context["quests"] = quests
-        return context
-
-    template_name = "pages/guide.html"
-
-
+# Vue principale
 def guide_detail(request, guide_id):
+    # Cache des guides
+    guides = cache.get("all_guides")
+    if guides is None:
+        guides = Guide.objects.only("id", "title").all()
+        cache.set("all_guides", guides, 60 * 15)
+
+    # Guide actuel
     guide = get_object_or_404(
-        Guide.objects.prefetch_related("achievement__quests"), id=guide_id
+        Guide.objects.prefetch_related(
+            Prefetch(
+                "achievement", queryset=Achievement.objects.prefetch_related("quests")
+            )
+        ),
+        id=guide_id,
     )
+
+    # Guides précédent/suivant sans try/except
+    previous_guide = None
+    if guide.page > 0:  # Vérifier si on n'est pas au premier guide
+        previous_guide = (
+            Guide.objects.filter(page__lt=guide.page, page__gt=0)
+            .order_by("-page")
+            .first()
+        )
+
+    next_guide = Guide.objects.filter(page__gt=guide.page).order_by("page").first()
+
+    # Préparation du contexte avec vérification
     achievements = list(guide.achievement.all())
-    quests = set()
-    if achievements:
-        selected_achievement = achievements[0]  # Premier achievement
-        for quest in selected_achievement.quests.all():
-            quests.add(quest)
+    selected_achievement = achievements[0] if achievements else None
+    quests = selected_achievement.quests.all() if selected_achievement else []
 
     context = {
         "guide": guide,
+        "guides": guides,
+        "previous_guide": previous_guide,  # Sera None si non trouvé
+        "next_guide": next_guide,  # Sera None si non trouvé
         "achievements": achievements,
-        "selected_achievement": selected_achievement,  # Ajouter l'achievement sélectionné
+        "selected_achievement": selected_achievement,
         "quests": quests,
     }
+
     return render(request, "pages/guide.html", context)
 
 
+# Vue des objectifs
 def guide_objectives_partial(request, guide_id):
     guide = get_object_or_404(Guide, id=guide_id)
     return render(request, "sections/objectives.html", {"guide": guide})
 
 
+# Vue des succès
 def guide_achievements_partial(request, guide_id):
     guide = get_object_or_404(
         Guide.objects.prefetch_related("achievement"), id=guide_id
@@ -74,36 +80,26 @@ def guide_achievements_partial(request, guide_id):
     )
 
 
+# Vue des quêtes
 def guide_quests_partial(request, guide_id, achievement_id=None):
     guide = get_object_or_404(
         Guide.objects.prefetch_related("achievement__quests"), id=guide_id
     )
 
-    # Debug print
-    print(f"Guide ID: {guide_id}")
-
     # Sélection de l'achievement avec debug
     if achievement_id:
         achievement = get_object_or_404(guide.achievement, id=achievement_id)
-        print(f"Achievement ID: {achievement_id}, Title: {achievement.title}")
     else:
         achievement = guide.achievement.first()
-        print("Using first achievement")
-        if achievement:
-            print(f"First achievement title: {achievement.title}")
 
     # Debug des quêtes
     quests = achievement.quests.all() if achievement else []
-    print(f"Number of quests: {len(quests)}")
 
     context = {
         "guide": guide,
         "achievement": achievement,
         "quests": quests,
     }
-
-    # Debug final
-    print("Context:", context)
 
     return render(request, "sections/quests.html", context)
 
@@ -114,7 +110,10 @@ def guide_achievements(request, guide_id, achievement_id):
         Guide.objects.prefetch_related("achievement"), id=guide_id
     )
     achievements = guide.achievement.all()
-    selected_achievement = get_object_or_404(achievements, id=achievement_id)
+    if get_object_or_404(achievements, id=achievement_id):
+        selected_achievement = get_object_or_404(achievements, id=achievement_id)
+    else:
+        selected_achievement = []
     quests = selected_achievement.quests.all()
     context = {
         "guide": guide,

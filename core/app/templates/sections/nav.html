@@ -1,0 +1,20 @@
+{% load static %}
+<div class="guide-selector-wrapper" id="guide-dropdown">
+  <div class="guide-header">
+    <div class="imgBackground">
+      <img src="{% static 'medias/icons/book.png' %}" alt="book icon" />
+    </div>
+    <h2>{{guide.title}}</h2>
+    <i class="fa-solid fa-caret-down"></i>
+  </div>
+
+  <div class="dropdown-content hidden">
+    <div class="overflow">
+      {% for guide in guides %}
+      <div class="guide-item" data-url="{% url 'app:guide_detail' guide.id %}">
+        {{ guide.title }}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

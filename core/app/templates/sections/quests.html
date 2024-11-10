@@ -2,13 +2,16 @@
 <turbo-frame id="frame_quests">
   <div class="title">
     <div class="imgBackground">
-      <img src="{% static 'medias/icons/quests.png' %}" alt="" />
+      <img src="{% static 'medias/icons/quest.png' %}" alt="" />
     </div>
     <h3>Quêtes</h3>
   </div>
   <div class="content">
+    <h4>
+      {% if selected_achievement %} {{ selected_achievement.title }} {% else %}
+      {{ achievement.title }} {% endif %}
+    </h4>
     {% if quests %}
-    <h4>{{ achievement.title }}</h4>
     <ul>
       {% for quest in quests %}
       <li>

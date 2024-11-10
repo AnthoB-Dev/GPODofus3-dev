@@ -132,9 +132,6 @@ STATIC_URL = "/static/"
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
-    os.path.join(
-        ROOT_DIR, "venv", "Lib", "site-packages", "fontawesomefree", "static"
-    ),  # Chemin vers Font Awesome
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
@@ -143,6 +140,10 @@ STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "compressor.finders.CompressorFinder",  # Ajoutez ceci
+]
+
+STATICFILES_IGNORE_PATTERNS = [
+    "*.map",
 ]
 
 # Default primary key field type

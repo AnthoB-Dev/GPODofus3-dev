@@ -15,9 +15,10 @@
         ></a>
       </div>
       <div class="achievementName">
-        <a
-          href="{% url 'app:guide_quests_achievement' guide.id achievement.id %}"
-          data-turbo-frame="frame_quests">
+        <button
+          type="button"
+          onclick="Turbo.visit('{% url 'app:guide_quests_achievement' guide.id achievement.id %}', { frame: 'frame_quests' })"
+          class="achievement-button">
           <p>{{ achievement.title }}</p>
           <span class="expectIcons">
             {% if achievement.expect_alignment %}
@@ -34,7 +35,7 @@
             <img src="{% static 'medias/icons/job.png' %}" alt="" />
             {% endif %} {% endif %}
           </span>
-        </a>
+        </button>
       </div>
       <span id="js-achievementPercent">33%</span>
     </li>

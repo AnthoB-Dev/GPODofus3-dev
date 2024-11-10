@@ -14,7 +14,13 @@ urlpatterns = [
     # path("quest/<int:id>/edit", views.AppView.as_view(), name="quest_edit"),
     # # Vues détaillées des succès /app/achievement/<id>/
     # path("achievement/<int:id>", views.AppView.as_view(), name="achievement_view"),
+    path("guide/", views.guide_detail, name="guide"),
     path("guide/<int:guide_id>/", views.guide_detail, name="guide_detail"),
+    path(
+        "guide/<int:guide_id>/achievements/",
+        views.guide_achievements_partial,
+        name="guide_achievements_partial",
+    ),
     path(
         "guide/<int:guide_id>/<int:achievement_id>",
         views.guide_achievements,
@@ -24,11 +30,6 @@ urlpatterns = [
         "guide/<int:guide_id>/objectives/",
         views.guide_objectives_partial,
         name="guide_objectives_partial",
-    ),
-    path(
-        "guide/<int:guide_id>/achievements/",
-        views.guide_achievements_partial,
-        name="guide_achievements_partial",
     ),
     path(
         "guide/<int:guide_id>/quests/",

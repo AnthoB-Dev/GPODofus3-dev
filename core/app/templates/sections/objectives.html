@@ -1,0 +1,12 @@
+{% load static %}
+<div id="objectives">
+  <div class="title">
+    <div class="imgBackground">
+      <img src="{% static 'medias/icons/achievement.png' %}" alt="" />
+    </div>
+    <h3>Objectifs</h3>
+  </div>
+  <div class="content">
+    <div>{{ guide.objectives|safe }}</div>
+  </div>
+</div>

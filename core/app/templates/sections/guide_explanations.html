@@ -1,0 +1,33 @@
+{% load static %}
+<div class="title">
+  <div class="imgBackground">
+    <img src="{% static 'medias/icons/map.png' %}" alt="" />
+  </div>
+  <h3>Guide</h3>
+  {% comment %}
+  <p>Complété à <strong>45%</strong></p>
+  {% endcomment %}
+</div>
+<div class="content">
+  {% if guide.important_info %}
+  <div id="previsions">
+    <h4>A prévoir dans les succès qui arrivent :</h4>
+
+    {{ guide.important_info|safe }}
+  </div>
+  {% endif %}
+
+  <div id="guide">
+    {% if guide.explanations %} {{ guide.explanations|safe }} {% endif%}
+  </div>
+</div>
+<div class="interactable">
+  <button>
+    <i class="fa-solid fa-backward-step"></i>
+    Tutoriel
+  </button>
+  <button>
+    Astrub : Introduction au background et avancée du personnage
+    <i class="fa-solid fa-forward-step"></i>
+  </button>
+</div>

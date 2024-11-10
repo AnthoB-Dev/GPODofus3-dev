@@ -1,67 +1,69 @@
-const{app, BrowserWindow, Menu} = require("electron")
-const { exec } = require('child_process');
+const { app, BrowserWindow, Menu } = require("electron");
+const { exec } = require("child_process");
 
-const path = require("path")
+const path = require("path");
 // const url = require("url")
-let win
+let win;
 
 function createWindow() {
-    win = new BrowserWindow({
-        width: 1280,
-        height: 720,
-        resizable: true,
-        minWidth: 1280,
-        minHeight: 720,
-        autoHideMenuBar: true,
-        webPreferences: {
-            nodeIntegration: true,
-        },
-    })
-    
-    // Load the React frontend served by Django at http://localhost:8000
-    win.loadURL('http://127.0.0.1:8000/app/');
+  win = new BrowserWindow({
+    width: 1280,
+    height: 720,
+    resizable: true,
+    minWidth: 1280,
+    minHeight: 720,
+    autoHideMenuBar: true,
+    webPreferences: {
+      nodeIntegration: true,
+    },
+  });
 
-    // win.loadURL(url.format({
-    //     pathname: path.join(__dirname, "main.html"),
-    //     protocol: "file:",
-    //     slashes: true,
-    // }))
+  // Load the React frontend served by Django at http://localhost:8000
+  win.loadURL("http://127.0.0.1:8000/app/guide/1/");
 
-    win.on("close", () => {
-        win = null
-    })
+  // win.loadURL(url.format({
+  //     pathname: path.join(__dirname, "main.html"),
+  //     protocol: "file:",
+  //     slashes: true,
+  // }))
 
-    // win.openDevTools()
+  win.on("close", () => {
+    win = null;
+  });
+
+  // win.openDevTools()
 }
 
 const startDjango = () => {
-    const pythonPath = path.join(__dirname, 'venv', 'Scripts', 'python.exe');
-    const djangoProjectPath = path.join(__dirname, 'core');
-    
-    const djangoProcess = exec(`${pythonPath} ${djangoProjectPath}/manage.py runserver`);
+  const pythonPath = path.join(__dirname, "venv", "Scripts", "python.exe");
+  const djangoProjectPath = path.join(__dirname, "core");
 
-    djangoProcess.stdout.on('data', (data) => {
-        console.log(`Django: ${data}`);
-    });
+  const djangoProcess = exec(
+    `${pythonPath} ${djangoProjectPath}/manage.py runserver`
+  );
 
-    djangoProcess.stderr.on('data', (data) => {
-        console.error(`Django error: ${data}`);
-    });
-}
+  djangoProcess.stdout.on("data", (data) => {
+    console.log(`Django: ${data}`);
+  });
+
+  djangoProcess.stderr.on("data", (data) => {
+    console.error(`Django error: ${data}`);
+  });
+};
 
 app.on("ready", () => {
-    startDjango()
-    createWindow()
-})
+  startDjango();
+  createWindow();
+});
 
-app.on("window-all-closed", ()=>{
-    if(process.platform !== "darwin"){
-        app.quit()
-    }
-})
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
+  }
+});
 
-app.on("activate", ()=>{
-    if(win == null) {
-        createWindow()
-    }
-})
+app.on("activate", () => {
+  if (win == null) {
+    createWindow();
+  }
+});

@@ -1,0 +1,43 @@
+{% load static %}
+<div class="title">
+  <div class="imgBackground">
+    <img src="{% static 'medias/icons/achievement.png' %}" alt="" />
+  </div>
+  <h3>Succès Concernés</h3>
+</div>
+<div class="content">
+  <ul>
+    {% for achievement in achievements %}
+    <li>
+      <div>
+        <a href="{{achievement.url}}" target="_blank" rel="noopener noreferrer"
+          ><i class="fa-solid fa-up-right-from-square"></i
+        ></a>
+      </div>
+      <div class="achievementName">
+        <a
+          href="{% url 'app:guide_quests_achievement' guide.id achievement.id %}"
+          data-turbo-frame="frame_quests">
+          <p>{{ achievement.title }}</p>
+          <span class="expectIcons">
+            {% if achievement.expect_alignment %}
+            <img src="{% static 'medias/icons/alignment.png' %}" alt="" />
+            {% else %} {% if achievement.expect_fight %}
+            <img src="{% static 'medias/icons/fight.png' %}" alt="" />
+            {% endif %} {% if achievement.expect_ressource %}
+            <img src="{% static 'medias/icons/resource.png' %}" alt="" />
+            {% endif %} {% if achievement.expect_item %}
+            <img src="{% static 'medias/icons/item.png' %}" alt="" />
+            {% endif %} {% if achievement.expect_dungeon %}
+            <img src="{% static 'medias/icons/dungeon.png' %}" alt="" />
+            {% endif %} {% if achievement.expect_job %}
+            <img src="{% static 'medias/icons/job.png' %}" alt="" />
+            {% endif %} {% endif %}
+          </span>
+        </a>
+      </div>
+      <span id="js-achievementPercent">33%</span>
+    </li>
+    {% endfor %}
+  </ul>
+</div>

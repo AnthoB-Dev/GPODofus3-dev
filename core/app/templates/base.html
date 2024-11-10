@@ -1,6 +1,6 @@
 {% load static %} {% load compress %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -22,8 +22,8 @@
       href="{% static 'fontawesomefree/css/solid.css' %}"
       rel="stylesheet"
       type="text/css" />
-    <script src="{% static 'turbo.es2017-esm.js' %}"></script>
-    <script src="{% static 'turbo.es2017-umd.js' %}"></script>
+    <script src="{% static 'turbo.es2017-esm.js' %}" defer></script>
+    <script src="{% static 'turbo.es2017-umd.js' %}" defer></script>
     <title>Menu</title>
   </head>
   <body id="theme-emeraude">
@@ -45,6 +45,6 @@
         <i class="fa-solid fa-moon themeToggle"></i>
       </div>
     </div>
-    <turbo-frame id="content"> {% block content %}{% endblock %} </turbo-frame>
+    <div id="content">{% block content %}{% endblock %}</div>
   </body>
 </html>

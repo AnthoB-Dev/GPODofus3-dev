@@ -1,4 +1,5 @@
-from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import (
     ListView,
@@ -11,7 +12,7 @@ from django.views.generic import (
 from django.urls import reverse_lazy
 from django.core.cache import cache
 from django.db.models import Prefetch
-from app.models import Achievement, Guide
+from app.models import Achievement, Guide, Quest
 
 
 # Vue principale
@@ -144,3 +145,18 @@ def guide_achievements(request, guide_id, achievement_id):
         "quests": quests,
     }
     return render(request, "pages/guide.html", context)
+
+
+@require_POST
+def toggle_quest_status(request, quest_id):
+    quest = get_object_or_404(Quest, id=quest_id)
+    quest.completed = not quest.completed
+    quest.save()
+
+    return render(
+        request,
+        "sections/_quest_item.html",
+        {
+            "quest": quest,
+        },
+    )

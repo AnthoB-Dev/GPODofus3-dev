@@ -348,11 +348,9 @@ body {
   }
 
   .interactable {
-    box-shadow: var(--box-shadow);
     display: flex;
     justify-content: space-between;
     padding: var(--gap-reg);
-    transition: all 0.3s ease;
 
     button,
     div {
@@ -360,13 +358,12 @@ body {
       background: var(--clr-secondary);
       border-radius: var(--border-radius);
       border: none;
+      color: var(--clr-text);
       cursor: pointer;
       display: flex;
       flex: 1;
-      color: var(--clr-text);
 
       &:disabled {
-        background: var(--clr-grey);
         cursor: initial;
 
         &:hover {
@@ -493,6 +490,7 @@ body {
             border-radius: var(--border-radius);
             flex-direction: column;
             overflow: hidden;
+
             .title {
               p {
                 margin-right: var(--gap-reg);
@@ -543,6 +541,10 @@ body {
                   }
                 }
               }
+            }
+
+            .interactable {
+              transition: background 0.3s ease-in-out;
             }
           }
 
@@ -708,9 +710,8 @@ body {
 }
 
 .isCompleted {
-  background: lighten(@clr-grey-two, 20%);
   box-shadow: 0 0 0 !important;
-  border-radius: calc(@border-radius / 2) !important;
+  opacity: 50%;
 
   i {
     padding: 10px !important;
@@ -719,6 +720,12 @@ body {
 
   p {
     font-size: 12px !important;
+  }
+
+  &:hover {
+    opacity: 100%;
+    background: #ffffff85;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.35) !important;
   }
 }
 
@@ -732,7 +739,7 @@ body {
 
   .check {
     &:hover {
-      background: lighten(@clr-green, 20%);
+      background: #23dc3d;
     }
   }
 

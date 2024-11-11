@@ -1,5 +1,6 @@
 {% load static %}
 <turbo-frame id="frame_quests">
+  {% csrf_token %}
   <div class="title">
     <div class="imgBackground">
       <img src="{% static 'medias/icons/quest.png' %}" alt="" />
@@ -12,26 +13,34 @@
       {{ achievement.title }} {% endif %}
     </h4>
     {% if quests %}
-    <ul>
+    <ul
+      onclick="if(event.target.closest('.qButton')) { 
+      event.preventDefault();
+      toggleQuest(event.target.closest('.qButton').id.split('_')[1]);
+    }">
       {% for quest in quests %}
-      <li
-        class="js-quest{% if quest.completed %} isCompleted{% endif %}"
-        data-achievement-id="{% if selected_achievement %}{{ selected_achievement.id }}{% else %}{{ achievement.id }}{% endif %}">
-        <div>
-          <a href="{{quest.url}}" target="_blank">
-            <i class="fa-solid fa-up-right-from-square"></i>
-          </a>
-        </div>
-        <p>{{quest.title}}</p>
-        <button
-          class="qButton {% if quest.completed %}uncheck{% else %}check{% endif %}">
-          {% if quest.completed %}
-          <i class="fa-solid fa-xmark"></i>
-          {% else %}
-          <i class="fa-solid fa-check"></i>
-          {% endif %}
-        </button>
-      </li>
+      <turbo-frame id="quest_frame_{{ quest.id }}">
+        <li
+          class="js-quest{% if quest.completed %} isCompleted{% endif %}"
+          data-achievement-id="{% if selected_achievement %}{{ selected_achievement.id }}{% else %}{{ achievement.id }}{% endif %}">
+          <div>
+            <a href="{{quest.url}}" target="_blank">
+              <i class="fa-solid fa-up-right-from-square"></i>
+            </a>
+          </div>
+          <p>{{quest.title}}</p>
+          <button
+            id="quest_{{ quest.id }}"
+            type="button"
+            class="qButton {% if quest.completed %}uncheck{% else %}check{% endif %}">
+            {% if quest.completed %}
+            <i class="fa-solid fa-xmark"></i>
+            {% else %}
+            <i class="fa-solid fa-check"></i>
+            {% endif %}
+          </button>
+        </li>
+      </turbo-frame>
       {% endfor %}
     </ul>
     {% endif %}

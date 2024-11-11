@@ -28,6 +28,7 @@
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
 - [ ] Enlever la video en background, elle se met à lag dans l'app Electron
 - [ ] Media queries
+- [ ] Implémenter d'autres themes
 
 <!-- Redaction -->
 

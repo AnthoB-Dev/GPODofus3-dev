@@ -4,16 +4,6 @@ from . import views
 app_name = "app"  # Namespace de l'application
 
 urlpatterns = [
-    # # Vue principale de l'application /app/
-    # path("", views.AppView.as_view(), name="guide"),
-    # # Vues détaillées des guides /app/guide/<id>/
-    # path("guide/<int:pk>", views.AppView.as_view(), name="guide_view"),
-    # path("guide/<int:id>/edit", views.AppView.as_view(), name="guide_edit"),
-    # # Vues détaillées des quêtes /app/quest/<id>/
-    # path("quest/<int:id>", views.AppView.as_view(), name="quest_view"),
-    # path("quest/<int:id>/edit", views.AppView.as_view(), name="quest_edit"),
-    # # Vues détaillées des succès /app/achievement/<id>/
-    # path("achievement/<int:id>", views.AppView.as_view(), name="achievement_view"),
     path("guide/", views.guide_detail, name="guide"),
     path("guide/<int:guide_id>/", views.guide_detail, name="guide_detail"),
     path(
@@ -40,5 +30,10 @@ urlpatterns = [
         "guide/<int:guide_id>/quests/<int:achievement_id>/",
         views.guide_quests_partial,
         name="guide_quests_achievement",
+    ),
+    path(
+        "toggle-quest/<int:quest_id>/",
+        views.toggle_quest_status,
+        name="toggle_quest_status",
     ),
 ]

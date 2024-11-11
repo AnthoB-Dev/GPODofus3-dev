@@ -1,20 +1,22 @@
-<li
-  class="js-quest{% if quest.completed %} isCompleted{% endif %}"
-  data-achievement-id="{{ selected_achievement.id }}">
-  <div>
-    <a href="{{quest.url}}" target="_blank">
-      <i class="fa-solid fa-up-right-from-square"></i>
-    </a>
-  </div>
-  <p>{{quest.title}}</p>
-  <button
-    id="quest_{{ quest.id }}"
-    type="button"
-    class="qButton {% if quest.completed %}uncheck{% else %}check{% endif %}">
-    {% if quest.completed %}
-    <i class="fa-solid fa-xmark"></i>
-    {% else %}
-    <i class="fa-solid fa-check"></i>
-    {% endif %}
-  </button>
-</li>
+<turbo-frame id="quest_frame_{{ quest.id }}">
+  <li
+    class="js-quest{% if quest.completed %} isCompleted{% endif %}"
+    data-achievement-id="{{ achievement.achievement.id }}">
+    <div>
+      <a href="{{quest.url}}" target="_blank">
+        <i class="fa-solid fa-up-right-from-square"></i>
+      </a>
+    </div>
+    <p>{{quest.title}}</p>
+    <button
+      id="quest_{{ quest.id }}"
+      type="button"
+      class="qButton {% if quest.completed %}uncheck{% else %}check{% endif %}">
+      {% if quest.completed %}
+      <i class="fa-solid fa-xmark"></i>
+      {% else %}
+      <i class="fa-solid fa-check"></i>
+      {% endif %}
+    </button>
+  </li>
+</turbo-frame>

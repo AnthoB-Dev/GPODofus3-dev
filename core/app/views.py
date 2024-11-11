@@ -13,6 +13,7 @@ from django.urls import reverse_lazy
 from django.core.cache import cache
 from django.db.models import Prefetch
 from app.models import Achievement, Guide, Quest
+from django.template.loader import render_to_string
 
 
 # Vue principale
@@ -62,13 +63,6 @@ def guide_detail(request, guide_id):
                 "completion_percentage": completion_percentage,
             }
         )
-        # # Liste des liens des quêtes par succès
-        # quest_links = {}
-        # for achievement in achievements:
-        #     quest_links[achievement.id] = [
-        #         {"id": quest.id, "title": quest.title, "url": quest.get_absolute_url()}
-        #         for quest in achievement.quests.all()
-        #     ]
 
     context = {
         "guide": guide,
@@ -153,10 +147,52 @@ def toggle_quest_status(request, quest_id):
     quest.completed = not quest.completed
     quest.save()
 
-    return render(
-        request,
-        "sections/_quest_item.html",
-        {
-            "quest": quest,
+    # Récupérer l'achievement et le guide
+    achievement = Achievement.objects.filter(quests=quest).first()
+    guide = Guide.objects.filter(achievement=achievement).first()
+
+    # Calcul des pourcentages comme dans guide_detail
+    achievements = list(guide.achievement.all())
+    achievements_with_completion = []
+    for achievement in achievements:
+        total_quests = achievement.quests.count()
+        completed_quests = achievement.quests.filter(completed=True).count()
+        completion_percentage = (
+            int((completed_quests / total_quests * 100)) if total_quests > 0 else 0
+        )
+        achievements_with_completion.append(
+            {
+                "achievement": achievement,
+                "completion_percentage": completion_percentage,
+            }
+        )
+
+    context = {
+        "quest": quest,
+        "guide": guide,
+        "achievements": achievements_with_completion,
+    }
+
+    return HttpResponse(
+        status=200,
+        headers={
+            "Content-Type": "text/vnd.turbo-stream.html",
+            "Turbo-Stream": True,
         },
+        content=f"""
+        <turbo-stream action="replace" target="quest_frame_{quest_id}">
+            <template>
+                {render_to_string("sections/_quest_item.html", {"quest": quest})}
+            </template>
+        </turbo-stream>
+        <turbo-stream action="replace" target="achievements_list">
+            <template>
+                <ul id="achievements_list">
+                    {"".join(render_to_string("sections/_achievement_item.html", 
+                        {"item": item, "guide": guide}) 
+                        for item in achievements_with_completion)}
+                </ul>
+            </template>
+        </turbo-stream>
+        """,
     )

@@ -1,0 +1,39 @@
+{% load static %}
+<li
+  class="js-achievement borders-{% if item.completion_percentage == 100 %}green{% elif item.completion_percentage >= 50 %}orange{% elif item.completion_percentage > 0 %}red{% endif %}"
+  data-achievement-id="{{ item.achievement.id }}">
+  <div>
+    <a
+      href="{{item.achievement.url}}"
+      target="_blank"
+      rel="noopener noreferrer">
+      <i class="fa-solid fa-up-right-from-square"></i>
+    </a>
+  </div>
+  <div class="achievementName">
+    <button
+      type="button"
+      onclick="Turbo.visit('{% url 'app:guide_quests_achievement' guide.id item.achievement.id %}', { frame: 'frame_quests' })"
+      class="achievement-button">
+      <p>{{ item.achievement.title }}</p>
+      <span class="expectIcons">
+        {% if item.achievement.expect_alignment %}
+        <img src="{% static 'medias/icons/alignment.png' %}" alt="" />
+        {% else %} {% if item.achievement.expect_fight %}
+        <img src="{% static 'medias/icons/fight.png' %}" alt="" />
+        {% endif %} {% if item.achievement.expect_ressource %}
+        <img src="{% static 'medias/icons/resource.png' %}" alt="" />
+        {% endif %} {% if item.achievement.expect_item %}
+        <img src="{% static 'medias/icons/item.png' %}" alt="" />
+        {% endif %} {% if item.achievement.expect_dungeon %}
+        <img src="{% static 'medias/icons/dungeon.png' %}" alt="" />
+        {% endif %} {% if item.achievement.expect_job %}
+        <img src="{% static 'medias/icons/job.png' %}" alt="" />
+        {% endif %} {% endif %}
+      </span>
+    </button>
+  </div>
+  <div class="achievementCompletion">
+    <span class="js-achievementPercent">{{item.completion_percentage}}</span>%
+  </div>
+</li>

@@ -6,7 +6,7 @@
   <h3>Succès Concernés</h3>
 </div>
 <div class="content">
-  <ul>
+  <ul id="achievements_list">
     {% for item in achievements %}
     <li
       class="js-achievement borders-{% if item.completion_percentage == 100 %}green{% elif item.completion_percentage >= 50 %}orange{% elif item.completion_percentage > 0 %}red{% endif %}"

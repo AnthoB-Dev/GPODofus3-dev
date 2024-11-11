@@ -23,11 +23,13 @@
           </a>
         </div>
         <p>{{quest.title}}</p>
-        <button class="validate-button">
-          {% comment %} <i class="fa-solid fa-check"></i> {% endcomment %}
-          <div class="containerAnim">
-            <div class="validate"></div>
-          </div>
+        <button
+          class="qButton {% if quest.completed %}uncheck{% else %}check{% endif %}">
+          {% if quest.completed %}
+          <i class="fa-solid fa-xmark"></i>
+          {% else %}
+          <i class="fa-solid fa-check"></i>
+          {% endif %}
         </button>
       </li>
       {% endfor %}

@@ -12,7 +12,6 @@
 - [ ] Mettre en place les validation de quêtes
 - [ ] Mettre en place la bottom bar de Quêtes
 - [ ] Mettre en place l'arrivée sur le dernier guide vu
-- [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
 
 <!-- Frontent -->
 
@@ -22,9 +21,10 @@
 - [x] Update auto des borders selon la complétion
 - [x] Update auto des pourcents selon la complétion
 - [x] Peupler le front avec les données du back
-- [ ] Changer les checkbox en un bouton de validation
+- [x] Changer les checkbox en un bouton de validation
 - [ ] Faire le style du drop down de topNav
 - [ ] Rotate de 360 le caret de topNav lorsque le drop est down
+- [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
 - [ ] Enlever la video en background, elle se met à lag dans l'app Electron
 - [ ] Media queries

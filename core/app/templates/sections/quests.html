@@ -14,19 +14,35 @@
     {% if quests %}
     <ul>
       {% for quest in quests %}
-      <li>
+      <li
+        class="js-quest{% if quest.completed %} isCompleted{% endif %}"
+        data-achievement-id="{% if selected_achievement %}{{ selected_achievement.id }}{% else %}{{ achievement.id }}{% endif %}">
         <div>
           <a href="{{quest.url}}" target="_blank">
             <i class="fa-solid fa-up-right-from-square"></i>
           </a>
         </div>
         <p>{{quest.title}}</p>
-        <div class="box-checkbox">
-          <input type="checkbox" name="check-quest" id="" />
-        </div>
+        <button class="validate-button">
+          {% comment %} <i class="fa-solid fa-check"></i> {% endcomment %}
+          <div class="containerAnim">
+            <div class="validate"></div>
+          </div>
+        </button>
       </li>
       {% endfor %}
     </ul>
     {% endif %}
+  </div>
+  <div class="interactable">
+    <button id="openAll">
+      <i class="fa-solid fa-up-right-from-square"></i>
+      Ouvrir tout
+    </button>
+
+    <button id="validateAll">
+      Tout valider
+      <i class="fa-solid fa-check-double"></i>
+    </button>
   </div>
 </turbo-frame>

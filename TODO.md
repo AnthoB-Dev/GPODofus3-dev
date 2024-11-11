@@ -5,26 +5,28 @@
 - [x] Peupler la BDD avec le contenu de guides.json
 - [x] Créer un model "dungeon"
 - [x] Penser la mise en place de la navigation.
+- [x] Mettre en place Turbo
 - [x] Mettre en place la navigation des guides.
 - [x] Rendre les barres de navigation fonctionnels
-- [ ] Mettre en place l'arrivée sur le dernier guide vu
-- [ ] Mettre en place tous les elements Turbo
+- [x] Electron : actuellement l'ouverture de liens se fait avec une page electron. Je ne le veux pas.
 - [ ] Mettre en place les validation de quêtes
 - [ ] Mettre en place la bottom bar de Quêtes
+- [ ] Mettre en place l'arrivée sur le dernier guide vu
 - [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
-- [ ] Electron : actuellement l'ouverture de liens se fait avec une page electron. Je ne le veux pas.
 
 <!-- Frontent -->
 
 - [x] Terminer le front
 - [x] Comprendre pourquoi #prevision n'existe pas dans les autres guides. (Mauvais format à la redaction)
-- [ ] Sur hover des succès : faire en sorte que le title prenne toute la hauteur + border radius right 8px
+- [x] Sur hover des succès : faire en sorte que le title prenne toute la hauteur + border radius right 8px
+- [x] Update auto des borders selon la complétion
+- [x] Update auto des pourcents selon la complétion
+- [x] Peupler le front avec les données du back
+- [ ] Changer les checkbox en un bouton de validation
 - [ ] Faire le style du drop down de topNav
 - [ ] Rotate de 360 le caret de topNav lorsque le drop est down
-- [ ] Retrouver la bottom bar de Quêtes
-- [ ] Changer les checkbox en un bouton de validation
-- [ ] Peupler le front avec les données du back
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
+- [ ] Enlever la video en background, elle se met à lag dans l'app Electron
 - [ ] Media queries
 
 <!-- Redaction -->

@@ -9,9 +9,11 @@
 - [x] Mettre en place la navigation des guides.
 - [x] Rendre les barres de navigation fonctionnels
 - [x] Electron : actuellement l'ouverture de liens se fait avec une page electron. Je ne le veux pas.
-- [ ] Mettre en place les validation de quêtes
-- [ ] Mettre en place la bottom bar de Quêtes
+- [x] Mettre en place les validation de quêtes
+- [x] Mettre en place la bottom bar de Quêtes
+- [ ] Modifier les problêmes lié à validAll qui ne peut pas enchainer les toggles
 - [ ] Mettre en place l'arrivée sur le dernier guide vu
+- [ ] Mettre en place l'arrivée sur le premier succès non à 100%
 
 <!-- Frontent -->
 
@@ -24,6 +26,7 @@
 - [x] Changer les checkbox en un bouton de validation
 - [ ] Faire le style du drop down de topNav
 - [ ] Rotate de 360 le caret de topNav lorsque le drop est down
+- [ ] Mettre une transi sur le passage check uncheck ques quêtes
 - [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
 - [ ] Enlever la video en background, elle se met à lag dans l'app Electron

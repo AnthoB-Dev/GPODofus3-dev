@@ -1,7 +1,5 @@
 # Core Dependencies
 django==5.0.2
-djangorestframework==3.14.0
-django-cors-headers==4.6.0
 django-compressor==4.4
 fontawesomefree==6.5.1
 python-dotenv==1.0.1

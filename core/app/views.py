@@ -32,7 +32,6 @@ def guide_detail(request, guide_id):
         id=guide_id,
     )
 
-    # Guides précédent/suivant sans try/except
     previous_guide = None
     if guide.page > 0:  # Vérifier si on n'est pas au premier guide
         previous_guide = (
@@ -48,14 +47,37 @@ def guide_detail(request, guide_id):
     selected_achievement = achievements[0] if achievements else None
     quests = selected_achievement.quests.all() if selected_achievement else []
 
+    # Calcul du pourcentage de quêtes complétées pour chaque achievement
+    achievements_with_completion = []
+    for achievement in achievements:
+        total_quests = achievement.quests.count()
+        completed_quests = achievement.quests.filter(completed=True).count()
+        completion_percentage = (
+            int((completed_quests / total_quests * 100)) if total_quests > 0 else 0
+        )
+        achievements_with_completion.append(
+            {
+                "achievement": achievement,
+                "completion_percentage": completion_percentage,
+            }
+        )
+        # # Liste des liens des quêtes par succès
+        # quest_links = {}
+        # for achievement in achievements:
+        #     quest_links[achievement.id] = [
+        #         {"id": quest.id, "title": quest.title, "url": quest.get_absolute_url()}
+        #         for quest in achievement.quests.all()
+        #     ]
+
     context = {
         "guide": guide,
         "guides": guides,
-        "previous_guide": previous_guide,  # Sera None si non trouvé
-        "next_guide": next_guide,  # Sera None si non trouvé
-        "achievements": achievements,
+        "previous_guide": previous_guide,
+        "next_guide": next_guide,
+        "achievements": achievements_with_completion,
         "selected_achievement": selected_achievement,
         "quests": quests,
+        # "quest_links": quest_links,
     }
 
     return render(request, "pages/guide.html", context)

@@ -1,12 +1,11 @@
-const { app, BrowserWindow, Menu } = require("electron");
+const { app, BrowserWindow, shell } = require("electron");
 const { exec } = require("child_process");
 
 const path = require("path");
-// const url = require("url")
-let win;
+let mainWindow;
 
 function createWindow() {
-  win = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1280,
     height: 720,
     resizable: true,
@@ -18,20 +17,16 @@ function createWindow() {
     },
   });
 
-  // Load the React frontend served by Django at http://localhost:8000
-  win.loadURL("http://127.0.0.1:8000/app/guide/1/");
+  mainWindow.loadURL("http://localhost:8000/app/guide/1/");
 
-  // win.loadURL(url.format({
-  //     pathname: path.join(__dirname, "main.html"),
-  //     protocol: "file:",
-  //     slashes: true,
-  // }))
-
-  win.on("close", () => {
-    win = null;
+  mainWindow.on("close", () => {
+    mainWindow = null;
   });
 
-  // win.openDevTools()
+  mainWindow.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: "deny" };
+  });
 }
 
 const startDjango = () => {
@@ -51,9 +46,13 @@ const startDjango = () => {
   });
 };
 
-app.on("ready", () => {
+app.whenReady().then(() => {
   startDjango();
   createWindow();
+
+  app.on("activate", function () {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
 });
 
 app.on("window-all-closed", () => {
@@ -63,7 +62,7 @@ app.on("window-all-closed", () => {
 });
 
 app.on("activate", () => {
-  if (win == null) {
+  if (mainwindow == null) {
     createWindow();
   }
 });

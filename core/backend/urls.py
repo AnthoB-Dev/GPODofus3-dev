@@ -22,7 +22,7 @@ from django.urls import path, include
 
 
 def redirect_to_app(request):
-    return redirect("app/guide/1/")
+    return redirect("/app/guide/1/")
 
 
 urlpatterns = [

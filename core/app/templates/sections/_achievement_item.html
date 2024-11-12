@@ -12,7 +12,9 @@
   </div>
   <div class="achievementName">
     <button
+      id="achievement_{{ item.achievement.id }}"
       type="button"
+      data-achievement-id="{{ item.achievement.id }}"
       onclick="Turbo.visit('{% url 'app:guide_quests_achievement' guide.id item.achievement.id %}', { frame: 'frame_quests' })"
       class="achievement-button">
       <p>{{ item.achievement.title }}</p>

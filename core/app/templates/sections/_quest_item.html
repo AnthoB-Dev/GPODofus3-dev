@@ -1,7 +1,7 @@
 <turbo-frame id="quest_frame_{{ quest.id }}">
   <li
     class="js-quest{% if quest.completed %} isCompleted{% endif %}"
-    data-achievement-id="{{ achievement.achievement.id }}">
+    data-achievement-id="{% if selected_achievement %}{{ selected_achievement.id }}{% else %}{{ achievement.id }}{% endif %}">
     <div>
       <a href="{{quest.url}}" target="_blank">
         <i class="fa-solid fa-up-right-from-square"></i>

@@ -171,6 +171,7 @@ def toggle_quest_status(request, quest_id):
         "quest": quest,
         "guide": guide,
         "achievements": achievements_with_completion,
+        "selected_achievement": achievement,  # Ajoutez ceci
     }
 
     return HttpResponse(
@@ -182,7 +183,7 @@ def toggle_quest_status(request, quest_id):
         content=f"""
         <turbo-stream action="replace" target="quest_frame_{quest_id}">
             <template>
-                {render_to_string("sections/_quest_item.html", {"quest": quest})}
+                {render_to_string("sections/_quest_item.html", {"quest": quest, "selected_achievement": achievement})}
             </template>
         </turbo-stream>
         <turbo-stream action="replace" target="achievements_list">

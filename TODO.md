@@ -11,7 +11,7 @@
 - [x] Electron : actuellement l'ouverture de liens se fait avec une page electron. Je ne le veux pas.
 - [x] Mettre en place les validation de quêtes
 - [x] Mettre en place la bottom bar de Quêtes
-- [ ] Modifier les problêmes lié à _validAll_ qui ne peut pas enchainer les toggles
+- [x] Modifier les problêmes lié à _validAll_ qui ne peut pas enchainer les toggles (lié à la façon de render la view)
 - [ ] Mettre en place l'arrivée sur le dernier guide vu
 - [ ] Mettre en place l'arrivée sur le premier succès non à 100%
 - [ ] Mettre en place _expect_capture_ (sur donjon ?)

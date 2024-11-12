@@ -1,4 +1,4 @@
-<!-- Backend -->
+## Backend
 
 - [x] Finir le peuplement des quêtes dans achievements.json
 - [x] Peupler la BDD avec le contenu de achievements.json
@@ -11,11 +11,12 @@
 - [x] Electron : actuellement l'ouverture de liens se fait avec une page electron. Je ne le veux pas.
 - [x] Mettre en place les validation de quêtes
 - [x] Mettre en place la bottom bar de Quêtes
-- [ ] Modifier les problêmes lié à validAll qui ne peut pas enchainer les toggles
+- [ ] Modifier les problêmes lié à _validAll_ qui ne peut pas enchainer les toggles
 - [ ] Mettre en place l'arrivée sur le dernier guide vu
 - [ ] Mettre en place l'arrivée sur le premier succès non à 100%
+- [ ] Mettre en place _expect_capture_ (sur donjon ?)
 
-<!-- Frontent -->
+## Frontend
 
 - [x] Terminer le front
 - [x] Comprendre pourquoi #prevision n'existe pas dans les autres guides. (Mauvais format à la redaction)
@@ -24,8 +25,8 @@
 - [x] Update auto des pourcents selon la complétion
 - [x] Peupler le front avec les données du back
 - [x] Changer les checkbox en un bouton de validation
-- [ ] Faire le style du drop down de topNav
-- [ ] Rotate de 360 le caret de topNav lorsque le drop est down
+- [ ] Faire le style du drop down de _topNav_
+- [ ] Rotate de 360 le caret de _topNav_ lorsque le drop est down
 - [ ] Mettre une transi sur le passage check uncheck ques quêtes
 - [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
@@ -33,8 +34,8 @@
 - [ ] Media queries
 - [ ] Implémenter d'autres themes
 
-<!-- Redaction -->
+## Redaction
 
 - [ ] Combiné les guides ayant pour objectif la complétion d'un donjon
-- [ ] Définir les succès concernés sur chaque Guide (actuellement à "A travers le Krosmoz")
-- [ ] Faire le README de l'app
+- [ ] Définir les succès concernés sur chaque Guide (actuellement à "**A travers le Krosmoz**")
+- [ ] Faire le _README_ de l'app

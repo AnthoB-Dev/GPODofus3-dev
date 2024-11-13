@@ -12,9 +12,10 @@
 - [x] Mettre en place les validation de quêtes
 - [x] Mettre en place la bottom bar de Quêtes
 - [x] Modifier les problêmes lié à _validAll_ qui ne peut pas enchainer les toggles (lié à la façon de render la view)
-- [ ] Mettre en place l'arrivée sur le dernier guide vu
-- [ ] Mettre en place l'arrivée sur le premier succès non à 100%
-- [ ] Mettre en place _expect_capture_ (sur donjon ?)
+- [x] Mettre en place l'arrivée sur le dernier guide vu
+- [x] Mettre en place l'arrivée sur le premier succès non à 100%
+- [ ] Mettre en place expect_capture (sur donjon ?)
+- [ ] Optimiser le code
 
 ## Frontend
 
@@ -28,6 +29,10 @@
 - [ ] Faire le style du drop down de _topNav_
 - [ ] Rotate de 360 le caret de _topNav_ lorsque le drop est down
 - [ ] Mettre une transi sur le passage check uncheck ques quêtes
+- [ ] Améliorer le script de *_check_redirect.html* pour récupérer le premier achievement < 100% du guide et le sauvegardé dans achievementId ce qui devrait permettre d'arriver sur le bon achievement (plan initial, oublié)
+- [ ] Mettre le script de *_check_redirect* dans un fichier JS, avec des fonctions de maj des variables du localstorage
+- [ ] Créer une fonction qui sauvegarde les achievements lors des event de click sur ces derniers
+- [ ] Mettre en place le passage au succès suivant après un _validateAll_ plutôt que de recliquer sur l'actuel (confort + va permettre de mettre à jour achievementId)
 - [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
 - [ ] Enlever la video en background, elle se met à lag dans l'app Electron
@@ -39,3 +44,9 @@
 - [ ] Combiné les guides ayant pour objectif la complétion d'un donjon
 - [ ] Définir les succès concernés sur chaque Guide (actuellement à "**A travers le Krosmoz**")
 - [ ] Faire le _README_ de l'app
+
+## Bogues
+
+- [ ] Premier chargement de page : _validateAll_ ne fonctionne pas
+- [ ] Lorsque je valide toute les quêtes individuellement, le bouton _validateAll_ ne se met pas à jour et reste sur valider tout.
+- [ ] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. Ce qui résulte en celle qui a été validée / dévalidée a rester dévalidée à moins de rappuyer sur le _validateAll_

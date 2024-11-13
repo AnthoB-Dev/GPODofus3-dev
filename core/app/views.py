@@ -16,6 +16,9 @@ from app.models import Achievement, Guide, Quest
 from django.template.loader import render_to_string
 
 
+def check_redirect(request):
+    return render(request, "sections/_check_redirect.html")
+
 # Vue principale
 def guide_detail(request, guide_id):
     # Cache des guides
@@ -72,7 +75,6 @@ def guide_detail(request, guide_id):
         "achievements": achievements_with_completion,
         "selected_achievement": selected_achievement,
         "quests": quests,
-        # "quest_links": quest_links,
     }
 
     return render(request, "pages/guide.html", context)
@@ -171,7 +173,7 @@ def toggle_quest_status(request, quest_id):
         "quest": quest,
         "guide": guide,
         "achievements": achievements_with_completion,
-        "selected_achievement": achievement,  # Ajoutez ceci
+        "selected_achievement": achievement, 
     }
 
     return HttpResponse(

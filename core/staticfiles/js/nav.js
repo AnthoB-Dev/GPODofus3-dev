@@ -1,4 +1,24 @@
+const url = "/app/guide";
+
+
 document.addEventListener("turbo:load", () => {
+  let hasRedirected = localStorage.getItem("hasRedirected");
+
+  if (!hasRedirected) {
+    const lastGuideId = localStorage.getItem("lastGuideId");
+    const lastAchievementId = localStorage.getItem("lastAchievementId");
+
+    if (lastGuideId) {
+      if (lastAchievementId) {
+        // Rediriger vers le succès non complété
+        Turbo.visit(`${url}/${lastGuideId}/achievements/${lastAchievementId}/`);
+      } else {
+        // Rediriger vers le dernier guide vu
+        Turbo.visit(`${url}/${lastGuideId}/`);
+      }
+      hasRedirected = true;  // Marquer comme redirigé
+    }
+  }
   initializeDropdown();
   updateSelectedGuide();
 });
@@ -31,10 +51,27 @@ const updateSelectedGuide = () => {
   guideItems.forEach((item) => {
     if (item.textContent.trim() === currentTitle?.trim()) {
       item.classList.add("selected");
+      // Sauvegarder le dernier guide vu
+      localStorage.setItem("lastGuideId", item.dataset.guideId);
     } else {
       item.classList.remove("selected");
     }
   });
+
+  // Sauvegarder le succès non complété
+  const percentages = document.querySelectorAll(".js-achievementPercent");
+  let notCompletedAchievements = [];
+  
+  percentages.forEach((item) => {
+    const completionPercentage = Number(item.textContent);
+    const button = item.parentElement?.parentElement;
+
+    if (completionPercentage < 100) {
+      notCompletedAchievements.push(button);
+    } 
+  });
+  localStorage.setItem("lastAchievementId", notCompletedAchievements[0]?.dataset.achievementId);
+  notCompletedAchievements[0] ? notCompletedAchievements[0].querySelector("button").click() : null;
 };
 
 const initializeDropdown = () => {

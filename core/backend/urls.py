@@ -19,16 +19,15 @@ from django.conf import settings
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, include
+from app.views import check_redirect
 
-
-def redirect_to_app(request):
-    return redirect("/app/guide/1/")
-
+def check_redirect(request):
+    return redirect("app:check_redirect")
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     # Redirection de la racine vers /app/
-    path("", redirect_to_app),
+    path("", check_redirect),
     # Routes de l'application
     path("app/", include("app.urls")),
 ]

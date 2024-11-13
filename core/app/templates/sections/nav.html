@@ -11,7 +11,7 @@
   <div class="dropdown-content hidden">
     <div class="overflow">
       {% for guide in guides %}
-      <div class="guide-item" data-url="{% url 'app:guide_detail' guide.id %}">
+      <div class="guide-item" data-guide-id="{{guide.id}}" data-url="{% url 'app:guide_detail' guide.id %}">
         {{ guide.title }}
       </div>
       {% endfor %}

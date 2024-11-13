@@ -4,6 +4,7 @@ from . import views
 app_name = "app"  # Namespace de l'application
 
 urlpatterns = [
+    path("check_redirect", views.check_redirect, name="check_redirect"),
     path("guide/", views.guide_detail, name="guide"),
     path("guide/<int:guide_id>/", views.guide_detail, name="guide_detail"),
     path(

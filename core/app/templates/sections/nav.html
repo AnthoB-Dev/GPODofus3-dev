@@ -1,13 +1,11 @@
 {% load static %}
-<div class="guide-selector-wrapper" id="guide-dropdown">
   <div class="guide-header">
     <div class="imgBackground">
       <img src="{% static 'medias/icons/book.png' %}" alt="book icon" />
     </div>
     <h2>{{guide.title}}</h2>
-    <i class="fa-solid fa-caret-down"></i>
+    <i class="fa-solid fa-caret-down caretClose"></i>
   </div>
-
   <div class="dropdown-content hidden">
     <div class="overflow">
       {% for guide in guides %}
@@ -17,4 +15,4 @@
       {% endfor %}
     </div>
   </div>
-</div>
+

@@ -215,23 +215,23 @@ body {
 
     h1 {
       display: flex;
-      flex: 1;
     }
 
     div {
       align-items: center;
       display: flex;
+      flex: 1;
+      padding-left: var(--gap-xl);
 
       #credentials {
         flex-direction: column;
         align-items: flex-start;
-        margin-right: 2em;
+        padding-left: 0;
       }
 
       #contacts {
         align-items: flex-start;
         flex-direction: column;
-        margin-left: 5px;
 
         i {
           color: var(--clr-discord);
@@ -416,67 +416,99 @@ body {
         .flex(3);
         flex-direction: column;
         gap: 10px;
+        position: relative;
+
+        .topNavOpen {
+          display: flex;
+          flex-direction: column;
+          position: absolute !important;
+          width: 100%;
+          background: var(--clr-secondary);
+          border-radius: var(--border-radius);
+          border: solid 1px var(--clr-light);
+          z-index: 100;
+        }
+
+        .caretOpen {
+          transition: all 0.3s ease-in-out; 
+          rotate: 180deg;
+        }
+
+        .caretClose {
+          transition: all 0.3s ease-in-out; 
+          rotate: 0deg;
+        }
 
         #topNav {
-          .flex(0);
+          position: relative;
+          background: var(--clr-secondary);
+          cursor: pointer;
+          border: solid 1px var(--clr-light);          
+          border-radius: var(--border-radius);
 
-          .guide-selector-wrapper {
-            position: relative;
-            cursor: pointer;
-            flex: 1;
+          .guide-header {
+            align-items: center;
+            display: flex;
 
-            .guide-header {
-              .flex();
+            .imgBackground {
+              border-radius: var(--border-radius) 0 0 var(--border-radius);
+              width: 50px;
+              height: 50px;
+              display: flex;
               align-items: center;
-
-              .title();
-              .imgBackground {
-                background: none;
-                border: none;
-                border-radius: var(--border-radius);
-              }
-              background: var(--clr-secondary);
-              border-radius: var(--border-radius);
-
-              i {
-                padding: 0 var(--gap-reg);
-                font-size: var(--fs-4);
+              justify-content: center;
+              padding: var(--gap-reg);
+        
+              img {
+                border-radius: var(--border-radius) 0 0 var(--border-radius);
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
               }
             }
 
-            .dropdown-content {
-              position: absolute;
-              top: 100%;
-              left: 0;
-              width: 100%;
-              background: white;
-              border: 1px solid #ddd;
-              border-radius: 4px;
-              z-index: 1000;
-              overflow: hidden;
-              border-radius: 0 0 8px 8px;
-              box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-
-              .overflow {
-                max-height: 400px;
-                overflow-y: auto;
-
-                .guide-item {
-                  padding: 8px 16px;
-                  cursor: pointer;
-                }
-
-                .guide-item:hover {
-                  background: #f5f5f5;
-                }
-
-                .guide-item.selected {
-                  background-color: #f0f0f0;
-                  font-weight: bold;
-                }
-              }
+            i {
+              padding: 0 var(--gap-reg);
+              font-size: var(--fs-4);
             }
           }
+
+          .dropdown-content {
+            position: absolute;
+            z-index: 1000;
+            overflow: hidden;
+            
+            .overflow {
+              transition: max-height 0.2s ease-in-out; 
+              overflow-y: auto;
+              scrollbar-color: #7b6939 #00000000;
+              margin: var(--gap-sm);
+              max-height: 0;
+
+              .guide-item {
+                padding: 8px 16px;
+                cursor: pointer;
+              }
+
+              .guide-item:hover {
+                background: #f5f5f5;
+              }
+
+              .guide-item.selected {
+                background-color: #f0f0f0;
+                font-weight: bold;
+              }
+            }
+
+            .overflowOpen {
+              max-height: 400px;
+            } 
+  
+            .overflowClose {
+              max-height: 0px;
+            }
+          }
+
         }
 
         #centerContent {

@@ -106,13 +106,14 @@ const clickValidateAll = (buttonsType) => {
     clickCurrentAchievementBtn(buttonsType);
   });
 };
+
 const toggleBtnBackgroundStyle = () => {
   const validateAll = document.querySelector("#validateAll");
   let buttons = getButtons();
   
   if (buttons.length === 0) return;
 
-  const color = buttons[0].classList.contains("check") ? "#23DC3D" : "#f37f81";
+  const color = buttons[0].classList.contains("check") ? "#23dc3c91" : "#f37f81";
 
   validateAll.addEventListener("mouseover", () => {
     buttons.forEach((button) => {

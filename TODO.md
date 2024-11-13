@@ -31,6 +31,7 @@
 - [ ] Mettre une transi sur le passage check uncheck ques quêtes
 - [ ] Améliorer le script de *_check_redirect.html* pour récupérer le premier achievement < 100% du guide et le sauvegardé dans achievementId ce qui devrait permettre d'arriver sur le bon achievement (plan initial, oublié)
 - [ ] Mettre le script de *_check_redirect* dans un fichier JS, avec des fonctions de maj des variables du localstorage
+- [ ] Vérifier si le doublon du turbo visit situé dans _nav.js_ est pertinent (je ne pense pas, c'est le script de *_check_redirect* qui fait le boulot)
 - [ ] Créer une fonction qui sauvegarde les achievements lors des event de click sur ces derniers
 - [ ] Mettre en place le passage au succès suivant après un _validateAll_ plutôt que de recliquer sur l'actuel (confort + va permettre de mettre à jour achievementId)
 - [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons

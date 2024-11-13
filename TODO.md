@@ -48,6 +48,7 @@
 
 ## Bogues
 
+- [ ] Les event listener de click lorsque la _topNav_ est ouverte ne fonctionnent plus (pas?)
 - [ ] Premier chargement de page : _validateAll_ ne fonctionne pas
 - [ ] Lorsque je valide toute les quêtes individuellement, le bouton _validateAll_ ne se met pas à jour et reste sur valider tout.
 - [ ] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. Ce qui résulte en celle qui a été validée / dévalidée a rester dévalidée à moins de rappuyer sur le _validateAll_

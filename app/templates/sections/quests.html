@@ -16,7 +16,7 @@
     <ul
       onclick="if(event.target.closest('.qButton')) { 
       event.preventDefault();
-      toggleQuest(event.target.closest('.qButton').id.split('_')[1]);
+      toggleQuestCompletion(event.target.closest('.qButton').id.split('_')[1]);
     }">
       {% for quest in quests %}
       <turbo-frame id="quest_frame_{{ quest.id }}">

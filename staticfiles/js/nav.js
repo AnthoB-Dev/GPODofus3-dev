@@ -1,4 +1,5 @@
 const url = "/app/guide";
+const dropdownContent = document.querySelector('.dropdown-content .overflow');
 
 
 // TODO : Vérifier si cet ecouteur sert à quelque chose
@@ -77,7 +78,6 @@ const updateSelectedGuide = () => {
   notCompletedAchievements[0] ? notCompletedAchievements[0].querySelector("button").click() : null;
 };
 
-const dropdownContent = document.querySelector('.dropdown-content .overflow');
 function openDropdown() {
   dropdownContent.classList.remove('overflowClose');
   setTimeout(() => {
@@ -111,6 +111,7 @@ const initializeDropdown = () => {
       dropdown.classList.toggle("topNavOpen");
       caret.classList.toggle("caretOpen");
       caret.classList.toggle("caretClose");
+      
       if (content.style.position == "initial") {
         content.style.position = "";
       } else {

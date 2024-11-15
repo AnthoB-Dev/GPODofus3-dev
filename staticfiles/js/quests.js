@@ -1,4 +1,4 @@
-const toggleQuest = (questId) => {
+const toggleQuestCompletion = (questId) => {
   fetch(`/app/toggle-quest/${questId}/`, {
     method: "POST",
     headers: {
@@ -83,6 +83,7 @@ const clickCurrentAchievementBtn = (buttonsType) => {
   let currentAchievement = document.querySelector("#achievement_" + achievementId);
 
   setTimeout(() => {
+    currentAchievement.classList.add("active")
     currentAchievement.click();
   }, 100);
 }
@@ -135,12 +136,24 @@ const listenToValidateAll = () => {
   });
 };
 
+const activeButton = () => {
+  const buttons = document.querySelectorAll(".achievement-button");
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      buttons.forEach((btn) => {
+        btn.parentElement.parentElement.classList.remove("active");
+      });
+      button.parentElement.parentElement.classList.add("active");
+    });
+  });
+};
 
 const launchFunctions = () => {
   listenToOpenAll();
   toggleBtnBackgroundStyle();
   listenToValidateAll();
   validateAllStyle();
+  activeButton();
 };
 
 document.addEventListener("DOMContentLoaded", launchFunctions);

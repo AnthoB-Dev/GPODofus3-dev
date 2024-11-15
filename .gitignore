@@ -148,8 +148,8 @@ README.md
 *.css.map
 .sass-cache/
 *.css.less
-core/static/CACHE/
-core/staticfiles/CACHE/
-core/staticfiles/debug_toolbar/
-core/staticfiles/fontawesomefree/
+static/CACHE/
+staticfiles/CACHE/
+staticfiles/debug_toolbar/
+staticfiles/fontawesomefree/
 !admin/css/**/*.css

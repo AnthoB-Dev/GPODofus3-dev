@@ -22,7 +22,12 @@ from django.urls import path, include
 from app.views import check_redirect
 
 def check_redirect(request):
-    return redirect("app:check_redirect")
+    guide_id = request.COOKIES.get("lastGuideId")
+    print(guide_id)
+    # if guide_id is not None:
+    #     return redirect("app:guide_detail", guide_id=guide_id)
+    # else:
+    #     return redirect("app:guide_detail", guide_id=1)  # Replace with a valid default view
 
 urlpatterns = [
     path("admin/", admin.site.urls),

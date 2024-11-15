@@ -26,9 +26,8 @@
 - [x] Update auto des pourcents selon la complétion
 - [x] Peupler le front avec les données du back
 - [x] Changer les checkbox en un bouton de validation
-- [ ] Faire le style du drop down de _topNav_
+- [x] Faire le style du drop down de _topNav_
 - [ ] Rotate de 360 le caret de _topNav_ lorsque le drop est down
-- [ ] Mettre une transi sur le passage check uncheck ques quêtes
 - [ ] Améliorer le script de *_check_redirect.html* pour récupérer le premier achievement < 100% du guide et le sauvegardé dans achievementId ce qui devrait permettre d'arriver sur le bon achievement (plan initial, oublié)
 - [ ] Mettre le script de *_check_redirect* dans un fichier JS, avec des fonctions de maj des variables du localstorage
 - [ ] Vérifier si le doublon du turbo visit situé dans _nav.js_ est pertinent (je ne pense pas, c'est le script de *_check_redirect* qui fait le boulot)

@@ -12,11 +12,6 @@ urlpatterns = [
         name="guide_achievements_partial",
     ),
     path(
-        "guide/<int:guide_id>/<int:achievement_id>",
-        views.guide_achievements,
-        name="guide_achievements",
-    ),
-    path(
         "guide/<int:guide_id>/objectives/",
         views.guide_objectives_partial,
         name="guide_objectives_partial",
@@ -31,9 +26,7 @@ urlpatterns = [
         views.guide_quests_partial,
         name="guide_quests_achievement",
     ),
-    path(
-        "toggle-quest/<int:quest_id>/",
-        views.toggle_quest_status,
-        name="toggle_quest_status",
-    ),
+    path('toggle-quest/<int:quest_id>/', views.toggle_quest_status, name='toggle_quest_status'),
+    path('quest_item/<int:quest_id>/', views.quest_item, name='quest_item'),
+    path('achievement_item/<int:achievement_id>/', views.achievement_item, name='achievement_item'),
 ]

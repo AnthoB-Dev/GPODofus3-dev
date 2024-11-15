@@ -2,29 +2,6 @@ const url = "/app/guide";
 const dropdownContent = document.querySelector('.dropdown-content .overflow');
 
 
-// TODO : Vérifier si cet ecouteur sert à quelque chose
-document.addEventListener("turbo:load", () => {
-  let hasRedirected = localStorage.getItem("hasRedirected");
-
-  if (!hasRedirected) {
-    const lastGuideId = localStorage.getItem("lastGuideId");
-    const lastAchievementId = localStorage.getItem("lastAchievementId");
-
-    if (lastGuideId) {
-      if (lastAchievementId) {
-        // Rediriger vers le succès non complété
-        Turbo.visit(`${url}/${lastGuideId}/achievements/${lastAchievementId}/`);
-      } else {
-        // Rediriger vers le dernier guide vu
-        Turbo.visit(`${url}/${lastGuideId}/`);
-      }
-      hasRedirected = true;  // Marquer comme redirigé
-    }
-  }
-  initializeDropdown();
-  updateSelectedGuide();
-});
-
 // Ecouteur pour mettre à jour le titre et la sélection du dropdown
 document.addEventListener("turbo:before-render", (event) => {
   // Récupérer le nouveau titre depuis la réponse

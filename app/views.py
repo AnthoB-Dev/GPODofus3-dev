@@ -12,12 +12,9 @@ from django.views.generic import (
 from django.urls import reverse_lazy
 from django.core.cache import cache
 from django.db.models import Prefetch
-from app.models import Achievement, Guide, Quest
+from app.models import Achievement, Guide, Quest, LastSession
 from django.template.loader import render_to_string
 
-
-def check_redirect(request):
-    return render(request, "sections/_check_redirect.html")
 
 # Vue principale
 def guide_detail(request, guide_id):
@@ -67,6 +64,11 @@ def guide_detail(request, guide_id):
             }
         )
 
+    lastSession, created = LastSession.objects.get_or_create(id=1)
+    lastSession.last_guide = guide if guide is not None else 1
+    lastSession.last_achievement = selected_achievement
+    lastSession.save()
+
     context = {
         "guide": guide,
         "guides": guides,
@@ -105,7 +107,6 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
         Guide.objects.prefetch_related("achievement__quests"), id=guide_id
     )
 
-    # Sélection de l'achievement avec debug
     if achievement_id:
         achievement = get_object_or_404(guide.achievement, id=achievement_id)
     else:

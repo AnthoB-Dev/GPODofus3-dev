@@ -234,6 +234,18 @@ class DungeonQuest(models.Model):
         return f"{self.dungeon.name} - {self.quest.title}"
 
 
+class LastSession(models.Model):
+    last_guide = models.ForeignKey("Guide", on_delete=models.SET_NULL, null=True)
+    last_achievement = models.ForeignKey('Achievement', on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return f"Last guide: {self.last_guide}, Last achievement: {self.last_achievement}"
+
+    class Meta:
+        verbose_name = "Dernière session"
+        verbose_name_plural = "Dernières sessions"
+
+
 class Quest(models.Model):
     """
     Représente une quête du jeu.

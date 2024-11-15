@@ -19,20 +19,20 @@ from django.conf import settings
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, include
-from app.views import check_redirect
+from app.models import LastSession
+from app.views import redirect
 
-def check_redirect(request):
-    guide_id = request.COOKIES.get("lastGuideId")
-    print(guide_id)
-    # if guide_id is not None:
-    #     return redirect("app:guide_detail", guide_id=guide_id)
-    # else:
-    #     return redirect("app:guide_detail", guide_id=1)  # Replace with a valid default view
+def redirect_to_guide(request):
+    last_session = LastSession.objects.first()
+    if last_session is not None:
+        return redirect("app:guide_detail", guide_id=last_session.last_guide_id)
+    else:
+        return redirect("app:guide_detail", guide_id=1)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     # Redirection de la racine vers /app/
-    path("", check_redirect),
+    path("", redirect_to_guide),
     # Routes de l'application
     path("app/", include("app.urls")),
 ]

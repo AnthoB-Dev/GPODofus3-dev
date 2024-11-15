@@ -77,13 +77,21 @@ const validateAllStyle = () => {
   }
 };
 
+const clickNextAchievementBtn = (buttonsType) => {
+  let achievementId = buttonsType[0]?.parentElement.dataset.achievementId; 
+  let currentAchievement = document.querySelector("#achievement_" + achievementId).parentElement?.parentElement;
+  let nextAchievement = currentAchievement.nextElementSibling.querySelector("button") || null;
+  setTimeout(() => {
+    nextAchievement.click();
+  }, 100);
+}
+
 const clickCurrentAchievementBtn = (buttonsType) => {
   if (buttonsType.length === 0) return;
   let achievementId = buttonsType[0]?.parentElement.dataset.achievementId; 
   let currentAchievement = document.querySelector("#achievement_" + achievementId);
 
   setTimeout(() => {
-    currentAchievement.classList.add("active")
     currentAchievement.click();
   }, 100);
 }
@@ -104,7 +112,9 @@ const clickValidateAll = (buttonsType) => {
   });
 
   Promise.all(promises).then(() => {
-    clickCurrentAchievementBtn(buttonsType);
+    buttonsType[0].classList.contains("uncheck") 
+    ? clickCurrentAchievementBtn(buttonsType) 
+    : clickNextAchievementBtn(buttonsType); 
   });
 };
 

@@ -16,8 +16,7 @@ from app.models import Achievement, Guide, Quest, LastSession
 from django.template.loader import render_to_string
 
 
-# Vue principale
-def guide_detail(request, guide_id):
+def guide_detail(request, guide_id, achievement_id=None):
     # Cache des guides
     guides = cache.get("all_guides")
     if guides is None:
@@ -46,7 +45,11 @@ def guide_detail(request, guide_id):
 
     # Préparation du contexte avec vérification
     achievements = list(guide.achievement.all())
-    selected_achievement = achievements[0] if achievements else None
+    if achievement_id:
+        selected_achievement = get_object_or_404(achievements, id=achievement_id)
+    else:
+        selected_achievement = achievements[0] if achievements else None
+
     quests = selected_achievement.quests.all() if selected_achievement else []
 
     # Calcul du pourcentage de quêtes complétées pour chaque achievement
@@ -68,7 +71,7 @@ def guide_detail(request, guide_id):
     lastSession.last_guide = guide if guide is not None else 1
     lastSession.last_achievement = selected_achievement
     lastSession.save()
-
+    
     context = {
         "guide": guide,
         "guides": guides,
@@ -102,17 +105,17 @@ def guide_achievements_partial(request, guide_id):
 
 
 # Vue des quêtes
+# Si un achievement_id est fourni, on affiche les quêtes de cet achievement
 def guide_quests_partial(request, guide_id, achievement_id=None):
     guide = get_object_or_404(
         Guide.objects.prefetch_related("achievement__quests"), id=guide_id
     )
-
+    
     if achievement_id:
         achievement = get_object_or_404(guide.achievement, id=achievement_id)
     else:
         achievement = guide.achievement.first()
 
-    # Debug des quêtes
     quests = achievement.quests.all() if achievement else []
 
     context = {
@@ -122,26 +125,6 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
     }
 
     return render(request, "sections/quests.html", context)
-
-
-# Permet de naviguer entre les succès d'un guide
-def guide_achievements(request, guide_id, achievement_id):
-    guide = get_object_or_404(
-        Guide.objects.prefetch_related("achievement"), id=guide_id
-    )
-    achievements = guide.achievement.all()
-    if get_object_or_404(achievements, id=achievement_id):
-        selected_achievement = get_object_or_404(achievements, id=achievement_id)
-    else:
-        selected_achievement = []
-    quests = selected_achievement.quests.all()
-    context = {
-        "guide": guide,
-        "achievements": achievements,
-        "selected_achievement": selected_achievement,
-        "quests": quests,
-    }
-    return render(request, "pages/guide.html", context)
 
 
 @require_POST
@@ -154,49 +137,29 @@ def toggle_quest_status(request, quest_id):
     achievement = Achievement.objects.filter(quests=quest).first()
     guide = Guide.objects.filter(achievement=achievement).first()
 
-    # Calcul des pourcentages comme dans guide_detail
-    achievements = list(guide.achievement.all())
-    achievements_with_completion = []
-    for achievement in achievements:
-        total_quests = achievement.quests.count()
-        completed_quests = achievement.quests.filter(completed=True).count()
-        completion_percentage = (
-            int((completed_quests / total_quests * 100)) if total_quests > 0 else 0
-        )
-        achievements_with_completion.append(
-            {
-                "achievement": achievement,
-                "completion_percentage": completion_percentage,
-            }
-        )
+    # Rediriger vers la vue partielle quest_item
+    return redirect('app:quest_item', quest_id=quest.id)
 
-    context = {
-        "quest": quest,
-        "guide": guide,
-        "achievements": achievements_with_completion,
-        "selected_achievement": achievement, 
-    }
 
-    return HttpResponse(
-        status=200,
-        headers={
-            "Content-Type": "text/vnd.turbo-stream.html",
-            "Turbo-Stream": True,
-        },
-        content=f"""
-        <turbo-stream action="replace" target="quest_frame_{quest_id}">
-            <template>
-                {render_to_string("sections/_quest_item.html", {"quest": quest, "selected_achievement": achievement})}
-            </template>
-        </turbo-stream>
-        <turbo-stream action="replace" target="achievements_list">
-            <template>
-                <ul id="achievements_list">
-                    {"".join(render_to_string("sections/_achievement_item.html", 
-                        {"item": item, "guide": guide}) 
-                        for item in achievements_with_completion)}
-                </ul>
-            </template>
-        </turbo-stream>
-        """,
-    )
+def quest_item(request, quest_id):
+    quest = get_object_or_404(Quest, id=quest_id)
+    achievement = Achievement.objects.filter(quests=quest).first()
+    guide = Guide.objects.filter(achievement=achievement).first()
+    
+    return render(request, "sections/_quest_item.html", {"quest": quest, "achievement": achievement, "guide": guide})
+
+def achievement_item(request, achievement_id):
+    achievement = get_object_or_404(Achievement, id=achievement_id)
+    guide = Guide.objects.filter(achievement=achievement).first()
+    
+    return render(request, "sections/_achievement_item.html", {"achievement": achievement, "guide": guide})
+
+
+def messages(request):
+    return render(request, "pages/messages/messages.html")
+
+def message(request, message_id):
+    return render(request, "pages/messages/message.html")
+
+def message_edit(request, message_id):
+    return render(request, "pages/messages/message_edit.html")

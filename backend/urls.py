@@ -31,9 +31,7 @@ def redirect_to_guide(request):
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    # Redirection de la racine vers /app/
     path("", redirect_to_guide),
-    # Routes de l'application
     path("app/", include("app.urls")),
 ]
 

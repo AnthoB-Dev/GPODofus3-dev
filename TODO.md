@@ -27,9 +27,9 @@
 - [x] Peupler le front avec les données du back
 - [x] Changer les checkbox en un bouton de validation
 - [x] Faire le style du drop down de _topNav_
+- [x] Mettre en place le passage au succès suivant après un _validateAll_ plutôt que de recliquer sur l'actuel
 - [ ] Rotate de 360 le caret de _topNav_ lorsque le drop est down
 - [ ] Créer une fonction qui sauvegarde les achievements lors des event de click sur ces derniers
-- [ ] Mettre en place le passage au succès suivant après un _validateAll_ plutôt que de recliquer sur l'actuel (confort + va permettre de mettre à jour achievementId)
 - [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
 - [ ] Enlever la video en background, elle se met à lag dans l'app Electron
@@ -48,3 +48,4 @@
 - [ ] Premier chargement de page : _validateAll_ ne fonctionne pas
 - [ ] Lorsque je valide toute les quêtes individuellement, le bouton _validateAll_ ne se met pas à jour et reste sur valider tout.
 - [ ] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. Ce qui résulte en celle qui a été validée / dévalidée a rester dévalidée à moins de rappuyer sur le _validateAll_
+- [ ] Problème sur l'arrivée de la page qui ne prends pas le js en compte

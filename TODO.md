@@ -1,3 +1,5 @@
+# TODO
+
 ## Backend
 
 - [x] Finir le peuplement des quêtes dans achievements.json
@@ -14,8 +16,26 @@
 - [x] Modifier les problêmes lié à _validAll_ qui ne peut pas enchainer les toggles (lié à la façon de render la view)
 - [x] Mettre en place l'arrivée sur le dernier guide vu
 - [x] Mettre en place l'arrivée sur le premier succès non à 100%
+- [x] Regler les gros problèmes de mémoires avec *Electron* (c'était la vidéo)
+- [ ] Créer une fonction pour les navs et les enlever de *guide_detail*
+- [ ] Rajouter un délais dans le chargement des pages assez court pour ne pas gêner une utilisation normal mais suffisament long pour rajouter une sensation de fluidité lors du spam des bouton de nav (possiblement inutile maintenant que y'a plus la vidéo)
 - [ ] Mettre en place expect_capture (sur donjon ?)
-- [ ] Optimiser le code
+- Optimiser le code
+    - [x] Revoir les turbo frames
+        - [x] frame_main
+        - [x] frame_guides
+        - [x] frame_quests
+        - [x] quest_frame_achievement_title
+        - [x] quest_frame_id
+        - [x] frame_objectives
+        - [x] frame_achievements
+- [ ] Résoudre *Electron Security Warning (Insecure Content-Security-Policy)*
+- [ ] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
+
+### Bogues :
+
+Vide pour le moment, youpi
+
 
 ## Frontend
 
@@ -28,13 +48,27 @@
 - [x] Changer les checkbox en un bouton de validation
 - [x] Faire le style du drop down de _topNav_
 - [x] Mettre en place le passage au succès suivant après un _validateAll_ plutôt que de recliquer sur l'actuel
-- [ ] Rotate de 360 le caret de _topNav_ lorsque le drop est down
+- [x] Rotate de 180 le caret de _topNav_ lorsque le drop est down
+- [x] Enlever la video en background, elle se met à lag dans l'app Electron
 - [ ] Créer une fonction qui sauvegarde les achievements lors des event de click sur ces derniers
 - [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
-- [ ] Enlever la video en background, elle se met à lag dans l'app Electron
+- Optimiser le code 
+    - [ ] Voir pour utiliser Stimulus
+    - [ ] Vérifier les events js
 - [ ] Media queries
 - [ ] Implémenter d'autres themes
+    - [ ] Changer l'image background selon le thème
+
+### Bogues :
+
+- [ ] Refaire fonctionner la *topNav* qui est en partie cassé depuis le styling
+- [ ] Les event listener de click lorsque la _topNav_ est ouverte ne fonctionnent plus (pas?) pour fermer la nav
+- [ ] Premier chargement de page : _validateAll_ ne fonctionne pas
+- [ ] Lorsque je valide toute les quêtes individuellement, le bouton _validateAll_ ne se met pas à jour et reste sur valider tout.
+- [ ] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. Ce qui résulte en celle qui a été validée / dévalidée a rester dévalidée à moins de rappuyer sur le _validateAll_
+- [ ] Problème sur l'arrivée de la page qui ne prends pas le js en compte
+
 
 ## Redaction
 
@@ -42,10 +76,3 @@
 - [ ] Définir les succès concernés sur chaque Guide (actuellement à "**A travers le Krosmoz**")
 - [ ] Faire le _README_ de l'app
 
-## Bogues
-
-- [ ] Les event listener de click lorsque la _topNav_ est ouverte ne fonctionnent plus (pas?)
-- [ ] Premier chargement de page : _validateAll_ ne fonctionne pas
-- [ ] Lorsque je valide toute les quêtes individuellement, le bouton _validateAll_ ne se met pas à jour et reste sur valider tout.
-- [ ] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. Ce qui résulte en celle qui a été validée / dévalidée a rester dévalidée à moins de rappuyer sur le _validateAll_
-- [ ] Problème sur l'arrivée de la page qui ne prends pas le js en compte

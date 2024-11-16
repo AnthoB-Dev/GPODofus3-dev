@@ -12,12 +12,13 @@ function createWindow() {
     minWidth: 1280,
     minHeight: 720,
     autoHideMenuBar: true,
+    icon: path.join(__dirname, '/static/medias/icons/favicon.ico'),
     webPreferences: {
       nodeIntegration: true,
     },
   });
 
-  mainWindow.loadURL("http://localhost:8000/app/guide/1/");
+  mainWindow.loadURL("http://localhost:8000/");
 
   mainWindow.on("close", () => {
     mainWindow = null;
@@ -29,13 +30,19 @@ function createWindow() {
   });
 }
 
-const startDjango = () => {
-  const pythonPath = path.join(__dirname, "venv", "Scripts", "python.exe");
-  const djangoProjectPath = path.join(__dirname, "core");
-
-  const djangoProcess = exec(
+const runDjangoProcess = (pythonPath, djangoProjectPath) => {
+  return exec(
     `${pythonPath} ${djangoProjectPath}/manage.py runserver`
   );
+};
+
+let djangoProcess;
+
+const startDjango = () => {
+  const pythonPath = path.join(__dirname, "venv", "Scripts", "python.exe");
+  const djangoProjectPath = path.join(__dirname);
+
+  djangoProcess = runDjangoProcess(pythonPath, djangoProjectPath);
 
   djangoProcess.stdout.on("data", (data) => {
     console.log(`Django: ${data}`);
@@ -56,7 +63,11 @@ app.whenReady().then(() => {
 });
 
 app.on("window-all-closed", () => {
+  
   if (process.platform !== "darwin") {
+    if (djangoProcess) {
+      djangoProcess.kill();
+    }
     app.quit();
   }
 });

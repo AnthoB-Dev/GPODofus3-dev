@@ -1,6 +1,4 @@
-const url = "/app/guide";
 const dropdownContent = document.querySelector('.dropdown-content .overflow');
-
 
 // Ecouteur pour mettre à jour le titre et la sélection du dropdown
 document.addEventListener("turbo:before-render", (event) => {
@@ -22,7 +20,7 @@ document.addEventListener("turbo:before-render", (event) => {
   }
 });
 
-// Mettre à jour la sélection du dropdown, plus sauvegarde de lastAchievementId
+// Mettre à jour la sélection du dropdown
 const updateSelectedGuide = () => {
   const currentTitle = document.querySelector(
     "#topNav .guide-header h2"
@@ -32,14 +30,12 @@ const updateSelectedGuide = () => {
   guideItems.forEach((item) => {
     if (item.textContent.trim() === currentTitle?.trim()) {
       item.classList.add("selected");
-      // Sauvegarder le dernier guide vu
-      localStorage.setItem("lastGuideId", item.dataset.guideId);
     } else {
       item.classList.remove("selected");
     }
   });
 
-  // Sauvegarder le succès non complété
+  // Clique sur le premier achievement non complété
   const percentages = document.querySelectorAll(".js-achievementPercent");
   let notCompletedAchievements = [];
   
@@ -51,7 +47,6 @@ const updateSelectedGuide = () => {
       notCompletedAchievements.push(button);
     } 
   });
-  localStorage.setItem("lastAchievementId", notCompletedAchievements[0]?.dataset.achievementId);
   notCompletedAchievements[0] ? notCompletedAchievements[0].querySelector("button").click() : null;
 };
 
@@ -135,3 +130,13 @@ const initializeDropdown = () => {
     });
   }
 };
+
+// Appeler initializeDropdown lors du chargement initial de la page
+document.addEventListener("DOMContentLoaded", () => {
+  initializeDropdown();
+});
+
+// Appeler initializeDropdown après chaque chargement Turbo
+document.addEventListener("turbo:load", () => {
+  initializeDropdown();
+});

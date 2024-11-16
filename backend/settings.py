@@ -30,13 +30,6 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    "192.168.1.21",
-    "*",  # Autoriser toutes les adresses
-]
-
 
 # Application definition
 
@@ -141,7 +134,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "compressor.finders.CompressorFinder",  # Ajoutez ceci
+    "compressor.finders.CompressorFinder",
 ]
 
 STATICFILES_IGNORE_PATTERNS = [
@@ -162,13 +155,12 @@ CORS_ALLOWED_ORIGINS = [
 
 COMPRESS_ENABLED = True
 
+COMPRESS_OFFLINE = False
+
 COMPRESS_ROOT = STATIC_ROOT
 
 COMPRESS_URL = STATIC_URL
 
-COMPRESS_PRECOMPILERS = (("text/less", "lessc {infile} {outfile}"),)
-
-INTERNAL_IPS = [
-    "127.0.0.1",
-    "192.168.1.21",
-]
+COMPRESS_PRECOMPILERS = (
+    ('text/less', 'lessc {infile} {outfile}'),
+)

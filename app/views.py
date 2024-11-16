@@ -74,9 +74,9 @@ def guide_detail(request, guide_id, achievement_id=None):
     
     context = {
         "guide": guide,
-        "guides": guides,
-        "previous_guide": previous_guide,
-        "next_guide": next_guide,
+        "guides": guides, # Pour la navigation des guides TODO: créer une fonction spécifiquement pour les nav topNav et celle du guide
+        "previous_guide": previous_guide, # TODO: Mettre dans la fonction de navigation
+        "next_guide": next_guide, # TODO: Mettre dans la fonction de navigation
         "achievements": achievements_with_completion,
         "selected_achievement": selected_achievement,
         "quests": quests,

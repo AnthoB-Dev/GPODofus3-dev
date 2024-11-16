@@ -6,5 +6,7 @@
   <h3>Objectifs</h3>
 </div>
 <div class="content">
-  <div>{{ guide.objectives|safe }}</div>
+  <turbo-frame id="frame_objectives">
+    <div>{{ guide.objectives|safe }}</div>
+  </turbo-frame>
 </div>

@@ -196,7 +196,7 @@ body {
     --clr-light: #1e1e1e;
   }
 
-  #backgroundVideo {
+  #backgroundImage {
     position: fixed;
     top: 0;
     left: 0;
@@ -232,6 +232,7 @@ body {
       #contacts {
         align-items: flex-start;
         flex-direction: column;
+        padding-left: 0;
 
         i {
           color: var(--clr-discord);
@@ -517,7 +518,7 @@ body {
           gap: 10px;
           overflow: hidden;
 
-          #frame_guide {
+          #guide {
             .flex(2);
             background-color: var(--clr-primary);
             border-radius: var(--border-radius);
@@ -534,46 +535,51 @@ body {
             .content {
               gap: var(--gap-reg);
 
-              #previsions {
-                display: flex;
-                flex-direction: column;
-                background-color: var(--clr-previsions);
-                border: solid 1px var(--clr-light);
-                border-radius: var(--border-radius);
-                box-shadow: var(--box-shadow);
-                padding: var(--gap-reg);
-
-                h4 {
+              #frame_guide {
+                
+                #previsions {
+                  display: flex;
+                  flex-direction: column;
+                  background-color: var(--clr-previsions);
+                  border: solid 1px var(--clr-light);
+                  border-radius: var(--border-radius);
+                  box-shadow: var(--box-shadow);
+                  padding: var(--gap-reg);
                   margin-bottom: var(--gap-reg);
-                  margin-left: 0;
-                  color: var(--clr-red);
+  
+                  h4 {
+                    margin-bottom: var(--gap-reg);
+                    margin-left: 0;
+                    color: var(--clr-red);
+                  }
+  
+                  ul {
+                    gap: @gap-sm;
+  
+                    li {
+                      box-shadow: none;
+                      display: flex;
+                      justify-content: flex-start;
+  
+                      img {
+                        width: 25px;
+                        height: 25px;
+                        object-fit: cover;
+                        margin-right: var(--gap-reg);
+                      }
+                    }
+                  }
                 }
-
-                ul {
-                  gap: @gap-sm;
-
-                  li {
-                    box-shadow: none;
-                    display: flex;
-                    justify-content: flex-start;
-
-                    img {
-                      width: 25px;
-                      height: 25px;
-                      object-fit: cover;
-                      margin-right: var(--gap-reg);
+  
+                #guide_content {
+                  ul {
+                    li {
+                      box-shadow: none;
                     }
                   }
                 }
               }
 
-              #guide {
-                ul {
-                  li {
-                    box-shadow: none;
-                  }
-                }
-              }
             }
 
             .interactable {
@@ -581,101 +587,118 @@ body {
             }
           }
 
-          #frame_quests {
+          #quests {
             .flex(1);
             background-color: var(--clr-primary);
             border-radius: var(--border-radius);
             flex-direction: column;
             overflow: hidden;
-            .content {
+
+              .flex();
+              flex-direction: column;
+              overflow-y: auto;
+
+              .content {
+                padding: 0 0 var(--gap-reg);
                 
-              .isCompleted {
-                box-shadow: 0 0 0 !important;
-                opacity: 50%;
-
-                i {
-                  padding: 10px !important;
-                  font-size: 12px !important;
-                }
-
-                p {
-                  font-size: 12px !important;
-                }
-
-                &:hover {
-                  opacity: 100%;
-                  box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.35) !important;
-                }
-              }
-
-              .js-quest {
-                transition: 0.3s ease-in-out;
-
-                .qButton {
-                  transition: background 0.3s ease-in-out;
-                  border-radius: 0 @border-radius @border-radius 0;
-                }
-
-                .check {
-                  &:hover {
-                    background: #23dc3c91;
+                #quest_frame_achievement_title {
+                  position: sticky;
+                  left: 0;
+                  top: 0;
+                  background: var(--clr-primary);
+                  
+                  h4 {
+                    text-align: center;
+                    margin: 0 0 var(--gap-reg) 0;
+                    position: relative;
+    
+                    &::after {
+                      content: "";
+                      display: block;
+                      height: 2px;
+                      background: var(--clr-secondary);
+                      width: 30%;
+                      margin: 2px;
+                      position: absolute;
+                      left: 50%;
+                      transform: translateX(-50%);
+                    }
                   }
                 }
 
-                .uncheck {
-                  &:hover {
-                    background: lighten(@clr-red, 20%);
-                  }
-                }
-              }
-
-              h4 {
-                text-align: center;
-                margin: 0 0 var(--gap-reg) 0;
-                position: relative;
-
-                &::after {
-                  content: "";
-                  display: block;
-                  height: 2px;
-                  background: var(--clr-secondary);
-                  width: 30%;
-                  margin: 2px;
-                  position: absolute;
-                  left: 50%;
-                  transform: translateX(-50%);
-                }
-              }
-
-              ul {
-                li {
-                  .validate-button {
-                    border-radius: 0 @border-radius @border-radius 0;
-                    transition: all 0.3s ease-in-out;
+                #frame_quests {
+                  padding: 0 var(--gap-reg);
+                  
+                  .isCompleted {
+                    box-shadow: 0 0 0 !important;
+                    opacity: 50%;
+    
+                    i {
+                      padding: 10px !important;
+                      font-size: 12px !important;
+                    }
+    
+                    p {
+                      font-size: 12px !important;
+                    }
+    
                     &:hover {
-                      background: darken(@clr-primary, 20%);
+                      opacity: 100%;
+                      box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.35) !important;
+                    }
+                  }
+    
+                  .js-quest {
+                    transition: 0.3s ease-in-out;
+    
+                    .qButton {
+                      transition: background 0.3s ease-in-out;
+                      border-radius: 0 @border-radius @border-radius 0;
+                    }
+    
+                    .check {
+                      &:hover {
+                        background: #23dc3c91;
+                      }
+                    }
+    
+                    .uncheck {
+                      &:hover {
+                        background: lighten(@clr-red, 20%);
+                      }
+                    }
+                  }
+    
+                  ul {
+                    li {
+                      .validate-button {
+                        border-radius: 0 @border-radius @border-radius 0;
+                        transition: all 0.3s ease-in-out;
+                        &:hover {
+                          background: darken(@clr-primary, 20%);
+                        }
+                      }
                     }
                   }
                 }
               }
-            }
-
-            .interactable {
-              div {
-                font-size: var(--fs--1);
-                cursor: auto;
-
-                padding: 0;
-
-                & p:first-child {
-                  text-align: right;
-                }
-
-                & p:last-child {
-                  text-align: left;
+  
+              .interactable {
+                div {
+                  font-size: var(--fs--1);
+                  cursor: auto;
+  
+                  padding: 0;
+  
+                  & p:first-child {
+                    text-align: right;
+                  }
+  
+                  & p:last-child {
+                    text-align: left;
+                  }
                 }
               }
-            }
           }
         }
       }
@@ -685,28 +708,32 @@ body {
         background-color: var(--clr-primary);
         border-radius: var(--border-radius);
 
-        #frame_objectives {
+        #objectives {
           .flex();
           flex-direction: column;
           overflow: hidden;
 
-          ul {
-            gap: var(--gap-sm) !important;
-            &:not(:last-child) {
-              margin-bottom: var(--gap-reg);
-            }
+          #frame_objectives {
 
-            li {
-              box-shadow: 0 0 0 !important;
-
-              p {
-                margin-left: 0 !important;
+            ul {
+              gap: var(--gap-sm) !important;
+              &:not(:last-child) {
+                margin-bottom: var(--gap-reg);
+              }
+  
+              li {
+                box-shadow: 0 0 0 !important;
+  
+                p {
+                  margin-left: 0 !important;
+                }
               }
             }
           }
+
         }
 
-        #frame_achievements {
+        #achievements {
           .flex(2);
           flex-direction: column;
           overflow: hidden;
@@ -719,59 +746,62 @@ body {
           }
 
           .content {
-            ul {
-              li {
-                transition: background 0.3s ease-in-out;
-                border-radius: 8px;
-                &:hover {
-                  background: darken(@clr-primary, 10%);
-                }
-
-                .achievementCompletion {
-                  padding-right: var(--gap-reg);
-                  margin-left: @gap-sm;
-                  font-family: @font-roboto-bold;
-                }
-
-                .achievementName {
-                  .flex();
-                  flex-direction: column;
-                  height: 100%;
-
-                  .expectIcons {
-                    margin-right: auto;
+            #frame_achievements {
+              
+              ul {
+                li {
+                  transition: background 0.3s ease-in-out;
+                  border-radius: 8px;
+                  &:hover {
+                    background: darken(@clr-primary, 10%);
+                  }
+  
+                  .achievementCompletion {
+                    padding-right: var(--gap-reg);
                     margin-left: @gap-sm;
-
-                    .flex();
-                    gap: var(--gap-reg);
-                    img {
-                      width: 15px;
-                      height: 15px;
-                      object-fit: cover;
-                    }
+                    font-family: @font-roboto-bold;
                   }
-
-                  button {
-                    p {
-                      text-align: left;
+  
+                  .achievementName {
+                    .flex();
+                    flex-direction: column;
+                    height: 100%;
+  
+                    .expectIcons {
+                      margin-right: auto;
+                      margin-left: @gap-sm;
+  
+                      .flex();
+                      gap: var(--gap-reg);
+                      img {
+                        width: 15px;
+                        height: 15px;
+                        object-fit: cover;
+                      }
+                    }
+  
+                    button {
+                      p {
+                        text-align: left;
+                      }
                     }
                   }
                 }
-              }
-
-              .borders-green {
-                border: solid 2px @clr-green;
-              }
-              .borders-red {
-                border: solid 2px @clr-red;
-              }
-              .borders-orange {
-                border: solid 2px @clr-orange;
-              }
-
-              .active {
-                background: darken(@clr-primary, 10%);
-                box-shadow: 0 0 0 !important;
+  
+                .borders-green {
+                  border: solid 2px @clr-green;
+                }
+                .borders-red {
+                  border: solid 2px @clr-red;
+                }
+                .borders-orange {
+                  border: solid 2px @clr-orange;
+                }
+  
+                .active {
+                  background: darken(@clr-primary, 10%);
+                  box-shadow: 0 0 0 !important;
+                }
               }
             }
           }

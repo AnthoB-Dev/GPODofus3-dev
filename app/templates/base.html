@@ -4,6 +4,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="{% static 'medias/icons/favicon.ico' %}" type="image/x-icon" />
     {% compress css %}
     <link
       rel="stylesheet"
@@ -13,16 +14,15 @@
     <link
       href="{% static 'fontawesomefree/css/all.min.css' %}"
       rel="stylesheet"
-      type="text/css" />
+      type="text/css" 
+    />
     <script src="{% static 'js/turbo.es2017-umd.js' %}" defer></script>
     <script src="{% static 'js/nav.js' %}" defer></script>
     <script src="{% static 'js/quests.js' %}" defer></script>
-    <title>Menu</title>
+    <title>Guide de progression optimisée</title>
   </head>
   <body id="theme-emeraude">
-    <video id="backgroundVideo" autoplay muted loop>
-      <source src="{% static 'medias/output_video.mp4' %}" type="video/mp4" />
-    </video>
+    <img id="backgroundImage" src="{% static 'medias/background.jpg' %}" alt="" data-turbo-permanent>
     <div id="header">
       <h1>Guide de progression optimisée</h1>
       <div>

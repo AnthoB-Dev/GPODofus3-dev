@@ -2,25 +2,27 @@
 <!-- Garder frame_main comme ID principal -->
 <turbo-frame id="frame_main">
   <main>
-    <div id="topNav" data-turbo-permanent>{%include "sections/nav.html"%}</div>
+    <div id="topNav" data-turbo-permanent>
+      {%include "sections/nav.html"%}
+    </div>
     <div id="centerContent">
       <!-- Ces frames seront mis à jour lors de la navigation -->
-      <turbo-frame id="frame_guide">
-        {%include "sections/guide_explanations.html"%}
-      </turbo-frame>
-      <turbo-frame id="frame_quests">
+      <section id="guide">
+        {% include "sections/guide_explanations.html" %}
+      </section>
+      <section id="quests">
         {% include "sections/quests.html" %}
-      </turbo-frame>
+      </section>
     </div>
   </main>
 
   <aside>
-    <turbo-frame id="frame_objectives">
+    <section id="objectives">
       {%include "sections/objectives.html"%}
-    </turbo-frame>
-    <turbo-frame id="frame_achievements">
+    </section>
+    <section id="achievements">
       {%include "sections/achievements.html" %}
-    </turbo-frame>
+    </section>
   </aside>
 </turbo-frame>
 {% endblock %}

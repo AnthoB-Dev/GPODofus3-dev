@@ -2,6 +2,20 @@
 
 ## Backend
 
+- [ ] Créer une fonction pour les navs et les enlever de *guide_detail*
+- [ ] Rajouter un délais dans le chargement des pages assez court pour ne pas gêner une utilisation normal mais suffisament long pour rajouter une sensation de fluidité lors du spam des bouton de nav (possiblement inutile maintenant que y'a plus la vidéo)
+- [ ] Mettre en place expect_capture (sur donjon ?)
+- Optimiser le code
+    - [x] Revoir les turbo frames
+        - [x] frame_main
+        - [x] frame_guides
+        - [x] frame_quests
+        - [x] quest_frame_achievement_title
+        - [x] quest_frame_id
+        - [x] frame_objectives
+        - [x] frame_achievements
+- [ ] Résoudre *Electron Security Warning (Insecure Content-Security-Policy)*
+- [ ] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
 - [x] Finir le peuplement des quêtes dans achievements.json
 - [x] Peupler la BDD avec le contenu de achievements.json
 - [x] Peupler la BDD avec le contenu de guides.json
@@ -17,20 +31,6 @@
 - [x] Mettre en place l'arrivée sur le dernier guide vu
 - [x] Mettre en place l'arrivée sur le premier succès non à 100%
 - [x] Regler les gros problèmes de mémoires avec *Electron* (c'était la vidéo)
-- [ ] Créer une fonction pour les navs et les enlever de *guide_detail*
-- [ ] Rajouter un délais dans le chargement des pages assez court pour ne pas gêner une utilisation normal mais suffisament long pour rajouter une sensation de fluidité lors du spam des bouton de nav (possiblement inutile maintenant que y'a plus la vidéo)
-- [ ] Mettre en place expect_capture (sur donjon ?)
-- Optimiser le code
-    - [x] Revoir les turbo frames
-        - [x] frame_main
-        - [x] frame_guides
-        - [x] frame_quests
-        - [x] quest_frame_achievement_title
-        - [x] quest_frame_id
-        - [x] frame_objectives
-        - [x] frame_achievements
-- [ ] Résoudre *Electron Security Warning (Insecure Content-Security-Policy)*
-- [ ] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
 
 ### Bogues :
 
@@ -39,6 +39,13 @@ Vide pour le moment, youpi
 
 ## Frontend
 
+- [ ] Créer une fonction qui sauvegarde les achievements lors des event de click sur ces derniers
+- [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
+- Optimiser le code 
+    - [ ] Vérifier les events js
+- [ ] Media queries
+- [ ] Implémenter d'autres themes
+    - [ ] Changer l'image background selon le thème
 - [x] Terminer le front
 - [x] Comprendre pourquoi #prevision n'existe pas dans les autres guides. (Mauvais format à la redaction)
 - [x] Sur hover des succès : faire en sorte que le title prenne toute la hauteur + border radius right 8px
@@ -50,13 +57,6 @@ Vide pour le moment, youpi
 - [x] Mettre en place le passage au succès suivant après un _validateAll_ plutôt que de recliquer sur l'actuel
 - [x] Rotate de 180 le caret de _topNav_ lorsque le drop est down
 - [x] Enlever la video en background, elle se met à lag dans l'app Electron
-- [ ] Créer une fonction qui sauvegarde les achievements lors des event de click sur ces derniers
-- [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
-- Optimiser le code 
-    - [ ] Vérifier les events js
-- [ ] Media queries
-- [ ] Implémenter d'autres themes
-    - [ ] Changer l'image background selon le thème
 
 ### Bogues :
 

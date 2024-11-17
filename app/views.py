@@ -1,15 +1,5 @@
 from django.views.decorators.http import require_POST
-from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from django.views.generic import (
-    ListView,
-    DetailView,
-    CreateView,
-    UpdateView,
-    DeleteView,
-    TemplateView,
-)
-from django.urls import reverse_lazy
 from django.core.cache import cache
 from django.db.models import Prefetch
 from app.models import Achievement, Guide, Quest, LastSession
@@ -128,7 +118,7 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
 
 
 @require_POST
-def toggle_quest_status(request, quest_id):
+def toggle_quest_completion(request, quest_id):
     quest = get_object_or_404(Quest, id=quest_id)
     quest.completed = not quest.completed
     quest.save()

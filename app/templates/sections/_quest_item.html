@@ -8,15 +8,19 @@
       </a>
     </div>
     <p>{{quest.title}}</p>
-    <button
+    <form method="post" action="{% url 'app:toggle_quest_completion' quest.id %}">
+      {% csrf_token %}
+      <button
       id="quest_{{ quest.id }}"
-      type="button"
-      class="qButton {% if quest.completed %}uncheck{% else %}check{% endif %}">
+      type="submit"
+      class="qButton {% if quest.completed %}uncheck{% else %}check{% endif %}"
+      >
       {% if quest.completed %}
       <i class="fa-solid fa-xmark"></i>
       {% else %}
       <i class="fa-solid fa-check"></i>
       {% endif %}
-    </button>
+      </button>
+    </form>
   </li>
 </turbo-frame>

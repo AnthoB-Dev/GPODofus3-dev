@@ -50,7 +50,6 @@ Vide pour le moment, youpi
 - [x] Mettre en place le passage au succès suivant après un _validateAll_ plutôt que de recliquer sur l'actuel
 - [x] Rotate de 180 le caret de _topNav_ lorsque le drop est down
 - [x] Enlever la video en background, elle se met à lag dans l'app Electron
-- [ ] Mettre en place Stimulus
 - [ ] Créer une fonction qui sauvegarde les achievements lors des event de click sur ces derniers
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
 - Optimiser le code 

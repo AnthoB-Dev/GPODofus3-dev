@@ -1,6 +1,7 @@
-const dropdownContent = document.querySelector('.dropdown-content .overflow');
-
-// Ecouteur pour mettre à jour le titre et la sélection du dropdown
+/**
+ * Met à jour le titre.\ 
+ * Puis updateSelectedGuide()
+ */
 document.addEventListener("turbo:before-render", (event) => {
   // Récupérer le nouveau titre depuis la réponse
   const newTitle = event.detail.newBody.querySelector(
@@ -20,7 +21,28 @@ document.addEventListener("turbo:before-render", (event) => {
   }
 });
 
-// Mettre à jour la sélection du dropdown
+/**
+ * Simule un clique sur le premier achievement non complété
+ */
+const clickFirstAchievementNotCompleted = () => {
+  const percentages = document.querySelectorAll(".js-achievementPercent");
+  let notCompletedAchievements = [];
+  
+  percentages.forEach((item) => {
+    const completionPercentage = Number(item.textContent);
+    const button = item.parentElement?.parentElement;
+
+    if (completionPercentage < 100) {
+      notCompletedAchievements.push(button);
+    } 
+  });
+  notCompletedAchievements[0] ? notCompletedAchievements[0].querySelector("button").click() : null;
+}
+
+/**
+ * Met à jour la sélection du dropdown.\
+ * Puis clickFirstAchievementNotCompleted()
+ */
 const updateSelectedGuide = () => {
   const currentTitle = document.querySelector(
     "#topNav .guide-header h2"
@@ -35,71 +57,69 @@ const updateSelectedGuide = () => {
     }
   });
 
-  // Clique sur le premier achievement non complété
-  const percentages = document.querySelectorAll(".js-achievementPercent");
-  let notCompletedAchievements = [];
-  
-  percentages.forEach((item) => {
-    const completionPercentage = Number(item.textContent);
-    const button = item.parentElement?.parentElement;
-
-    if (completionPercentage < 100) {
-      notCompletedAchievements.push(button);
-    } 
-  });
-  notCompletedAchievements[0] ? notCompletedAchievements[0].querySelector("button").click() : null;
+  clickFirstAchievementNotCompleted();
 };
 
-function openDropdown() {
-  dropdownContent.classList.remove('overflowClose');
+
+const toggleCaret = () => {
+  const caret = document.querySelector("#topNav i");
+  caret.classList.toggle("caretClose");
+  caret.classList.toggle("caretOpen");
+}
+
+
+/**
+ * Ouvre le dropdown
+ */
+const openDropdown = () => {
+  const overflow = document.querySelector('.overflow');
+
+  overflow.classList.remove('overflowClose');
+  overflow.classList.remove('hidden');
   setTimeout(() => {
-    dropdownContent.classList.add('overflowOpen');
+    overflow.classList.add('overflowOpen');
   }, 10);
 }
 
-function closeDropdown() {
-  dropdownContent.classList.remove('overflowOpen');
+/**
+ * Ferme le dropdown.\
+ * Classes CSS:\
+ * .overflowOpen\
+ * .overflowClose
+ */
+const closeDropdown = () => {
+  const overflow = document.querySelector('.overflow');
+  overflow.classList.remove('overflowOpen');
   setTimeout(() => {
-    dropdownContent.classList.add('overflowClose');
+    overflow.classList.add('overflowClose');
+    overflow.classList.add('hidden');
   }, 10);
 }
 
-// Initialisation du dropdown
+/**
+ * Initialisation du dropdown.\
+ */
 const initializeDropdown = () => {
-  const dropdown = document.getElementById("topNav");
-  if (!dropdown) return;
+  const topNav = document.getElementById("topNav");
 
-  const header = dropdown.querySelector(".guide-header");
-  const content = dropdown.querySelector(".dropdown-content");
-  const caret  = dropdown.querySelector("i");
-  const overflowContainer = content.querySelector(".overflow");
+  const guideHeader = topNav.querySelector(".guide-header");
 
-  if (!header.hasAttribute("data-initialized")) {
-    header.setAttribute("data-initialized", "true");
+  const dropDownContent = topNav.querySelector(".dropdown-content");
+  const overflow = dropDownContent.querySelector(".overflow");
 
-    header.addEventListener("click", () => {
-      content.classList.toggle("hidden");
-      
-      dropdown.classList.toggle("topNavOpen");
-      caret.classList.toggle("caretOpen");
-      caret.classList.toggle("caretClose");
-      
-      if (content.style.position == "initial") {
-        content.style.position = "";
-      } else {
-        content.style.position = "initial";
-      }
 
-      if (dropdown.classList.contains("topNavOpen")) {
-        openDropdown();
-      } else {
-        closeDropdown();
-      }
+  if (!guideHeader.hasAttribute("data-initialized")) {
+    guideHeader.setAttribute("data-initialized", "true");
+
+    guideHeader.addEventListener("click", () => {
+      dropDownContent.classList.toggle("hidden");
+      toggleCaret();
 
       // Scroll vers l'élément sélectionné quand on ouvre le dropdown
-      if (!content.classList.contains("hidden")) {
+      if (!dropDownContent.classList.contains("hidden")) {
+        openDropdown()
         setTimeout(() => {
-          const selectedItem = content.querySelector(".guide-item.selected");
+          const selectedItem = overflow.querySelector(".guide-item.selected");
           if (selectedItem) {
             selectedItem.scrollIntoView({
               behavior: "auto",
@@ -107,14 +127,14 @@ const initializeDropdown = () => {
             });
           }
         }, 0);
+      } else {
+        closeDropdown()
       }
-      
     });
 
-    content.querySelectorAll(".guide-item").forEach((item) => {
+    overflow.querySelectorAll(".guide-item").forEach((item) => {
       item.addEventListener("click", (e) => {
         e.preventDefault();
-        content.classList.add("hidden");
 
         // Mise à jour de la sélection
         document
@@ -126,6 +146,8 @@ const initializeDropdown = () => {
           action: "replace",
           frame: "frame_main",
         });
+        closeDropdown();
+        toggleCaret();
       });
     });
   }

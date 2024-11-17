@@ -1,7 +1,7 @@
 {
   "name": "gpodofus",
   "version": "0.1.0",
-  "main": "main.js",
+  "main": "electron/main.js",
   "scripts": {
     "start": "electron .",
     "test": "echo \"Error: no test specified\" && exit 1"

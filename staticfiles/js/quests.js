@@ -1,17 +1,3 @@
-const toggleQuestCompletion = (questId) => {
-  fetch(`/app/toggle-quest/${questId}/`, {
-    method: "POST",
-    headers: {
-      "X-CSRFToken": document.querySelector("[name=csrfmiddlewaretoken]").value,
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.text())
-    .then((html) => {
-      document.getElementById(`quest_frame_${questId}`).innerHTML = html;
-    });
-};
-
 const getLinks = () => {
   const jsQuest = document.querySelectorAll(".js-quest");
   const links = [];

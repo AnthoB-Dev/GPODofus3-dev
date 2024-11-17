@@ -1,4 +1,4 @@
-/*global gettext, interpolate, ngettext, Actions*/
+/*global gettext, interpolate, ngettext*/
 'use strict';
 {
     function show(selector) {

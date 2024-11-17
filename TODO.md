@@ -50,11 +50,10 @@ Vide pour le moment, youpi
 - [x] Mettre en place le passage au succès suivant après un _validateAll_ plutôt que de recliquer sur l'actuel
 - [x] Rotate de 180 le caret de _topNav_ lorsque le drop est down
 - [x] Enlever la video en background, elle se met à lag dans l'app Electron
+- [ ] Mettre en place Stimulus
 - [ ] Créer une fonction qui sauvegarde les achievements lors des event de click sur ces derniers
-- [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
 - Optimiser le code 
-    - [ ] Voir pour utiliser Stimulus
     - [ ] Vérifier les events js
 - [ ] Media queries
 - [ ] Implémenter d'autres themes
@@ -75,4 +74,5 @@ Vide pour le moment, youpi
 - [ ] Combiné les guides ayant pour objectif la complétion d'un donjon
 - [ ] Définir les succès concernés sur chaque Guide (actuellement à "**A travers le Krosmoz**")
 - [ ] Faire le _README_ de l'app
+- [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
 

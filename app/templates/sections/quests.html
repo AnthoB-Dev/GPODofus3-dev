@@ -1,5 +1,4 @@
 {% load static %}
-{% csrf_token %}
 <div class="title">
   <div class="imgBackground">
     <img src="{% static 'medias/icons/quest.png' %}" alt="" />
@@ -16,13 +15,9 @@
     </turbo-frame>
     {% if quests %}
     <turbo-frame id="frame_quests">
-      <ul
-        onclick="if(event.target.closest('.qButton')) { 
-        event.preventDefault();
-        toggleQuestCompletion(event.target.closest('.qButton').id.split('_')[1]);
-      }">
+      <ul>
         {% for quest in quests %}
-        {% include "sections/_quest_item.html" %}
+          {% include "sections/_quest_item.html" %}
         {% endfor %}
       </ul>
     </turbo-frame>

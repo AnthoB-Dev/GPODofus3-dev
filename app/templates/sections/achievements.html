@@ -9,9 +9,7 @@
   <turbo-frame id="frame_achievements">
     <ul id="achievements_list">
       {% for item in achievements %}
-      <turbo-frame id="frame_achievement_{{ item.achievement.id }}">
         {% include 'sections/_achievement_item.html' %}
-      </turbo-frame>
       {% endfor %}
     </ul>
   </turbo-frame>

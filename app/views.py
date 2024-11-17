@@ -1,3 +1,6 @@
+import logging
+from django.http import HttpResponse
+from django.urls import reverse
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.cache import cache
@@ -116,6 +119,7 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
 
     return render(request, "sections/quests.html", context)
 
+logger = logging.getLogger(__name__)
 
 @require_POST
 def toggle_quest_completion(request, quest_id):
@@ -123,12 +127,45 @@ def toggle_quest_completion(request, quest_id):
     quest.completed = not quest.completed
     quest.save()
 
-    # Récupérer l'achievement et le guide
+    # Récupérer l'achievement associé
     achievement = Achievement.objects.filter(quests=quest).first()
     guide = Guide.objects.filter(achievement=achievement).first()
 
-    # Rediriger vers la vue partielle quest_item
-    return redirect('app:quest_item', quest_id=quest.id)
+    # Recalculer le pourcentage de complétion
+    total_quests = achievement.quests.count()
+    completed_quests = achievement.quests.filter(completed=True).count()
+    completion_percentage = (
+        int((completed_quests / total_quests * 100)) if total_quests > 0 else 0
+    )
+
+    # Rendre les templates partiels EN INCLUANT `request`
+    quest_html = render_to_string('sections/_quest_item.html', {
+        'quest': quest,
+        'achievement': achievement,
+        'guide': guide
+    }, request=request)
+    
+    achievement_html = render_to_string('sections/_achievement_item.html', {
+        'item': {
+            'achievement': achievement,
+            'completion_percentage': completion_percentage
+        },
+        'guide': guide
+    }, request=request)
+
+    logger.debug(f"Quest HTML: {quest_html}")
+    logger.debug(f"Achievement HTML: {achievement_html}")
+
+    # Créer la réponse Turbo Stream
+    response_content = f"""
+    <turbo-stream action="replace" target="quest_frame_{quest.id}">
+      <template>{quest_html}</template>
+    </turbo-stream>
+    <turbo-stream action="replace" target="achievement_frame_{achievement.id}">
+      <template>{achievement_html}</template>
+    </turbo-stream>
+    """
+    return HttpResponse(response_content, content_type='text/vnd.turbo-stream.html')
 
 
 def quest_item(request, quest_id):

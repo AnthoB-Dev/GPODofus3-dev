@@ -2,9 +2,6 @@
 
 ## Backend
 
-- [ ] Créer une fonction pour les navs et les enlever de *guide_detail*
-- [ ] Rajouter un délais dans le chargement des pages assez court pour ne pas gêner une utilisation normal mais suffisament long pour rajouter une sensation de fluidité lors du spam des bouton de nav (possiblement inutile maintenant que y'a plus la vidéo)
-- [ ] Mettre en place expect_capture (sur donjon ?)
 - Optimiser le code
     - [x] Revoir les turbo frames
         - [x] frame_main
@@ -14,8 +11,9 @@
         - [x] quest_frame_id
         - [x] frame_objectives
         - [x] frame_achievements
-- [ ] Résoudre *Electron Security Warning (Insecure Content-Security-Policy)*
-- [ ] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
+- [ ] Créer une fonction pour les navs et les enlever de *guide_detail*
+- [ ] Rajouter un délais dans le chargement des pages assez court pour ne pas gêner une utilisation normal mais suffisament long pour rajouter une sensation de fluidité lors du spam des bouton de nav (possiblement inutile maintenant que y'a plus la vidéo)
+- [ ] Mettre en place expect_capture (sur donjon ?)
 - [x] Finir le peuplement des quêtes dans achievements.json
 - [x] Peupler la BDD avec le contenu de achievements.json
 - [x] Peupler la BDD avec le contenu de guides.json
@@ -30,19 +28,17 @@
 - [x] Modifier les problêmes lié à _validAll_ qui ne peut pas enchainer les toggles (lié à la façon de render la view)
 - [x] Mettre en place l'arrivée sur le dernier guide vu
 - [x] Mettre en place l'arrivée sur le premier succès non à 100%
-- [x] Regler les gros problèmes de mémoires avec *Electron* (c'était la vidéo)
 
 ### Bogues :
 
-Vide pour le moment, youpi
-
+- [ ] Le titre de du succès dans quêtes ne se met pas à jour lors des cliques sur un succès différent
 
 ## Frontend
 
-- [ ] Créer une fonction qui sauvegarde les achievements lors des event de click sur ces derniers
-- [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
 - Optimiser le code 
     - [ ] Vérifier les events js
+- [ ] Créer une fonction qui sauvegarde les achievements lors des event de click sur ces derniers
+- [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
 - [ ] Media queries
 - [ ] Implémenter d'autres themes
     - [ ] Changer l'image background selon le thème
@@ -60,18 +56,28 @@ Vide pour le moment, youpi
 
 ### Bogues :
 
-- [ ] Refaire fonctionner la *topNav* qui est en partie cassé depuis le styling
-- [ ] Les event listener de click lorsque la _topNav_ est ouverte ne fonctionnent plus (pas?) pour fermer la nav
-- [ ] Premier chargement de page : _validateAll_ ne fonctionne pas
-- [ ] Lorsque je valide toute les quêtes individuellement, le bouton _validateAll_ ne se met pas à jour et reste sur valider tout.
 - [ ] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. Ce qui résulte en celle qui a été validée / dévalidée a rester dévalidée à moins de rappuyer sur le _validateAll_
-- [ ] Problème sur l'arrivée de la page qui ne prends pas le js en compte
+- [ ] Le titre du succès dans quêtes ne change pas suite au focus
+- [x] Lorsque je valide toute les quêtes individuellement, le bouton _validateAll_ ne se met pas à jour et reste sur valider tout.
+- [x] Refaire fonctionner la *topNav* qui est en partie cassé depuis le styling
+- [x] Les event listener de click lorsque la _topNav_ est ouverte ne fonctionnent plus (pas?) pour fermer la nav
+- Problèmes sur le premier chargement de la page qui ne prends pas le js en compte
+    - [x] Le focus sur le premier succès non complété ne se fait pas lors de l'arrivée
+    - [x] _validateAll_ ne fonctionne pas
 
 
 ## Redaction
 
 - [ ] Combiné les guides ayant pour objectif la complétion d'un donjon
 - [ ] Définir les succès concernés sur chaque Guide (actuellement à "**A travers le Krosmoz**")
-- [ ] Faire le _README_ de l'app
 - [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
+- [ ] Faire le _README_ de l'app
 
+
+## Electron 
+
+- [ ] Le *validateAll* sur spam du bouton finit par ralentir un des processus, peut être le *clickNextAchievement*, ou peut être le render de quests    
+- [ ] Résoudre *Electron Security Warning (Insecure Content-Security-Policy)*
+- [ ] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
+- [ ] Faire en sorte de bien avoir le nom et l'icone de l'app dans le gestionnaire des tâches (peut être que le build résoudra le pb ?)
+- [x] Regler les gros problèmes de mémoires avec *Electron* (c'était la vidéo)

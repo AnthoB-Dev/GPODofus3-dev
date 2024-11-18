@@ -27,6 +27,4 @@ urlpatterns = [
         name="guide_quests_achievement",
     ),
     path('toggle-quest/<int:quest_id>/', views.toggle_quest_completion, name='toggle_quest_completion'),
-    path('quest_item/<int:quest_id>/', views.quest_item, name='quest_item'),
-    path('achievement_item/<int:achievement_id>/', views.achievement_item, name='achievement_item'),
 ]

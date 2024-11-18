@@ -166,27 +166,3 @@ def toggle_quest_completion(request, quest_id):
     </turbo-stream>
     """
     return HttpResponse(response_content, content_type='text/vnd.turbo-stream.html')
-
-
-def quest_item(request, quest_id):
-    quest = get_object_or_404(Quest, id=quest_id)
-    achievement = Achievement.objects.filter(quests=quest).first()
-    guide = Guide.objects.filter(achievement=achievement).first()
-    
-    return render(request, "sections/_quest_item.html", {"quest": quest, "achievement": achievement, "guide": guide})
-
-def achievement_item(request, achievement_id):
-    achievement = get_object_or_404(Achievement, id=achievement_id)
-    guide = Guide.objects.filter(achievement=achievement).first()
-    
-    return render(request, "sections/_achievement_item.html", {"achievement": achievement, "guide": guide})
-
-
-def messages(request):
-    return render(request, "pages/messages/messages.html")
-
-def message(request, message_id):
-    return render(request, "pages/messages/message.html")
-
-def message_edit(request, message_id):
-    return render(request, "pages/messages/message_edit.html")

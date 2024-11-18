@@ -37,6 +37,11 @@
 
 - Optimiser le code 
     - [ ] Vérifier les events js
+    - [ ] Améliorer l'accessibilité
+        - [ ] Changer la plupart de mes ul / li en divs
+        - [x] Aria label sur les liens
+        - [x] Aria label sur les boutons
+    - [x] Régler l'erreur *Form submission canceled because the form is not connected*
 - [ ] Créer une fonction qui sauvegarde les achievements lors des event de click sur ces derniers
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
 - [ ] Media queries
@@ -79,5 +84,6 @@
 - [ ] Le *validateAll* sur spam du bouton finit par ralentir un des processus, peut être le *clickNextAchievement*, ou peut être le render de quests    
 - [ ] Résoudre *Electron Security Warning (Insecure Content-Security-Policy)*
 - [ ] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
+- [ ] Ajouter un loading screen au lancer
 - [ ] Faire en sorte de bien avoir le nom et l'icone de l'app dans le gestionnaire des tâches (peut être que le build résoudra le pb ?)
 - [x] Regler les gros problèmes de mémoires avec *Electron* (c'était la vidéo)

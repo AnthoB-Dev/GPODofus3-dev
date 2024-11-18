@@ -435,7 +435,7 @@ body {
           background: var(--clr-secondary);
           cursor: pointer;
           border: solid 1px var(--clr-light);          
-          border-radius: var(--border-radius);
+          transition: all 0.1s ease-in-out;
 
           .guide-header {
             align-items: center;
@@ -481,39 +481,50 @@ body {
             position: absolute;
             z-index: 1000;
             overflow: hidden;
+            width: 100%;
+            background: var(--clr-secondary-two);
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            border: solid 1px var(--clr-light);
             
             .overflow {
-              transition: max-height 0.2s ease-in-out; 
+              max-height: 0;
+              transition: all 0.1s ease-in-out;
               overflow-y: auto;
               scrollbar-color: #7b6939 #00000000;
               margin: var(--gap-sm);
-              max-height: 0;
-
+          
               .guide-item {
                 padding: 8px 16px;
                 cursor: pointer;
               }
-
+          
               .guide-item:hover {
                 background: #f5f5f5;
               }
-
+          
               .guide-item.selected {
                 background-color: #f0f0f0;
                 font-weight: bold;
               }
             }
-
+          
             .overflowOpen {
               max-height: 400px;
             } 
-  
+          
             .overflowClose {
-              max-height: 0px;
+              max-height: 0;
             }
           }
+        }
 
+        .js-open {
+          border-radius: var(--border-radius) var(--border-radius) 0 0;
           
+        }
+
+        .js-close {
+          border-radius: var(--border-radius);
         }
 
         #centerContent {

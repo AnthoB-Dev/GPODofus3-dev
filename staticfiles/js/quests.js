@@ -102,9 +102,8 @@ const toggleBtnBackgroundStyle = () => {
  */
 const listenToValidateAllBtn = () => {
   const validateAll = document.querySelector("#validateAll");
-  let buttonsType = getButtons();
   validateAll.addEventListener("click", () => {
-    clickValidateAll(buttonsType);
+    clickValidateAll();
   });
 };
 
@@ -128,17 +127,21 @@ const getButtons = () => {
 /**
  * - Clique sur chacun des boutons de validation des quêtes.
  * - Une fois tous les boutons cliqués, appelle clickNextAchievementBtn() ou clickCurrentAchievementBtn() selon le type de boutons.
- * @param buttonsType 
  */
-const clickValidateAll = (buttonsType) => {
+const clickValidateAll = () => {
+  let buttonsType = getButtons();
   
   if (!Array.isArray(buttonsType)) {
     buttonsType = Array.from(buttonsType);
   }
+
   let delay = 0;
   const promises = buttonsType.map((button) => {
     return new Promise((resolve) => {
-      button.click();
+      // Vérifie que le bouton est toujours dans le DOM
+      if (document.body.contains(button)) {
+        button.click();
+      }
       resolve();
     }, delay += 100);
   });

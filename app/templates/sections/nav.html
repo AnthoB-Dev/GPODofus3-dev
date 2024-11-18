@@ -7,7 +7,7 @@
   <i class="fa-solid fa-caret-down caretClose"></i>
 </div>
 <turbo-frame id="navigation-dropdown" class="dropdown-content hidden" loading="lazy">
-  <div class="overflow">
+  <div class="overflow overflowClose">
     {% for guide in guides %}
     <div class="guide-item" data-guide-id="{{guide.id}}" data-url="{% url 'app:guide_detail' guide.id %}">
       {{ guide.title }}

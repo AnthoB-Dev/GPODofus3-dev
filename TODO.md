@@ -3,6 +3,7 @@
 ## Backend
 
 - Optimiser le code
+    - [ ] Reduire le nombre de redondance et de code inutile
     - [x] Revoir les turbo frames
         - [x] frame_main
         - [x] frame_guides
@@ -11,9 +12,11 @@
         - [x] quest_frame_id
         - [x] frame_objectives
         - [x] frame_achievements
-- [ ] Créer une fonction pour les navs et les enlever de *guide_detail*
-- [ ] Rajouter un délais dans le chargement des pages assez court pour ne pas gêner une utilisation normal mais suffisament long pour rajouter une sensation de fluidité lors du spam des bouton de nav (possiblement inutile maintenant que y'a plus la vidéo)
+- [ ] Mettre en place la sauvegarde du dernier achievement vu lors des cliques sur ces derniers (Ne sauvegarde que le premier du guide actuellement)
+- [ ] Ajouter un toggle pour l'alignement, le mettre en storage.
+    - [ ] Mettre en place la logique de visibilité des guides selon l'alignement
 - [ ] Mettre en place expect_capture (sur donjon ?)
+- [x] Créer une fonction pour les navs et les enlever de *guide_detail*
 - [x] Finir le peuplement des quêtes dans achievements.json
 - [x] Peupler la BDD avec le contenu de achievements.json
 - [x] Peupler la BDD avec le contenu de guides.json
@@ -31,7 +34,10 @@
 
 ### Bogues :
 
-- [ ] Le titre de du succès dans quêtes ne se met pas à jour lors des cliques sur un succès différent
+- [ ] Le titre du succès dans quêtes ne se met pas à jour lors des cliques sur un succès différent
+- [ ] L'arrivée sur le guide 4 "**A travers le Krosmoz**" redirige vers */app/guide/4/quests/164/* 
+- [ ] L'arrivée sur le guide 169 "**Donjon : Nid du Kwakwa**" redirige vers */app/guide/169/quests/166/*
+- [ ] Problemes de "*content missing*" sur le succès "*Tout est en Ordre*" du guide "**Archipel de Valonia - Albuera**" (Vu qu'ici)
 
 ## Frontend
 
@@ -42,8 +48,12 @@
         - [x] Aria label sur les liens
         - [x] Aria label sur les boutons
     - [x] Régler l'erreur *Form submission canceled because the form is not connected*
-- [ ] Créer une fonction qui sauvegarde les achievements lors des event de click sur ces derniers
+- [ ] Empecher le *clickNextAchievement* lors de la *dévalidation*
+- [ ] Faire en sorte que le validateAll lors du dernier succès du guide reste sur le dernier succès (probablement doublon avec la ligne de dessus) 
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
+- [ ] Ajouter des eventlistener sur les fleches gauche et droite pour naviguer dans les guides
+- [ ] Ajouter des eventlistener sur les fleches du haut et du bas pour naviguer avec la topNav
+- [ ] Décider quoi faire des pseudo discord, mettre des liens ? Probablement pas
 - [ ] Media queries
 - [ ] Implémenter d'autres themes
     - [ ] Changer l'image background selon le thème
@@ -61,6 +71,9 @@
 
 ### Bogues :
 
+- [ ] Lorsque je selectionne un guide et que je refresh la page, la topNav ne revient pas sur le dernier guide vu (scrollIntoView nav.js)
+- [ ] Le clickCurrentAchievement lorsqu'il n'y a plus de nextAchievement ne fonctionne pas
+- [ ] Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés
 - [ ] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. Ce qui résulte en celle qui a été validée / dévalidée a rester dévalidée à moins de rappuyer sur le _validateAll_
 - [ ] Le titre du succès dans quêtes ne change pas suite au focus
 - [x] Lorsque je valide toute les quêtes individuellement, le bouton _validateAll_ ne se met pas à jour et reste sur valider tout.

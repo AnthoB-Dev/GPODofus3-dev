@@ -9,13 +9,32 @@ from app.models import Achievement, Guide, Quest, LastSession
 from django.template.loader import render_to_string
 
 
-def guide_detail(request, guide_id, achievement_id=None):
+def get_navigation_context(guide):
     # Cache des guides
     guides = cache.get("all_guides")
     if guides is None:
         guides = Guide.objects.only("id", "title").all()
-        cache.set("all_guides", guides, 60 * 15)
+        cache.set("all_guides", guides, 60 * 15)  # Cache pour 15 minutes
 
+    # Guides précédent et suivant
+    previous_guide = None
+    if guide.page > 0:  # Vérifier si on n'est pas au premier guide
+        previous_guide = (
+            Guide.objects.filter(page__lt=guide.page, page__gt=0)
+            .order_by("-page")
+            .first()
+        )
+
+    next_guide = Guide.objects.filter(page__gt=guide.page).order_by("page").first()
+
+    return {
+        "guides": guides,
+        "previous_guide": previous_guide,
+        "next_guide": next_guide,
+    }
+    
+    
+def guide_detail(request, guide_id, achievement_id=None):
     # Guide actuel
     guide = get_object_or_404(
         Guide.objects.prefetch_related(
@@ -26,15 +45,8 @@ def guide_detail(request, guide_id, achievement_id=None):
         id=guide_id,
     )
 
-    previous_guide = None
-    if guide.page > 0:  # Vérifier si on n'est pas au premier guide
-        previous_guide = (
-            Guide.objects.filter(page__lt=guide.page, page__gt=0)
-            .order_by("-page")
-            .first()
-        )
-
-    next_guide = Guide.objects.filter(page__gt=guide.page).order_by("page").first()
+    # Obtenir le contexte de navigation
+    navigation_context = get_navigation_context(guide)
 
     # Préparation du contexte avec vérification
     achievements = list(guide.achievement.all())
@@ -67,13 +79,13 @@ def guide_detail(request, guide_id, achievement_id=None):
     
     context = {
         "guide": guide,
-        "guides": guides, # Pour la navigation des guides TODO: créer une fonction spécifiquement pour les nav topNav et celle du guide
-        "previous_guide": previous_guide, # TODO: Mettre dans la fonction de navigation
-        "next_guide": next_guide, # TODO: Mettre dans la fonction de navigation
         "achievements": achievements_with_completion,
         "selected_achievement": selected_achievement,
         "quests": quests,
     }
+
+    # Ajouter le contexte de navigation au contexte général
+    context.update(navigation_context)
 
     return render(request, "pages/guide.html", context)
 

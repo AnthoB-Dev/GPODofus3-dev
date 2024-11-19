@@ -63,7 +63,7 @@ const clickFirstAchievementNotCompleted = () => {
       notCompletedAchievements.push(button);
     } 
   });
-  notCompletedAchievements[0] ? notCompletedAchievements[0].querySelector("button").click() : null;
+  notCompletedAchievements[0] ? notCompletedAchievements[0].querySelector(".achievementName a").click() : null;
 }
 
 /**

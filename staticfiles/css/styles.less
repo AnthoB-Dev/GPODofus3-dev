@@ -326,7 +326,7 @@ body {
         i {
           cursor: pointer;
           font-size: 15px;
-          padding: var(--gap-md);
+          padding: var(--gap-lg);
         }
 
         p {
@@ -780,7 +780,7 @@ body {
                   .achievementName {
                     .flex();
                     flex-direction: column;
-                    height: 43px;
+                    min-height: 45px;
                     justify-content: center;
   
                     .expectIcons {
@@ -796,7 +796,11 @@ body {
                       }
                     }
   
-                    button {
+                    a {
+                      padding: var(--gap-sm) 0;
+                      .flex();
+                      justify-content: center;
+                      flex-direction: column;
                       p {
                         text-align: left;
                       }

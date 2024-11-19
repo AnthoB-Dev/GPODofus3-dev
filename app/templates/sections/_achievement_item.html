@@ -13,17 +13,26 @@
       </a>
     </div>
     <div class="achievementName">
-      <button
-        id="achievement_{{ item.achievement.id }}"
-        type="button"
+      <a
+        href="{% url 'app:guide_quests_achievement' guide.id item.achievement.id %}"
+        aria-label="Voir les quêtes du succès {{ item.achievement.title }}"
+        class="achievement-button"
+        data-turbo-frame="frame_quests"
         data-achievement-id="{{ item.achievement.id }}"
-        onclick="Turbo.visit('{% url 'app:guide_quests_achievement' guide.id item.achievement.id %}', { frame: 'frame_quests' })"
-        class="achievement-button">
+        id="achievement_{{ item.achievement.id }}"
+        >
         <p>{{ item.achievement.title }}</p>
+
+        {% if item.achievement.expect_alignment %}
+        {% endif %} {% if item.achievement.expect_fight %}
+        {% endif %} {% if item.achievement.expect_ressource %}
+        {% endif %} {% if item.achievement.expect_item %}
+        {% endif %} {% if item.achievement.expect_dungeon %}
+        {% endif %} {% if item.achievement.expect_job %}
         <span class="expectIcons">
           {% if item.achievement.expect_alignment %}
           <img src="{% static 'medias/icons/alignment.png' %}" alt="" />
-          {% else %} {% if item.achievement.expect_fight %}
+          {% endif %} {% if item.achievement.expect_fight %}
           <img src="{% static 'medias/icons/fight.png' %}" alt="" />
           {% endif %} {% if item.achievement.expect_ressource %}
           <img src="{% static 'medias/icons/resource.png' %}" alt="" />
@@ -33,9 +42,10 @@
           <img src="{% static 'medias/icons/dungeon.png' %}" alt="" />
           {% endif %} {% if item.achievement.expect_job %}
           <img src="{% static 'medias/icons/job.png' %}" alt="" />
-          {% endif %} {% endif %}
+          {% endif %}
         </span>
-      </button>
+        {% endif %}
+      </a>
     </div>
     <div class="achievementCompletion">
       <span class="js-achievementPercent">{{item.completion_percentage}}</span>%

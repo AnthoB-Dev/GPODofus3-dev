@@ -4,6 +4,7 @@ const launchFunctions = () => {
   listenToValidateAllBtn();
   validateAllBtnStyle();
   toggleActiveStateOnAchievements();
+  updateQuestsAchievementTitle();
 };
 
 document.addEventListener("DOMContentLoaded", launchFunctions);
@@ -96,7 +97,6 @@ const toggleBtnBackgroundStyle = () => {
   });
 };
 
-
 /**
  * - Ajoute un listener "click" sur le bouton #validateAll.
  */
@@ -162,7 +162,7 @@ const clickNextAchievementBtn = () => {
   achievements.forEach((achievement) => {
     const currentAchievementId = achievement.dataset.achievementId;
     if (currentAchievementId === questsAchievementId) {
-      nextAchievement = achievement.parentElement.nextElementSibling?.querySelector("button");
+      nextAchievement = achievement.parentElement.nextElementSibling?.querySelector(".achievementName a");
     }
     return; 
   })
@@ -192,7 +192,7 @@ const clickCurrentAchievementBtn = () => {
   achievements.forEach((achievement) => {
     const currentAchievementId = achievement.dataset.achievementId;
     if (currentAchievementId === questsAchievementId) {
-      currentAchievement = achievement.parentElement.querySelector("button");
+      currentAchievement = achievement.parentElement.querySelector(".achievementName a");
     }
     return; 
   })
@@ -217,3 +217,23 @@ const toggleActiveStateOnAchievements = () => {
     });
   });
 };
+
+/**
+ * - Met à jour le titre du succès actuel.
+ */
+const updateQuestsAchievementTitle = () => {
+  const questsAchievementId = document.querySelector(".js-quest").dataset.achievementId;
+  const questsAchievementTitle = document.querySelector("#quest_frame_achievement_title h4");
+
+  const achievements = getAchievements();
+  let currentAchievement;
+  
+  achievements.forEach((achievement) => {
+    const currentAchievementId = achievement.dataset.achievementId;
+    if (currentAchievementId === questsAchievementId) {
+      currentAchievement = achievement.parentElement.querySelector("p");
+    }
+    return; 
+  })
+  questsAchievementTitle.textContent = currentAchievement.textContent;
+}

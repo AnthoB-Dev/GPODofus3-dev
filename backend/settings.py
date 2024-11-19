@@ -30,6 +30,11 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+]
+
 
 # Application definition
 
@@ -47,15 +52,22 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  
+    "django.middleware.gzip.GZipMiddleware",       
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware", 
 ]
+
+if not DEBUG:
+    INSTALLED_APPS.remove('debug_toolbar')
+    MIDDLEWARE.remove('debug_toolbar.middleware.DebugToolbarMiddleware')
+
 
 ROOT_URLCONF = "backend.urls"
 
@@ -160,4 +172,18 @@ COMPRESS_URL = STATIC_URL
 
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
+)
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Configuration GZip
+GZIP_MINIMUM_SIZE = 1024  # 1 Ko
+GZIP_CONTENT_TYPES = (
+    'text/plain',
+    'text/css',
+    'application/json',
+    'application/javascript',
+    'text/html',
+    'application/xml',
+    'text/javascript',
 )

@@ -1,10 +1,10 @@
-const { contextBridge, ipcRenderer } = require("electron");
+const { contextBridge, ipcRenderer } = require('electron');
 
-contextBridge.exposeInMainWorld("electron", {
-  openExternal: (url) => ipcRenderer.send("open-external", url),
+contextBridge.exposeInMainWorld('electronAPI', {
+  saveLastAchievement: (achievementId) => ipcRenderer.invoke('save-last-achievement', achievementId)
 });
 
-// renderer.js
+// TODO: Enlever le code ci-dessous si renderer.js est configuté et fonctionne
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll('a[href^="http"]').forEach((link) => {
     link.addEventListener("click", (event) => {

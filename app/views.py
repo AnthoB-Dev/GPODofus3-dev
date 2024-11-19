@@ -33,31 +33,35 @@ def get_navigation_context(guide):
         "next_guide": next_guide,
     }
     
-    
+
 def guide_detail(request, guide_id, achievement_id=None):
-    # Guide actuel
+    # Récupérer le guide avec les achievements et quêtes préchargés
     guide = get_object_or_404(
         Guide.objects.prefetch_related(
             Prefetch(
-                "achievement", queryset=Achievement.objects.prefetch_related("quests")
+                "achievement",
+                queryset=Achievement.objects.prefetch_related("quests")
             )
         ),
         id=guide_id,
     )
 
-    # Obtenir le contexte de navigation
+    # Contexte de navigation
     navigation_context = get_navigation_context(guide)
 
-    # Préparation du contexte avec vérification
+    # Sélection de l'achievement
     achievements = list(guide.achievement.all())
     if achievement_id:
-        selected_achievement = get_object_or_404(achievements, id=achievement_id)
+        selected_achievement = next((a for a in achievements if a.id == achievement_id), None)
+        if not selected_achievement:
+            selected_achievement = get_object_or_404(Achievement, id=achievement_id)
     else:
         selected_achievement = achievements[0] if achievements else None
 
+    # Liste des quêtes
     quests = selected_achievement.quests.all() if selected_achievement else []
 
-    # Calcul du pourcentage de quêtes complétées pour chaque achievement
+    # Calcul du pourcentage de complétion
     achievements_with_completion = []
     for achievement in achievements:
         total_quests = achievement.quests.count()
@@ -65,28 +69,27 @@ def guide_detail(request, guide_id, achievement_id=None):
         completion_percentage = (
             int((completed_quests / total_quests * 100)) if total_quests > 0 else 0
         )
-        achievements_with_completion.append(
-            {
-                "achievement": achievement,
-                "completion_percentage": completion_percentage,
-            }
-        )
+        achievements_with_completion.append({
+            "achievement": achievement,
+            "completion_percentage": completion_percentage,
+        })
 
+    # Mise à jour de la session
     lastSession, created = LastSession.objects.get_or_create(id=1)
     lastSession.last_guide = guide if guide is not None else 1
     lastSession.last_achievement = selected_achievement
     lastSession.save()
     
+    # Contexte complet
     context = {
         "guide": guide,
         "achievements": achievements_with_completion,
         "selected_achievement": selected_achievement,
         "quests": quests,
     }
-
-    # Ajouter le contexte de navigation au contexte général
     context.update(navigation_context)
 
+    # Rendre la page complète sinon
     return render(request, "pages/guide.html", context)
 
 
@@ -131,7 +134,6 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
 
     return render(request, "sections/quests.html", context)
 
-logger = logging.getLogger(__name__)
 
 @require_POST
 def toggle_quest_completion(request, quest_id):
@@ -142,15 +144,15 @@ def toggle_quest_completion(request, quest_id):
     # Récupérer l'achievement associé
     achievement = Achievement.objects.filter(quests=quest).first()
     guide = Guide.objects.filter(achievement=achievement).first()
-
+    
     # Recalculer le pourcentage de complétion
     total_quests = achievement.quests.count()
     completed_quests = achievement.quests.filter(completed=True).count()
     completion_percentage = (
         int((completed_quests / total_quests * 100)) if total_quests > 0 else 0
     )
-
-    # Rendre les templates partiels EN INCLUANT `request`
+    
+    # Rendre les templates partiels en incluant request
     quest_html = render_to_string('sections/_quest_item.html', {
         'quest': quest,
         'achievement': achievement,
@@ -164,9 +166,6 @@ def toggle_quest_completion(request, quest_id):
         },
         'guide': guide
     }, request=request)
-
-    logger.debug(f"Quest HTML: {quest_html}")
-    logger.debug(f"Achievement HTML: {achievement_html}")
 
     # Créer la réponse Turbo Stream
     response_content = f"""

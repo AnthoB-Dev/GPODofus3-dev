@@ -17,17 +17,9 @@ Including another URLconf
 
 from django.conf import settings
 from django.contrib import admin
-from django.shortcuts import redirect
 from django.urls import path, include
-from app.models import LastSession
-from app.views import redirect
+from app.views import redirect_to_guide
 
-def redirect_to_guide(request):
-    last_session = LastSession.objects.first()
-    if last_session is not None:
-        return redirect("app:guide_detail", guide_id=last_session.last_guide_id)
-    else:
-        return redirect("app:guide_detail", guide_id=1)
 
 urlpatterns = [
     path("admin/", admin.site.urls),

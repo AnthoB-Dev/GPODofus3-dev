@@ -9,6 +9,14 @@ from app.models import Achievement, Guide, Quest, LastSession
 from django.template.loader import render_to_string
 
 
+def redirect_to_guide(request):
+    last_session = LastSession.objects.first()
+    if last_session is not None:
+        return redirect("app:guide_detail", guide_id=last_session.last_guide_id)
+    else:
+        return redirect("app:guide_detail", guide_id=1)
+
+
 def get_navigation_context(guide):
     # Cache des guides
     guides = cache.get("all_guides")
@@ -51,6 +59,8 @@ def guide_detail(request, guide_id, achievement_id=None):
 
     # Sélection de l'achievement
     achievements = list(guide.achievement.all())
+    
+    
     if achievement_id:
         selected_achievement = next((a for a in achievements if a.id == achievement_id), None)
         if not selected_achievement:
@@ -125,6 +135,13 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
         achievement = guide.achievement.first()
 
     quests = achievement.quests.all() if achievement else []
+    
+       
+    # Mise à jour de la session
+    lastSession, created = LastSession.objects.get_or_create(id=1)
+    lastSession.last_guide = guide if guide is not None else 1
+    lastSession.last_achievement = achievement
+    lastSession.save()
 
     context = {
         "guide": guide,

@@ -6,22 +6,10 @@
   <h3>Quêtes</h3>
 </div>
 <div class="content">
-    <turbo-frame id="quest_frame_achievement_title">
-      <h4>
-        {% if selected_achievement %} 
-        {{ selected_achievement.title }} {% else %} {{ achievement.title }} 
-        {% endif %}
-      </h4>
-    </turbo-frame>
-    {% if quests %}
-    <turbo-frame id="frame_quests">
-      <ul>
-        {% for quest in quests %}
-          {% include "sections/_quest_item.html" %}
-        {% endfor %}
-      </ul>
-    </turbo-frame>
-    {% endif %}
+  {% include 'sections/_quests_achievement_title.html' %}
+  {% if quests %}
+    {% include 'sections/_frame_quests.html' %}
+  {% endif %}
 </div>
 <div class="interactable">
   <button id="openAll">

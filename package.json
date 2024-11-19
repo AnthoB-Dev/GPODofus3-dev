@@ -1,18 +1,57 @@
 {
-  "name": "gpodofus",
-  "version": "0.1.0",
+  "name": "guide-de-progression-optimisee-dofus",
+  "version": "0.8.0",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:renderer": "node esbuild.config.js",
+    "build": "npm run build:renderer && electron-builder"
   },
-  "author": "Shiinasan",
-  "license": "ISC",
+  "build": {
+    "appId": "com.gpodofus.anthobdev",
+    "productName": "Guide de Progession Optimisée pour Dofus",
+    "files": [
+      "main.js",
+      "preload.js",
+      "static/**/*",
+      "templates/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icons/favicon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "build/icons/favicon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "build/icons/png/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true
+    }
+  },
+  "author": "AnthoB-Dev",
+  "license": "MIT",
   "description": "Guide de progression optimisée pour Dofus",
   "devDependencies": {
-    "electron": "^33.0.2"
+    "electron": "^33.0.2",
+    "electron-builder": "^25.1.8",
+    "esbuild": "^0.24.0"
   },
   "dependencies": {
-    "@hotwired/turbo": "^8.0.12"
+    "@hotwired/turbo": "^8.0.12",
+    "dotenv": "^16.4.5",
+    "electron-log": "^5.2.2",
+    "electron-store": "^7.0.1",
+    "electron-updater": "^6.3.9"
   }
 }

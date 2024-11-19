@@ -151,3 +151,4 @@ staticfiles/CACHE/
 staticfiles/debug_toolbar/
 staticfiles/fontawesomefree/
 !admin/css/**/*.css
+logs/

@@ -4,9 +4,6 @@
     <img src="{% static 'medias/icons/map.png' %}" alt="" />
   </div>
   <h3>Guide</h3>
-  {% comment %}
-  <p>Complété à <strong>45%</strong></p>
-  {% endcomment %}
 </div>
 <div class="content">
   <turbo-frame id="frame_guide">
@@ -23,40 +20,6 @@
     </div>
   </turbo-frame>
 </div>
-<div class="interactable">
-  <button 
-    {% if previous_guide.id|default:'' %}
-    onclick="Turbo.visit('{% url 'app:guide_detail' previous_guide.id %}', { 
-      frame: 'frame_main',
-      action: 'replace'
-    })"
-    {% else %}
-    disabled
-    {% endif %}
-  >
-    <i class="fa-solid fa-backward-step"></i>
-    {% if previous_guide %}
-      {{ previous_guide.title }}
-    {% else %}
-      Aucun guide précédent
-    {% endif %}
-  </button>
-
-  <button 
-    {% if next_guide.id|default:'' %}
-    onclick="Turbo.visit('{% url 'app:guide_detail' next_guide.id %}', { 
-      frame: 'frame_main',
-      action: 'replace'
-    })"
-    {% else %}
-    disabled
-    {% endif %}
-  >
-    {% if next_guide %}
-      {{ next_guide.title }}
-    {% else %}
-      Aucun guide suivant
-    {% endif %}
-    <i class="fa-solid fa-forward-step"></i>
-  </button>
+<div id="pageNav" class="interactable">
+  {% include 'sections/_page_nav.html' %}
 </div>

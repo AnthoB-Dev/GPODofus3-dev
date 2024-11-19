@@ -1,5 +1,19 @@
 # TODO
 
+Prépaper la **Beta 0.8.0**
+- Régler les problèmes suivant en priorité:
+    - L'arrivée sur le guide 4 "**A travers le Krosmoz**" redirige vers */app/guide/4/quests/164/* 
+    - L'arrivée sur le guide 169 "**Donjon : Nid du Kwakwa**" redirige vers */app/guide/169/quests/166/*
+    - Mettre en place la sauvegarde du dernier achievement vu lors des cliques sur ces derniers (Ne sauvegarde que le premier du guide actuellement)
+    - Empecher le *clickNextAchievement* lors de la *dévalidation*
+    - Faire en sorte que le *validateAll* lors du dernier succès du guide reste sur le dernier succès (probablement doublon avec la ligne de dessus) 
+    - Lorsque je selectionne un guide et que je refresh la page, la *topNav* ne revient pas sur le dernier guide vu (scrollIntoView *nav.js*) S:Stocker la pos ?
+    - Résoudre *Electron Security Warning (Insecure Content-Security-Policy)*
+    - S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
+- Peupler les guides avec du faux contenu automatiquement
+- Tester
+- Build l'app
+
 ## Backend
 
 - Optimiser le code
@@ -71,11 +85,11 @@
 
 ### Bogues :
 
-- [ ] Lorsque je selectionne un guide et que je refresh la page, la *topNav* ne revient pas sur le dernier guide vu (scrollIntoView *nav.js*)
+- [ ] Lorsque je selectionne un guide et que je refresh la page, la *topNav* ne revient pas sur le dernier guide vu (scrollIntoView *nav.js*) S:Stocker la pos ?
 - [ ] Le *clickCurrentAchievement* lorsqu'il n'y a plus de *nextAchievement* ne fonctionne pas
 - [ ] Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés
 - [ ] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. Ce qui résulte en celle qui a été validée / dévalidée a rester dévalidée à moins de rappuyer sur le _validateAll_
-- [ ] Le titre du succès dans quêtes ne change pas suite au focus
+- [x] Le titre du succès dans quêtes ne change pas suite au focus
 - [x] Lorsque je valide toute les quêtes individuellement, le bouton _validateAll_ ne se met pas à jour et reste sur valider tout.
 - [x] Refaire fonctionner la *topNav* qui est en partie cassé depuis le styling
 - [x] Les event listener de click lorsque la _topNav_ est ouverte ne fonctionnent plus (pas?) pour fermer la nav

@@ -1,4 +1,4 @@
-const { app, BrowserWindow, shell, ipcMain, globalShortcut } = require('electron');
+const { app, BrowserWindow, shell, ipcMain } = require('electron');
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
@@ -16,8 +16,8 @@ log.info('App is starting...');
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1600,
-    height: 900,
+    width: 1280,
+    height: 720,
     resizable: true,
     minWidth: 1280,
     minHeight: 720,

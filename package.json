@@ -1,5 +1,5 @@
 {
-  "name": "guide-de-progression-optimisee-dofus",
+  "name": "gpodofus",
   "version": "0.8.0",
   "main": "main.js",
   "scripts": {
@@ -10,13 +10,33 @@
   },
   "build": {
     "appId": "com.gpodofus.anthobdev",
-    "productName": "Guide de Progession Optimisée pour Dofus",
+    "productName": "GPODofus",
     "files": [
       "main.js",
       "preload.js",
       "static/**/*",
       "templates/**/*",
-      "node_modules/**/*"
+      "node_modules/**/*",
+      "app/**/*",       
+      "backend/**/*", 
+      "db.sqlite3"
+    ],
+    "extraFiles": [
+      {
+        "from": "venv",
+        "to": "venv",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "app",
+        "to": "app",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "backend",
+        "to": "backend",
+        "filter": ["**/*"]
+      }
     ],
     "directories": {
       "buildResources": "build"

@@ -1,9 +1,10 @@
-const path = require("path");
-const { app, BrowserWindow, shell, ipcMain, globalShortcut } = require("electron");
-const { spawn } = require("child_process");
-const { autoUpdater } = require('electron-updater');
+const { app, BrowserWindow, shell, ipcMain, globalShortcut } = require('electron');
+const { spawn } = require('child_process');
+const path = require('path');
+const fs = require('fs');
 const Store = require('electron-store');
 const log = require('electron-log');
+const { autoUpdater } = require('electron-updater');
 
 const store = new Store();
 let mainWindow;
@@ -46,82 +47,55 @@ function createWindow() {
 
   // Supprimer complètement le menu
   mainWindow.setMenu(null);
-
-  // Empêcher l'ouverture de la barre de menus avec ALT
-  mainWindow.webContents.on('before-input-event', (event, input) => {
-    if (input.key === 'Alt') {
-      event.preventDefault();
-    }
-  });
-
-  // Enregistrer un raccourci vide pour désactiver le comportement ALT
-  globalShortcut.register('Alt', () => {
-    // Ne rien faire
-  });
-  
 }
 
-// Fonction pour exécuter le processus Django
-const runDjangoProcess = (pythonPath, djangoProjectPath) => {
-  return spawn(pythonPath, ['manage.py', 'runserver'], {
+function runDjangoProcess(pythonPath, djangoProjectPath) {
+  const django = spawn(pythonPath, ['manage.py', 'runserver'], {
     cwd: djangoProjectPath,
-    windowsHide: true,
+    shell: true,
     stdio: 'inherit',
   });
-};
 
-// Fonction pour démarrer Django
-const startDjango = () => {
-  const pythonPath = path.join(__dirname, "venv", "Scripts", "python.exe");
-  const djangoProjectPath = path.join(__dirname);
+  django.on('error', (err) => {
+    console.error('Échec du démarrage du processus Django :', err);
+    app.quit();
+  });
 
-  djangoProcess = runDjangoProcess(pythonPath, djangoProjectPath);
-
-  console.log('Django process started with PID:', djangoProcess.pid);
-};
-
-// Fonction pour nettoyer les processus enfants
-function cleanupAndExit(signal) {
-  console.log(`Received ${signal}. Cleaning up...`);
-  if (djangoProcess && !djangoProcess.killed) {
-    try {
-      djangoProcess.kill(); // Tuer le processus sans spécifier de signal
-      console.log('Django process terminated.');
-    } catch (error) {
-      console.error('Error terminating Django process:', error);
+  django.on('exit', (code) => {
+    if (code !== 0) {
+      console.error(`Le processus Django s'est terminé avec le code ${code}`);
     }
-  } else {
-    console.log('No Django process to terminate.');
-  }
-  app.quit();
+    app.quit();
+  });
+
+  return django;
 }
 
-// Gestion des signaux de terminaison
-process.on('SIGINT', () => cleanupAndExit('SIGINT'));
-process.on('SIGTERM', () => cleanupAndExit('SIGTERM'));
+function startDjango() {
+  const appPath = app.isPackaged ? process.resourcesPath : app.getAppPath();
+  const pythonPath = path.join(appPath, 'python', 'python.exe');
+  const djangoProjectPath = appPath;
 
-// Gestion de l'événement 'exit'
-process.on('exit', () => cleanupAndExit('exit'));
-
-// Gestion de la fermeture de toutes les fenêtres
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    cleanupAndExit('window-all-closed');
+  if (!fs.existsSync(pythonPath)) {
+    console.error(`Python introuvable à l'emplacement ${pythonPath}`);
+    app.quit();
+    return;
   }
-});
 
-// Gestionnaire IPC pour 'save-last-achievement'
-ipcMain.handle('save-last-achievement', (event, achievementId) => {
-  store.set('lastAchievement', achievementId);
-  return { status: 'success' };
-});
+  if (!fs.existsSync(path.join(djangoProjectPath, 'manage.py'))) {
+    console.error(`manage.py introuvable dans ${djangoProjectPath}`);
+    app.quit();
+    return;
+  }
 
-// Initialiser l'application
+  djangoProcess = runDjangoProcess(pythonPath, djangoProjectPath);
+  console.log('Processus Django démarré avec le PID :', djangoProcess.pid);
+}
+
 app.whenReady().then(() => {
   startDjango();
   createWindow();
 
-  // Vérifier les mises à jour
   autoUpdater.checkForUpdatesAndNotify();
 
   app.on("activate", function () {
@@ -129,11 +103,13 @@ app.whenReady().then(() => {
   });
 });
 
-// Gérer les événements de mise à jour
-autoUpdater.on('update-available', () => {
-  log.info('Mise à jour disponible.');
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
 });
 
-autoUpdater.on('update-downloaded', () => {
-  autoUpdater.quitAndInstall();
+ipcMain.handle('save-last-achievement', (event, achievementId) => {
+  store.set('lastAchievement', achievementId);
+  return { status: 'success' };
 });

@@ -2,9 +2,11 @@
 
 
 ## Releases 
+Roadmap des releases.
 
 <details>
-<summary>ROADMAP</summary>
+<summary>Ouvrir</summary>
+
 
 ### **RELEASE 1.0.0** : Distribution public
 Sortie de la version *RELEASE 1.0.0*
@@ -37,9 +39,12 @@ Résoudre les problèmes liés à l'installation
 
 
 ## Backend
+Developpement backend DJANGO.
 
 <details>
-<summary>Backend</summary>
+<summary>Ouvrir</summary>
+
+### Développer :
 
 - Optimiser le code
     - [ ] Reduire le nombre de redondance et de code inutile
@@ -86,9 +91,12 @@ Résoudre les problèmes liés à l'installation
 
 
 ## Electron 
+Distribution windows sous Electron.
 
 <details>
-<summary>Electron</summary>
+<summary>Ouvrir</summary>
+
+### Développer :
 
 - [ ] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
 - [ ] Le *validateAll* sur spam du bouton finit par ralentir un des processus, peut être le *clickNextAchievement*, ou peut être le render de quests    
@@ -100,9 +108,12 @@ Résoudre les problèmes liés à l'installation
 
 
 ## Frontend
+Développement frontend templates Django.
 
 <details>
-<summary>Frontend</summary>
+<summary>Ouvrir</summary>
+
+### Développer :
 
 - Optimiser le code 
     - [ ] Vérifier les events js
@@ -150,9 +161,12 @@ Résoudre les problèmes liés à l'installation
 
 
 ## Redaction
+Contenu de l'application.
 
 <details>
-<summary>Redaction</summary>
+<summary>Ouvrir</summary>
+
+### Rédiger :
 
 - [ ] Combiné les guides ayant pour objectif la complétion d'un donjon
 - [ ] Définir les succès concernés sur chaque Guide (actuellement à "**A travers le Krosmoz**")

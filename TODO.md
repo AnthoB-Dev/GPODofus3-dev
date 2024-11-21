@@ -1,6 +1,28 @@
 # TODO
 
-Prépaper la **Beta 0.8.0**
+
+## Releases 
+
+<details>
+<summary>ROADMAP</summary>
+
+### **RELEASE 1.0.0** : Distribution public
+Sortie de la version *RELEASE 1.0.0*
+- [ ] S'assurer que les fonctions principales n'aient plus de bugs
+
+### **BETA 0.9.1** : Résolution des problèmes lié à l'utilisation
+Résoudre les problèmes liés à l'utilisation
+- [ ] Faire une cinquantaine de guides
+
+### **BETA 0.9.0** : Test d'utilisation de l'application
+Démonstration d'utilisation, experience utilisateur.
+- [ ] Faire une cinquantaine de guides
+
+### **BETA 0.8.1** : Résolution des problèmes d'installation
+Résoudre les problèmes liés à l'installation
+- [ ] Faire en sorte que le script d'installation marche à tous les coups : [Installation de NodeJS](https://github.com/AnthoB-Dev/GPODofus3/issues/1)
+
+### **BETA 0.8.0** : Test d'installation
 - Régler les problèmes suivant en priorité:
     - [ ] validateAll envoie vers /app/guide/x/quests/x lorsque c'est le dernier succès de la liste
     - [ ] La topNav bug avec Electron, le toggleOpen galère
@@ -11,11 +33,13 @@ Prépaper la **Beta 0.8.0**
     - [x] L'arrivée sur le guide 169 "**Donjon : Nid du Kwakwa**" redirige vers */app/guide/169/quests/166/*
         Au chargement, les succès sont visiblent puis disparaissent, puis dans la réponse aucune traces de la frame "frame_quests"; Je n'ai d'ailleurs plus de redirection, juste du content missing lors de la disparition
     - [x] Mettre en place la sauvegarde du dernier achievement vu lors des cliques sur ces derniers (Ne sauvegarde que le premier du guide actuellement)
-- [ ] Faire une cinquantaine de guides
-- [ ] Tester
-- [ ] Build l'app
+</details>
+
 
 ## Backend
+
+<details>
+<summary>Backend</summary>
 
 - Optimiser le code
     - [ ] Reduire le nombre de redondance et de code inutile
@@ -58,8 +82,27 @@ Prépaper la **Beta 0.8.0**
 - [x] Problèmes à l'arrivée sur les guides 4 et 169
     Les problèmes de redirection puis de content missing étaients liés au fait que ces guides avaient des succès mais pas de quêtes associées.
 - [x] Le titre du succès dans quêtes ne se met pas à jour lors des cliques sur un succès différent (c'était du JS enfaite)
+</details>
+
+
+## Electron 
+
+<details>
+<summary>Electron</summary>
+
+- [ ] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
+- [ ] Le *validateAll* sur spam du bouton finit par ralentir un des processus, peut être le *clickNextAchievement*, ou peut être le render de quests    
+- [ ] Ajouter un loading screen au lancer
+- [ ] Faire en sorte de bien avoir le nom et l'icone de l'app dans le gestionnaire des tâches (peut être que le build résoudra le pb ?)
+- [x] Résoudre *Electron Security Warning (Insecure Content-Security-Policy)*
+- [x] Regler les gros problèmes de mémoires avec *Electron* (c'était la vidéo)
+</details>
+
 
 ## Frontend
+
+<details>
+<summary>Frontend</summary>
 
 - Optimiser le code 
     - [ ] Vérifier les events js
@@ -103,21 +146,16 @@ Prépaper la **Beta 0.8.0**
 - Problèmes sur le premier chargement de la page qui ne prends pas le js en compte
     - [x] Le focus sur le premier succès non complété ne se fait pas lors de l'arrivée
     - [x] _validateAll_ ne fonctionne pas
+</details>
 
 
 ## Redaction
+
+<details>
+<summary>Redaction</summary>
 
 - [ ] Combiné les guides ayant pour objectif la complétion d'un donjon
 - [ ] Définir les succès concernés sur chaque Guide (actuellement à "**A travers le Krosmoz**")
 - [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
 - [ ] Faire le _README_ de l'app
-
-
-## Electron 
-
-- [ ] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
-- [ ] Le *validateAll* sur spam du bouton finit par ralentir un des processus, peut être le *clickNextAchievement*, ou peut être le render de quests    
-- [ ] Ajouter un loading screen au lancer
-- [ ] Faire en sorte de bien avoir le nom et l'icone de l'app dans le gestionnaire des tâches (peut être que le build résoudra le pb ?)
-- [x] Résoudre *Electron Security Warning (Insecure Content-Security-Policy)*
-- [x] Regler les gros problèmes de mémoires avec *Electron* (c'était la vidéo)
+</details>

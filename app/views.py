@@ -138,15 +138,19 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
     
     # Récupérer l'achievement sélectionné
     achievement = get_object_or_404(guide.achievement, id=achievement_id)
+    
     # Mettre à jour is_last_seen pour tous les GuideAchievement du guide
     GuideAchievement.objects.filter(guide=guide).update(is_last_seen=False)
+    
     # Définir is_last_seen pour le GuideAchievement sélectionné
     guide_achievement = GuideAchievement.objects.get(
         guide=guide, achievement=achievement
     )
     guide_achievement.is_last_seen = True
     guide_achievement.save()
-    last_seen_achievement = achievement.id
+    
+    # Définir selected_achievement
+    selected_achievement = achievement
 
     quests = achievement.quests.all() if achievement else []
 
@@ -154,7 +158,8 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
         "guide": guide,
         "achievement": achievement,
         "quests": quests,
-        "last_seen_achievement": last_seen_achievement,
+        "selected_achievement": selected_achievement,  
+        "last_seen_achievement": selected_achievement, 
     }
 
     return render(request, "sections/quests.html", context)
@@ -179,13 +184,19 @@ def toggle_quest_completion(request, quest_id):
     completion_percentage = (
         int((completed_quests / total_quests * 100)) if total_quests > 0 else 0
     )
-    
+
+    # Définir last_seen_achievement
+    last_seen_achievement = GuideAchievement.objects.filter(
+        guide=guide, is_last_seen=True
+    ).first()
+
     # Rendre les templates partiels en incluant request
     quest_html = render_to_string('sections/_quest_item.html', {
         'quest': quest,
         'achievement': achievement,
         'guide': guide,
-        'selected_achievement': selected_achievement 
+        'selected_achievement': selected_achievement,
+        'last_seen_achievement': last_seen_achievement 
     }, request=request)
     
     achievement_html = render_to_string('sections/_achievement_item.html', {
@@ -194,7 +205,8 @@ def toggle_quest_completion(request, quest_id):
             'completion_percentage': completion_percentage
         },
         'guide': guide,
-        'selected_achievement': selected_achievement 
+        'selected_achievement': selected_achievement,
+        'last_seen_achievement': last_seen_achievement 
     }, request=request)
 
     # Créer la réponse Turbo Stream

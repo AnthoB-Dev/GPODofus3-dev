@@ -1,7 +1,7 @@
 # TODO
 
 ## Backend
-Developpement backend DJANGO.
+Developpement backend **Django**.
 
 <details>
 <summary>Ouvrir</summary>
@@ -21,6 +21,11 @@ Developpement backend DJANGO.
         - [x] quest_frame_id
         - [x] frame_objectives
         - [x] frame_achievements
+- [ ] Supprimer *LastSession*, rajouter un champ *is_last_seen* dans *GuideAchievement* pour sauvegarder l'achievement qui a été vu en dernier dans ce guide.
+- [ ] Revoir le fonctionnement du *selected_achievement* dans ma view *guide_detail*   
+    - Definir la valeur de *selected_achievement* grâce au champ *is_last_seen* de *GuideAchievement*
+- [ ] Enlever tout ce qui concerne le *achievement_id* dans guide_detail
+    - Actuellement ne rentre jamais dans le if achievement_id puisque la view ne le reçois jamais, c'est traité ailleurs
 - [ ] Ajouter un toggle pour l'alignement, le mettre en storage.
     - [ ] Mettre en place la logique de visibilité des guides selon l'alignement
 - [ ] Supprimer *LastSession*, rajouter un champ *is_last_seen* dans *GuideAchievement* pour sauvegarder l'achievement qui a été vu en dernier dans ce guide.
@@ -64,24 +69,24 @@ Developpement backend DJANGO.
 
 
 ## Electron 
-Distribution windows sous Electron.
+Distribution windows sous **Electron**.
 
 <details>
 <summary>Ouvrir</summary>
 
 ### Développer :
 
-- [ ] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
 - [ ] Le *validateAll* sur spam du bouton finit par ralentir un des processus, peut être le *clickNextAchievement*, ou peut être le render de quests    
 - [ ] Ajouter un loading screen au lancer
 - [ ] Faire en sorte de bien avoir le nom et l'icone de l'app dans le gestionnaire des tâches (peut être que le build résoudra le pb ?)
+- [x] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
 - [x] Résoudre *Electron Security Warning (Insecure Content-Security-Policy)*
 - [x] Regler les gros problèmes de mémoires avec *Electron* (c'était la vidéo)
 </details>
 
 
 ## Frontend
-Développement frontend templates Django.
+Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 <details>
 <summary>Ouvrir</summary>
@@ -96,11 +101,12 @@ Développement frontend templates Django.
         - [x] Aria label sur les liens
         - [x] Aria label sur les boutons
     - [x] Régler l'erreur *Form submission canceled because the form is not connected*
+- [ ] Ajouter le passage au succès suivant lors de la validation manuelle des succès
 - [ ] Empecher le *clickNextAchievement* lors de la *dévalidation*
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
 - [ ] Ajouter des eventlistener sur les fleches gauche et droite pour naviguer dans les *guides*
 - [ ] Ajouter des eventlistener sur les fleches du haut et du bas pour naviguer avec la *topNav*
-- [ ] Décider quoi faire des pseudo discord, mettre des liens ? Probablement pas
+- [ ] Décider quoi faire des pseudo discord, mettre des liens ?
 - [ ] Media queries
 - [ ] Implémenter d'autres themes
     - [ ] Changer l'image background selon le thème
@@ -119,6 +125,11 @@ Développement frontend templates Django.
 
 ### Bogues :
 
+- [ ] Boucle infini d'ouverture de liens dans le navigateur lors de *openAll*
+- [ ] *validateAll* envoie vers */app/guide/x/quests/x* lorsque c'est le dernier succès de la liste, et lors de *doubles click*
+    - J'ai pu observer que les doubles click d'affilé sur *validateAll* cause le problème de manière casi certain.
+    - Mais parfois un simple *validateAll* sur le dernier succès me fait la redirection.
+- [ ] La topNav bug avec Electron, le toggleOpen galère
 - [ ] Lorsque je selectionne un guide et que je refresh la page, la *topNav* ne revient pas sur le dernier guide vu (scrollIntoView *nav.js*) S:Stocker la pos ?
 - [ ] Le *clickCurrentAchievement* lorsqu'il n'y a plus de *nextAchievement* ne fonctionne pas
 - [ ] Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés

@@ -1,5 +1,6 @@
 from decimal import Decimal
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 GAME_VERSION = Decimal("2.73")
@@ -176,10 +177,13 @@ class Guide(models.Model):
 
 
 class GuideAchievement(models.Model):
-    guide = models.ForeignKey(Guide, on_delete=models.CASCADE, verbose_name="Guide")
-    achievement = models.ForeignKey(
-        Achievement, on_delete=models.CASCADE, verbose_name="Succès"
+    guide = models.ForeignKey(
+        Guide, on_delete=models.CASCADE, verbose_name="Guide", related_name="guide_achievements"
     )
+    achievement = models.ForeignKey(
+        Achievement, on_delete=models.CASCADE, verbose_name="Succès", related_name="achievement_guides"
+    )
+    is_last_seen = models.BooleanField(default=False)
 
     class Meta:
         unique_together = ("guide", "achievement")
@@ -189,6 +193,19 @@ class GuideAchievement(models.Model):
 
     def __str__(self):
         return f"{self.guide.title} - {self.achievement.title}"
+
+    def clean(self):
+        if self.is_last_seen:
+            if GuideAchievement.objects.filter(
+                guide=self.guide, is_last_seen=True
+            ).exclude(id=self.id).exists():
+                raise ValidationError(
+                    "Un seul achievement peut être marqué comme vu en dernier par guide."
+                )
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super().save(*args, **kwargs)
 
 
 class Dungeon(models.Model):

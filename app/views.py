@@ -5,15 +5,18 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.cache import cache
 from django.db.models import Prefetch
-from app.models import Achievement, Guide, GuideAchievement, Quest, LastSession
+from app.models import Achievement, Guide, GuideAchievement, Quest
 from django.template.loader import render_to_string
 
 
 def redirect_to_guide(request):
-    last_session = LastSession.objects.first()
-    if last_session is not None:
-        return redirect("app:guide_detail", guide_id=last_session.last_guide_id)
+    # Récupérer le dernier guide vu
+    last_guide = Guide.objects.filter(is_last_seen=True).first()
+
+    if last_guide:
+        return redirect("app:guide_detail", guide_id=last_guide.id)
     else:
+        # Rediriger vers un guide par défaut si aucun n'est trouvé
         return redirect("app:guide_detail", guide_id=1)
 
 
@@ -54,6 +57,8 @@ def guide_detail(request, guide_id):
         ),
         id=guide_id,
     )
+    guide.is_last_seen = True
+    guide.save()
 
     # Contexte de navigation
     navigation_context = get_navigation_context(guide)
@@ -74,10 +79,13 @@ def guide_detail(request, guide_id):
     # Liste des quêtes
     quests = selected_achievement.quests.all() if selected_achievement else []
 
-    # Calcul du pourcentage de complétion
     achievements_with_completion = []
+    last_seen_achievement = None
+    
     for guide_achievement in guide_achievements:
         achievement = guide_achievement.achievement
+        if guide_achievement.is_last_seen:
+            last_seen_achievement = achievement.id
         total_quests = achievement.quests.count()
         completed_quests = achievement.quests.filter(completed=True).count()
         completion_percentage = (
@@ -88,17 +96,12 @@ def guide_detail(request, guide_id):
             "completion_percentage": completion_percentage,
         })
 
-    # Mise à jour de la session
-    lastSession, created = LastSession.objects.get_or_create(id=1)
-    lastSession.last_guide = guide
-    lastSession.last_achievement = selected_achievement
-    lastSession.save()
-
     # Contexte complet
     context = {
         "guide": guide,
         "achievements": achievements_with_completion,
         "selected_achievement": selected_achievement,
+        "last_seen_achievement": last_seen_achievement,
         "quests": quests,
     }
     context.update(navigation_context)
@@ -133,37 +136,25 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
         Guide.objects.prefetch_related("achievement__quests"), id=guide_id
     )
     
-    if achievement_id:
-        # Récupérer l'achievement sélectionné
-        achievement = get_object_or_404(guide.achievement, id=achievement_id)
-        # Mettre à jour is_last_seen pour tous les GuideAchievement du guide
-        GuideAchievement.objects.filter(guide=guide).update(is_last_seen=False)
-        # Définir is_last_seen pour le GuideAchievement sélectionné
-        guide_achievement = GuideAchievement.objects.get(
-            guide=guide, achievement=achievement
-        )
-        guide_achievement.is_last_seen = True
-        guide_achievement.save()
-    else:
-        # Si aucun achievement_id n'est fourni, prendre celui avec is_last_seen=True
-        guide_achievement = guide.guide_achievements.filter(is_last_seen=True).first()
-        if guide_achievement:
-            achievement = guide_achievement.achievement
-        else:
-            achievement = guide.achievement.first()
+    # Récupérer l'achievement sélectionné
+    achievement = get_object_or_404(guide.achievement, id=achievement_id)
+    # Mettre à jour is_last_seen pour tous les GuideAchievement du guide
+    GuideAchievement.objects.filter(guide=guide).update(is_last_seen=False)
+    # Définir is_last_seen pour le GuideAchievement sélectionné
+    guide_achievement = GuideAchievement.objects.get(
+        guide=guide, achievement=achievement
+    )
+    guide_achievement.is_last_seen = True
+    guide_achievement.save()
+    last_seen_achievement = achievement.id
 
     quests = achievement.quests.all() if achievement else []
-    
-    # Mise à jour de la session
-    lastSession, created = LastSession.objects.get_or_create(id=1)
-    lastSession.last_guide = guide
-    lastSession.last_achievement = achievement
-    lastSession.save()
 
     context = {
         "guide": guide,
         "achievement": achievement,
         "quests": quests,
+        "last_seen_achievement": last_seen_achievement,
     }
 
     return render(request, "sections/quests.html", context)
@@ -178,7 +169,10 @@ def toggle_quest_completion(request, quest_id):
     # Récupérer l'achievement associé
     achievement = Achievement.objects.filter(quests=quest).first()
     guide = Guide.objects.filter(achievement=achievement).first()
-    
+
+    # Définir selected_achievement
+    selected_achievement = achievement
+
     # Recalculer le pourcentage de complétion
     total_quests = achievement.quests.count()
     completed_quests = achievement.quests.filter(completed=True).count()
@@ -190,7 +184,8 @@ def toggle_quest_completion(request, quest_id):
     quest_html = render_to_string('sections/_quest_item.html', {
         'quest': quest,
         'achievement': achievement,
-        'guide': guide
+        'guide': guide,
+        'selected_achievement': selected_achievement 
     }, request=request)
     
     achievement_html = render_to_string('sections/_achievement_item.html', {
@@ -198,7 +193,8 @@ def toggle_quest_completion(request, quest_id):
             'achievement': achievement,
             'completion_percentage': completion_percentage
         },
-        'guide': guide
+        'guide': guide,
+        'selected_achievement': selected_achievement 
     }, request=request)
 
     # Créer la réponse Turbo Stream

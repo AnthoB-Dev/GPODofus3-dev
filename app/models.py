@@ -166,6 +166,7 @@ class Guide(models.Model):
     achievement = models.ManyToManyField(
         Achievement, through="GuideAchievement", related_name="guides"
     )
+    is_last_seen = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -174,6 +175,12 @@ class Guide(models.Model):
         ordering = ["id"]  # TODO: Changer l'ordre de tri par "page"
         verbose_name = "Guide"
         verbose_name_plural = "Guides"
+        
+    def save(self, *args, **kwargs):
+        if self.is_last_seen:
+            # Mettre is_last_seen à False pour tous les autres guides
+            Guide.objects.filter(is_last_seen=True).exclude(pk=self.pk).update(is_last_seen=False)
+        super().save(*args, **kwargs)
 
 
 class GuideAchievement(models.Model):
@@ -249,18 +256,6 @@ class DungeonQuest(models.Model):
 
     def __str__(self):
         return f"{self.dungeon.name} - {self.quest.title}"
-
-
-class LastSession(models.Model):
-    last_guide = models.ForeignKey("Guide", on_delete=models.SET_NULL, null=True)
-    last_achievement = models.ForeignKey('Achievement', on_delete=models.SET_NULL, null=True)
-
-    def __str__(self):
-        return f"Last guide: {self.last_guide}, Last achievement: {self.last_achievement}"
-
-    class Meta:
-        verbose_name = "Dernière session"
-        verbose_name_plural = "Dernières sessions"
 
 
 class Quest(models.Model):

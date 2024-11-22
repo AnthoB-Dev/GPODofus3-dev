@@ -26,7 +26,7 @@ class Achievement(models.Model):
     objectives = models.TextField(
         max_length=255, null=True, blank=True, verbose_name="Objectifs"
     )
-    expect_ressource = models.BooleanField(
+    expect_resource = models.BooleanField(
         default=False, verbose_name="Demande : Ressource"
     )
     expect_item = models.BooleanField(default=False, verbose_name="Demande : Item")

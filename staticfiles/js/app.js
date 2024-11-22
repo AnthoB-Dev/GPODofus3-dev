@@ -1,34 +1,37 @@
-import { Nav } from "./nav.js";
-import { Quests } from "./quests.js";
-import { Achievements } from "./achievements.js";
+import * as nav from "./nav.js";
+import * as quests from "./quests.js";
+import * as achievements from "./achievements.js";
 
-const launchFunctions = () => {
-    Quests.listenToOpenAllBtn();
-    Quests.toggleBtnBackgroundStyle();
-    Quests.listenToValidateAllBtn();
-    Quests.validateAllBtnStyle();
-    Quests.updateQuestsAchievementTitle();
-    Achievements.toggleActiveStateOnAchievements();
+// Fonction pour initialiser les événements
+const initializeEvents = () => {
+    nav.addNavEventListeners();
+    quests.addQuestEventListeners();
+    achievements.addAchievementEventListeners();
+    quests.toggleBtnBackgroundStyle();
+    quests.validateAllBtnStyle();
+    quests.updateQuestsAchievementTitle();
 };
 
-let hasLaunchedFunctions = false;
+// Fonction pour purger les événements
+const purgeEvents = () => {
+    nav.removeNavEventListeners();
+    quests.removeQuestEventListeners();
+    achievements.removeAchievementEventListeners();
+};
 
-const init = () => {
-    Nav.init();
-      
-    const handleLaunch = () => {
-        if (!hasLaunchedFunctions) {
-            console.log("First LaunchFuncs");
-            launchFunctions();
-            hasLaunchedFunctions = true;
-        } else {
-            console.log("LaunchFuncs");
-            launchFunctions();
-        }
-    }
+// Écouteur pour `turbo:before-render`
+document.addEventListener("turbo:before-render", (event) => {
+    nav.updateTopNavTitle(event);
+    purgeEvents();
+});
 
-    document.addEventListener("turbo:load", handleLaunch);
-    document.addEventListener("turbo:frame-render", handleLaunch);
-}
+// Écouteur pour `turbo:load`
+document.addEventListener("turbo:load", () => {
+    initializeEvents();
+});
 
-init();
+// Écouteur pour `turbo:frame-render`
+document.addEventListener("turbo:frame-render", () => {
+    purgeEvents();
+    initializeEvents();
+});

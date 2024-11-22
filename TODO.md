@@ -9,6 +9,8 @@ Developpement backend **Django**.
 ### Développer :
 
 - Optimiser le code
+    - [ ] Enlever les compresseurs en dev
+    - [ ] Enlever les dépendences non utilisées
     - [ ] Trouver un moyen de réduire la query pour les guides dans *guide_detail*
         - A chaque changement de guide, ils sont tous récupérés alors qu'il ne pourrait y en a avoir qu'une dizaine, 10 avant, 10 après
         - Mais il est possible que le cache des guides empeche un quelconque soucis avec l'état actuel, à voir
@@ -31,13 +33,13 @@ Developpement backend **Django**.
 - [ ] Ajouter un toggle pour l'alignement, le mettre en storage.
     - Mettre en place la logique de visibilité des guides selon l'alignement
 - [ ] Ajouter un champ level aux succès et permettre l'affichage des succès par niveaux
+- [ ] Mettre en place expect_capture (sur donjon ?)
 - [x] Mettre en place la redirection vers le last_guide / last_achievement (la solution était plus simple : mettre simplement en place le dernier succès vu)
 - [x] Supprimer *LastSession*, rajouter un champ *is_last_seen* dans *GuideAchievement* pour sauvegarder l'achievement qui a été vu en dernier dans ce guide.
 - [x] Revoir le fonctionnement du *selected_achievement* dans ma view *guide_detail*   
     - Definir la valeur de *selected_achievement* grâce au champ *is_last_seen* de *GuideAchievement*
 - [x] Enlever tout ce qui concerne le *achievement_id* dans guide_detail
     - Actuellement ne rentre jamais dans le if achievement_id puisque la view ne le reçois jamais, c'est traité ailleurs
-- [ ] Mettre en place expect_capture (sur donjon ?)
 - [x] Mettre en place la sauvegarde du dernier achievement vu lors des cliques sur ces derniers (Ne sauvegarde que le premier du guide actuellement)
 - [x] Créer une fonction pour les navs et les enlever de *guide_detail*
 - [x] Finir le peuplement des quêtes dans achievements.json
@@ -95,7 +97,7 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 ### Développer :
 
 - Optimiser le code 
-    - [ ] Vérifier les events js
+    - [ ] Vérifier les events js - En cours
     - [ ] Améliorer l'accessibilité
         - [ ] Changer la plupart de mes ul / li en divs
         - [ ] Remplir le alt des images
@@ -103,6 +105,7 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
         - [x] Aria label sur les boutons
     - [x] Adapter le click JS en click sur la classe active seulement 
     - [x] Régler l'erreur *Form submission canceled because the form is not connected*
+- [ ] Ajouter l'icon other.png
 - [ ] Ajouter le passage au succès suivant lors de la validation manuelle des succès
 - [ ] Empecher le *clickNextAchievement* lors de la *dévalidation*
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
@@ -112,6 +115,7 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 - [ ] Media queries
 - [ ] Implémenter d'autres themes
     - [ ] Changer l'image background selon le thème
+- [x] Ajouter un délais sur le clique du *validateAll*
 - [x] Faire en sorte que le *validateAll* lors du dernier succès du guide reste sur le dernier succès (probablement doublon avec la ligne de dessus) 
 - [x] Terminer le front
 - [x] Comprendre pourquoi #prevision n'existe pas dans les autres guides. (Mauvais format à la redaction)
@@ -127,16 +131,16 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 ### Bogues :
 
-- [ ] Double les ouvertures de liens lors de *openAll* - En cours
-    - Se produit après un changement de frame mais pas à la première arrivée
-- [ ] *validateAll* envoie vers */app/guide/x/quests/x* lorsque c'est le dernier succès de la liste, et lors de *doubles click*
-    - J'ai pu observer que les doubles click d'affilé sur *validateAll* cause le problème de manière casi certain.
-    - Mais parfois un simple *validateAll* sur le dernier succès me fait la redirection.
 - [ ] La topNav bug avec Electron, le toggleOpen galère
 - [ ] Lorsque je selectionne un guide et que je refresh la page, la *topNav* ne revient pas sur le dernier guide vu (scrollIntoView *nav.js*) S:Stocker la pos ?
 - [ ] Le *clickCurrentAchievement* lorsqu'il n'y a plus de *nextAchievement* ne fonctionne pas
 - [ ] Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés
-- [ ] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. Ce qui résulte en celle qui a été validée / dévalidée a rester dévalidée à moins de rappuyer sur le _validateAll_
+- [ ] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. Ce qui résulte en celle qui a été validée / dévalidée a rester dévalidée à moins de rappuyer sur le _validateAll_ ()
+- [x] *validateAll* envoie vers */app/guide/x/quests/x* lorsque c'est le dernier succès de la liste, et lors de *doubles click*
+    - J'ai pu observer que les doubles click d'affilé sur *validateAll* cause le problème de manière casi certain.
+    - Mais parfois un simple *validateAll* sur le dernier succès me fait la redirection.
+- [x] Double les ouvertures de liens lors de *openAll*
+    - Est dû au double listener turbo dans app.js
 - [x] Le titre du succès dans quêtes ne change pas suite au focus
 - [x] Lorsque je valide toute les quêtes individuellement, le bouton _validateAll_ ne se met pas à jour et reste sur valider tout.
 - [x] Refaire fonctionner la *topNav* qui est en partie cassé depuis le styling

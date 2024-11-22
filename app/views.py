@@ -80,20 +80,25 @@ def guide_detail(request, guide_id):
     quests = selected_achievement.quests.all() if selected_achievement else []
 
     achievements_with_completion = []
+    expect_list = []
     last_seen_achievement = None
     
     for guide_achievement in guide_achievements:
         achievement = guide_achievement.achievement
+
         if guide_achievement.is_last_seen:
             last_seen_achievement = achievement.id
+
         total_quests = achievement.quests.count()
         completed_quests = achievement.quests.filter(completed=True).count()
         completion_percentage = (
             int((completed_quests / total_quests * 100)) if total_quests > 0 else 0
         )
+        expect_list = [field.name[7:] for field in achievement._meta.get_fields() if field.name.startswith('expect_') and getattr(achievement, field.name)]
         achievements_with_completion.append({
             "achievement": achievement,
             "completion_percentage": completion_percentage,
+            "expect_list": expect_list
         })
 
     # Contexte complet

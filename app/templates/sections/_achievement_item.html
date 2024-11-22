@@ -23,27 +23,11 @@
         >
         <p>{{ item.achievement.title }}</p>
 
-        {% if item.achievement.expect_alignment %}
-        {% endif %} {% if item.achievement.expect_fight %}
-        {% endif %} {% if item.achievement.expect_ressource %}
-        {% endif %} {% if item.achievement.expect_item %}
-        {% endif %} {% if item.achievement.expect_dungeon %}
-        {% endif %} {% if item.achievement.expect_job %}
+        {% if item.expect_list %}
         <span class="expectIcons">
-          {% if item.achievement.expect_alignment %}
-          <img src="{% static 'medias/icons/alignment.png' %}" alt="" />
-          {% endif %} {% if item.achievement.expect_fight %}
-          <img src="{% static 'medias/icons/fight.png' %}" alt="" />
-          {% endif %} {% if item.achievement.expect_ressource %}
-          <img src="{% static 'medias/icons/resource.png' %}" alt="" />
-          {% endif %} {% if item.achievement.expect_item %}
-          <img src="{% static 'medias/icons/item.png' %}" alt="" />
-          {% endif %} {% if item.achievement.expect_dungeon %}
-          <img src="{% static 'medias/icons/dungeon.png' %}" alt="" />
-          {% endif %} {% if item.achievement.expect_job %}
-          <img src="{% static 'medias/icons/job.png' %}" alt="" />
-          {% endif %}
-        </span>
+          {% for expect in item.expect_list %}
+            <img src="{% static 'medias/icons/' %}{{ expect }}.png" alt="" />
+          {% endfor %}
         {% endif %}
       </a>
     </div>

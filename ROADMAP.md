@@ -20,9 +20,9 @@ Résoudre les problèmes liés à l'installation
 ### **BETA 0.8.0** : Test d'installation
 Tester l'installation de l'application sur plusieurs machines
 - Régler les problèmes suivant en priorité:
-    - [ ] validateAll envoie vers /app/guide/x/quests/x lorsque c'est le dernier succès de la liste
-    - [ ] La topNav bug avec Electron, le toggleOpen galère
     - [ ] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
+    - [x] validateAll envoie vers /app/guide/x/quests/x lorsque c'est le dernier succès de la liste
+    - [x] La topNav bug avec Electron, le toggleOpen galère
     - [x] Faire en sorte que le *validateAll* lors du dernier succès du guide reste sur le dernier succès (probablement doublon avec la ligne de dessus) 
     - [x] Résoudre *Electron Security Warning (Insecure Content-Security-Policy)*
     - [x] L'arrivée sur le guide 4 "**A travers le Krosmoz**" redirige vers */app/guide/4/quests/164/* 

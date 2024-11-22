@@ -1,5 +1,3 @@
-import { Achievements } from "./achievements.js";
-
 export const Nav = {
     init: function() {
         document.addEventListener("turbo:before-render", this.updateTopNavTitle.bind(this));
@@ -9,9 +7,6 @@ export const Nav = {
     onTurboLoad: function() {
         this.topNavHandler();
         this.pageNavHandler();
-        setTimeout(() => {
-            Achievements.clickLastAchievement();
-        }, 200);
     },
 
     updateTopNavTitle(event) {

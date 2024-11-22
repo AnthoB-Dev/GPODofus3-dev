@@ -2,12 +2,17 @@ import { Achievements } from "./achievements.js";
 
 export const Quests = {
     openLinksOfQuests: function() {
-        const links = Quests.getLinksOfQuests();
+        console.log("openLinks0: Entrée dans la fonction openLinksOfQuests");
+        const links = this.getLinksOfQuests();
+        if (!links) return;
+        console.log("openLinks1: Liens récupérés");
         let delay = 0;
 
         links.forEach((link) => {
+            
             setTimeout(() => {
-                window.open(link, "_blank");
+                // window.open(link, "_blank");
+                console.log("openLinks2: Ouverture de la quête");
             }, delay);
             delay += 300;
         });
@@ -15,9 +20,12 @@ export const Quests = {
 
     getLinksOfQuests: function() {
         const jsQuest = document.querySelectorAll(".js-quest");
+        if (jsQuest.length === 0) return;
+        console.log("getLinks1: Entrée dans la fonction getLinksOfQuests");
         const links = [];
 
         jsQuest.forEach((quest) => {
+            console.log("getLinks2: Récupération du lien de la quête");
             const anchor = quest.querySelector("a");
             const link = anchor.href;
             links.push(link);
@@ -26,16 +34,20 @@ export const Quests = {
     },
 
     listenToOpenAllBtn: function() {
+        console.log("listenToOpenAllBtn1: Entrée");
+        
         const openAll = document.querySelector("#openAll");
         openAll.addEventListener("click", () => {
-            Quests.openLinksOfQuests();
+            console.log("listenToOpenAllBtn2: Clic sur le bouton openAll");
+            
+            this.openLinksOfQuests();
         });
     },
 
     validateAllBtnStyle: function() {
         const validateAll = document.querySelector("#validateAll");
         const icon = validateAll.querySelector("i");
-        let buttons = Quests.getButtons();
+        let buttons = this.getButtons();
         const newIcon = document.createElement("i");
 
         if (buttons.length > 0 && buttons[0].classList.contains("uncheck")) {
@@ -53,7 +65,7 @@ export const Quests = {
 
     toggleBtnBackgroundStyle: function() {
         const validateAll = document.querySelector("#validateAll");
-        let buttons = Quests.getButtons();
+        let buttons = this.getButtons();
 
         if (buttons.length === 0) return;
 
@@ -76,7 +88,7 @@ export const Quests = {
     listenToValidateAllBtn: function() {
         const validateAll = document.querySelector("#validateAll");
         validateAll.addEventListener("click", () => {
-            Quests.clickValidateAll();
+            this.clickValidateAll();
         });
     },
 
@@ -94,7 +106,7 @@ export const Quests = {
     },
 
     clickValidateAll: function() {
-        let buttonsType = Quests.getButtons();
+        let buttonsType = this.getButtons();
 
         if (!Array.isArray(buttonsType)) {
             buttonsType = Array.from(buttonsType);

@@ -1,20 +1,15 @@
-import { Achievements } from "./achievements.js";
-
 export const Nav = {
     init: function() {
-        document.addEventListener("turbo:before-render", this.updateTitle.bind(this));
+        document.addEventListener("turbo:before-render", this.updateTopNavTitle.bind(this));
         document.addEventListener("turbo:load", this.onTurboLoad.bind(this));
     },
 
     onTurboLoad: function() {
         this.topNavHandler();
         this.pageNavHandler();
-        setTimeout(() => {
-            Achievements.clickLastAchievement();
-        }, 200);
     },
 
-    updateTitle(event) {
+    updateTopNavTitle(event) {
         const newTitle = event.detail.newBody.querySelector("#topNav .guide-header h2")?.textContent;
 
         if (newTitle) {

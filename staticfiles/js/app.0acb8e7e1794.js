@@ -9,7 +9,6 @@ const launchFunctions = () => {
     Quests.validateAllBtnStyle();
     Quests.updateQuestsAchievementTitle();
     Achievements.toggleActiveStateOnAchievements();
-    Achievements.listenToAchievementClick();
 };
 
 let hasLaunchedFunctions = false;
@@ -19,9 +18,11 @@ const init = () => {
       
     const handleLaunch = () => {
         if (!hasLaunchedFunctions) {
+            console.log("First LaunchFuncs");
             launchFunctions();
             hasLaunchedFunctions = true;
         } else {
+            console.log("LaunchFuncs");
             launchFunctions();
         }
     }

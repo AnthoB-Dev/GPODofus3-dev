@@ -159,7 +159,7 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
         "achievement": achievement,
         "quests": quests,
         "selected_achievement": selected_achievement,  
-        "last_seen_achievement": selected_achievement, 
+        "last_seen_achievement": selected_achievement, # TODO: verifier l'utilitée
     }
 
     return render(request, "sections/quests.html", context)

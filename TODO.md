@@ -21,11 +21,6 @@ Developpement backend **Django**.
         - [x] quest_frame_id
         - [x] frame_objectives
         - [x] frame_achievements
-- [ ] Supprimer *LastSession*, rajouter un champ *is_last_seen* dans *GuideAchievement* pour sauvegarder l'achievement qui a été vu en dernier dans ce guide.
-- [ ] Revoir le fonctionnement du *selected_achievement* dans ma view *guide_detail*   
-    - Definir la valeur de *selected_achievement* grâce au champ *is_last_seen* de *GuideAchievement*
-- [ ] Enlever tout ce qui concerne le *achievement_id* dans guide_detail
-    - Actuellement ne rentre jamais dans le if achievement_id puisque la view ne le reçois jamais, c'est traité ailleurs
 - [ ] Ajouter un toggle pour l'alignement, le mettre en storage.
     - [ ] Mettre en place la logique de visibilité des guides selon l'alignement
 - [ ] Supprimer *LastSession*, rajouter un champ *is_last_seen* dans *GuideAchievement* pour sauvegarder l'achievement qui a été vu en dernier dans ce guide.
@@ -36,6 +31,12 @@ Developpement backend **Django**.
 - [ ] Ajouter un toggle pour l'alignement, le mettre en storage.
     - Mettre en place la logique de visibilité des guides selon l'alignement
 - [ ] Ajouter un champ level aux succès et permettre l'affichage des succès par niveaux
+- [x] Mettre en place la redirection vers le last_guide / last_achievement (la solution était plus simple : mettre simplement en place le dernier succès vu)
+- [x] Supprimer *LastSession*, rajouter un champ *is_last_seen* dans *GuideAchievement* pour sauvegarder l'achievement qui a été vu en dernier dans ce guide.
+- [x] Revoir le fonctionnement du *selected_achievement* dans ma view *guide_detail*   
+    - Definir la valeur de *selected_achievement* grâce au champ *is_last_seen* de *GuideAchievement*
+- [x] Enlever tout ce qui concerne le *achievement_id* dans guide_detail
+    - Actuellement ne rentre jamais dans le if achievement_id puisque la view ne le reçois jamais, c'est traité ailleurs
 - [ ] Mettre en place expect_capture (sur donjon ?)
 - [x] Mettre en place la sauvegarde du dernier achievement vu lors des cliques sur ces derniers (Ne sauvegarde que le premier du guide actuellement)
 - [x] Créer une fonction pour les navs et les enlever de *guide_detail*
@@ -100,6 +101,7 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
         - [ ] Remplir le alt des images
         - [x] Aria label sur les liens
         - [x] Aria label sur les boutons
+    - [x] Adapter le click JS en click sur la classe active seulement 
     - [x] Régler l'erreur *Form submission canceled because the form is not connected*
 - [ ] Ajouter le passage au succès suivant lors de la validation manuelle des succès
 - [ ] Empecher le *clickNextAchievement* lors de la *dévalidation*
@@ -125,7 +127,8 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 ### Bogues :
 
-- [ ] Boucle infini d'ouverture de liens dans le navigateur lors de *openAll*
+- [ ] Double les ouvertures de liens lors de *openAll* - En cours
+    - Se produit après un changement de frame mais pas à la première arrivée
 - [ ] *validateAll* envoie vers */app/guide/x/quests/x* lorsque c'est le dernier succès de la liste, et lors de *doubles click*
     - J'ai pu observer que les doubles click d'affilé sur *validateAll* cause le problème de manière casi certain.
     - Mais parfois un simple *validateAll* sur le dernier succès me fait la redirection.

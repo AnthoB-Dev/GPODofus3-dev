@@ -194,6 +194,8 @@ def toggle_quest_completion(request, quest_id):
     last_seen_achievement = GuideAchievement.objects.filter(
         guide=guide, is_last_seen=True
     ).first()
+    expect_list = []
+    expect_list = [field.name[7:] for field in achievement._meta.get_fields() if field.name.startswith('expect_') and getattr(achievement, field.name)]
 
     # Rendre les templates partiels en incluant request
     quest_html = render_to_string('sections/_quest_item.html', {
@@ -207,7 +209,8 @@ def toggle_quest_completion(request, quest_id):
     achievement_html = render_to_string('sections/_achievement_item.html', {
         'item': {
             'achievement': achievement,
-            'completion_percentage': completion_percentage
+            'completion_percentage': completion_percentage,
+            "expect_list": expect_list
         },
         'guide': guide,
         'selected_achievement': selected_achievement,

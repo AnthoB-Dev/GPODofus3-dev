@@ -21,7 +21,6 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-static/
 assets/css/main.css
 dist/
 downloads/
@@ -146,7 +145,8 @@ README.md
 *.css.map
 .sass-cache/
 *.css.less
-static/CACHE/
+static/fontawesomefree/
+static/debug_toolbar/
 staticfiles/CACHE/
 staticfiles/debug_toolbar/
 staticfiles/fontawesomefree/

@@ -122,11 +122,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = "fr-FR"
-
 TIME_ZONE = "UTC"
-
 USE_I18N = True
-
 USE_TZ = True
 
 
@@ -134,24 +131,19 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = "/static/"
-
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
-
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     "compressor.finders.CompressorFinder",
 ]
-
 STATICFILES_IGNORE_PATTERNS = [
     "*.map",
 ]
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -159,21 +151,15 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # URL du serveur React
 ]
 
-
 # Django Compressor
 
-COMPRESS_ENABLED = True
-
+COMPRESS_ENABLED = False
 COMPRESS_OFFLINE = False
-
 COMPRESS_ROOT = STATIC_ROOT
-
 COMPRESS_URL = STATIC_URL
-
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
 )
-
 
 # Configuration GZip
 GZIP_MINIMUM_SIZE = 1024  # 1 Ko

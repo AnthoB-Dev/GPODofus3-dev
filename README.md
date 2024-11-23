@@ -6,7 +6,7 @@
 
 **GPODofus3** (*GPOD3 pour les intimes*) a été développé dans le but **d'apporter** ce qui, à mon humble avis et avec toute la **subjectivité** que cela implique, **manque** au guide du -presque- même nom de [Skyzio](https://docs.google.com/spreadsheets/d/1X7rrozrDZDepncPr8AZXV7oLT_xEa6dkASjLmVFOLwA/edit?gid=1858873548#gid=1858873548).
 
-**N'hésitez pas** à mettre une **étoile** sur [le Github du projet](https://github.com/AnthoB-Dev/GPODofus3) si vous **appréciez** l'application, ou ne serait-ce que pour me montrer l'**initiative** vous interesse.
+**N'hésitez pas** à mettre une **étoile** sur [le Github du projet](https://github.com/AnthoB-Dev/GPODofus3) si vous **appréciez** l'application, ou ne serait-ce que pour me montrer que l'**initiative** vous interesse.
 
 
 ## Sommaire

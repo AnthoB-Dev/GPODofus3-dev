@@ -56,11 +56,13 @@ Moi c'est **Anthony**, developpeur occasionel mais aussi (et surtout) joueur de 
 Depuis l'école primaire à aujourd'hui, je suis passé par un sacré nombre de versions, mais je n'avais pas non plus le temps nécessaire à consacrer au jeu à l'époque de **Dofus 1** pour pleinement profiter de cette version... Et puis, fallait-il encore avoir accès à l'ordi.
 
 L'arrivée du PC à bibi only, **Dofus 2**, des succès , des idoles, etc, ayant **casualiser** le jeu, j'ai pu profiter un peu plus du contenu haut level, surtout lorsque j'avais finalement décider de jouer en *team de 4*, qui n'était pas spécialement populaire à l'époque à côté des *team de 8* mais c'était un bon compromis, déjà. Aussi bien pour mon PC de l'époque que pour mon amusement. 
+
 Mais, quand on peut faire 4 on peut faire 6 voir 8, n'est-ce pas ? Je me suis arrêté à 6 perso, le PC était déjà assez en galère comme ça. 
 Ceci dit ce n'est pas tout à fait vrai : Une fois j'ai fait une *team de 8* mais il fallait faire des bailles chelou en mettant le PC en mode sans echec ou je ne sais plus, bref, y'avait presque pas d'UI à l'arrivé, et presque rien qui tournait en fond. Sacrée experience mais content de ne plus avoir à recourir à de tels mesures 😂
 
 Bref, c'est à ce moment là que j'ai **redécouvert** le jeu et où j'ai pu pleinement m'amuser à **parcourir le monde des Douzes**.
 Mais le **questing** étant ce qu'il est et surtout avec plusieurs comptes, je n'ai jamais eu le courage de faire la quête d'un Dofus en entier... Ni même jamais d'en drop un, d'ailleurs. 
+
 Mais avec la sortie de **Dofus 3** je me suis dit que ça allait changer. C'est là qu'intervient le [guide de Skyzio](https://docs.google.com/spreadsheets/d/1X7rrozrDZDepncPr8AZXV7oLT_xEa6dkASjLmVFOLwA/edit?gid=1858873548#gid=1858873548), et **GPODofus3**.
 </details>
 
@@ -95,7 +97,7 @@ Comme dit précedemment, j'ai essayer de faire en sorte d'apporter ce qu'il peut
 
 - **Des liens** : Un sacré paquet d'ailleurs, ajoutés un part un à la mano (dédicace aux macros souris et clavier, sans elles je ne serais pas là aujourd'hui) menant vers [Dofus pour les noobs](https://www.dofuspourlesnoobs.com/) dès lors que c'est possible. Donc actuellement sur les **quêtes**, sur les **succès**.
 
-- **Un repère visuel pour connaitre les prérequis d'un succès** : Concrètement j'ai incorporé la section "à prévoir" de **DPLN**. Il y a des petites icones dans la section **Succès** permettant d'un coup de d'oeil de savoir ce dont il y aura besoin pour completer le succès ! 
+- **Un repère visuel pour connaitre les prérequis d'un succès** : Concrètement j'ai incorporé la section "à prévoir" de [DPLN](https://www.dofuspourlesnoobs.com), exemple : "Ce qu'il vous faudra prévoir" dans la [quête de l'emeraude](https://www.dofuspourlesnoobs.com/dofus-emeraude.html). Il y a des petites icones dans la section **Succès** permettant d'un coup de d'oeil de savoir qu'il y aura un prérequis pour completer le succès ! Plus qu'à cliquer sur le lien du succès et [DPLN](https://www.dofuspourlesnoobs.com) vous donnera les détails.
 
 - **Un retour sur le dernier guide et succès consulté** : Pour ne pas perdre de temps à retrouvé là où on s'était arrêté la veille.
 

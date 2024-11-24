@@ -1,6 +1,3 @@
-const html = document.querySelector('html');
-const images = document.querySelectorAll('.guide_element img');
-
 const createModal = (image) => {
     const modal = document.createElement('div');
     const img = document.createElement('img');
@@ -41,9 +38,11 @@ const removeModal = () => {
     modal.removeEventListener('click', removeModal);
 }
 
-const toggleSummary = (button) => {
+const toggleSummary = async (button) => {
     console.log('toggleSummary');
-    const summaryBtns = document.querySelectorAll('.jsToggleSummaryBtn');
+    const summaryBtns = await getSummaryBtns();
+    console.log(summaryBtns);
+    
     let summary;
     summaryBtns.forEach(btn => {
         if (btn !== button) {
@@ -65,13 +64,28 @@ const toggleSummary = (button) => {
     })
 }
 
-export const addGuideEventListeners = () => {
+const getSummaryBtns = () => {
+    return new Promise((resolve) => {
+        const summaryBtns = document.querySelectorAll('.jsToggleSummaryBtn');
+        resolve(summaryBtns);
+    })
+}
+
+const getImages = () => {
+    return new Promise((resolve) => {
+        const images = document.querySelectorAll('.guide_element img');
+        resolve(images);
+    })
+}
+
+export const addGuideEventListeners = async () => {
+    const images = await getImages();
     images.forEach(image => {
         image.addEventListener('click', () => {
             createModal(image);
         })
     })
-    const summaryBtns = document.querySelectorAll('.jsToggleSummaryBtn');
+    const summaryBtns = await getSummaryBtns();
     summaryBtns.forEach(button => {
         button.addEventListener('click', () => {
             toggleSummary(button);
@@ -79,13 +93,14 @@ export const addGuideEventListeners = () => {
     });
 }
 
-export const removeGuideEventListeners = () => {
+export const removeGuideEventListeners = async () => {
+    const images = await getImages();
     images.forEach(image => {
         image.removeEventListener('click', () => {
             createModal(image);
         })
     })
-    const buttons = document.querySelectorAll('.jsToggleSummaryBtn');
+    const buttons = await getSummaryBtns();
     buttons.forEach(button => {
         button.removeEventListener('click', () => {
             toggleSummary(button);

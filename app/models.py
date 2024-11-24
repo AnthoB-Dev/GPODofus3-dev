@@ -23,20 +23,16 @@ class Achievement(models.Model):
     title = models.CharField(max_length=255, verbose_name="titre")
     url = models.URLField(max_length=255)
     completion_points = models.IntegerField(verbose_name="Point de succès")
-    objectives = models.TextField(
-        max_length=255, null=True, blank=True, verbose_name="Objectifs"
-    )
-    expect_resource = models.BooleanField(
-        default=False, verbose_name="Demande : Ressource"
-    )
+    objectives = models.TextField(max_length=255, null=True, blank=True, verbose_name="Objectifs")
+    expect_alignment = models.BooleanField(default=False, verbose_name="Demande : Alignement")
+    expect_capture = models.BooleanField(default=False, verbose_name="Demande : Capture")
+    expect_job = models.BooleanField(default=False, verbose_name="Demande : Métier")
+    expect_resource = models.BooleanField(default=False, verbose_name="Demande : Ressource")
     expect_item = models.BooleanField(default=False, verbose_name="Demande : Item")
     expect_fight = models.BooleanField(default=False, verbose_name="Demande : Combat")
     expect_dungeon = models.BooleanField(default=False, verbose_name="Demande : Donjon")
-    expect_job = models.BooleanField(default=False, verbose_name="Demande : Métier")
     expect_other = models.BooleanField(default=False, verbose_name="Demande : Autre")
-    expect_alignment = models.BooleanField(
-        default=False, verbose_name="Demande : Alignement"
-    )
+    
     created_at = models.DateTimeField(
         auto_now_add=True, verbose_name="Date de création"
     )

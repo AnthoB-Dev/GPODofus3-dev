@@ -656,6 +656,10 @@ body {
                     flex-direction: column;
                     gap: var(--gap-reg);
 
+                    a {
+                      color: revert;
+                    }
+
                     ul {
                       gap: 0;
 
@@ -671,7 +675,6 @@ body {
                       width: 100%;
                       object-fit: scale-down;
                       cursor: pointer;
-                      margin-bottom: var(--gap-reg);
                     }
 
                     h4 {
@@ -690,7 +693,7 @@ body {
                       border-radius: 4px;
 
                       &:hover {
-                        background: var(--clr-tertiary);
+                        background: darken(@clr-previsions, 10%);
                       }
 
                       &:active {
@@ -859,14 +862,15 @@ body {
             flex-direction: column;
             gap: var(--gap-reg);
 
-            #objectives_content {
-              gap: var(--gap-sm) !important;
-              &:not(:last-child) {
-                margin-bottom: var(--gap-reg);
-              }
-  
-              p {
-                margin-left: 0 !important;
+            .objective_element {
+              ul {
+                gap: 0;
+                li {
+                  box-shadow: none;
+                  border: none;
+                  border-radius: none;
+                  display: block;
+                }
               }
             }
           }

@@ -1,12 +1,13 @@
 # Guide de progression optimisée: Dofus 3
 
-<!-- Ajouté une image du projet -->
+<!-- TODO: Changer l'image par une version finale -->
+![Image du projet](/static/medias/project.png)
 
-## Bonjour et bienvenu sur le github de l'application GPODofus3.
+## Bonjour et bienvenu sur GPODofus3.
 
 **GPODofus3** (*GPOD3 pour les intimes*) a été développé dans le but **d'apporter** ce qui, à mon humble avis et avec toute la **subjectivité** que cela implique, **manque** au guide du -presque- même nom de [Skyzio](https://docs.google.com/spreadsheets/d/1X7rrozrDZDepncPr8AZXV7oLT_xEa6dkASjLmVFOLwA/edit?gid=1858873548#gid=1858873548).
 
-**N'hésitez pas** à mettre une **étoile** sur [le Github du projet](https://github.com/AnthoB-Dev/GPODofus3) si vous **appréciez** l'application, ou ne serait-ce que pour me montrer que l'**initiative** vous interesse.
+**N'hésitez pas** à mettre une **étoile** sur [le Github du projet](https://github.com/AnthoB-Dev/GPODofus3) si vous **appréciez** l'application, ou simplement si l'**initiative** vous interesse.
 
 
 ## Sommaire
@@ -97,7 +98,15 @@ Comme dit précedemment, j'ai essayer de faire en sorte d'apporter ce qu'il peut
 
 - **Des liens** : Un sacré paquet d'ailleurs, ajoutés un part un à la mano (dédicace aux macros souris et clavier, sans elles je ne serais pas là aujourd'hui) menant vers [Dofus pour les noobs](https://www.dofuspourlesnoobs.com/) dès lors que c'est possible. Donc actuellement sur les **quêtes**, sur les **succès**.
 
-- **Un repère visuel pour connaitre les prérequis d'un succès** : Concrètement j'ai incorporé la section "à prévoir" de [DPLN](https://www.dofuspourlesnoobs.com), exemple : "Ce qu'il vous faudra prévoir" dans la [quête de l'emeraude](https://www.dofuspourlesnoobs.com/dofus-emeraude.html). Il y a des petites icones dans la section **Succès** permettant d'un coup de d'oeil de savoir qu'il y aura un prérequis pour completer le succès ! Plus qu'à cliquer sur le lien du succès et [DPLN](https://www.dofuspourlesnoobs.com) vous donnera les détails.
+- **Une section Succès avec** :
+
+    - **Un repère visuel pour connaitre les prérequis d'un succès** : Concrètement j'ai incorporé la section **à prévoir** de [DPLN](https://www.dofuspourlesnoobs.com), exemple : "Ce qu'il vous faudra prévoir" dans la [quête de l'emeraude](https://www.dofuspourlesnoobs.com/dofus-emeraude.html). Il y a des petites icones dans la section **Succès** permettant d'un coup de d'oeil de savoir qu'il y aura un prérequis pour completer le succès ! Plus qu'à cliquer sur le lien du succès et [DPLN](https://www.dofuspourlesnoobs.com) vous donnera les détails.
+
+    - **Deux autres repères visuel pour connaitre l'avancée du succès d'un coup d'oeil** : 
+        - Une **bordure** entoure les succès lors de la complétion de quêtes selon un **code couleur** simple : 
+        Supérieur à 0% : <span style="color:#eb2126;">Rouge</span>; Supérieur ou égal à 50% : <span style="color:#dea325;">Orange</span>; Inférieur à 100% : <span style="color:#198309;">Vert</span>
+        Ainsi, s'il n'y a **aucune** bordure : **tout est à faire**; Si la bordure est **verte**: **plus rien n'est à faire**. En un coup d'oeil on **élimine** déjà 2 possibilités sur 4 !
+        - Un **pourcentage** permet dans le cas où l'ont voit du rouge ou du vert à donner une information précise de l'avancée actuelle du succès
 
 - **Un retour sur le dernier guide et succès consulté** : Pour ne pas perdre de temps à retrouvé là où on s'était arrêté la veille.
 
@@ -129,7 +138,8 @@ Je souhaite toute la réussite possible à Dofus 3 en esperant que ce soit le d�
 Ensuite à **Skyzio** pour avoir mis à disposition de la communauté un guide qui a assurément demander des mois de travail. 
 Merci à toi, je vais enfin pouvoir jouer de façon plus optimale (et mettre les mains sur autre chose que le Cawotte !)
 
-Et enfin, à **toi** l'utilisateur de cette application. Merci d'avoir donné une chance à un projet qui ne devait servir qu'à mes amis et moi même.
+Et enfin, à **toi** l'utilisateur de cette application. Ou bien **toi** qui envisagerait de l'utilisée.
+Je vous remercie d'être les premiers utilisateurs hors entourage à utiliser une de mes création.
 
 
 ## Contact

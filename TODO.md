@@ -100,13 +100,12 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 - Optimiser le code 
     - [ ] Vérifier les events js - En cours
     - [ ] Améliorer l'accessibilité
-        - [ ] Changer la plupart de mes ul / li en divs
-        - [ ] Remplir le alt des images
+        - [ ] Changer la plupart de mes ul / li en divs - En cours
+        - [ ] Remplir le alt des images - En cours
         - [x] Aria label sur les liens
         - [x] Aria label sur les boutons
     - [x] Adapter le click JS en click sur la classe active seulement 
     - [x] Régler l'erreur *Form submission canceled because the form is not connected*
-- [ ] Ajouter l'icon other.png
 - [ ] Ajouter le passage au succès suivant lors de la validation manuelle des succès
 - [ ] Empecher le *clickNextAchievement* lors de la *dévalidation*
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
@@ -116,6 +115,7 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 - [ ] Media queries
 - [ ] Implémenter d'autres themes
     - [ ] Changer l'image background selon le thème
+- [x] Ajouter l'icon other.png
 - [x] Ajouter un délais sur le clique du *validateAll*
 - [x] Faire en sorte que le *validateAll* lors du dernier succès du guide reste sur le dernier succès (probablement doublon avec la ligne de dessus) 
 - [x] Terminer le front
@@ -134,15 +134,15 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 - [ ] Enorme délais dans la pageNav dans le changement des guides. Observé sur navigateur légèrement mais avec Electron c'est flagrant et permanent. Observé aussi sur la topNav.
     - Plus le spam est rapide moins ça avance.
-    - Je pense que c'est liés au fait de supprimer les events et de les rajouter fois, passé partout ça a rajouter pas mal de merde à executer au changement de guide
+    - Je pense que c'est liés au fait de supprimer les events et de les rajouter fois, passé partout ça a rajouter pas mal de merde à executer au changement de guide, et puis c'est depuis ces changements que ça merde
     - Mais c'est peut être aussi simplement lié à la duplication restante à ce niveau là de l'app
-- [ ] Le clic sur le dernier achievement à l'air de se produire vu que le bouton *validateAll* se met à jour mais le style de l'achievement ne change pas
+- [ ] Le *clickCurrentAchievement* lorsqu'il n'y a plus de *nextAchievement* ne fonctionne pas
+    - Le clic sur le dernier achievement à l'air de se produire vu que le bouton *validateAll* se met à jour mais le style de l'achievement ne change pas
 - [ ] Moins flagrant sur le navigateur mais j'ai pu constater qu'il arrive malgré le disabled que lors du spam intense de *validateAll* des succès sont sautés.
     - Je n'ai heureusement pas réussi à empêcher la fin de l'action CàD la validation des succès. Par contre lorsqu'il est validé à 100, le suivant est sauté..
 - [ ] La topNav ne galère plus par contre il faut que je mette un await sur la fermeture on que je revois les setTimeout car le caret n'a pas le temps de se fermer
     - C'est peut être chose puisque je peux l'ouvrir / fermer sans problemes, c'est seulement lors de la selection d'un guide.
 - [ ] Lorsque je selectionne un guide et que je refresh la page, la *topNav* ne revient pas sur le dernier guide vu (scrollIntoView *nav.js*) S:Stocker la pos ?
-- [ ] Le *clickCurrentAchievement* lorsqu'il n'y a plus de *nextAchievement* ne fonctionne pas
 - [ ] Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés
 - [ ] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. Ce qui résulte en celle qui a été validée / dévalidée a rester dévalidée à moins de rappuyer sur le _validateAll_ ()
 - [x] La topNav bug avec Electron, le toggleOpen galère
@@ -169,8 +169,9 @@ Contenu de l'application.
 
 ### Rédiger :
 
+- [ ] Faire le guide tuto - En cours
 - [ ] Combiné les guides ayant pour objectif la complétion d'un donjon
 - [ ] Définir les succès concernés sur chaque Guide (actuellement à "**A travers le Krosmoz**")
 - [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
-- [ ] Faire le _README_ de l'app
+- [ ] Faire le _README_ de l'app - En cours
 </details>

@@ -1,12 +1,14 @@
 import * as nav from "./nav.js";
 import * as quests from "./quests.js";
 import * as achievements from "./achievements.js";
+import * as guide from "./guide.js";
 
 // Fonction pour initialiser les événements
 const initializeEvents = () => {
     nav.addNavEventListeners();
     quests.addQuestEventListeners();
     achievements.addAchievementEventListeners();
+    guide.addGuideEventListeners();
     quests.toggleBtnBackgroundStyle();
     quests.validateAllBtnStyle();
     quests.updateQuestsAchievementTitle();
@@ -17,6 +19,7 @@ const purgeEvents = () => {
     nav.removeNavEventListeners();
     quests.removeQuestEventListeners();
     achievements.removeAchievementEventListeners();
+    guide.removeGuideEventListeners();
 };
 
 // Écouteur pour `turbo:before-render`

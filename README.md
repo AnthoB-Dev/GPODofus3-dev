@@ -128,7 +128,7 @@ Mais j'ai quand même fait en sorte au meilleur de mes compétences, de **rédui
 
 
 ## Utilisation
-Le tout premier Guide de l'application est un guide tutoriel expliquant comment "qui fait quoi" dans l'application. Je vous invite donc à vous rendre sur celui-ci lorsque vous avez un questionnement par rapport à une icone, par exemple.
+Le tout premier Guide de l'application est un guide tutoriel expliquant "qui fait quoi" dans l'application. Je vous invite donc à vous rendre sur celui-ci lorsque vous avez un questionnement quelconque sur les fonctionnalités de l'app.
 
 
 ## Remerciements

@@ -132,6 +132,7 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 ### Bogues :
 
+- [ ] Fix le JS de guide.js qui se dédouble après changemement de page
 - [ ] Enorme délais dans la pageNav dans le changement des guides. Observé sur navigateur légèrement mais avec Electron c'est flagrant et permanent. Observé aussi sur la topNav.
     - Plus le spam est rapide moins ça avance.
     - Je pense que c'est liés au fait de supprimer les events et de les rajouter fois, passé partout ça a rajouter pas mal de merde à executer au changement de guide, et puis c'est depuis ces changements que ça merde
@@ -169,9 +170,12 @@ Contenu de l'application.
 
 ### Rédiger :
 
-- [ ] Faire le guide tuto - En cours
+- [ ] Rédiger 1/3 des guides
+- [ ] Rédiger 2/3 des guides
+- [ ] Rédiger 3/3 des guides
 - [ ] Combiné les guides ayant pour objectif la complétion d'un donjon
 - [ ] Définir les succès concernés sur chaque Guide (actuellement à "**A travers le Krosmoz**")
 - [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
 - [ ] Faire le _README_ de l'app - En cours
+- [x] Faire le guide tuto
 </details>

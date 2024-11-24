@@ -137,7 +137,7 @@ class CommonSpell(models.Model):
 
 class Guide(models.Model):
     title = models.CharField(max_length=255, verbose_name="Titre")
-    objectives = models.TextField("Objectifs", max_length=500)
+    objectives = models.TextField("Objectifs", null=True, blank=True)
     important_info = models.TextField("A prévoir", null=True, blank=True)
     explanations = models.TextField("Guide", null=True, blank=True)
     page = models.FloatField()

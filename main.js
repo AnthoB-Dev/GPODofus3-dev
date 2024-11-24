@@ -22,7 +22,7 @@ function createWindow() {
     maxWidth: 1600,
     maxHeight: 900,
     autoHideMenuBar: true,
-    icon: path.join(__dirname, '/static/medias/icons/favicon.ico'),
+    icon: path.join(__dirname, '/static/medias/icons/favicons/favicon.ico'),
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       nodeIntegration: false,

@@ -5,7 +5,7 @@ from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.cache import cache
 from django.db.models import Prefetch
-from app.models import Achievement, Guide, GuideAchievement, Quest
+from app.models import Achievement, Alignment, Guide, GuideAchievement, Quest, User
 from django.template.loader import render_to_string
 
 
@@ -21,29 +21,54 @@ def redirect_to_guide(request):
 
 
 def get_navigation_context(guide):
-    # Cache des guides
-    guides = cache.get("all_guides")
-    if guides is None:
-        guides = Guide.objects.only("id", "title").all()
-        cache.set("all_guides", guides, 60 * 15)  # Cache pour 15 minutes
+    # Déterminer l'alignement à utiliser
+    user = User.objects.first()
+    alignment_ids = [user.alignment_id, 3, 4]
+    
+    admin = True            # DEBUG TODO: ENLEVER
+    admin_ids = [1, 2, 3]   # DEBUG TODO: ENLEVER
 
-    # Guides précédent et suivant
-    previous_guide = None
-    if guide.page > 0:  # Vérifier si on n'est pas au premier guide
-        previous_guide = (
-            Guide.objects.filter(page__lt=guide.page, page__gt=0)
-            .order_by("-page")
-            .first()
-        )
+    if not admin:
+        # Cache des guides
+        guides = cache.get(f"all_guides_alignment_{alignment_ids}")
+        if guides is None:
+            guides = Guide.objects.filter(alignment_id__in=alignment_ids).only("id", "title").all()
+            cache.set(f"all_guides_alignment_{alignment_ids}", guides, 60 * 15)  # Cache pour 15 minutes
 
-    next_guide = Guide.objects.filter(page__gt=guide.page).order_by("page").first()
+        # Guides précédent et suivant
+        previous_guide = None
+        if guide.page > 0:  # Vérifier si on n'est pas au premier guide
+            previous_guide = (
+                Guide.objects.filter(page__lt=guide.page, page__gt=0, alignment_id__in=alignment_ids)
+                .order_by("-page")
+                .first()
+            )
+
+        next_guide = Guide.objects.filter(page__gt=guide.page, alignment_id__in=alignment_ids).order_by("page").first()
+        
+    else:
+        # Cache des guides
+        guides = cache.get(f"all_guides_admin_{admin_ids}")
+        if guides is None:
+            guides = Guide.objects.filter(alignment_id__in=admin_ids).only("id", "title").all()
+            cache.set(f"all_guides_admin_{admin_ids}", guides, 60 * 15)  # Cache pour 15 minutes
+        
+        # Guides précédent et suivant
+        previous_guide = None
+        if guide.page > 0:
+            previous_guide = (
+                Guide.objects.filter(page__lt=guide.page, page__gt=0, alignment_id__in=admin_ids)
+                .order_by("-page")
+                .first()
+            )
+        
+        next_guide = Guide.objects.filter(page__gt=guide.page, alignment_id__in=admin_ids).order_by("page").first()
 
     return {
         "guides": guides,
         "previous_guide": previous_guide,
         "next_guide": next_guide,
     }
-    
 
 def guide_detail(request, guide_id):
     # Récupérer le guide avec les achievements et quêtes préchargés
@@ -101,6 +126,8 @@ def guide_detail(request, guide_id):
             "expect_list": expect_list
         })
 
+        alignments = Alignment.objects.all()
+
     # Contexte complet
     context = {
         "guide": guide,
@@ -108,6 +135,7 @@ def guide_detail(request, guide_id):
         "selected_achievement": selected_achievement,
         "last_seen_achievement": last_seen_achievement,
         "quests": quests,
+        "alignments" : alignments,
     }
     context.update(navigation_context)
 
@@ -156,7 +184,7 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
     
     # Définir selected_achievement
     selected_achievement = achievement
-
+    
     quests = achievement.quests.all() if achievement else []
 
     context = {
@@ -224,6 +252,28 @@ def toggle_quest_completion(request, quest_id):
     </turbo-stream>
     <turbo-stream action="replace" target="achievement_frame_{achievement.id}">
       <template>{achievement_html}</template>
+    </turbo-stream>
+    """
+    return HttpResponse(response_content, content_type='text/vnd.turbo-stream.html')
+
+
+@require_POST
+def alignment_choice(request):
+    alignment_id = request.POST.get('alignment')
+    alignment = get_object_or_404(Alignment, id=alignment_id)
+    
+    user, created = User.objects.get_or_create(id=1)
+    user.alignment = alignment
+    user.save()
+    
+    alignments = Alignment.objects.all()
+    alignments_html = render_to_string('sections/alignment.html', {
+        'alignments': alignments,
+    }, request=request)
+
+    response_content = f"""
+    <turbo-stream action="replace" target="alignment_choice">
+      <template>{alignments_html}</template>
     </turbo-stream>
     """
     return HttpResponse(response_content, content_type='text/vnd.turbo-stream.html')

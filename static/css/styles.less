@@ -13,7 +13,8 @@
 
 @fs--2: 10px;
 @fs--1: 12px;
-@fs-0: 16px;
+@fs-0: 14px;
+@fs-05: 16px;
 @fs-1: 18px;
 @fs-2: 22px;
 @fs-3: 26px;
@@ -109,6 +110,7 @@
   --fs--2: @fs--2;
   --fs--1: @fs--1;
   --fs-0: @fs-0;
+  --fs-05: @fs-05;
   --fs-1: @fs-1;
   --fs-2: @fs-2;
   --fs-3: @fs-3;
@@ -200,6 +202,19 @@ input {
   max-width: 70vw;
 }
 
+.quest {
+  color: #1e90ff;
+}
+
+.achievement {
+  font-weight: 600;
+  color: #006400;
+}
+
+.warning {
+  color: red;
+}
+
 body {
   color: var(--clr-text);
   display: flex;
@@ -249,13 +264,13 @@ body {
 
     h1 {
       display: flex;
+      margin: 0;
     }
 
     div {
       align-items: center;
       display: flex;
-      flex: 1;
-      padding-left: var(--gap-xl);
+      margin-left: var(--gap-reg);
 
       #credentials {
         flex-direction: column;
@@ -496,6 +511,10 @@ body {
               padding: 0 var(--gap-reg);
               font-size: var(--fs-4);
             }
+
+            h2 {
+              margin-left: 0;
+            }
           }
           
           .dropDownOpen {
@@ -585,6 +604,7 @@ body {
 
             .content {
               gap: var(--gap-reg);
+              font-size: var(--fs-05);
 
               #frame_guide {
                 
@@ -596,12 +616,21 @@ body {
                   border-radius: var(--border-radius);
                   box-shadow: var(--box-shadow);
                   padding: var(--gap-reg);
-                  margin-bottom: var(--gap-reg);
-  
+                  margin-bottom: var(--gap-md);
+                  
                   h4 {
                     margin-bottom: var(--gap-reg);
-                    margin-left: 0;
+                    margin-left: auto;
                     color: var(--clr-red);
+                  }
+                  
+                  a {
+                    color: revert;
+                    transition: all 0.2s ease;
+
+                    &:hover {
+                      color: lighten(#0000CC, 30%);
+                    }
                   }
   
                   #prevision_content {
@@ -658,6 +687,11 @@ body {
 
                     a {
                       color: revert;
+                      transition: all 0.2s ease;
+  
+                      &:hover {
+                        color: lighten(#0000CC, 30%);
+                      }
                     }
 
                     ul {
@@ -686,14 +720,14 @@ body {
                     
                     .jsToggleSummaryBtn {
                       padding: 8px 0;
-                      background: var(--clr-previsions);
+                      background: lighten(@clr-previsions, 5%);
                       width: 100%;
                       box-shadow: var(--box-shadow);
                       font-family: 'Roboto-Bold';
                       border-radius: 4px;
 
                       &:hover {
-                        background: darken(@clr-previsions, 10%);
+                        background: @clr-previsions;
                       }
 
                       &:active {
@@ -861,6 +895,7 @@ body {
             display: flex;
             flex-direction: column;
             gap: var(--gap-reg);
+            font-size: var(--fs-05);
 
             .objective_element {
               ul {
@@ -961,4 +996,40 @@ body {
 }
 
 
+.jsToggleSummaryBtn {
+  padding: 8px 0;
+  background: lighten(@clr-previsions, 5%);
+  width: 100%;
+  box-shadow: var(--box-shadow);
+  font-family: 'Roboto-Bold';
+  border-radius: 4px;
 
+  &:hover {
+    background: @clr-previsions;
+  }
+
+  &:active {
+    box-shadow: none;
+  }
+}
+
+.jsGuideSummary {
+  display: none;
+
+  .guideSummary {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-reg);
+
+    &:not(:last-child) {
+      margin-bottom: var(--gap-lg);
+    }
+
+    h5 {
+      color: var(--clr-red);
+      margin-left: 0;
+      font-size: 1.1em;
+      margin: var(--gap-sm) 0;
+    }
+  }
+}

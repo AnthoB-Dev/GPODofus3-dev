@@ -78,6 +78,17 @@ const getImages = () => {
     })
 }
 
+const handleAlignmentForm = (alignmentForm) => {
+    alignmentForm.submit();
+}
+
+const getGuideId = () => {
+    return new Promise((resolve) => {
+        const guideId = document.querySelector('main').dataset.guide;
+        resolve(guideId);
+    })
+}
+
 export const addGuideEventListeners = async () => {
     const images = await getImages();
     images.forEach(image => {
@@ -91,6 +102,16 @@ export const addGuideEventListeners = async () => {
             toggleSummary(button);
         });
     });
+    const guideId = await getGuideId();
+    if (guideId == 1) {
+        const alignmentForm = document.querySelector('#alignment_form');
+        const alignmentSelect = document.getElementById("alignment");
+        if (alignmentSelect) {
+            alignmentSelect.addEventListener("change", function() {
+                handleAlignmentForm(alignmentForm);
+            });
+        }
+    }
 }
 
 export const removeGuideEventListeners = async () => {
@@ -106,4 +127,11 @@ export const removeGuideEventListeners = async () => {
             toggleSummary(button);
         });
     });
+    const main = document.querySelector('main');
+    if (main.dataset.guide == 1) {
+        const alignment = document.querySelector('#alignment_form');
+        alignment.removeEventListener('change', () => {
+            handleAlignmentForm(alignment);
+        });
+    }
 }

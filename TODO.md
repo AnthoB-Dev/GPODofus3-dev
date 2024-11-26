@@ -24,12 +24,17 @@ Developpement backend **Django**.
         - [x] quest_frame_id
         - [x] frame_objectives
         - [x] frame_achievements
+- [ ] Finir le système de tri du contenu selon l'alignement
+    - Actuellement les succès d'alignements se partagent TOUTES les quêtes sans tri. Ce qui fait qu'il y a des quêtes Brak dans Bonta..
+- [ ] Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons
+- [ ] Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons
+    - L'idée c'est de changer **Quêtes** en **Donjons** et que les succès affichent les donjons à la place des quêtes
 - [ ] Changer les fichiers static
     - Lorsque je passe en debug : False, il ne trouve plus mon css / js
-- [ ] Ajouter un toggle pour l'*alignement*, le mettre en storage.
-    - [ ] Mettre en place la logique de visibilité des guides selon l'*alignement*
 - [ ] Ajouter un champ level aux succès et permettre l'affichage des succès par niveaux
 - [ ] Mettre en place expect_capture (sur donjon ?)
+- [x] Ajouter un toggle pour l'*alignement*, le mettre en storage.
+    - [x] Mettre en place la logique de visibilité des guides selon l'*alignement*
 - [x] Supprimer *LastSession*, rajouter un champ *is_last_seen* dans *GuideAchievement* pour sauvegarder l'achievement qui a été vu en dernier dans ce guide.
 - [x] Revoir le fonctionnement du *selected_achievement* dans ma view *guide_detail*   
     - Definir la valeur de *selected_achievement* grâce au champ *is_last_seen* de *GuideAchievement*
@@ -60,11 +65,14 @@ Developpement backend **Django**.
 
 ### Bogues :
 
+- [ ] Afficher les bonnes icones d'alignement
+    - Avec le nouveau champ User.alignment ça devrait être ez
+- [ ] Régler le probleme de redirection d'alignment_choice, turbo le prends pas..
 - [ ] Par contre à présent, le toggleCompletion ne refresh pas auto le guide où la quête est doublon comme il le devrait.
     Les quêtes ne sont pas individuelle, comme j'ai utilisé une quête préalablement utilisée, elle est validée partout où elle est présente, ce qui n'est pas un problème en soit vu qu'un des seul cas de figure où ça aura lieu ce sera dans les différents guides tornades des donjons / tour du monde.
     Par contre, le refresh ne fonctionne que lorsque la quête est validée dans son succès initial
-    - [ ] Guide 4 "**A travers le Krosmoz**"  
-    - [ ] Guide 169 "**Donjon : Nid du Kwakwa**" 
+    - Guide 4 "**A travers le Krosmoz**"  
+    - Guide 169 "**Donjon : Nid du Kwakwa**" 
 - [ ] Problemes de "*content missing*" sur le succès "*Tout est en Ordre*" du guide "**Archipel de Valonia - Albuera**" (Vu qu'ici)
 - [x] Problèmes à l'arrivée sur les guides 4 et 169
     Les problèmes de redirection puis de content missing étaients liés au fait que ces guides avaient des succès mais pas de quêtes associées.
@@ -112,6 +120,7 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 - [ ] Ajouter des eventlistener sur les fleches gauche et droite pour naviguer dans les *guides*
 - [ ] Ajouter des eventlistener sur les fleches du haut et du bas pour naviguer avec la *topNav*
 - [ ] Décider quoi faire des pseudo discord + réajuster leurs positions
+- [ ] Au survol d'une quête ou d'un succès dans les guides, mettre en surbrillance la quête et le succès.
 - [ ] Media queries
 - [ ] Implémenter d'autres themes
     - [ ] Changer l'image background selon le thème
@@ -170,12 +179,19 @@ Contenu de l'application.
 
 ### Rédiger :
 
+- [ ] Ajouter un guide Rush Donjons après les Quêtes alignement Brak 20
+- [ ] Ajouter un guide pour choisir son alignement
+- [ ] Dans le premier rush donjons entre alignement 0-4 et 4-16 : ajouter un if user.alignment = neutre pour afficher tous ceux à faire avec alignement.
+- [ ] **Garde à vous** et **Chef oui chef** du guide Quêtes d'alignements 4 à 16 affichent n'imp
+- [ ] Ajouter un succès pour les Donjons à la manière des alignements
 - [ ] Rédiger 1/3 des guides
 - [ ] Rédiger 2/3 des guides
 - [ ] Rédiger 3/3 des guides
 - [ ] Combiné les guides ayant pour objectif la complétion d'un donjon
 - [ ] Définir les succès concernés sur chaque Guide (actuellement à "**A travers le Krosmoz**")
 - [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
+    - Ajouter un succès Tour du monde et y mettre les 27 quêtes (donjons ?)
+    - Pareil pour Tornade des donjons, ça ne refletera pas le vrai succès mais il se terminera bien au même moment.
 - [ ] Faire le _README_ de l'app - En cours
 - [x] Faire le guide tuto
 </details>

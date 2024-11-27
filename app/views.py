@@ -8,6 +8,7 @@ from django.db.models import Prefetch
 from app.models import Achievement, Alignment, Guide, GuideAchievement, Quest, User
 from django.template.loader import render_to_string
 
+ADMIN = True            # DEBUG TODO: ENLEVER
 
 def redirect_to_guide(request):
     # Récupérer le dernier guide vu
@@ -23,16 +24,15 @@ def redirect_to_guide(request):
 def get_navigation_context(guide):
     # Déterminer l'alignement à utiliser
     user = User.objects.first()
-    alignment_ids = [user.alignment_id, 3, 4]
+    alignment_ids = [user.alignment_id, 3, 4] # L'alignement de l'utilisateur + neutre + aligner
     
-    admin = True            # DEBUG TODO: ENLEVER
-    admin_ids = [1, 2, 3]   # DEBUG TODO: ENLEVER
+    admin_ids = [1, 2, 3, 4]   # DEBUG TODO: ENLEVER
 
-    if not admin:
+    if not ADMIN:
         # Cache des guides
         guides = cache.get(f"all_guides_alignment_{alignment_ids}")
         if guides is None:
-            guides = Guide.objects.filter(alignment_id__in=alignment_ids).only("id", "title").all()
+            guides = Guide.objects.filter(alignment_id__in=alignment_ids).only("id", "title").order_by("page").all()
             cache.set(f"all_guides_alignment_{alignment_ids}", guides, 60 * 15)  # Cache pour 15 minutes
 
         # Guides précédent et suivant
@@ -50,7 +50,7 @@ def get_navigation_context(guide):
         # Cache des guides
         guides = cache.get(f"all_guides_admin_{admin_ids}")
         if guides is None:
-            guides = Guide.objects.filter(alignment_id__in=admin_ids).only("id", "title").all()
+            guides = Guide.objects.filter(alignment_id__in=admin_ids).only("id", "title").order_by("page").all()
             cache.set(f"all_guides_admin_{admin_ids}", guides, 60 * 15)  # Cache pour 15 minutes
         
         # Guides précédent et suivant
@@ -101,8 +101,10 @@ def guide_detail(request, guide_id):
         achievements = list(guide.achievement.all())
         selected_achievement = achievements[0] if achievements else None
 
-    # Liste des quêtes
-    quests = selected_achievement.quests.all() if selected_achievement else []
+    user = User.objects.first()
+    user_alignment = user.alignment.name
+    alignment_ids = [user.alignment_id, 3, 4] # L'alignement de l'utilisateur + neutre + aligner = Tout voir sauf l'alignement opposé
+    admin_ids = [1, 2, 3, 4]
 
     achievements_with_completion = []
     expect_list = []
@@ -110,6 +112,11 @@ def guide_detail(request, guide_id):
     
     for guide_achievement in guide_achievements:
         achievement = guide_achievement.achievement
+        
+        if not ADMIN:
+            quests = achievement.quests.filter(alignment_id__in=alignment_ids) if achievement else []
+        else:
+            quests = achievement.quests.filter(alignment_id__in=admin_ids) if achievement else []
 
         if guide_achievement.is_last_seen:
             last_seen_achievement = achievement.id
@@ -119,7 +126,20 @@ def guide_detail(request, guide_id):
         completion_percentage = (
             int((completed_quests / total_quests * 100)) if total_quests > 0 else 0
         )
-        expect_list = [field.name[7:] for field in achievement._meta.get_fields() if field.name.startswith('expect_') and getattr(achievement, field.name)]
+        
+        # Permet de modifier l'icone selon l'alignement de l'utilisateur
+        for field in achievement._meta.get_fields():
+            if field.name.startswith('expect_') and getattr(achievement, field.name):
+                expect = field.name[7:]
+                if expect == 'alignment':
+                    if user.alignment and user.alignment.name == "Bonta":
+                        expect = 'alignment_bonta'
+                    elif user.alignment and user.alignment.name == "Brâkmar":
+                        expect = 'alignment_brak'
+                else:
+                    expect = f'{expect}'
+                expect_list.append(expect)
+        
         achievements_with_completion.append({
             "achievement": achievement,
             "completion_percentage": completion_percentage,
@@ -136,6 +156,7 @@ def guide_detail(request, guide_id):
         "last_seen_achievement": last_seen_achievement,
         "quests": quests,
         "alignments" : alignments,
+        "user_alignment" : user_alignment
     }
     context.update(navigation_context)
 
@@ -185,8 +206,14 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
     # Définir selected_achievement
     selected_achievement = achievement
     
-    quests = achievement.quests.all() if achievement else []
-
+    user = User.objects.first()
+    admin_ids = [1, 2, 3, 4]
+    
+    if not ADMIN:
+        quests = achievement.quests.filter(alignment=user.alignment) if achievement else []
+    else:
+        quests = achievement.quests.filter(alignment_id__in=admin_ids) if achievement else []
+   
     context = {
         "guide": guide,
         "achievement": achievement,
@@ -225,6 +252,8 @@ def toggle_quest_completion(request, quest_id):
     expect_list = []
     expect_list = [field.name[7:] for field in achievement._meta.get_fields() if field.name.startswith('expect_') and getattr(achievement, field.name)]
 
+    user_alignment = User.objects.first().alignment
+
     # Rendre les templates partiels en incluant request
     quest_html = render_to_string('sections/_quest_item.html', {
         'quest': quest,
@@ -238,7 +267,8 @@ def toggle_quest_completion(request, quest_id):
         'item': {
             'achievement': achievement,
             'completion_percentage': completion_percentage,
-            "expect_list": expect_list
+            "expect_list": expect_list,
+            'user_alignment' : user_alignment
         },
         'guide': guide,
         'selected_achievement': selected_achievement,

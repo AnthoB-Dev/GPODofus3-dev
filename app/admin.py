@@ -67,6 +67,7 @@ class GuideAdmin(admin.ModelAdmin):
     inlines = [GuideAchievementInline, DungeonGuideInline]
     list_display = [
         "title",
+        "page",
         "id",
         "recommended_level",
     ]

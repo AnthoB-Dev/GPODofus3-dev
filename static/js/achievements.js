@@ -34,6 +34,9 @@ export const addAchievementEventListeners = async () => {
     const achievements = await getAchievements();
     buttons.forEach((button) => {
         button.addEventListener("click", handleAchievementButtonClick(button, achievements));
+        if (!button.parentElement.parentElement.classList.contains("active")) {
+            // buttons[0].click();
+        }
     });
 };
 

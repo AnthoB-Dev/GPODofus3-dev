@@ -39,9 +39,7 @@ const removeModal = () => {
 }
 
 const toggleSummary = async (button) => {
-    console.log('toggleSummary');
     const summaryBtns = await getSummaryBtns();
-    console.log(summaryBtns);
     
     let summary;
     summaryBtns.forEach(btn => {

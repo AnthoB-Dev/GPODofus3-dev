@@ -203,16 +203,22 @@ input {
 }
 
 .quest {
-  color: #1e90ff;
+  color: #1e90ff !important;
+  font-weight: 500;
 }
 
 .achievement {
   font-weight: 600;
-  color: #006400;
+  color: #006400 !important;
+}
+
+.dungeon {
+  font-style: oblique !important;
+  color: #b700df !important;
 }
 
 .warning {
-  color: red;
+  color: red !important;
 }
 
 body {
@@ -702,6 +708,10 @@ body {
                         box-shadow: none;
                         border: none;
                         border-radius: none;
+                      }
+
+                      ul {
+                        margin-left: var(--gap-lg);
                       }
                     }
 

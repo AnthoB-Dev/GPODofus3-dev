@@ -14,6 +14,19 @@ Developpement backend **Django**.
         - A chaque changement de guide, ils sont tous récupérés alors qu'il ne pourrait y en a avoir qu'une dizaine, 10 avant, 10 après
         - Mais il est possible que le cache des guides empeche un quelconque soucis avec l'état actuel, à voir
     - [ ] Reduire le nombre de redondance et de code inutile
+- [ ] Finir le système de tri du contenu selon l'alignement - En cours
+    - Actuellement les succès d'alignements se partagent TOUTES les quêtes sans tri. Ce qui fait qu'il y a des quêtes Brak dans Bonta..
+- [ ] Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons
+    - L'idée c'est de changer **Quêtes** en **Donjons** et que les succès affichent les donjons à la place des quêtes
+- [ ] Changer les fichiers static
+    - Lorsque je passe en debug : False, il ne trouve plus mon css / js
+- [ ] Ajouter un champ level aux succès et permettre l'affichage des succès par niveaux
+- [ ] Mettre en place expect_capture (sur donjon ?)
+
+<details>
+<summary>Résolus</summary>
+
+- Optimiser le code
     - [x] Enlever le dossier staticfiles
     - [x] Enlever les compresseurs en dev
     - [x] Revoir les turbo frames
@@ -24,15 +37,6 @@ Developpement backend **Django**.
         - [x] quest_frame_id
         - [x] frame_objectives
         - [x] frame_achievements
-- [ ] Finir le système de tri du contenu selon l'alignement
-    - Actuellement les succès d'alignements se partagent TOUTES les quêtes sans tri. Ce qui fait qu'il y a des quêtes Brak dans Bonta..
-- [ ] Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons
-- [ ] Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons
-    - L'idée c'est de changer **Quêtes** en **Donjons** et que les succès affichent les donjons à la place des quêtes
-- [ ] Changer les fichiers static
-    - Lorsque je passe en debug : False, il ne trouve plus mon css / js
-- [ ] Ajouter un champ level aux succès et permettre l'affichage des succès par niveaux
-- [ ] Mettre en place expect_capture (sur donjon ?)
 - [x] Ajouter un toggle pour l'*alignement*, le mettre en storage.
     - [x] Mettre en place la logique de visibilité des guides selon l'*alignement*
 - [x] Supprimer *LastSession*, rajouter un champ *is_last_seen* dans *GuideAchievement* pour sauvegarder l'achievement qui a été vu en dernier dans ce guide.
@@ -62,11 +66,10 @@ Developpement backend **Django**.
 - [x] Modifier les problêmes lié à _validAll_ qui ne peut pas enchainer les toggles (lié à la façon de render la view)
 - [x] Mettre en place l'arrivée sur le dernier guide vu
 - [x] Mettre en place l'arrivée sur le premier succès non à 100%
+</details>
 
 ### Bogues :
 
-- [ ] Afficher les bonnes icones d'alignement
-    - Avec le nouveau champ User.alignment ça devrait être ez
 - [ ] Régler le probleme de redirection d'alignment_choice, turbo le prends pas..
 - [ ] Par contre à présent, le toggleCompletion ne refresh pas auto le guide où la quête est doublon comme il le devrait.
     Les quêtes ne sont pas individuelle, comme j'ai utilisé une quête préalablement utilisée, elle est validée partout où elle est présente, ce qui n'est pas un problème en soit vu qu'un des seul cas de figure où ça aura lieu ce sera dans les différents guides tornades des donjons / tour du monde.
@@ -74,9 +77,17 @@ Developpement backend **Django**.
     - Guide 4 "**A travers le Krosmoz**"  
     - Guide 169 "**Donjon : Nid du Kwakwa**" 
 - [ ] Problemes de "*content missing*" sur le succès "*Tout est en Ordre*" du guide "**Archipel de Valonia - Albuera**" (Vu qu'ici)
+
+<details>
+<summary>Résolus</summary>
+
+- [x] Afficher les bonnes icones d'alignement
+    - Avec le nouveau champ User.alignment ça devrait être ez
 - [x] Problèmes à l'arrivée sur les guides 4 et 169
     Les problèmes de redirection puis de content missing étaients liés au fait que ces guides avaient des succès mais pas de quêtes associées.
 - [x] Le titre du succès dans quêtes ne se met pas à jour lors des cliques sur un succès différent (c'était du JS enfaite)
+</details>
+
 </details>
 
 
@@ -90,10 +101,16 @@ Distribution windows sous **Electron**.
 
 - [ ] Ajouter un loading screen au lancer
 - [ ] Faire en sorte de bien avoir le nom et l'icone de l'app dans le gestionnaire des tâches (peut être que le build résoudra le pb ?)
+
+<details>
+<summary>Résolus</summary>
+
 - [x] Le *validateAll* sur spam du bouton finit par ralentir un des processus, peut être le *clickNextAchievement*, ou peut être le render de quests    
 - [x] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
 - [x] Résoudre *Electron Security Warning (Insecure Content-Security-Policy)*
 - [x] Regler les gros problèmes de mémoires avec *Electron* (c'était la vidéo)
+</details>
+
 </details>
 
 
@@ -107,23 +124,29 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 - Optimiser le code 
     - [ ] Vérifier les events js - En cours
-    - [ ] Améliorer l'accessibilité
+    - Améliorer l'accessibilité
         - [ ] Changer la plupart de mes ul / li en divs - En cours
         - [ ] Remplir le alt des images - En cours
-        - [x] Aria label sur les liens
-        - [x] Aria label sur les boutons
-    - [x] Adapter le click JS en click sur la classe active seulement 
-    - [x] Régler l'erreur *Form submission canceled because the form is not connected*
 - [ ] Ajouter le passage au succès suivant lors de la validation manuelle des succès
 - [ ] Empecher le *clickNextAchievement* lors de la *dévalidation*
 - [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
 - [ ] Ajouter des eventlistener sur les fleches gauche et droite pour naviguer dans les *guides*
 - [ ] Ajouter des eventlistener sur les fleches du haut et du bas pour naviguer avec la *topNav*
-- [ ] Décider quoi faire des pseudo discord + réajuster leurs positions
+- [ ] Changer le pseudo discord de Skyzio en son youtube
 - [ ] Au survol d'une quête ou d'un succès dans les guides, mettre en surbrillance la quête et le succès.
 - [ ] Media queries
 - [ ] Implémenter d'autres themes
     - [ ] Changer l'image background selon le thème
+
+<details>
+<summary>Résolus</summary>
+
+- Optimiser le code 
+    - Améliorer l'accessibilité
+        - [x] Aria label sur les liens
+        - [x] Aria label sur les boutons
+    - [x] Adapter le click JS en click sur la classe active seulement 
+    - [x] Régler l'erreur *Form submission canceled because the form is not connected*
 - [x] Ajouter l'icon other.png
 - [x] Ajouter un délais sur le clique du *validateAll*
 - [x] Faire en sorte que le *validateAll* lors du dernier succès du guide reste sur le dernier succès (probablement doublon avec la ligne de dessus) 
@@ -138,6 +161,7 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 - [x] Mettre en place le passage au succès suivant après un _validateAll_ plutôt que de recliquer sur l'actuel
 - [x] Rotate de 180 le caret de _topNav_ lorsque le drop est down
 - [x] Enlever la video en background, elle se met à lag dans l'app Electron
+</details>
 
 ### Bogues :
 
@@ -155,6 +179,10 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 - [ ] Lorsque je selectionne un guide et que je refresh la page, la *topNav* ne revient pas sur le dernier guide vu (scrollIntoView *nav.js*) S:Stocker la pos ?
 - [ ] Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés
 - [ ] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. Ce qui résulte en celle qui a été validée / dévalidée a rester dévalidée à moins de rappuyer sur le _validateAll_ ()
+
+<details>
+<summary>Résolus</summary>
+
 - [x] La topNav bug avec Electron, le toggleOpen galère
 - [x] *validateAll* envoie vers */app/guide/x/quests/x* lorsque c'est le dernier succès de la liste, et lors de *doubles click*
     - J'ai pu observer que les doubles click d'affilé sur *validateAll* cause le problème de manière casi certain.
@@ -170,6 +198,8 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
     - [x] _validateAll_ ne fonctionne pas
 </details>
 
+</details>
+
 
 ## Redaction
 Contenu de l'application.
@@ -179,19 +209,109 @@ Contenu de l'application.
 
 ### Rédiger :
 
+- [ ] Rédiger tous les Guides - En cours (page 58: "Ali bonta 41")
+- [ ] Rédiger 2/3 des guides
+- [ ] Ajouter des guides de rappel de temps en temps
+    - Exemple : quelques guides avant le Veilleur pour rappeler de ne pas aller au dela du level 114
+- [ ] Ajouter un guide Rush Donjons après les Quêtes alignement Brak 41
 - [ ] Ajouter un guide Rush Donjons après les Quêtes alignement Brak 20
 - [ ] Ajouter un guide pour choisir son alignement
 - [ ] Dans le premier rush donjons entre alignement 0-4 et 4-16 : ajouter un if user.alignment = neutre pour afficher tous ceux à faire avec alignement.
 - [ ] **Garde à vous** et **Chef oui chef** du guide Quêtes d'alignements 4 à 16 affichent n'imp
 - [ ] Ajouter un succès pour les Donjons à la manière des alignements
-- [ ] Rédiger 1/3 des guides
-- [ ] Rédiger 2/3 des guides
 - [ ] Rédiger 3/3 des guides
 - [ ] Combiné les guides ayant pour objectif la complétion d'un donjon
-- [ ] Définir les succès concernés sur chaque Guide (actuellement à "**A travers le Krosmoz**")
 - [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
     - Ajouter un succès Tour du monde et y mettre les 27 quêtes (donjons ?)
     - Pareil pour Tornade des donjons, ça ne refletera pas le vrai succès mais il se terminera bien au même moment.
 - [ ] Faire le _README_ de l'app - En cours
+
+<details>
+<summary>Résolus</summary>
+
+- [x] Ajouter les succès aux guides avant rédaction
+- [x] Rédiger 1/3 des guides
 - [x] Faire le guide tuto
+</details>
+
+</details>
+
+## Planning
+
+<details>
+<summary>Planning</summary>
+
+<details>
+<summary>27 Novembre</summary>
+Se lis : "jusqu'à XXh"
+
+- 13h : **Rédaction** > *Rédiger* > #1
+- 16h : **Frontend** > *Bogues* > #2
+- 19h : **Backend** > *Bogues* > #1
+- 22h : **Rédaction** > *Rédiger* > #2
+- 00h : **Rédaction** > *Rédiger* > #3
+
+Note : La journée sera bonne si je rédige les 2/3 des guides et excellente si je résous le délais
+</details>
+
+<details>
+<summary>28 Novembre</summary>
+
+- 13h : TODO
+- 16h : TODO
+- 19h : TODO
+- 22h : TODO
+- 00h : TODO
+
+Note : 
+</details>
+
+<details>
+<summary>29 Novembre</summary>
+
+- 13h : TODO
+- 16h : TODO
+- 19h : TODO
+- 22h : TODO
+- 00h : TODO
+
+Note : 
+</details>
+
+<details>
+<summary>30 Novembre</summary>
+
+- 13h : TODO
+- 16h : TODO
+- 19h : TODO
+- 22h : TODO
+- 00h : TODO
+
+Note : 
+</details>
+
+<details>
+<summary>1 Décembre</summary>
+
+- 13h : TODO
+- 16h : TODO
+- 19h : TODO
+- 22h : TODO
+- 00h : TODO
+
+Note : 
+</details>
+
+<details>
+<summary>2 Décembre</summary>
+
+- 13h : TODO
+- 16h : TODO
+- 19h : TODO
+- 22h : TODO
+- 00h : TODO
+
+Note : 
+</details>
+
 </details>

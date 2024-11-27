@@ -168,7 +168,7 @@ class Guide(models.Model):
         return self.title
 
     class Meta:
-        ordering = ["id"]  # TODO: Changer l'ordre de tri par "page"
+        ordering = ["page"]
         verbose_name = "Guide"
         verbose_name_plural = "Guides"
         

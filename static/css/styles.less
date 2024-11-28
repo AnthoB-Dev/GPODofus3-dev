@@ -17,7 +17,7 @@
 @fs-05: 16px;
 @fs-1: 18px;
 @fs-2: 22px;
-@fs-3: 26px;
+@fs-3: 24px;
 @fs-4: 42px;
 
 @clr-primary: #dedabd;
@@ -219,6 +219,21 @@ input {
 
 .warning {
   color: red !important;
+}
+
+.keyboardFocusedElement {
+  position: relative;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    width: 95%;
+    height: 0px;
+    bottom: -3px;
+    left: 0;
+    border: outset 2px var(--clr-red);
+    border-radius: 4px;
+  }
 }
 
 body {

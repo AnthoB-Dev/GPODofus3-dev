@@ -13,13 +13,14 @@ Developpement backend **Django**.
     - [ ] Trouver un moyen de réduire la query pour les guides dans *guide_detail*
         - A chaque changement de guide, ils sont tous récupérés alors qu'il ne pourrait y en a avoir qu'une dizaine, 10 avant, 10 après
         - Mais il est possible que le cache des guides empeche un quelconque soucis avec l'état actuel, à voir
-    - [ ] Reduire le nombre de redondance et de code inutile
+    - [x] Reduire le nombre de redondance et de code inutile
 - [ ] Finir le système de tri du contenu selon l'alignement - En cours
-    - Actuellement les succès d'alignements se partagent TOUTES les quêtes sans tri. Ce qui fait qu'il y a des quêtes Brak dans Bonta..
-- [ ] Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons
-    - L'idée c'est de changer **Quêtes** en **Donjons** et que les succès affichent les donjons à la place des quêtes
+    - Manque d'empêcher de voir les quêtes ali à Neutre
+- [ ] Faire une vérification complete de l'appli avec le django_debug.log
 - [ ] Changer les fichiers static
     - Lorsque je passe en debug : False, il ne trouve plus mon css / js
+- [ ] Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons
+    - L'idée c'est de changer **Quêtes** en **Donjons** et que les succès affichent les donjons à la place des quêtes
 - [ ] Ajouter un champ level aux succès et permettre l'affichage des succès par niveaux
 - [ ] Mettre en place expect_capture (sur donjon ?)
 
@@ -30,26 +31,14 @@ Developpement backend **Django**.
     - [x] Enlever le dossier staticfiles
     - [x] Enlever les compresseurs en dev
     - [x] Revoir les turbo frames
-        - [x] frame_main
-        - [x] frame_guides
-        - [x] frame_quests
-        - [x] quest_frame_achievement_title
-        - [x] quest_frame_id
-        - [x] frame_objectives
-        - [x] frame_achievements
 - [x] Ajouter un toggle pour l'*alignement*, le mettre en storage.
-    - [x] Mettre en place la logique de visibilité des guides selon l'*alignement*
 - [x] Supprimer *LastSession*, rajouter un champ *is_last_seen* dans *GuideAchievement* pour sauvegarder l'achievement qui a été vu en dernier dans ce guide.
 - [x] Revoir le fonctionnement du *selected_achievement* dans ma view *guide_detail*   
-    - Definir la valeur de *selected_achievement* grâce au champ *is_last_seen* de *GuideAchievement*
 - [x] Enlever tout ce qui concerne le *achievement_id* dans guide_detail
-    - Actuellement ne rentre jamais dans le if achievement_id puisque la view ne le reçois jamais, c'est traité ailleurs
 - [x] Mettre en place la redirection vers le last_guide / last_achievement (la solution était plus simple : mettre simplement en place le dernier succès vu)
 - [x] Supprimer *LastSession*, rajouter un champ *is_last_seen* dans *GuideAchievement* pour sauvegarder l'achievement qui a été vu en dernier dans ce guide.
 - [x] Revoir le fonctionnement du *selected_achievement* dans ma view *guide_detail*   
-    - Definir la valeur de *selected_achievement* grâce au champ *is_last_seen* de *GuideAchievement*
 - [x] Enlever tout ce qui concerne le *achievement_id* dans guide_detail
-    - Actuellement ne rentre jamais dans le if achievement_id puisque la view ne le reçois jamais, c'est traité ailleurs
 - [x] Mettre en place la sauvegarde du dernier achievement vu lors des cliques sur ces derniers (Ne sauvegarde que le premier du guide actuellement)
 - [x] Créer une fonction pour les navs et les enlever de *guide_detail*
 - [x] Finir le peuplement des quêtes dans achievements.json
@@ -81,10 +70,9 @@ Developpement backend **Django**.
 <details>
 <summary>Résolus</summary>
 
+- [x] Icones d'alignements s'affichent en double *guide_detail*
 - [x] Afficher les bonnes icones d'alignement
-    - Avec le nouveau champ User.alignment ça devrait être ez
 - [x] Problèmes à l'arrivée sur les guides 4 et 169
-    Les problèmes de redirection puis de content missing étaients liés au fait que ces guides avaient des succès mais pas de quêtes associées.
 - [x] Le titre du succès dans quêtes ne se met pas à jour lors des cliques sur un succès différent (c'était du JS enfaite)
 </details>
 
@@ -99,6 +87,7 @@ Distribution windows sous **Electron**.
 
 ### Développer :
 
+- [ ] Faire un test de build
 - [ ] Ajouter un loading screen au lancer
 - [ ] Faire en sorte de bien avoir le nom et l'icone de l'app dans le gestionnaire des tâches (peut être que le build résoudra le pb ?)
 
@@ -127,16 +116,12 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
     - Améliorer l'accessibilité
         - [ ] Changer la plupart de mes ul / li en divs - En cours
         - [ ] Remplir le alt des images - En cours
-- [ ] Ajouter le passage au succès suivant lors de la validation manuelle des succès
-- [ ] Empecher le *clickNextAchievement* lors de la *dévalidation*
-- [ ] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
-- [ ] Ajouter des eventlistener sur les fleches gauche et droite pour naviguer dans les *guides*
-- [ ] Ajouter des eventlistener sur les fleches du haut et du bas pour naviguer avec la *topNav*
 - [ ] Changer le pseudo discord de Skyzio en son youtube
-- [ ] Au survol d'une quête ou d'un succès dans les guides, mettre en surbrillance la quête et le succès.
+- [ ] Empecher le *clickNextAchievement* lors de la *dévalidation*
 - [ ] Media queries
+- [ ] Au survol d'une quête ou d'un succès dans les guides, mettre en surbrillance la quête et le succès.
 - [ ] Implémenter d'autres themes
-    - [ ] Changer l'image background selon le thème
+    - Changer l'image background selon le thème
 
 <details>
 <summary>Résolus</summary>
@@ -147,6 +132,10 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
         - [x] Aria label sur les boutons
     - [x] Adapter le click JS en click sur la classe active seulement 
     - [x] Régler l'erreur *Form submission canceled because the form is not connected*
+- [x] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
+- [x] Ajouter le passage au succès suivant lors de la validation manuelle des succès
+- [x] Ajouter des eventlistener sur les fleches gauche et droite pour naviguer dans les *guides*
+- [x] Ajouter des eventlistener sur les fleches du haut et du bas pour naviguer avec la *topNav*
 - [x] Ajouter l'icon other.png
 - [x] Ajouter un délais sur le clique du *validateAll*
 - [x] Faire en sorte que le *validateAll* lors du dernier succès du guide reste sur le dernier succès (probablement doublon avec la ligne de dessus) 
@@ -165,30 +154,28 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 ### Bogues :
 
-- [ ] Fix le JS de guide.js qui se dédouble après changemement de page
-- [ ] Enorme délais dans la pageNav dans le changement des guides. Observé sur navigateur légèrement mais avec Electron c'est flagrant et permanent. Observé aussi sur la topNav.
-    - Plus le spam est rapide moins ça avance.
-    - Je pense que c'est liés au fait de supprimer les events et de les rajouter fois, passé partout ça a rajouter pas mal de merde à executer au changement de guide, et puis c'est depuis ces changements que ça merde
-    - Mais c'est peut être aussi simplement lié à la duplication restante à ce niveau là de l'app
-- [ ] Le *clickCurrentAchievement* lorsqu'il n'y a plus de *nextAchievement* ne fonctionne pas
+- [ ] Délais entre les changements des guides  
+    - C'est lié au fait que la requête fetch pour charger la frame_main prends 150 à 200ms, donc spammer plus vite que ça empêche l'avancée.
+    - Faut faire en sorte que le spam soit possible en faisant en sorte que le contexte de nav continue d'avancer et une fois le spam terminer fetch.
     - Le clic sur le dernier achievement à l'air de se produire vu que le bouton *validateAll* se met à jour mais le style de l'achievement ne change pas
 - [ ] Moins flagrant sur le navigateur mais j'ai pu constater qu'il arrive malgré le disabled que lors du spam intense de *validateAll* des succès sont sautés.
     - Je n'ai heureusement pas réussi à empêcher la fin de l'action CàD la validation des succès. Par contre lorsqu'il est validé à 100, le suivant est sauté..
-- [ ] La topNav ne galère plus par contre il faut que je mette un await sur la fermeture on que je revois les setTimeout car le caret n'a pas le temps de se fermer
-    - C'est peut être chose puisque je peux l'ouvrir / fermer sans problemes, c'est seulement lors de la selection d'un guide.
-- [ ] Lorsque je selectionne un guide et que je refresh la page, la *topNav* ne revient pas sur le dernier guide vu (scrollIntoView *nav.js*) S:Stocker la pos ?
+    - Par contre ensuite les succès sautés ne peuvent plus être .active lors d'un clique
+    - J'ai déjà un anti spam sous la forme de disabled mais il doit y avoir une frame de faillabilité si on est assez rapide. idk
+- [ ] La topNav ne galère plus par contre il faut que je mette un await sur la fermeture ou que je revois les setTimeout car le caret n'a pas le temps de se fermer
+    - C'est peut être autre chose puisque je peux l'ouvrir / fermer sans problemes, c'est seulement lors de la selection d'un guide.
 - [ ] Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés
-- [ ] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. Ce qui résulte en celle qui a été validée / dévalidée a rester dévalidée à moins de rappuyer sur le _validateAll_ ()
 
 <details>
 <summary>Résolus</summary>
 
+- [x] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. 
+- [x] Lorsque je selectionne un guide et que je refresh la page, la *topNav* ne revient pas sur le dernier guide vu (scrollIntoView *nav.js*) S:Stocker la pos ?
+- [x] Fix le JS de guide.js qui se dédouble après changemement de page
 - [x] La topNav bug avec Electron, le toggleOpen galère
+- [x] Le *clickCurrentAchievement* lorsqu'il n'y a plus de *nextAchievement* ne fonctionne pas
 - [x] *validateAll* envoie vers */app/guide/x/quests/x* lorsque c'est le dernier succès de la liste, et lors de *doubles click*
-    - J'ai pu observer que les doubles click d'affilé sur *validateAll* cause le problème de manière casi certain.
-    - Mais parfois un simple *validateAll* sur le dernier succès me fait la redirection.
 - [x] Double les ouvertures de liens lors de *openAll*
-    - Est dû au double listener turbo dans app.js
 - [x] Le titre du succès dans quêtes ne change pas suite au focus
 - [x] Lorsque je valide toute les quêtes individuellement, le bouton _validateAll_ ne se met pas à jour et reste sur valider tout.
 - [x] Refaire fonctionner la *topNav* qui est en partie cassé depuis le styling
@@ -220,6 +207,9 @@ Contenu de l'application.
 - [ ] **Garde à vous** et **Chef oui chef** du guide Quêtes d'alignements 4 à 16 affichent n'imp
 - [ ] Ajouter un succès pour les Donjons à la manière des alignements
 - [ ] Rédiger 3/3 des guides
+- [ ] Refaire les screens du tuto
+    - Lorsque les bords n'ont pas de radius
+    - L'image du passage sol invisible
 - [ ] Combiné les guides ayant pour objectif la complétion d'un donjon
 - [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
     - Ajouter un succès Tour du monde et y mettre les 27 quêtes (donjons ?)
@@ -237,13 +227,14 @@ Contenu de l'application.
 </details>
 
 ## Planning
+<details>
+<summary>Ouvrir</summary>
 
+### 27 Novembre
 <details>
 <summary>Planning</summary>
 
-<details>
-<summary>27 Novembre</summary>
-Se lis : "jusqu'à XXh"
+#### Planning
 
 - 13h : **Rédaction** > *Rédiger* > #1
 - 16h : **Frontend** > *Bogues* > #2
@@ -251,67 +242,110 @@ Se lis : "jusqu'à XXh"
 - 22h : **Rédaction** > *Rédiger* > #2
 - 00h : **Rédaction** > *Rédiger* > #3
 
-Note : La journée sera bonne si je rédige les 2/3 des guides et excellente si je résous le délais
+#### Notes
+La journée sera bonne si je rédige les 2/3 des guides et excellente si je résous le délais
+
+#### Fin de journée
+- À défaut d'avoir rédiger, j'ai ajouté tous les succès.
+- J'ai clear un sacré paquet de dev et de bugs. Entre autre une partie du délais sur la nav des guides. 
+- J'ai ajouté le support navigation au clavier et ma foi c'est pas vilain.
+En conclusion, j'ai pas suivi le planning mais l'impression d'avoir fait plus que si je l'avais suivi.
+
 </details>
 
+### 28 Novembre
 <details>
-<summary>28 Novembre</summary>
+<summary>Planning</summary>
 
-- 13h : TODO
-- 16h : TODO
-- 19h : TODO
-- 22h : TODO
-- 00h : TODO
+#### Planning
 
-Note : 
+- 13h : **Backend** > *Dev* > #2
+- 16h : **Backend** > *Dev* > #3
+- 19h : **Frontend** > *Dev* > #3
+- 22h : **Electron** > *Dev* > #1
+- 00h : **Rédaction** > *Rédiger* > #1
+
+#### Notes
+Prévoir un test de build en fin de journée après l'avancé des autres points.
+
+#### Fin de journée
+
 </details>
 
+### 29 Novembre
 <details>
-<summary>29 Novembre</summary>
+<summary>Planning</summary>
 
-- 13h : TODO
-- 16h : TODO
-- 19h : TODO
-- 22h : TODO
-- 00h : TODO
+#### Planning
 
-Note : 
+- 13h : **Rédaction** > *Rédiger* > #1
+- 16h : TDM
+- 19h : **Release BETA 0.9.0**
+- 22h : TDM
+- 00h : TDM
+
+#### Notes
+Selon le test de la veille et l'état des bugs : Sortir la 0.9.0 build Electron.
+
+#### Fin de journée
+
 </details>
 
+### 30 Novembre
 <details>
-<summary>30 Novembre</summary>
+<summary>Planning</summary>
 
-- 13h : TODO
-- 16h : TODO
-- 19h : TODO
-- 22h : TODO
-- 00h : TODO
+#### Planning
 
-Note : 
+- 13h : **Electron**
+- 16h : **Electron**
+- 19h : TDM
+- 22h : TDM
+- 00h : TDM
+
+#### Notes
+
+
+#### Fin de journée
+
 </details>
 
+### 1 Décembre
 <details>
-<summary>1 Décembre</summary>
+<summary>Planning</summary>
 
-- 13h : TODO
-- 16h : TODO
-- 19h : TODO
-- 22h : TODO
-- 00h : TODO
+#### Planning
 
-Note : 
+- 13h : TDM
+- 16h : TDM
+- 19h : TDM
+- 22h : TDM
+- 00h : TDM
+
+#### Notes
+
+
+#### Fin de journée
+
 </details>
 
+### 2 Décembre
 <details>
-<summary>2 Décembre</summary>
+<summary>Planning</summary>
 
-- 13h : TODO
-- 16h : TODO
-- 19h : TODO
-- 22h : TODO
-- 00h : TODO
+#### Planning
 
-Note : 
+- 13h : TDM
+- 16h : TDM
+- 19h : TDM
+- 22h : TDM
+- 00h : TDM
+
+#### Notes
+
+
+#### Fin de journée
+
 </details>
 
 </details>

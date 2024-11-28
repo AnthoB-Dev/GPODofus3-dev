@@ -100,7 +100,8 @@ Comme dit précedemment, j'ai essayer de faire en sorte d'apporter ce qu'il peut
 
 - **Une section Succès avec** :
 
-    - **Un repère visuel pour connaitre les prérequis d'un succès** : Concrètement j'ai incorporé la section **à prévoir** de [DPLN](https://www.dofuspourlesnoobs.com), exemple : "Ce qu'il vous faudra prévoir" dans la [quête de l'emeraude](https://www.dofuspourlesnoobs.com/dofus-emeraude.html). Il y a des petites icones dans la section **Succès** permettant d'un coup de d'oeil de savoir qu'il y aura un prérequis pour completer le succès ! Plus qu'à cliquer sur le lien du succès et [DPLN](https://www.dofuspourlesnoobs.com) vous donnera les détails.
+    - **Un repère visuel pour connaitre les prérequis d'un succès** : Concrètement j'ai incorporé la section **à prévoir** de [DPLN](https://www.dofuspourlesnoobs.com), exemple : "Ce qu'il vous faudra prévoir" dans la [quête de l'emeraude](https://www.dofuspourlesnoobs.com/dofus-emeraude.html). 
+J'ai ajouté des petites icônes dans la section **Succès** permettant d'un coup d'oeil de savoir qu'il y aura un prérequis et quel(s) prérequis pour completer le succès ! Plus qu'à cliquer sur le lien du succès et [DPLN](https://www.dofuspourlesnoobs.com) vous donnera les détails.
 
     - **Deux autres repères visuel pour connaitre l'avancée du succès d'un coup d'oeil** : 
         - Une **bordure** entoure les succès lors de la complétion de quêtes selon un **code couleur** simple : 

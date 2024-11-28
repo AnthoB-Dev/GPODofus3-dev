@@ -153,3 +153,4 @@ staticfiles/fontawesomefree/
 !admin/css/**/*.css
 logs/
 db.sqlite3
+redaction.html

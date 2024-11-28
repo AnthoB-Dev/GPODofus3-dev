@@ -1,39 +1,40 @@
 /**
  * Clique sur le succès suivant de la liste des succès du guide.
  */
-export const clickNextAchievementBtn = async() => {
-    const questsAchievementId = document.querySelector(".js-quest").dataset.achievementId;
-    if (!questsAchievementId) return;
-    const achievements = await getAchievements();
-    let nextAchievement;
+// export const clickNextAchievementBtn = async() => {
+//     const questsAchievementId = document.querySelector(".js-quest").dataset.achievementId;
+//     if (!questsAchievementId) return;
+//     const achievements = await getAchievements();
+//     let nextAchievement;
 
-    achievements.forEach((achievement) => {
-        const currentAchievementId = achievement.dataset.achievementId;
-        if (currentAchievementId === questsAchievementId) {
-            nextAchievement = achievement.parentElement.nextElementSibling?.querySelector(".achievementName a");
-        }
-        return; 
-    });
-    nextAchievement.click();
-}
+//     nextAchievement = [...achievements].find(
+//         achievement => achievement.dataset.achievementId === questsAchievementId)
+//         .parentElement.nextElementSibling?.querySelector(".achievementName a")
+//     ;
+    
+//     nextAchievement.click();
+// }
 
 /**
  * Met en surbrillance le succès cliqué.
  */
 export const handleAchievementButtonClick = (button, achievements) => {
-    return () => {
-        achievements.forEach((e) => {
-            e.classList.remove("active");
-        });
-        button.parentElement.parentElement.classList.add("active");
-    };
+    console.log(button);
+    console.log(achievements);
+    
+    achievements.forEach((e) => {
+        e.classList.remove("active");
+    });
+    button.parentElement.parentElement.classList.add("active");
 };
 
 export const addAchievementEventListeners = async () => {
     const buttons = document.querySelectorAll(".achievement-button");
     const achievements = await getAchievements();
     buttons.forEach((button) => {
-        button.addEventListener("click", handleAchievementButtonClick(button, achievements));
+        button.addEventListener("click", () => {
+            handleAchievementButtonClick(button, achievements);
+        });
     });
 };
 
@@ -48,12 +49,12 @@ export const removeAchievementEventListeners = async () => {
 /**
  * Clique sur le succès actuel qui a la classe "active".
  */
-export const clickCurrentAchievementBtn = async () => {
-    const achievements = await getAchievements();
-    const currentAchievement = [...achievements].find(achievement => achievement.classList.contains("active"));
-    if (!currentAchievement) return;
-    currentAchievement.querySelector(".achievementName a").click();
-}
+// export const clickCurrentAchievementBtn = async () => {
+//     const achievements = await getAchievements();
+//     const currentAchievement = [...achievements].find(achievement => achievement.classList.contains("active"));
+//     if (!currentAchievement) return;
+//     currentAchievement.querySelector(".achievementName a").click();
+// }
 
 /**
  * Récupère les succès du guide.

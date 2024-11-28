@@ -74,11 +74,14 @@ def get_selected_achievement(guide_achievements, guide):
         return selected_guide_achievement.achievement
     return guide.achievement.first()
 
-def calculate_completion_percentage(achievement, user_alignment):
-    aligned_quests = achievement.quests.filter(alignment=user_alignment)
+def calculate_completion_percentage(achievement, user_alignment, guide):
+    if not guide.alignment_id in ALIGNED_FILTER_IDS:
+        quests = achievement.quests.filter(alignment=user_alignment)
+    else:
+        quests = achievement.quests.all()
     
-    total_quests_count = aligned_quests.count()
-    completed_quests_count = aligned_quests.filter(completed=True).count()
+    total_quests_count = quests.count()
+    completed_quests_count = quests.filter(completed=True).count()
     
     return int((completed_quests_count / total_quests_count * 100)) if total_quests_count > 0 else 0
 

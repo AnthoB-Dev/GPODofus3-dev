@@ -8,6 +8,7 @@
 **GPODofus3** (*GPOD3 pour les intimes*) a été développé dans le but **d'apporter** ce qui, à mon humble avis et avec toute la **subjectivité** que cela implique, **manque** au guide du -presque- même nom de [Skyzio](https://docs.google.com/spreadsheets/d/1X7rrozrDZDepncPr8AZXV7oLT_xEa6dkASjLmVFOLwA/edit?gid=1858873548#gid=1858873548).
 
 **N'hésitez pas** à mettre une **étoile** sur [le Github du projet](https://github.com/AnthoB-Dev/GPODofus3) si vous **appréciez** l'application, ou simplement si l'**initiative** vous interesse.
+J'ai déjà en tête des axes d'améliorations en termes de fonctionnalités, de qualité de vie, d'optimisations structurelles de l'application, et bien plus !
 
 
 ## Sommaire
@@ -114,13 +115,14 @@ J'ai ajouté des petites icônes dans la section **Succès** permettant d'un cou
 
 ### Ce que ça n'apporte pas
 
-- **Un guide de pro de Dofus** : Non comme je le disais dans ma présentation, je ne suis qu'un joueur cazu du jeu. C'est pour cela que j'ai besoin du [guide de Skyzio](https://docs.google.com/spreadsheets/d/1X7rrozrDZDepncPr8AZXV7oLT_xEa6dkASjLmVFOLwA/edit?gid=1858873548#gid=1858873548).
+- **Un guide de pro de Dofus** : Comme on pu noté ceux ayant jeter un oeil à ma présentation, je ne suis qu'un joueur cazu du jeu. J'ai des connaissances, dans certaines tranches de niveaux plus que d'autres, mais en ce qui concerne les quêtes je vais faire confiance au [guide de Skyzio](https://docs.google.com/spreadsheets/d/1X7rrozrDZDepncPr8AZXV7oLT_xEa6dkASjLmVFOLwA/edit?gid=1858873548#gid=1858873548). 
+C'est pour ça que cette application se base sur son travail ! Merci Skyzio !
 
 - **Une application parfaite** : J'ai une formation **web developpeur** mais je ne travail malheureusement pas dans le milieu. Je **manque d'experiences** et c'est la première fois que j'utilise la plupart des techs utilisées dans cette application (**Django, Electron**). 
 Même **Python** n'est pas mon langage de croisière ! 
-Mais j'ai quand même fait en sorte au meilleur de mes compétences, de **réduire** l'impact de mon application sur la **mémoire**. Il faudra compter entre **100 et 200 mo de mémoire** disponible, ce qui est 2x moins que ce que me prend mon discord à l'heure où je rédige ces mots.
+Mais j'ai quand même fait en sorte, au meilleur de mes compétences, de **réduire** l'impact de mon application sur la **mémoire**. Il faudra compter entre **100 et 200 mo de mémoire** disponible, ce qui est 2x moins que ce que me prend mon discord à l'heure où je rédige ces mots, En idle.
 
-- **La simplicité de l'utilisation d'un spreadsheet** : Malgré ce que j'en dis, dans un spreadsheet il suffira de faire un CTRL + F et de chercher dans la page pour facilement trouver l'information recherchée.
+- **La simplicité de l'utilisation d'un spreadsheet** : Malgré ce que j'en dis, dans un spreadsheet il suffit de faire un CTRL + F et de chercher dans la page pour facilement trouver l'information recherchée.
 
 - **Tout ce qu'un bon dev aurait pu ajouté, et tout ce que je n'ai pas encore ajouté**.
 

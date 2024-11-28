@@ -20,7 +20,7 @@ export const clickNextAchievementBtn = async() => {
 /**
  * Met en surbrillance le succès cliqué.
  */
-const handleAchievementButtonClick = (button, achievements) => {
+export const handleAchievementButtonClick = (button, achievements) => {
     return () => {
         achievements.forEach((e) => {
             e.classList.remove("active");
@@ -34,9 +34,6 @@ export const addAchievementEventListeners = async () => {
     const achievements = await getAchievements();
     buttons.forEach((button) => {
         button.addEventListener("click", handleAchievementButtonClick(button, achievements));
-        if (!button.parentElement.parentElement.classList.contains("active")) {
-            // buttons[0].click();
-        }
     });
 };
 
@@ -49,16 +46,13 @@ export const removeAchievementEventListeners = async () => {
 };
 
 /**
- * Clique sur le succès actuel (sert surtout lors du validateAll clickNextAchievementBtn() pour refocus le dernier succès de la liste)
+ * Clique sur le succès actuel qui a la classe "active".
  */
 export const clickCurrentAchievementBtn = async () => {
-    try {
-        const [...achievements] = await getAchievements();
-        const lastAchievement = achievements.slice(-1)[0].querySelector(".achievementName a");
-        lastAchievement.click();
-    } catch (error) {
-        console.log("error", error);
-    }
+    const achievements = await getAchievements();
+    const currentAchievement = [...achievements].find(achievement => achievement.classList.contains("active"));
+    if (!currentAchievement) return;
+    currentAchievement.querySelector(".achievementName a").click();
 }
 
 /**

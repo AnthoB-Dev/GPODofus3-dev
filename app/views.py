@@ -207,17 +207,21 @@ def toggle_quest_completion(request, quest_id):
 
 @require_POST
 def alignment_choice(request):
-    alignment_id = request.POST.get('alignment_select')
+    alignment_id = request.POST.get('alignment')
+
+    if not alignment_id:
+        return HttpResponse("Aucun alignement sélectionné.", status=400)
+
     alignment = get_object_or_404(Alignment, id=alignment_id)
-    
+
     user = User.objects.first()
     if user:
         user.alignment = alignment
         user.save()
-    
+
     alignments = Alignment.objects.all()
     current_alignment_id = user.alignment.id if user.alignment else None
-    
+
     alignments_html = render_to_string('sections/alignment.html', {
         'alignments': alignments,
         'current_alignment_id': current_alignment_id,

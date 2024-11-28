@@ -1,13 +1,16 @@
 <turbo-frame id="alignment_choice">
     <form method="post" action="{% url 'app:alignment_choice' %}" id="alignment_form" data-turbo-frame="alignment_choice">
-    {% csrf_token %}
+        {% csrf_token %}
         <div class="form-group">
-            <label for="alignment">Alignement</label>
-            <select class="form-control" id="alignment" name="alignment">
+            <label for="alignment_select">Alignement</label>
+            <select class="form-control" id="alignment_select" name="alignment">
                 {% for alignment in alignments %}
-                <option value="{{alignment.id}}">{{alignment.name}}</option>
+                <option value="{{ alignment.id }}" {% if alignment.id == current_alignment_id %}selected{% endif %}>
+                    {{ alignment.name }}
+                </option>
                 {% endfor %}
             </select>
         </div>
+        <button type="submit" class="hidden">Changer l'Alignement</button>
     </form>
 </turbo-frame>

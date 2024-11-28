@@ -19,14 +19,13 @@
  * Met en surbrillance le succès cliqué.
  */
 export const handleAchievementButtonClick = (button, achievements) => {
-    console.log(button);
-    console.log(achievements);
-    
-    achievements.forEach((e) => {
-        e.classList.remove("active");
-    });
-    button.parentElement.parentElement.classList.add("active");
-};
+    return () => {
+        achievements.forEach((e) => {
+            e.classList.remove("active");
+        });
+        button.parentElement.parentElement.classList.add("active");
+    };
+}
 
 export const addAchievementEventListeners = async () => {
     const buttons = document.querySelectorAll(".achievement-button");

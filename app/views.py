@@ -71,7 +71,7 @@ class GuideDetailView(View):
             if ga.is_last_seen:
                 last_seen_achievement = achievement.id
 
-            completion_percentage = calculate_completion_percentage(achievement, user_alignment)
+            completion_percentage = calculate_completion_percentage(achievement, user_alignment, guide)
             expect_list = generate_expect_list(achievement, user_alignment_name)
 
             achievements_with_completion.append({
@@ -156,6 +156,8 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
 @require_POST
 def toggle_quest_completion(request, quest_id):
     quest = get_object_or_404(Quest, id=quest_id)
+    quest.completed = not quest.completed
+    quest.save()
     
     achievement = Achievement.objects.filter(quests=quest).first()
     if not achievement:
@@ -171,14 +173,13 @@ def toggle_quest_completion(request, quest_id):
     
     user_alignment = User.objects.first().alignment
 
-    completion_percentage = calculate_completion_percentage(achievement, user_alignment)
+    completion_percentage = calculate_completion_percentage(achievement, user_alignment, guide)
 
     last_seen_achievement_id = get_last_seen_achievement_id(guide_achievements, achievement)
 
     expect_list = generate_expect_list(achievement, User.objects.first().alignment.name)
 
-    quest.completed = not quest.completed
-    quest.save()
+    
     
     quest_html = render_to_string('sections/_quest_item.html', {
         'quest': quest,

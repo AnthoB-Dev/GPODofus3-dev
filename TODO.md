@@ -299,9 +299,9 @@ Selon le test de la veille et l'état des bugs : Sortir la 0.9.0 build Electron.
 
 - 13h : **Electron**
 - 16h : **Electron**
-- 19h : TDM
-- 22h : TDM
-- 00h : TDM
+- 19h : **Rédaction** > *Rédiger* > #1
+- 22h : **Rédaction** > *Rédiger* > #1
+- 00h : **Rédaction** > *Rédiger* > #1
 
 #### Notes
 

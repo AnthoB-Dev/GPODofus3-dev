@@ -1,4 +1,4 @@
-import { clickNextAchievementBtn, clickCurrentAchievementBtn, getAchievements } from "./achievements.js";
+import { handleAchievementButtonClick, getAchievements } from "./achievements.js";
 
 
 const openLinksOfQuests = async () => {
@@ -124,17 +124,28 @@ export const toggleBtnBackgroundStyle = async () => {
 };
 
 const getButtons = () => {
-    const cButtons = document.querySelectorAll(".js-quest .check");
-    const uButtons = document.querySelectorAll(".js-quest .uncheck");
-    let buttonsType = [];
+    const checkBtns = document.querySelectorAll(".js-quest .check");
+    const uncheckBtns = document.querySelectorAll(".js-quest .uncheck");
+    let tglCompletionBtns = [];
 
-    if (cButtons.length === 0) {
-        buttonsType = uButtons;
-    } else if (cButtons.length > 0) {
-        buttonsType = cButtons;
+    if (checkBtns.length === 0) {
+        tglCompletionBtns = uncheckBtns;
+    } else if (checkBtns.length > 0) {
+        tglCompletionBtns = checkBtns;
     }
-    return buttonsType;
+    return tglCompletionBtns;
 };
+
+const toggleBtn = async (button) => {
+    return new Promise((resolve) => {
+        if (document.body.contains(button)) {
+            setTimeout(() => {
+                button.click();
+                resolve();
+            }, 50);
+        }
+    });
+}
 
 const clickValidateAll = async () => {
     const validateAll = document.querySelector("#validateAll");
@@ -142,33 +153,18 @@ const clickValidateAll = async () => {
         validateAll.disabled = true;
     }
 
-    let buttonsType = getButtons();
+    let tglCompletionBtns = getButtons();
     const achievements = Array.from(await getAchievements());
 
-    if (!Array.isArray(buttonsType)) {
-        buttonsType = Array.from(buttonsType);
+    if (!Array.isArray(tglCompletionBtns)) {
+        tglCompletionBtns = Array.from(tglCompletionBtns);
     }
 
-    for (const button of buttonsType) {
-        if (document.body.contains(button)) {
-            await new Promise((resolve) => {
-                setTimeout(() => {
-                    button.click();
-                    resolve();
-                }, 50);
-            });
-        }
+    for (const button of tglCompletionBtns) {
+        await toggleBtn(button);
     }
 
-    const currentAchievementId = document.querySelector(".js-quest")?.dataset.achievementId;
-    const lastAchievementId = achievements[achievements.length - 1]?.dataset.achievementId;
-    const nextAchievement = achievements[achievements.length + 1]?.querySelector(".achievementName a");
-
-    if (currentAchievementId !== lastAchievementId) {
-        clickNextAchievementBtn();
-    } else if (!nextAchievement) {
-        clickCurrentAchievementBtn();
-    }
+    handleAchievementButtonClick(tglCompletionBtns[0], achievements);
 
     if (validateAll) {
         validateAll.disabled = false; 

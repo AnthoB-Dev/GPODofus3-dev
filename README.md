@@ -72,9 +72,9 @@ Mais avec la sortie de **Dofus 3** je me suis dit que ça allait changer. C'est 
 
 ### Les défauts qui m'ont inspirés 
 
-1. En tant que nooblar complet du **questing**, j'ai vite vu les inconvénients en terme de **présentation** du format **spreadsheet** alors même qu'on peut facilement s'apercevoir du travail de **Skyzio** sur ce point là (entre autre).
+1. En tant que nooblar complet du **questing**, j'ai vite vu les inconvénients en terme de **présentation** du format **spreadsheet**... Un paradoxe entre trop d'infos et pas assez.
 
-2. Le **second** inconvénients à mon sens est de n'avoir **que du visuel** finalement, à part la possibilité de copier (et encore dans la douleur de spreadsheet) les noms des succès, pour ensuite le coller dans DPLN, je trouve que ça **manque de liens**, et **d'interactibilité**.
+2. Le **second** inconvénients à mon sens est de n'avoir **que du visuel** finalement, à part la possibilité de copier les noms des succès, et dans la douleur de spreadsheet (vous l'aurez compris je n'aime pas les spreadsheets), pour ensuite le coller dans DPLN, je trouve que ça **manque de liens**, et **d'interactibilité**.
 
 3. Et enfin : le **manque de guidance** ! Je sais que c'est le but **recherché** par Skyzio qui souhaite laisser aux lecteurs de son guide le **choix** de prendre leurs propres **décisions**, et je le respecte. J'en partage la philosophie. 
 Malgré tout, peut être que des gens passeront **à côté** de ce très bon guide à cause du **manque de guidance** ? 

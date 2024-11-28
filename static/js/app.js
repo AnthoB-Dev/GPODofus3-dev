@@ -52,7 +52,7 @@ document.addEventListener("turbo:frame-render", () => {
     // quests.validateAllBtnStyle();
 });
 
-document.addEventListener("turbo:frame-load", (event) => {
+document.addEventListener("turbo:frame-load", () => {
     console.log("frame-load");
     quests.updateQuestsAchievementTitle();
     quests.toggleBtnBackgroundStyle();

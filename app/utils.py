@@ -3,7 +3,7 @@ from django.db.models import Prefetch
 from app.models import Achievement, Alignment, Guide, GuideAchievement, Quest, User
 
 ADMIN_FILTER_IDS = [1, 2, 3, 4]
-ALIGNMENT_FILTER_IDS = [3, 4]
+ALIGNED_FILTER_IDS = [3, 4]
 
 def get_guides_and_navigation(guide, is_admin, alignment_ids, admin_ids):
     if not is_admin:
@@ -11,14 +11,14 @@ def get_guides_and_navigation(guide, is_admin, alignment_ids, admin_ids):
         guides = cache.get(cache_key)
         if guides is None:
             guides = Guide.objects.filter(alignment_id__in=alignment_ids).only("id", "title").order_by("page").all()
-            cache.set(cache_key, guides, 60 * 15)  # Cache pour 15 minutes
+            cache.set(cache_key, guides, 60 * 60)  # Cache pour 1h
         filter_ids = alignment_ids
     else:
         cache_key = f"all_guides_admin_{'_'.join(map(str, admin_ids))}"
         guides = cache.get(cache_key)
         if guides is None:
             guides = Guide.objects.filter(alignment_id__in=admin_ids).only("id", "title").order_by("page").all()
-            cache.set(cache_key, guides, 60 * 15)  # Cache pour 15 minutes
+            cache.set(cache_key, guides, 60 * 60)  # Cache pour 1h
         filter_ids = admin_ids
 
     previous_guide = None
@@ -35,7 +35,10 @@ def get_guides_and_navigation(guide, is_admin, alignment_ids, admin_ids):
 
 def get_navigation_context(guide, is_admin):
     user = User.objects.first()
-    alignment_ids = [user.alignment_id] + ALIGNMENT_FILTER_IDS
+    if user.alignment.name == "Neutre":
+        alignment_ids = [user.alignment_id]
+    else:
+        alignment_ids = [user.alignment_id] + ALIGNED_FILTER_IDS
     admin_ids = ADMIN_FILTER_IDS
 
     guides, previous_guide, next_guide = get_guides_and_navigation(guide, is_admin, alignment_ids, admin_ids)
@@ -47,9 +50,9 @@ def get_navigation_context(guide, is_admin):
     }
 
 def get_filtered_quests(achievement, is_admin, alignment_ids, admin_ids):
-    if not is_admin:
+    if not is_admin: # Voir les quêtes si aligné à Bonta ou Brâkmar + les quêtes "aligner" communes
         return achievement.quests.filter(alignment_id__in=alignment_ids) if achievement else Quest.objects.none()
-    else:
+    else: # Tout voir : ADMIN
         return achievement.quests.filter(alignment_id__in=admin_ids) if achievement else Quest.objects.none()
 
 def generate_expect_list(achievement, user_alignment):
@@ -57,7 +60,7 @@ def generate_expect_list(achievement, user_alignment):
     for field in achievement._meta.get_fields():
         if field.name.startswith('expect_') and getattr(achievement, field.name):
             expect = field.name[7:]
-            if expect == 'alignment':
+            if expect == 'alignment' and user_alignment != "Neutre":
                 if user_alignment == "Bonta":
                     expect = 'alignment_bonta'
                 elif user_alignment == "Brâkmar":
@@ -71,9 +74,12 @@ def get_selected_achievement(guide_achievements, guide):
         return selected_guide_achievement.achievement
     return guide.achievement.first()
 
-def calculate_completion_percentage(achievement):
-    total_quests_count = achievement.quests.count()
-    completed_quests_count = achievement.quests.filter(completed=True).count()
+def calculate_completion_percentage(achievement, user_alignment):
+    aligned_quests = achievement.quests.filter(alignment=user_alignment)
+    
+    total_quests_count = aligned_quests.count()
+    completed_quests_count = aligned_quests.filter(completed=True).count()
+    
     return int((completed_quests_count / total_quests_count * 100)) if total_quests_count > 0 else 0
 
 def get_last_seen_achievement_id(guide_achievements, current_achievement):

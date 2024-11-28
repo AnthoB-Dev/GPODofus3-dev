@@ -16,9 +16,9 @@ from .utils import (
     get_last_seen_achievement_id
 )
 
-ADMIN = False # DEBUG TODO: ENLEVER
+ADMIN = False # DEBUG
 ADMIN_FILTER_IDS = [1, 2, 3, 4]
-ALIGNMENT_FILTER_IDS = [3, 4]
+ALIGNED_FILTER_IDS = [3, 4]
 
 
 def redirect_to_guide(request):
@@ -53,8 +53,13 @@ class GuideDetailView(View):
         selected_achievement = get_selected_achievement(guide_achievements, guide)
 
         user = User.objects.first()
-        user_alignment = user.alignment.name
-        alignment_ids = [user.alignment_id] + ALIGNMENT_FILTER_IDS
+        user_alignment = user.alignment
+        user_alignment_name = user.alignment.name
+        if user_alignment_name == "Neutre":
+            alignment_ids = [user.alignment_id]
+        else:
+            alignment_ids = [user.alignment_id] + ALIGNED_FILTER_IDS
+            
         admin_ids = ADMIN_FILTER_IDS
 
         achievements_with_completion = []
@@ -66,8 +71,8 @@ class GuideDetailView(View):
             if ga.is_last_seen:
                 last_seen_achievement = achievement.id
 
-            completion_percentage = calculate_completion_percentage(achievement)
-            expect_list = generate_expect_list(achievement, user_alignment)
+            completion_percentage = calculate_completion_percentage(achievement, user_alignment)
+            expect_list = generate_expect_list(achievement, user_alignment_name)
 
             achievements_with_completion.append({
                 "achievement": achievement,
@@ -86,7 +91,7 @@ class GuideDetailView(View):
             "last_seen_achievement": last_seen_achievement,
             "quests": quests,
             "alignments": alignments,
-            "user_alignment": user_alignment
+            "user_alignment_name": user_alignment_name
         }
         context.update(navigation_context)
 
@@ -133,7 +138,7 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
     guide_achievement.save()
     
     user = User.objects.first()
-    alignment_ids = [user.alignment_id] + ALIGNMENT_FILTER_IDS
+    alignment_ids = [user.alignment_id] + ALIGNED_FILTER_IDS
     admin_ids = ADMIN_FILTER_IDS
     
     quests = get_filtered_quests(achievement, ADMIN, alignment_ids, admin_ids)
@@ -151,9 +156,7 @@ def guide_quests_partial(request, guide_id, achievement_id=None):
 @require_POST
 def toggle_quest_completion(request, quest_id):
     quest = get_object_or_404(Quest, id=quest_id)
-    quest.completed = not quest.completed
-    quest.save()
-
+    
     achievement = Achievement.objects.filter(quests=quest).first()
     if not achievement:
         return HttpResponse(status=404)
@@ -165,15 +168,18 @@ def toggle_quest_completion(request, quest_id):
     guide_achievements = guide.guide_achievements.select_related("achievement")
 
     selected_achievement = achievement
+    
+    user_alignment = User.objects.first().alignment
 
-    completion_percentage = calculate_completion_percentage(achievement)
+    completion_percentage = calculate_completion_percentage(achievement, user_alignment)
 
     last_seen_achievement_id = get_last_seen_achievement_id(guide_achievements, achievement)
 
     expect_list = generate_expect_list(achievement, User.objects.first().alignment.name)
 
-    user_alignment = User.objects.first().alignment
-
+    quest.completed = not quest.completed
+    quest.save()
+    
     quest_html = render_to_string('sections/_quest_item.html', {
         'quest': quest,
         'achievement': achievement,
@@ -219,12 +225,17 @@ def alignment_choice(request):
         user.alignment = alignment
         user.save()
 
+        alignments = Alignment.objects.all()
+        current_alignment_id = user.alignment_id
+        user_alignment = user.alignment.name
+
     alignments = Alignment.objects.all()
     current_alignment_id = user.alignment.id if user.alignment else None
-
+    
     alignments_html = render_to_string('sections/alignment.html', {
         'alignments': alignments,
         'current_alignment_id': current_alignment_id,
+        'user_alignment': user_alignment,
     }, request=request)
 
     response_content = f"""

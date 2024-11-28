@@ -1,11 +1,10 @@
 {
   "name": "gpodofus3",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm run electron-builder"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "build": {
     "appId": "com.gpodofus.anthobdev",
@@ -15,9 +14,7 @@
   "license": "MIT",
   "description": "Guide de progression optimisée pour Dofus 3",
   "devDependencies": {
-    "electron": "^33.2.0",
-    "electron-builder": "^25.1.8",
-    "electron-winstaller": "^5.4.0"
+    "electron": "^33.2.0"
   },
   "dependencies": {
     "@hotwired/turbo": "^8.0.12",

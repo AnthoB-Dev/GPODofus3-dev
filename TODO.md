@@ -14,8 +14,6 @@ Developpement backend **Django**.
         - A chaque changement de guide, ils sont tous récupérés alors qu'il ne pourrait y en a avoir qu'une dizaine, 10 avant, 10 après
         - Mais il est possible que le cache des guides empeche un quelconque soucis avec l'état actuel, à voir
     - [x] Reduire le nombre de redondance et de code inutile
-- [ ] Finir le système de tri du contenu selon l'alignement - En cours
-    - Manque d'empêcher de voir les quêtes ali à Neutre
 - [ ] Faire une vérification complete de l'appli avec le django_debug.log
 - [ ] Changer les fichiers static
     - Lorsque je passe en debug : False, il ne trouve plus mon css / js
@@ -31,6 +29,7 @@ Developpement backend **Django**.
     - [x] Enlever le dossier staticfiles
     - [x] Enlever les compresseurs en dev
     - [x] Revoir les turbo frames
+- [x] Finir le système de tri du contenu selon l'alignement - En cours
 - [x] Ajouter un toggle pour l'*alignement*, le mettre en storage.
 - [x] Supprimer *LastSession*, rajouter un champ *is_last_seen* dans *GuideAchievement* pour sauvegarder l'achievement qui a été vu en dernier dans ce guide.
 - [x] Revoir le fonctionnement du *selected_achievement* dans ma view *guide_detail*   
@@ -60,6 +59,7 @@ Developpement backend **Django**.
 ### Bogues :
 
 - [ ] Régler le probleme de redirection d'alignment_choice, turbo le prends pas..
+    - Ou en tout cas pas correctement, il me faut absolument declencher un load à la fin car sinon la nav est pété. J'ai accès aux guides de l'alignement inverse puisque la nav n'a pas été mise à jour à la selection de l'alignement.
 - [ ] Par contre à présent, le toggleCompletion ne refresh pas auto le guide où la quête est doublon comme il le devrait.
     Les quêtes ne sont pas individuelle, comme j'ai utilisé une quête préalablement utilisée, elle est validée partout où elle est présente, ce qui n'est pas un problème en soit vu qu'un des seul cas de figure où ça aura lieu ce sera dans les différents guides tornades des donjons / tour du monde.
     Par contre, le refresh ne fonctionne que lorsque la quête est validée dans son succès initial
@@ -154,6 +154,8 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 ### Bogues :
 
+- [ ] Résoudre .active qui disparait des succès.
+    - Lorsque lancé depuis *validateAll*, le button que récupère la func *handleAchievementButtonClick* c'est le *qButton*, le **tglCompletionBtn** de la 1ere quêtes de la liste
 - [ ] Délais entre les changements des guides  
     - C'est lié au fait que la requête fetch pour charger la frame_main prends 150 à 200ms, donc spammer plus vite que ça empêche l'avancée.
     - Faut faire en sorte que le spam soit possible en faisant en sorte que le contexte de nav continue d'avancer et une fois le spam terminer fetch.
@@ -236,12 +238,6 @@ Contenu de l'application.
 
 #### Planning
 
-- 13h : **Rédaction** > *Rédiger* > #1
-- 16h : **Frontend** > *Bogues* > #2
-- 19h : **Backend** > *Bogues* > #1
-- 22h : **Rédaction** > *Rédiger* > #2
-- 00h : **Rédaction** > *Rédiger* > #3
-
 #### Notes
 La journée sera bonne si je rédige les 2/3 des guides et excellente si je résous le délais
 
@@ -259,9 +255,10 @@ En conclusion, j'ai pas suivi le planning mais l'impression d'avoir fait plus qu
 
 #### Planning
 
-- 13h : **Backend** > *Dev* > #2
-- 16h : **Backend** > *Dev* > #3
-- 19h : **Frontend** > *Dev* > #3
+- 16h : **Frontend** > *Dev* > #3 - Pausé le temps de résoudre F > B > #1
+- 17h : **Frontend** > *Bogues* > #1 - Non fini
+- 18h : **Backend** > *Dev* > #3
+- 20h : **Frontend** > *Bogues* > #1 - A terminer & si possible **Frontend** > *Dev* > #3
 - 22h : **Electron** > *Dev* > #1
 - 00h : **Rédaction** > *Rédiger* > #1
 

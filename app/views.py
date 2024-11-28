@@ -82,6 +82,8 @@ class GuideDetailView(View):
 
         quests = get_filtered_quests(selected_achievement, ADMIN, alignment_ids, admin_ids) if selected_achievement else []
 
+        current_alignment_id = user.alignment.id if user.alignment else None
+        
         alignments = Alignment.objects.all()
 
         context = {
@@ -91,7 +93,8 @@ class GuideDetailView(View):
             "last_seen_achievement": last_seen_achievement,
             "quests": quests,
             "alignments": alignments,
-            "user_alignment_name": user_alignment_name
+            "user_alignment_name": user_alignment_name,
+            "current_alignment_id": current_alignment_id,
         }
         context.update(navigation_context)
 
@@ -175,6 +178,7 @@ def toggle_quest_completion(request, quest_id):
 
     completion_percentage = calculate_completion_percentage(achievement, user_alignment, guide)
 
+    last_seen_achievement = get_selected_achievement(guide_achievements, guide)
     last_seen_achievement_id = get_last_seen_achievement_id(guide_achievements, achievement)
 
     expect_list = generate_expect_list(achievement, User.objects.first().alignment.name)
@@ -186,6 +190,7 @@ def toggle_quest_completion(request, quest_id):
         'achievement': achievement,
         'guide': guide,
         'selected_achievement': selected_achievement,
+        'last_seen_achievement': last_seen_achievement,       
         'last_seen_achievement_id': last_seen_achievement_id 
     }, request=request)
     
@@ -198,6 +203,7 @@ def toggle_quest_completion(request, quest_id):
         },
         'guide': guide,
         'selected_achievement': selected_achievement,
+        'last_seen_achievement': last_seen_achievement,   
         'last_seen_achievement_id': last_seen_achievement_id 
     }, request=request)
 
@@ -236,7 +242,7 @@ def alignment_choice(request):
     alignments_html = render_to_string('sections/alignment.html', {
         'alignments': alignments,
         'current_alignment_id': current_alignment_id,
-        'user_alignment': user_alignment,
+        'user_alignment_name': user_alignment
     }, request=request)
 
     response_content = f"""

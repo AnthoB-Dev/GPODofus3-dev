@@ -14,8 +14,8 @@ log.info('App is starting...');
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 720,
+    width: 1366,
+    height: 768,
     resizable: true,
     minWidth: 1280,
     minHeight: 720,
@@ -75,7 +75,7 @@ function startDjango() {
   const djangoProjectPath = appPath;
 
   if (!fs.existsSync(pythonPath)) {
-    console.error(`Python introuvable à l'emplacement ${pythonPath}`);
+    console.error(`Python introuvable a l'emplacement ${pythonPath}`);
     app.quit();
     return;
   }
@@ -87,7 +87,7 @@ function startDjango() {
   }
 
   djangoProcess = runDjangoProcess(pythonPath, djangoProjectPath);
-  console.log('Processus Django démarré avec le PID :', djangoProcess.pid);
+  console.log('Processus Django demarrer avec le PID :', djangoProcess.pid);
 }
 
 app.whenReady().then(() => {

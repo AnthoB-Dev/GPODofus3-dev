@@ -92,7 +92,10 @@ function startDjango() {
 
 app.whenReady().then(() => {
   startDjango();
-  createWindow();
+
+  setTimeout(() => {
+    createWindow();
+  }, 3000);
 
   autoUpdater.checkForUpdatesAndNotify();
 

@@ -61,16 +61,12 @@ Developpement backend **Django**.
 
 - [ ] Régler le probleme de redirection d'alignment_choice, turbo le prends pas..
     - Ou en tout cas pas correctement, il me faut absolument declencher un load à la fin car sinon la nav est pété. J'ai accès aux guides de l'alignement inverse puisque la nav n'a pas été mise à jour à la selection de l'alignement.
-- [ ] Par contre à présent, le toggleCompletion ne refresh pas auto le guide où la quête est doublon comme il le devrait.
-    Les quêtes ne sont pas individuelle, comme j'ai utilisé une quête préalablement utilisée, elle est validée partout où elle est présente, ce qui n'est pas un problème en soit vu qu'un des seul cas de figure où ça aura lieu ce sera dans les différents guides tornades des donjons / tour du monde.
-    Par contre, le refresh ne fonctionne que lorsque la quête est validée dans son succès initial
-    - Guide 4 "**A travers le Krosmoz**"  
-    - Guide 169 "**Donjon : Nid du Kwakwa**" 
-- [ ] Problemes de "*content missing*" sur le succès "*Tout est en Ordre*" du guide "**Archipel de Valonia - Albuera**" (Vu qu'ici)
 
 <details>
 <summary>Résolus</summary>
 
+- [x] Le toggleCompletion ne refresh pas auto le guide où la quête est doublon.
+- [x] Problemes de "*content missing*" sur le succès "*Tout est en Ordre*" du guide "**Archipel de Valonia - Albuera**" (Vu qu'ici)
 - [x] Icones d'alignements s'affichent en double *guide_detail*
 - [x] Afficher les bonnes icones d'alignement
 - [x] Problèmes à l'arrivée sur les guides 4 et 169

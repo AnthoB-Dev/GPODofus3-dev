@@ -17,10 +17,10 @@ Developpement backend **Django**.
 - [ ] Faire une vérification complete de l'appli avec le django_debug.log
     - Lorsque je passe en debug : False, il ne trouve plus mon css / js
     - Dans mon environnement de Dev, tout est bon. Par contre au moment de distruber l'app... Donc j'attends de voir.
-- [ ] Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons
-    - L'idée c'est de changer **Quêtes** en **Donjons** et que les succès affichent les donjons à la place des quêtes
-- [ ] Ajouter un champ level aux succès et permettre l'affichage des succès par niveaux
 - [ ] Mettre en place expect_capture (sur donjon ?)
+- [ ] **V2** Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons
+    - L'idée c'est de changer **Quêtes** en **Donjons** et que les succès affichent les donjons à la place des quêtes
+- [ ] **V2** Ajouter un champ level aux succès et permettre l'affichage des succès par niveaux
 
 <details>
 <summary>Résolus</summary>
@@ -86,7 +86,7 @@ Distribution windows sous **Electron**.
 
 - [ ] Comprendre comment utiliser Electron Forge
 - [ ] Ajouter un loading screen au lancer
-- [ ] Faire en sorte de bien avoir le nom et l'icone de l'app dans le gestionnaire des tâches (peut être que le build résoudra le pb ?)
+- [ ] Faire en sorte de bien avoir le nom et l'icone de l'app dans le gestionnaire des tâches (build l'app avec un builder résous le pb)
 
 <details>
 <summary>Résolus</summary>
@@ -117,9 +117,9 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 - [ ] Changer le pseudo discord de Skyzio en son youtube
 - [ ] **En attente** : Empecher le *clickNextAchievement* lors de la *dévalidation*.
 - [ ] Media queries
-- [ ] Au survol d'une quête ou d'un succès dans les guides, mettre en surbrillance la quête et le succès.
-- [ ] Implémenter d'autres themes
+- [ ] **V1.+** Implémenter d'autres themes
     - Changer l'image background selon le thème
+- [ ] **V2** Au survol d'une quête ou d'un succès dans les guides, mettre en surbrillance la quête et le succès.
 
 <details>
 <summary>Résolus</summary>
@@ -195,27 +195,26 @@ Contenu de l'application.
 
 - [ ] Rédiger tous les Guides - En cours (page 58: "Ali bonta 41")
 - [ ] Rédiger 2/3 des guides
+- [ ] Ajouter un guide pour choisir son alignement
 - [ ] Ajouter des guides de rappel de temps en temps
     - Exemple : quelques guides avant le Veilleur pour rappeler de ne pas aller au dela du level 114
 - [ ] Ajouter un guide Rush Donjons après les Quêtes alignement Brak 41
 - [ ] Ajouter un guide Rush Donjons après les Quêtes alignement Brak 20
-- [ ] Ajouter un guide pour choisir son alignement
 - [ ] Dans le premier rush donjons entre alignement 0-4 et 4-16 : ajouter un if user.alignment = neutre pour afficher tous ceux à faire avec alignement.
-- [ ] **Garde à vous** et **Chef oui chef** du guide Quêtes d'alignements 4 à 16 affichent n'imp
-- [ ] Ajouter un succès pour les Donjons à la manière des alignements
 - [ ] Rédiger 3/3 des guides
 - [ ] Refaire les screens du tuto
     - Lorsque les bords n'ont pas de radius
     - L'image du passage sol invisible
-- [ ] Combiné les guides ayant pour objectif la complétion d'un donjon
-- [ ] Repenser la structure pour les succès Tour du monde et Tornade des donjons
+- [ ] Faire le _README_ de l'app - En cours
+- [ ] **V2** Combiné les guides ayant pour objectif la complétion d'un donjon
+- [ ] **V2** Repenser la structure pour les succès Tour du monde et Tornade des donjons
     - Ajouter un succès Tour du monde et y mettre les 27 quêtes (donjons ?)
     - Pareil pour Tornade des donjons, ça ne refletera pas le vrai succès mais il se terminera bien au même moment.
-- [ ] Faire le _README_ de l'app - En cours
 
 <details>
 <summary>Résolus</summary>
 
+- [x] **Garde à vous** et **Chef oui chef** du guide Quêtes d'alignements 4 à 16 affichent n'imp
 - [x] Ajouter les succès aux guides avant rédaction
 - [x] Rédiger 1/3 des guides
 - [x] Faire le guide tuto

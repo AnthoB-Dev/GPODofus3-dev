@@ -15,8 +15,8 @@ Developpement backend **Django**.
         - Mais il est possible que le cache des guides empeche un quelconque soucis avec l'état actuel, à voir
     - [x] Reduire le nombre de redondance et de code inutile
 - [ ] Faire une vérification complete de l'appli avec le django_debug.log
-- [ ] Changer les fichiers static
     - Lorsque je passe en debug : False, il ne trouve plus mon css / js
+    - Dans mon environnement de Dev, tout est bon. Par contre au moment de distruber l'app... Donc j'attends de voir.
 - [ ] Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons
     - L'idée c'est de changer **Quêtes** en **Donjons** et que les succès affichent les donjons à la place des quêtes
 - [ ] Ajouter un champ level aux succès et permettre l'affichage des succès par niveaux
@@ -29,6 +29,7 @@ Developpement backend **Django**.
     - [x] Enlever le dossier staticfiles
     - [x] Enlever les compresseurs en dev
     - [x] Revoir les turbo frames
+- [x] Comprendre les fichier statiques en debug false + compression
 - [x] Finir le système de tri du contenu selon l'alignement - En cours
 - [x] Ajouter un toggle pour l'*alignement*, le mettre en storage.
 - [x] Supprimer *LastSession*, rajouter un champ *is_last_seen* dans *GuideAchievement* pour sauvegarder l'achievement qui a été vu en dernier dans ce guide.
@@ -87,13 +88,14 @@ Distribution windows sous **Electron**.
 
 ### Développer :
 
-- [ ] Faire un test de build
+- [ ] Comprendre comment utiliser Electron Forge
 - [ ] Ajouter un loading screen au lancer
 - [ ] Faire en sorte de bien avoir le nom et l'icone de l'app dans le gestionnaire des tâches (peut être que le build résoudra le pb ?)
 
 <details>
 <summary>Résolus</summary>
 
+- [x] Faire un test de build
 - [x] Le *validateAll* sur spam du bouton finit par ralentir un des processus, peut être le *clickNextAchievement*, ou peut être le render de quests    
 - [x] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
 - [x] Résoudre *Electron Security Warning (Insecure Content-Security-Policy)*
@@ -117,7 +119,7 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
         - [ ] Changer la plupart de mes ul / li en divs - En cours
         - [ ] Remplir le alt des images - En cours
 - [ ] Changer le pseudo discord de Skyzio en son youtube
-- [ ] Empecher le *clickNextAchievement* lors de la *dévalidation*
+- [ ] **En attente** : Empecher le *clickNextAchievement* lors de la *dévalidation*.
 - [ ] Media queries
 - [ ] Au survol d'une quête ou d'un succès dans les guides, mettre en surbrillance la quête et le succès.
 - [ ] Implémenter d'autres themes
@@ -156,21 +158,18 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 - [ ] Résoudre .active qui disparait des succès.
     - Lorsque lancé depuis *validateAll*, le button que récupère la func *handleAchievementButtonClick* c'est le *qButton*, le **tglCompletionBtn** de la 1ere quêtes de la liste
-- [ ] Délais entre les changements des guides  
-    - C'est lié au fait que la requête fetch pour charger la frame_main prends 150 à 200ms, donc spammer plus vite que ça empêche l'avancée.
-    - Faut faire en sorte que le spam soit possible en faisant en sorte que le contexte de nav continue d'avancer et une fois le spam terminer fetch.
-    - Le clic sur le dernier achievement à l'air de se produire vu que le bouton *validateAll* se met à jour mais le style de l'achievement ne change pas
 - [ ] Moins flagrant sur le navigateur mais j'ai pu constater qu'il arrive malgré le disabled que lors du spam intense de *validateAll* des succès sont sautés.
     - Je n'ai heureusement pas réussi à empêcher la fin de l'action CàD la validation des succès. Par contre lorsqu'il est validé à 100, le suivant est sauté..
     - Par contre ensuite les succès sautés ne peuvent plus être .active lors d'un clique
     - J'ai déjà un anti spam sous la forme de disabled mais il doit y avoir une frame de faillabilité si on est assez rapide. idk
-- [ ] La topNav ne galère plus par contre il faut que je mette un await sur la fermeture ou que je revois les setTimeout car le caret n'a pas le temps de se fermer
     - C'est peut être autre chose puisque je peux l'ouvrir / fermer sans problemes, c'est seulement lors de la selection d'un guide.
 - [ ] Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés
 
 <details>
 <summary>Résolus</summary>
 
+- [x] La topNav ne galère plus par contre il faut que je mette un await sur la fermeture ou que je revois les setTimeout car le caret n'a pas le temps de se fermer. S : Comme pour les délais entre les guides.
+- [x] Délais entre les changements des guides. S : La compression des assets, et le collectstatic règles tous les problèmes de latence.
 - [x] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. 
 - [x] Lorsque je selectionne un guide et que je refresh la page, la *topNav* ne revient pas sur le dernier guide vu (scrollIntoView *nav.js*) S:Stocker la pos ?
 - [x] Fix le JS de guide.js qui se dédouble après changemement de page
@@ -257,15 +256,17 @@ En conclusion, j'ai pas suivi le planning mais l'impression d'avoir fait plus qu
 
 - 16h : **Frontend** > *Dev* > #3 - Pausé le temps de résoudre F > B > #1
 - 17h : **Frontend** > *Bogues* > #1 - Non fini
-- 18h : **Backend** > *Dev* > #3
 - 20h : **Frontend** > *Bogues* > #1 - A terminer & si possible **Frontend** > *Dev* > #3
-- 22h : **Electron** > *Dev* > #1
-- 00h : **Rédaction** > *Rédiger* > #1
+- 00h : **Rédaction** > *Rédiger* > #1  x
 
 #### Notes
 Prévoir un test de build en fin de journée après l'avancé des autres points.
 
 #### Fin de journée
+Encore pas de rédaction. Les pbs de front sont toujours là : le F > D > #3 (*clickNextAchievement*) est pour l'instant commenté.
+Le *.active* sur les succès ne fonctionne toujours pas. Et enfin j'ai pas réussir à build l'app et je sens que ça ne va pas être simple.
+Bref, une journée de merde.
+En bon : J'ai compris comment servir les fichiers statics avec compression ce qui règle le gros problème de latence lors de la nav entre mes guides.
 
 </details>
 
@@ -275,11 +276,11 @@ Prévoir un test de build en fin de journée après l'avancé des autres points.
 
 #### Planning
 
-- 13h : **Rédaction** > *Rédiger* > #1
-- 16h : TDM
+- 13h : **Electron** > *Dev* > #1 - Comprendre Electron Forge
+- 16h : **Electron** > *Dev* > #1 - Comprendre Electron Forge
 - 19h : **Release BETA 0.9.0**
-- 22h : TDM
-- 00h : TDM
+- 22h : **Frontend** > *Bogues* > #1 - Résoudre .active
+- 00h : 
 
 #### Notes
 Selon le test de la veille et l'état des bugs : Sortir la 0.9.0 build Electron.
@@ -296,9 +297,9 @@ Selon le test de la veille et l'état des bugs : Sortir la 0.9.0 build Electron.
 
 - 13h : **Electron**
 - 16h : **Electron**
-- 19h : **Rédaction** > *Rédiger* > #1
-- 22h : **Rédaction** > *Rédiger* > #1
-- 00h : **Rédaction** > *Rédiger* > #1
+- 19h : **Rédaction** > *Rédiger* > #1 - Rédiger les guides
+- 22h : **Rédaction** > *Rédiger* > #1 - Rédiger les guides
+- 00h : **Rédaction** > *Rédiger* > #1 - Rédiger les guides
 
 #### Notes
 

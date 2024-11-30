@@ -51,7 +51,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     # "whitenoise.middleware.WhiteNoiseMiddleware",  
-    # "django.middleware.gzip.GZipMiddleware",       
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -158,18 +157,6 @@ COMPRESS_ROOT = STATIC_ROOT
 COMPRESS_URL = STATIC_URL
 COMPRESS_PRECOMPILERS = (
     ('text/less', 'lessc {infile} {outfile}'),
-)
-
-# Configuration GZip
-GZIP_MINIMUM_SIZE = 1024  # 1 Ko
-GZIP_CONTENT_TYPES = (
-    'text/plain',
-    'text/css',
-    'application/json',
-    'application/javascript',
-    'text/html',
-    'application/xml',
-    'text/javascript',
 )
 
 LOGGING = {

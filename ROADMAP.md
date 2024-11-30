@@ -5,13 +5,17 @@ Roadmap des releases.
 Sortie de la version *RELEASE 1.0.0*
 - [ ] S'assurer que les fonctions principales n'aient plus de bugs
 
-### **BETA 0.9.1** : Résolution des problèmes lié à l'utilisation
+### **BETA 0.9.2** : Résolution des problèmes lié à l'utilisation
 Résoudre les problèmes liés à l'utilisation
 - [ ] Faire une cinquantaine de guides
 
-### **BETA 0.9.0** : Test d'utilisation de l'application
+### **BETA 0.9.1** : Test d'utilisation de l'application
 Démonstration d'utilisation, experience utilisateur.
 - [ ] Faire une cinquantaine de guides
+
+### **BETA 0.9.0** : Test d'utilisation de l'application
+Installation de l'app packagée.
+- Distribuer un executable qui fonctionne
 
 ### **BETA 0.8.1** : Résolution des problèmes d'installation
 Résoudre les problèmes liés à l'installation

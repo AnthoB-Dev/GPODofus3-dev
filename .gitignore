@@ -154,3 +154,4 @@ staticfiles/fontawesomefree/
 logs/
 db.sqlite3
 redaction.html
+out/

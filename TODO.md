@@ -271,7 +271,6 @@ En bon : J'ai compris comment servir les fichiers statics avec compression ce qu
 
 #### Planning
 
-- 13h : **Electron** > *Dev* > #1 - Comprendre Electron Forge
 - 16h : **Electron** > *Dev* > #1 - Comprendre Electron Forge
 - 19h : **Release BETA 0.9.0**
 - 22h : **Frontend** > *Bogues* > #1 - Résoudre .active

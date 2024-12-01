@@ -147,6 +147,7 @@ README_exemple.md
 *.css.less
 static/fontawesomefree/
 static/debug_toolbar/
+static/CACHE/
 staticfiles/CACHE/
 staticfiles/debug_toolbar/
 staticfiles/fontawesomefree/

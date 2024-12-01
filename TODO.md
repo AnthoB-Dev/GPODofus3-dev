@@ -59,12 +59,11 @@ Developpement backend **Django**.
 
 ### Bogues :
 
-- [ ] Régler le probleme de redirection d'alignment_choice, turbo le prends pas..
-    - Ou en tout cas pas correctement, il me faut absolument declencher un load à la fin car sinon la nav est pété. J'ai accès aux guides de l'alignement inverse puisque la nav n'a pas été mise à jour à la selection de l'alignement.
 
 <details>
 <summary>Résolus</summary>
 
+- [x] Régler le probleme de redirection d'alignment_choice, turbo le prends pas..
 - [x] Le toggleCompletion ne refresh pas auto le guide où la quête est doublon.
 - [x] Problemes de "*content missing*" sur le succès "*Tout est en Ordre*" du guide "**Archipel de Valonia - Albuera**" (Vu qu'ici)
 - [x] Icones d'alignements s'affichent en double *guide_detail*
@@ -84,19 +83,31 @@ Distribution windows sous **Electron**.
 
 ### Développer :
 
-- [ ] Comprendre comment utiliser Electron Forge
-- [ ] Ajouter un loading screen au lancer
-- [ ] Faire en sorte de bien avoir le nom et l'icone de l'app dans le gestionnaire des tâches (build l'app avec un builder résous le pb)
+- [ ] Retirer le dossier static du produit final.
+- [ ] Ajouter un loading screen au lancer.
 
 <details>
 <summary>Résolus</summary>
 
+- [x] Comprendre comment utiliser Electron Forge
 - [x] Faire un test de build
 - [x] Le *validateAll* sur spam du bouton finit par ralentir un des processus, peut être le *clickNextAchievement*, ou peut être le render de quests    
 - [x] S'assurer que lors de la fermeture de l'app via la X le terminal s'arrête (à vérif lorsqu'il y aura le .exe)
 - [x] Résoudre *Electron Security Warning (Insecure Content-Security-Policy)*
 - [x] Regler les gros problèmes de mémoires avec *Electron* (c'était la vidéo)
 </details>
+
+### Bogues :
+
+- [ ] **#1** L'installation demande des permissions admin pour installer les dépendences avec pip. 
+    - [error] Erreur lors de l'installation des dépendances : ERROR: Could not install packages due to an OSError: [Errno 13] Permission denied: 'C:\users\jerem\appdata\local\pip\cache\wheels\ad\65\ea\2bf7fc5ad0ad12aece612f6ec937287fe60a17ed10b8d3bdd1\rcssmin-1.1.1-py3-none-any.whl' Check the permissions.
+    - Éventuellement il pourrait être plus judicieux de ne pas rendre l'admin obligatoire et de prévenir qu'en cas d'erreur lors de l'install des dépendances que c'est probablement lié au fait de devoir lancé en admin.
+- [ ] **#2** Revoir la logique du script dans une certaine mesure. Il faudrait partager correctement la logique d'installation avec celle du lancement.
+    - Cela pourrait être assez simple : lancer l'app normalement et en cas d'erreur lancer la procédure actuelle.
+    - Dans tous les cas ça me demande de déterminer le *pythonPath* au préalable.
+- [ ] **#3** Dans le cas où le *#2* ne suffit pas, il faut revoir les events squirrel qui la plupart du temps empêche de lancer l'app du premier coup.
+- [ ] **#4** Les processus *Python* continuent de se réouvrir à la fermeture de l'app.
+    - Jerem n'a pas eu le problème ce qui ne m'aide pas.
 
 </details>
 
@@ -109,14 +120,15 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 ### Développer :
 
-- Optimiser le code 
+- **#1** Optimiser le code 
     - [ ] Vérifier les events js - En cours
     - Améliorer l'accessibilité
         - [ ] Changer la plupart de mes ul / li en divs - En cours
         - [ ] Remplir le alt des images - En cours
-- [ ] Changer le pseudo discord de Skyzio en son youtube
-- [ ] **En attente** : Empecher le *clickNextAchievement* lors de la *dévalidation*.
-- [ ] Media queries
+- [ ] **#2** Mettre (remettre) un délais sur l'utilisation de *openAll* pour éviter qu'un con n'ouvre 100 onglets après avoir spam le btn.
+- [ ] **#3** Changer le pseudo discord de Skyzio en son youtube
+- [ ] **#4** Media queries
+- [ ] **#5** En attente : Empecher le *clickNextAchievement* lors de la *dévalidation*.
 - [ ] **V1.+** Implémenter d'autres themes
     - Changer l'image background selon le thème
 - [ ] **V2** Au survol d'une quête ou d'un succès dans les guides, mettre en surbrillance la quête et le succès.
@@ -152,18 +164,20 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 ### Bogues :
 
-- [ ] Résoudre .active qui disparait des succès.
-    - Lorsque lancé depuis *validateAll*, le button que récupère la func *handleAchievementButtonClick* c'est le *qButton*, le **tglCompletionBtn** de la 1ere quêtes de la liste
-- [ ] Moins flagrant sur le navigateur mais j'ai pu constater qu'il arrive malgré le disabled que lors du spam intense de *validateAll* des succès sont sautés.
-    - Je n'ai heureusement pas réussi à empêcher la fin de l'action CàD la validation des succès. Par contre lorsqu'il est validé à 100, le suivant est sauté..
-    - Par contre ensuite les succès sautés ne peuvent plus être .active lors d'un clique
-    - J'ai déjà un anti spam sous la forme de disabled mais il doit y avoir une frame de faillabilité si on est assez rapide. idk
-    - C'est peut être autre chose puisque je peux l'ouvrir / fermer sans problemes, c'est seulement lors de la selection d'un guide.
-- [ ] Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés
+- [ ] **#1** La *topNav* se réouvre lorsque **compress = true**.
+    - A part la piste **compress**, j'en ai pas d'autres. La *topNav* marche sans problèmes lorsque **compress = false**.
+    - Mais c'est apparu lors de la dernière compression. Le build précédent n'avait pas de soucis.
+    - Les autres fonctionnalités n'ont pas de problèmes.
+    - Les events turbo ne se dupliquent pas.
+    - Mettre un console log dans la fonction d'ouverture pour voir.
+- [ ] **#2** La *navigation clavier*, globalement. Je pense la désactiver pour le moment pour la paufiner et la sortir plus tard.
+- [ ] **#3** Résoudre *.active* qui disparait des succès lors du *validateAll* et qui empêche de leurs remettre.
+- [ ] **#4** Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés
 
 <details>
 <summary>Résolus</summary>
 
+- [x] Moins flagrant sur le navigateur mais j'ai pu constater qu'il arrive malgré le disabled que lors du spam intense de *validateAll* des succès sont sautés. S : Probablement la compression.
 - [x] La topNav ne galère plus par contre il faut que je mette un await sur la fermeture ou que je revois les setTimeout car le caret n'a pas le temps de se fermer. S : Comme pour les délais entre les guides.
 - [x] Délais entre les changements des guides. S : La compression des assets, et le collectstatic règles tous les problèmes de latence.
 - [x] Valider puis dévalider une seule quête cause le même problême: le bouton _validateAll_ ne prends plus la dite quête en compte et valide toute les autres. 
@@ -249,11 +263,6 @@ En conclusion, j'ai pas suivi le planning mais l'impression d'avoir fait plus qu
 
 #### Planning
 
-- 16h : **Frontend** > *Dev* > #3 - Pausé le temps de résoudre F > B > #1
-- 17h : **Frontend** > *Bogues* > #1 - Non fini
-- 20h : **Frontend** > *Bogues* > #1 - A terminer & si possible **Frontend** > *Dev* > #3
-- 00h : **Rédaction** > *Rédiger* > #1  x
-
 #### Notes
 Prévoir un test de build en fin de journée après l'avancé des autres points.
 
@@ -271,15 +280,12 @@ En bon : J'ai compris comment servir les fichiers statics avec compression ce qu
 
 #### Planning
 
-- 16h : **Electron** > *Dev* > #1 - Comprendre Electron Forge
-- 19h : **Release BETA 0.9.0**
-- 22h : **Frontend** > *Bogues* > #1 - Résoudre .active
-- 00h : 
-
 #### Notes
 Selon le test de la veille et l'état des bugs : Sortir la 0.9.0 build Electron.
 
 #### Fin de journée
+Galère avec le build toute la journée, *.active* bug toujours mais comme avant : lors du *validateAll*.
+Aucune rédaction.
 
 </details>
 
@@ -289,14 +295,10 @@ Selon le test de la veille et l'état des bugs : Sortir la 0.9.0 build Electron.
 
 #### Planning
 
-- 13h : **Electron**
-- 16h : **Electron**
-- 19h : **Rédaction** > *Rédiger* > #1 - Rédiger les guides
-- 22h : **Rédaction** > *Rédiger* > #1 - Rédiger les guides
-- 00h : **Rédaction** > *Rédiger* > #1 - Rédiger les guides
-
 #### Notes
-
+Toute la journée passée sur le script d'*Electron* et il reste des truc à faire comme revoir les events *squirrel* qui ne marchent pas correctement.
+Et pas que, j'ai l'impression que le script n'aime pas le app.quit().
+Aucune rédaction.
 
 #### Fin de journée
 
@@ -308,11 +310,10 @@ Selon le test de la veille et l'état des bugs : Sortir la 0.9.0 build Electron.
 
 #### Planning
 
-- 13h : TDM
-- 16h : TDM
-- 19h : TDM
-- 22h : TDM
-- 00h : TDM
+- 19h : **Frontend** > *Bogues* >     #1 - *topNav* qui se réouvre.
+- 19h : **Frontend** > *Bogues* >     #3 - *.active* après *validateAll*.
+- 19h : **Frontend** > *Développer* > #2 - Ajouter un délais sur *openAll*.
+- 02h : **Electron** > *Bogues* >     #2 - Séparer la logique d'installation et d'ouverture.
 
 #### Notes
 

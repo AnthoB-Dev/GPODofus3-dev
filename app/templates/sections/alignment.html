@@ -1,4 +1,4 @@
-<form method="post" action="{% url 'app:alignment_choice' %}" id="alignment_form">
+<form method="post" action="{% url 'app:alignment_choice' %}" id="alignment_form" data-turbo="false">
     {% csrf_token %}
     <div class="form-group">
         <label for="alignment_select">Défini à <strong>{{user_alignment_name}}</strong></label>

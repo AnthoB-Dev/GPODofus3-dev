@@ -231,23 +231,5 @@ def alignment_choice(request):
     if user:
         user.alignment = alignment
         user.save()
-
-        alignments = Alignment.objects.all()
-        current_alignment_id = user.alignment_id
-        user_alignment = user.alignment.name
-
-    alignments = Alignment.objects.all()
-    current_alignment_id = user.alignment.id if user.alignment else None
-    
-    alignments_html = render_to_string('sections/alignment.html', {
-        'alignments': alignments,
-        'current_alignment_id': current_alignment_id,
-        'user_alignment_name': user_alignment
-    }, request=request)
-
-    response_content = f"""
-    <turbo-stream action="replace" target="alignment_choice">
-      <template>{alignments_html}</template>
-    </turbo-stream>
-    """
-    return HttpResponse(response_content, content_type='text/vnd.turbo-stream.html')
+        
+    return redirect('app:guide_detail', guide_id=1)

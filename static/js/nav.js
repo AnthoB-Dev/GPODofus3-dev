@@ -16,7 +16,6 @@ export const updateTopNavTitle = (event = null) => {
         if (currentTitle) {
             currentTitle.textContent = newTitle;
         }
-        updateSelectedGuide();
     }
 };
 
@@ -229,9 +228,9 @@ const handleKeys = async (e) => {
             toggleDropdown();
         } else {
             if (selected.nextElementSibling) {
-                selected.nextElementSibling.classList.add('selected');
+                selected.nextElementSibling?.classList.add('selected');
                 selected.classList.remove('selected');
-                selected.nextElementSibling.scrollIntoView({ block: 'nearest' });
+                selected.nextElementSibling?.scrollIntoView({ block: 'nearest' });
             }
         }
     } else if (neitherCtrlNorShift && arrowUp) {
@@ -245,9 +244,9 @@ const handleKeys = async (e) => {
             }
         }
     } else if (notCtrl && arrowDown) {
-        activeAchievement.parentElement.nextElementSibling.querySelector('.achievementName a').click();
+        activeAchievement.parentElement.nextElementSibling?.querySelector('.achievementName a').click();
     } else if (notCtrl && arrowUp) {
-        activeAchievement.parentElement.previousElementSibling.querySelector('.achievementName a').click();
+        activeAchievement.parentElement.previousElementSibling?.querySelector('.achievementName a').click();
     } else if (neitherCtrlNorShift && e.key === 'Enter' && topNav.classList.contains('js-open')) {
         selected.click();
     } else if (e.key === 'Escape' && topNav.classList.contains('js-open')) {

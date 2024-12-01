@@ -41,7 +41,6 @@ module.exports = {
           "favicons",
           "icon.ico"
         ),
-        exe: "GPODofus3.exe",
       },
     },
     {

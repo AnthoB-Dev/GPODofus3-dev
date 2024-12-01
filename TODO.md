@@ -99,15 +99,17 @@ Distribution windows sous **Electron**.
 
 ### Bogues :
 
-- [ ] **#1** L'installation demande des permissions admin pour installer les dépendences avec pip. 
+- [ ] **#1** L'installation demande des permissions *admin* pour installer les dépendences avec *pip*. 
     - [error] Erreur lors de l'installation des dépendances : ERROR: Could not install packages due to an OSError: [Errno 13] Permission denied: 'C:\users\jerem\appdata\local\pip\cache\wheels\ad\65\ea\2bf7fc5ad0ad12aece612f6ec937287fe60a17ed10b8d3bdd1\rcssmin-1.1.1-py3-none-any.whl' Check the permissions.
     - Éventuellement il pourrait être plus judicieux de ne pas rendre l'admin obligatoire et de prévenir qu'en cas d'erreur lors de l'install des dépendances que c'est probablement lié au fait de devoir lancé en admin.
-- [ ] **#2** Revoir la logique du script dans une certaine mesure. Il faudrait partager correctement la logique d'installation avec celle du lancement.
+    - Nouveaux rebondissement : VP avait toujours les problèmes de permissions même après avoir lancé l'installateur en mode *admin*.
+    - Et actuellement, les *dépendences* ne s'installent pas (à part pip) dans le *venv*, alors même qu'il n'y a pas d'erreurs. (voir les logs d'Alex) ce qui résulte en une erreur Django code 1.
     - Cela pourrait être assez simple : lancer l'app normalement et en cas d'erreur lancer la procédure actuelle.
     - Dans tous les cas ça me demande de déterminer le *pythonPath* au préalable.
-- [ ] **#3** Dans le cas où le *#2* ne suffit pas, il faut revoir les events squirrel qui la plupart du temps empêche de lancer l'app du premier coup.
 - [ ] **#4** Les processus *Python* continuent de se réouvrir à la fermeture de l'app.
     - Jerem n'a pas eu le problème ce qui ne m'aide pas.
+- [x] **#2** Revoir la logique du script dans une certaine mesure. Il faudrait partager correctement la logique d'installation avec celle du lancement.
+- [x] **#3** Dans le cas où le *#2* ne suffit pas, il faut revoir les events squirrel qui la plupart du temps empêche de lancer l'app du premier coup.
 
 </details>
 
@@ -125,7 +127,6 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
     - Améliorer l'accessibilité
         - [ ] Changer la plupart de mes ul / li en divs - En cours
         - [ ] Remplir le alt des images - En cours
-- [ ] **#2** Mettre (remettre) un délais sur l'utilisation de *openAll* pour éviter qu'un con n'ouvre 100 onglets après avoir spam le btn.
 - [ ] **#3** Changer le pseudo discord de Skyzio en son youtube
 - [ ] **#4** Media queries
 - [ ] **#5** En attente : Empecher le *clickNextAchievement* lors de la *dévalidation*.
@@ -142,6 +143,7 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
         - [x] Aria label sur les boutons
     - [x] Adapter le click JS en click sur la classe active seulement 
     - [x] Régler l'erreur *Form submission canceled because the form is not connected*
+- [x] **#2** Mettre (remettre) un délais sur l'utilisation de *openAll* pour éviter qu'un con n'ouvre 100 onglets après avoir spam le btn.
 - [x] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
 - [x] Ajouter le passage au succès suivant lors de la validation manuelle des succès
 - [x] Ajouter des eventlistener sur les fleches gauche et droite pour naviguer dans les *guides*
@@ -164,19 +166,14 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 ### Bogues :
 
-- [ ] **#1** La *topNav* se réouvre lorsque **compress = true**.
-    - A part la piste **compress**, j'en ai pas d'autres. La *topNav* marche sans problèmes lorsque **compress = false**.
-    - Mais c'est apparu lors de la dernière compression. Le build précédent n'avait pas de soucis.
-    - Les autres fonctionnalités n'ont pas de problèmes.
-    - Les events turbo ne se dupliquent pas.
-    - Mettre un console log dans la fonction d'ouverture pour voir.
 - [ ] **#2** La *navigation clavier*, globalement. Je pense la désactiver pour le moment pour la paufiner et la sortir plus tard.
-- [ ] **#3** Résoudre *.active* qui disparait des succès lors du *validateAll* et qui empêche de leurs remettre.
 - [ ] **#4** Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés
 
 <details>
 <summary>Résolus</summary>
 
+- [x] **#1** La *topNav* se réouvre lorsque **compress = true**. S : Le problème venait du fait que j'avais enlever **data-turbo-permanent** de *topNav*...
+- [x] **#3** Résoudre *.active* qui disparait des succès lors de la validation des quêtes et qui empêche de leurs remettre. S : C'était un problème de comparaison entre achievement et last_seen_achievement
 - [x] Moins flagrant sur le navigateur mais j'ai pu constater qu'il arrive malgré le disabled que lors du spam intense de *validateAll* des succès sont sautés. S : Probablement la compression.
 - [x] La topNav ne galère plus par contre il faut que je mette un await sur la fermeture ou que je revois les setTimeout car le caret n'a pas le temps de se fermer. S : Comme pour les délais entre les guides.
 - [x] Délais entre les changements des guides. S : La compression des assets, et le collectstatic règles tous les problèmes de latence.
@@ -319,6 +316,7 @@ Aucune rédaction.
 
 
 #### Fin de journée
+J'ai pu faire 3 des 4 points. Il me manque d'avoir un main.js totalement fonctionnel.
 
 </details>
 
@@ -328,8 +326,7 @@ Aucune rédaction.
 
 #### Planning
 
-- 13h : TDM
-- 16h : TDM
+- 16h : **Electron** > *Bogues* > #1 - erreur code 1 & +
 - 19h : TDM
 - 22h : TDM
 - 00h : TDM

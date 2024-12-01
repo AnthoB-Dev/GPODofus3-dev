@@ -78,4 +78,3 @@ document.addEventListener("turbo:submit-end", (e) => {
         quests.validateAllBtnStyle();
     }, 10);
 })
-

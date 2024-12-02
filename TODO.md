@@ -83,8 +83,9 @@ Distribution windows sous **Electron**.
 
 ### Développer :
 
-- [ ] Retirer le dossier static du produit final.
-- [ ] Ajouter un loading screen au lancer.
+- [ ] **#1** Ajouter l'installation de Python pendant le script.
+- [ ] **#2** Retirer le dossier static si c'est possible.
+- [ ] **#3** Ajouter un loading screen au lancer.
 
 <details>
 <summary>Résolus</summary>
@@ -104,9 +105,7 @@ Distribution windows sous **Electron**.
     - Éventuellement il pourrait être plus judicieux de ne pas rendre l'admin obligatoire et de prévenir qu'en cas d'erreur lors de l'install des dépendances que c'est probablement lié au fait de devoir lancé en admin.
     - Nouveaux rebondissement : VP avait toujours les problèmes de permissions même après avoir lancé l'installateur en mode *admin*.
     - Et actuellement, les *dépendences* ne s'installent pas (à part pip) dans le *venv*, alors même qu'il n'y a pas d'erreurs. (voir les logs d'Alex) ce qui résulte en une erreur Django code 1.
-    - Cela pourrait être assez simple : lancer l'app normalement et en cas d'erreur lancer la procédure actuelle.
-    - Dans tous les cas ça me demande de déterminer le *pythonPath* au préalable.
-- [ ] **#4** Les processus *Python* continuent de se réouvrir à la fermeture de l'app.
+- [ ] **#4** Les processus *Python* continuent de se réouvrir à la fermeture de l'app. (Semble s'être réglé, à observer)
     - Jerem n'a pas eu le problème ce qui ne m'aide pas.
 - [x] **#2** Revoir la logique du script dans une certaine mesure. Il faudrait partager correctement la logique d'installation avec celle du lancement.
 - [x] **#3** Dans le cas où le *#2* ne suffit pas, il faut revoir les events squirrel qui la plupart du temps empêche de lancer l'app du premier coup.
@@ -293,11 +292,11 @@ Aucune rédaction.
 #### Planning
 
 #### Notes
+
+#### Fin de journée
 Toute la journée passée sur le script d'*Electron* et il reste des truc à faire comme revoir les events *squirrel* qui ne marchent pas correctement.
 Et pas que, j'ai l'impression que le script n'aime pas le app.quit().
 Aucune rédaction.
-
-#### Fin de journée
 
 </details>
 
@@ -307,13 +306,7 @@ Aucune rédaction.
 
 #### Planning
 
-- 19h : **Frontend** > *Bogues* >     #1 - *topNav* qui se réouvre.
-- 19h : **Frontend** > *Bogues* >     #3 - *.active* après *validateAll*.
-- 19h : **Frontend** > *Développer* > #2 - Ajouter un délais sur *openAll*.
-- 02h : **Electron** > *Bogues* >     #2 - Séparer la logique d'installation et d'ouverture.
-
 #### Notes
-
 
 #### Fin de journée
 J'ai pu faire 3 des 4 points. Il me manque d'avoir un main.js totalement fonctionnel.
@@ -326,13 +319,27 @@ J'ai pu faire 3 des 4 points. Il me manque d'avoir un main.js totalement fonctio
 
 #### Planning
 
-- 16h : **Electron** > *Bogues* > #1 - erreur code 1 & +
-- 19h : TDM
-- 22h : TDM
-- 00h : TDM
+- 15h : **Electron** > *Bogues* >       #1 - erreur code 1 & +
+- 19h : **Electron** > *Développer* >   #1 - Incorporer Python
+- 00h : **Rédaction** > *Rédiger* >     #1 - Rédiger tout
 
 #### Notes
+J'ai le pourquoi du comment du bug, mettre en place la solution dans la matinée.
+Ensuite rédiger si j'ai le temps.
 
+#### Fin de journée
+
+### 3 Décembre
+<details>
+<summary>Planning</summary>
+
+#### Planning
+
+- 12h : TDM
+- 12h : **RELEASE 1.0**
+
+#### Notes
+Idéalement faut que je sorte la release avant le 3. Sinon à midi max et derniers préparatifs le matin.
 
 #### Fin de journée
 

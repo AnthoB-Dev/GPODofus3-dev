@@ -1,7 +1,7 @@
 # Guide de progression optimisée: Dofus 3
 
 <!-- TODO: Changer l'image par une version finale -->
-![Image du projet](/static/medias/project.png)
+![Image du projet](resources/app/static/medias/project.png)
 
 ## Bonjour et bienvenu sur GPODofus3.
 
@@ -11,7 +11,9 @@
 **N'hésitez pas** à mettre une **étoile** sur [le Github du projet](https://github.com/AnthoB-Dev/GPODofus3) si vous **appréciez** l'application, ou simplement si l'**initiative** vous interesse.
 J'ai déjà en tête des axes d'améliorations en termes de fonctionnalités, de qualité de vie, d'optimisations structurelles de l'application, et bien plus !
 
-**<span style="color:red;">LIRE ATTENTIVEMENT LA SECTION INSTALLATION SVP.</span>**
+- **<span style="color:red;">LIRE ATTENTIVEMENT LA SECTION INSTALLATION SVP.</span>**
+- **<span style="color:red;">Version 1.0 pour demain matin.</span>**
+- **<span style="color:red;">Ne supporte que Windows.</span>**
 
 ## Sommaire
 <ul>
@@ -137,11 +139,15 @@ Mais j'ai quand même fait en sorte, au meilleur de mes compétences, de **rédu
 Dans la section [Release](https://github.com/AnthoB-Dev/GPODofus3/tags), cliquez sur la dernière version (**1.0.X**). Vous trouverez un installateur **GPODofus3-1.X.X.Setup.exe** dans *Assets*.
 
 ### Installation
-Pour ce qui est de l'installation ce n'est pas compliqué mais faites **<span style="color: red;">attention à 2 points</span>**:
+Pour ce qui est de l'installation ce n'est pas compliqué mais faites **<span style="color: red;">attention à 3 points</span>**:
 1. Vous **<span style="color: red;">DEVEZ</span>** télécharger [Python 3.13](https://www.python.org/downloads/release/python-3130/) et l'installer.
     - Lorsque l'installateur Python s'ouvre, sélectionnez bien <span style="color: red;">Ajouter Python au Path</span> ainsi qu'en <span style="color: red;">privilège administrateur</span>. Ceci devrait vous évitez de relancer votre session (ou redémarrer l'ordi).
 2. Une fois **Python installé**, vous pouvez lancer le **Setup.exe** mais attention sur un point : Lorsque non lancer en administrateur, il est possible que les dépendances ne s'installent pas correctement. Si c'est votre cas, lancer le **Setup.exe en administrateur** devrait résoudre le problème.
-    *J'utilise le conditionnel car sur les 5 machines où a été tester l'application, il y en a une pour laquelle le lancement en admin n'a pas fonctionné. Je ne connais pas la raison et j'ai manqué de temps pour la trouver. Si c'est votre cas, malheureusement vous ne pourrez pas utiliser **GPODofus3**, je m'en excuse.
+    - J'utilise le conditionnel car sur les 5 machines où a été tester l'application, il y en a une pour laquelle le lancement en admin n'a pas fonctionné. Je ne connais pas la raison et j'ai manqué de temps pour la trouver. Si c'est votre cas, malheureusement vous ne pourrez pas utiliser **GPODofus3**, je m'en excuse.
+3. L'installateur **se ferme AVANT la fin de l'installation**. Attendez bien que la fenêtre l'application s'ouvre d'elle même. L'attente dépendra de la vitesse de votre connexion mais comptez au moins **30 secondes**.
+
+### Désinstallation 
+Vous pouvez supprimer l'application depuis "Ajouter ou supprimer des programmes" sous Windows.
 
 ## Utilisation
 Le tout premier Guide de l'application est un guide tutoriel expliquant "qui fait quoi" dans l'application. Je vous invite donc à vous rendre sur celui-ci lorsque vous avez un questionnement quelconque sur les fonctionnalités de l'app.

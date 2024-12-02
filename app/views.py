@@ -228,4 +228,4 @@ def alignment_choice(request):
         user.alignment = alignment
         user.save()
         
-    return redirect('app:guide_detail', guide_id=1)
+    return redirect('app:guide_detail', guide_id=174)

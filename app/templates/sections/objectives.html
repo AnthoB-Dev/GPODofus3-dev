@@ -8,5 +8,8 @@
 <div class="content">
   <turbo-frame id="frame_objectives">
     {{ guide.objectives|safe }}
+    {% if guide.id == 174 %}
+      {% include "sections/alignment.html" %}
+    {% endif %}
   </turbo-frame>
 </div>

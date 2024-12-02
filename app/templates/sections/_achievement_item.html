@@ -26,7 +26,12 @@
         {% if item.expect_list %}
         <span class="expectIcons">
           {% for expect in item.expect_list %}
+            {% if guide.id == 174 %}
+              <img src="{% static 'medias/icons/expect/' %}alignment_bonta.png" alt="Icone Bonta" />
+              <img src="{% static 'medias/icons/expect/' %}alignment_brak.png" alt="Icone Brâkmar" />
+            {% else %}
             <img src="{% static 'medias/icons/expect/' %}{{ expect }}.png" alt="Icone {{expect}}" />
+            {% endif %}
           {% endfor %}
         {% endif %}
       </a>

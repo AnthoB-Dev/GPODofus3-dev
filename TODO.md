@@ -100,13 +100,9 @@ Distribution windows sous **Electron**.
 
 ### Bogues :
 
-- [ ] **#1** L'installation demande des permissions *admin* pour installer les dépendences avec *pip*. 
-    - [error] Erreur lors de l'installation des dépendances : ERROR: Could not install packages due to an OSError: [Errno 13] Permission denied: 'C:\users\jerem\appdata\local\pip\cache\wheels\ad\65\ea\2bf7fc5ad0ad12aece612f6ec937287fe60a17ed10b8d3bdd1\rcssmin-1.1.1-py3-none-any.whl' Check the permissions.
-    - Éventuellement il pourrait être plus judicieux de ne pas rendre l'admin obligatoire et de prévenir qu'en cas d'erreur lors de l'install des dépendances que c'est probablement lié au fait de devoir lancé en admin.
-    - Nouveaux rebondissement : VP avait toujours les problèmes de permissions même après avoir lancé l'installateur en mode *admin*.
-    - Et actuellement, les *dépendences* ne s'installent pas (à part pip) dans le *venv*, alors même qu'il n'y a pas d'erreurs. (voir les logs d'Alex) ce qui résulte en une erreur Django code 1.
 - [ ] **#4** Les processus *Python* continuent de se réouvrir à la fermeture de l'app. (Semble s'être réglé, à observer)
     - Jerem n'a pas eu le problème ce qui ne m'aide pas.
+- [x] **#1** L'installation demande des permissions *admin* pour installer les dépendences avec *pip*. 
 - [x] **#2** Revoir la logique du script dans une certaine mesure. Il faudrait partager correctement la logique d'installation avec celle du lancement.
 - [x] **#3** Dans le cas où le *#2* ne suffit pas, il faut revoir les events squirrel qui la plupart du temps empêche de lancer l'app du premier coup.
 
@@ -128,10 +124,10 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
         - [ ] Remplir le alt des images - En cours
 - [ ] **#3** Changer le pseudo discord de Skyzio en son youtube
 - [ ] **#4** Media queries
-- [ ] **#5** En attente : Empecher le *clickNextAchievement* lors de la *dévalidation*.
-- [ ] **V1.+** Implémenter d'autres themes
+- **V1.+** Réimplémenter les *clickNextAchievement*, *clickCurrentAchievement*
+- **V1.+** Implémenter d'autres themes
     - Changer l'image background selon le thème
-- [ ] **V2** Au survol d'une quête ou d'un succès dans les guides, mettre en surbrillance la quête et le succès.
+- **V2** Au survol d'une quête ou d'un succès dans les guides, mettre en surbrillance la quête et le succès.
 
 <details>
 <summary>Résolus</summary>
@@ -165,7 +161,7 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 ### Bogues :
 
-- [ ] **#2** La *navigation clavier*, globalement. Je pense la désactiver pour le moment pour la paufiner et la sortir plus tard.
+- [ ] **#2** La *navigation clavier* : Je la laisse mais il faut prévenir de pas trop spam comme des dératés au risque de devoir relancer l'app.
 - [ ] **#4** Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés
 
 <details>
@@ -203,19 +199,18 @@ Contenu de l'application.
 
 ### Rédiger :
 
-- [ ] Rédiger tous les Guides - En cours (page 58: "Ali bonta 41")
-- [ ] Rédiger 2/3 des guides
-- [ ] Ajouter un guide pour choisir son alignement
-- [ ] Ajouter des guides de rappel de temps en temps
+- [ ] **#9** Mettre les guides présents à jours grâce à la maj du spreadsheet de Skyzio + améliorer le visuel de ceux existant.
+- [ ] **#1** Rédiger tous les Guides - En cours (page 58: "Ali bonta 41")
+- [ ] **#2** Rédiger 2/3 des guides
+- [ ] **#3** Ajouter des guides de rappel de temps en temps
     - Exemple : quelques guides avant le Veilleur pour rappeler de ne pas aller au dela du level 114
-- [ ] Ajouter un guide Rush Donjons après les Quêtes alignement Brak 41
-- [ ] Ajouter un guide Rush Donjons après les Quêtes alignement Brak 20
-- [ ] Dans le premier rush donjons entre alignement 0-4 et 4-16 : ajouter un if user.alignment = neutre pour afficher tous ceux à faire avec alignement.
-- [ ] Rédiger 3/3 des guides
-- [ ] Refaire les screens du tuto
+- [ ] **#4** Ajouter un guide Rush Donjons après les Quêtes alignement Brak 41
+- [ ] **#5** Ajouter un guide Rush Donjons après les Quêtes alignement Brak 20
+- [ ] **#6** Dans le premier rush donjons entre alignement 0-4 et 4-16 : ajouter un if user.alignment = neutre pour afficher tous ceux à faire avec alignement.
+- [ ] **#7** Rédiger 3/3 des guides
+- [ ] **#8** Refaire les screens du tuto
     - Lorsque les bords n'ont pas de radius
     - L'image du passage sol invisible
-- [ ] Faire le _README_ de l'app - En cours
 - [ ] **V2** Combiné les guides ayant pour objectif la complétion d'un donjon
 - [ ] **V2** Repenser la structure pour les succès Tour du monde et Tornade des donjons
     - Ajouter un succès Tour du monde et y mettre les 27 quêtes (donjons ?)
@@ -224,6 +219,8 @@ Contenu de l'application.
 <details>
 <summary>Résolus</summary>
 
+- [x] Ajouter un guide pour choisir son alignement
+- [x] Faire le _README_ de l'app - En cours
 - [x] **Garde à vous** et **Chef oui chef** du guide Quêtes d'alignements 4 à 16 affichent n'imp
 - [x] Ajouter les succès aux guides avant rédaction
 - [x] Rédiger 1/3 des guides
@@ -319,15 +316,13 @@ J'ai pu faire 3 des 4 points. Il me manque d'avoir un main.js totalement fonctio
 
 #### Planning
 
-- 15h : **Electron** > *Bogues* >       #1 - erreur code 1 & +
-- 19h : **Electron** > *Développer* >   #1 - Incorporer Python
-- 00h : **Rédaction** > *Rédiger* >     #1 - Rédiger tout
-
 #### Notes
 J'ai le pourquoi du comment du bug, mettre en place la solution dans la matinée.
 Ensuite rédiger si j'ai le temps.
 
 #### Fin de journée
+Je n'ai pas eu le temps d'incorporer Python, mais erreur code 1 c'est réglé.
+J'ai tout juste avancé la rédaction.
 
 ### 3 Décembre
 <details>
@@ -335,13 +330,16 @@ Ensuite rédiger si j'ai le temps.
 
 #### Planning
 
-- 12h : TDM
+- 10h : **Rédaction** > *Rédiger* > #9 - MAJ guides + visu
+- 11h : **Frontend** > *Bogues* > #2 - Prévention utilisation clavier
+- 11h : **Frontend** > *Développer* > #3 - Icone Skyzio
 - 12h : **RELEASE 1.0**
 
 #### Notes
-Idéalement faut que je sorte la release avant le 3. Sinon à midi max et derniers préparatifs le matin.
+Sortie à midi max et derniers préparatifs le matin. Prévoir absolument 1h pour *compress* / *compilation* / *test* / *upload*.
 
 #### Fin de journée
+C'EST LE RUSH !!!
 
 </details>
 

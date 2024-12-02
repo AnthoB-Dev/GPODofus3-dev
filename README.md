@@ -25,7 +25,7 @@ J'ai déjà en tête des axes d'améliorations en termes de fonctionnalités, de
         </ul>
     </li>
     <li>
-        <a href="#le-guide-de-progression-optimisée-dofus-3">Le Guide de Progression Optimisée: Dofus 3</a>
+        <a href="#guide-de-progression-optimisée-dofus-3-1">Le Guide de Progression Optimisée: Dofus 3</a>
         <ul>
             <li><a href="#ce-quapporte-gpod3">Ce qu'apporte GPOD3</a></li>
             <li><a href="#ce-que-ça-napporte-pas">Ce que ça n'apporte pas</a></li>
@@ -34,7 +34,8 @@ J'ai déjà en tête des axes d'améliorations en termes de fonctionnalités, de
     <li>
         <a href="#installation">Installation</a>
         <ul>
-            <li><a href="">TODO</a></li>
+            <li><a href="#téléchargement">Téléchargement</a></li>
+            <li><a href="#installation-1">Installation</a></li>
         </ul>
     </li>
     <li>
@@ -88,7 +89,7 @@ Et puis, même en **gardant** cette liberté de choix, n'est-il pas possible de 
 > Comment l'**améliorer** et le rendre plus **agréable** à parcourir et exploiter pour ainsi le rendre plus **nooblar-friendly**?
 
 
-## Le Guide de Progression Optimisée: Dofus 3
+## Guide de Progression Optimisée: Dofus 3
 
 Comme dit précedemment, j'ai essayer de faire en sorte d'apporter ce qu'il peut **manquer** aussi bien techniquement de la part d'un **spreadsheet** que volontairement en ce sens de **la volonté**, de Skyzio de ne pas **diriger** le lecteur.
 

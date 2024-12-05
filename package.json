@@ -1,6 +1,6 @@
 {
   "name": "GPODofus3",
-  "version": "0.9.2",
+  "version": "1.0.0",
   "main": "main.js",
   "scripts": {
     "start": "electron-forge start",

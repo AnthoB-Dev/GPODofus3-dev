@@ -157,3 +157,4 @@ db.sqlite3
 redaction.html
 out/
 staticfiles/
+.kit_endbuild/

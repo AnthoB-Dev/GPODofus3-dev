@@ -199,6 +199,7 @@ Contenu de l'application.
 
 ### Rédiger :
 
+- [ ] **#8** Mettre à jour les guides selon le GPO v3.0 de Skyzio (Actuellement au guide id 26 "Quêtes d'Alignement : Bonta - 20 + Ordre 1") 
 - [ ] **#9** Mettre les guides présents à jours grâce à la maj du spreadsheet de Skyzio + améliorer le visuel de ceux existant.
 - [ ] **#1** Rédiger tous les Guides - En cours (page 58: "Ali bonta 41")
 - [ ] **#2** Rédiger 2/3 des guides
@@ -208,9 +209,6 @@ Contenu de l'application.
 - [ ] **#5** Ajouter un guide Rush Donjons après les Quêtes alignement Brak 20
 - [ ] **#6** Dans le premier rush donjons entre alignement 0-4 et 4-16 : ajouter un if user.alignment = neutre pour afficher tous ceux à faire avec alignement.
 - [ ] **#7** Rédiger 3/3 des guides
-- [ ] **#8** Refaire les screens du tuto
-    - Lorsque les bords n'ont pas de radius
-    - L'image du passage sol invisible
 - [ ] **V2** Combiné les guides ayant pour objectif la complétion d'un donjon
 - [ ] **V2** Repenser la structure pour les succès Tour du monde et Tornade des donjons
     - Ajouter un succès Tour du monde et y mettre les 27 quêtes (donjons ?)
@@ -219,6 +217,7 @@ Contenu de l'application.
 <details>
 <summary>Résolus</summary>
 
+- [x] **#8** Refaire les screens du tuto
 - [x] Ajouter un guide pour choisir son alignement
 - [x] Faire le _README_ de l'app - En cours
 - [x] **Garde à vous** et **Chef oui chef** du guide Quêtes d'alignements 4 à 16 affichent n'imp

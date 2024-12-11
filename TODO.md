@@ -14,13 +14,12 @@ Developpement backend **Django**.
         - A chaque changement de guide, ils sont tous récupérés alors qu'il ne pourrait y en a avoir qu'une dizaine, 10 avant, 10 après
         - Mais il est possible que le cache des guides empeche un quelconque soucis avec l'état actuel, à voir
     - [x] Reduire le nombre de redondance et de code inutile
-- [ ] Faire une vérification complete de l'appli avec le django_debug.log
-    - Lorsque je passe en debug : False, il ne trouve plus mon css / js
-    - Dans mon environnement de Dev, tout est bon. Par contre au moment de distruber l'app... Donc j'attends de voir.
+- [ ] Ajouter un champ position pour les quêtes / succès pour géré le triage dans le cas où y'a besoin de les changés de place.
+    - Valeur par défaut = id
 - [ ] Mettre en place expect_capture (sur donjon ?)
-- [ ] **V2** Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons
+- [ ] **V1.+** Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons
     - L'idée c'est de changer **Quêtes** en **Donjons** et que les succès affichent les donjons à la place des quêtes
-- [ ] **V2** Ajouter un champ level aux succès et permettre l'affichage des succès par niveaux
+- [ ] **V1.+** Ajouter un champ level aux succès et permettre l'affichage des succès par niveaux
 
 <details>
 <summary>Résolus</summary>
@@ -29,6 +28,7 @@ Developpement backend **Django**.
     - [x] Enlever le dossier staticfiles
     - [x] Enlever les compresseurs en dev
     - [x] Revoir les turbo frames
+- [x] Faire une vérification complete de l'appli avec le django_debug.log
 - [x] Comprendre les fichier statiques en debug false + compression
 - [x] Finir le système de tri du contenu selon l'alignement - En cours
 - [x] Ajouter un toggle pour l'*alignement*, le mettre en storage.
@@ -83,7 +83,8 @@ Distribution windows sous **Electron**.
 
 ### Développer :
 
-- [ ] **#1** Ajouter l'installation de Python pendant le script.
+- [ ] **#1** Ajouter l'installation de Python pendant le script (avec l'installateur).
+- [ ] **#4** Éffacer le dossier *dependencies* une fois utilisé.
 - [ ] **#2** Retirer le dossier static si c'est possible.
 - [ ] **#3** Ajouter un loading screen au lancer.
 
@@ -101,7 +102,6 @@ Distribution windows sous **Electron**.
 ### Bogues :
 
 - [ ] **#4** Les processus *Python* continuent de se réouvrir à la fermeture de l'app. (Semble s'être réglé, à observer)
-    - Jerem n'a pas eu le problème ce qui ne m'aide pas.
 - [x] **#1** L'installation demande des permissions *admin* pour installer les dépendences avec *pip*. 
 - [x] **#2** Revoir la logique du script dans une certaine mesure. Il faudrait partager correctement la logique d'installation avec celle du lancement.
 - [x] **#3** Dans le cas où le *#2* ne suffit pas, il faut revoir les events squirrel qui la plupart du temps empêche de lancer l'app du premier coup.
@@ -122,12 +122,14 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
     - Améliorer l'accessibilité
         - [ ] Changer la plupart de mes ul / li en divs - En cours
         - [ ] Remplir le alt des images - En cours
-- [ ] **#3** Changer le pseudo discord de Skyzio en son youtube
 - [ ] **#4** Media queries
 - **V1.+** Réimplémenter les *clickNextAchievement*, *clickCurrentAchievement*
+- **V1.+** Ajouter une recherche
+    - De guide
+    - De quête
 - **V1.+** Implémenter d'autres themes
     - Changer l'image background selon le thème
-- **V2** Au survol d'une quête ou d'un succès dans les guides, mettre en surbrillance la quête et le succès.
+- **V1.+** Au survol d'une quête ou d'un succès dans les guides, mettre en surbrillance la quête et le succès.
 
 <details>
 <summary>Résolus</summary>
@@ -138,6 +140,7 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
         - [x] Aria label sur les boutons
     - [x] Adapter le click JS en click sur la classe active seulement 
     - [x] Régler l'erreur *Form submission canceled because the form is not connected*
+- [x] **#3** Changer le pseudo discord de Skyzio en son youtube
 - [x] **#2** Mettre (remettre) un délais sur l'utilisation de *openAll* pour éviter qu'un con n'ouvre 100 onglets après avoir spam le btn.
 - [x] Remplacer le pourcentage de progression pour les guides car c'est relativement incompatible avec ma mise en pratique du guide
 - [x] Ajouter le passage au succès suivant lors de la validation manuelle des succès
@@ -199,18 +202,18 @@ Contenu de l'application.
 
 ### Rédiger :
 
-- [ ] **#8** Mettre à jour les guides selon le GPO v3.0 de Skyzio (Actuellement au guide id 26 "Quêtes d'Alignement : Bonta - 20 + Ordre 1") 
-- [ ] **#9** Mettre les guides présents à jours grâce à la maj du spreadsheet de Skyzio + améliorer le visuel de ceux existant.
-- [ ] **#1** Rédiger tous les Guides - En cours (page 58: "Ali bonta 41")
-- [ ] **#2** Rédiger 2/3 des guides
+- [ ] **#8** Mettre à jour les guides selon le GPO v3.0 de Skyzio 
+    - Actuellement au guide id 26 "Quêtes d'Alignement : Bonta - 20 + Ordre 1"
+- [ ] **#1** Rédiger tous les Guides
+    - Dernier : page 58: "Ali bonta 41"
 - [ ] **#3** Ajouter des guides de rappel de temps en temps
     - Exemple : quelques guides avant le Veilleur pour rappeler de ne pas aller au dela du level 114
 - [ ] **#4** Ajouter un guide Rush Donjons après les Quêtes alignement Brak 41
 - [ ] **#5** Ajouter un guide Rush Donjons après les Quêtes alignement Brak 20
 - [ ] **#6** Dans le premier rush donjons entre alignement 0-4 et 4-16 : ajouter un if user.alignment = neutre pour afficher tous ceux à faire avec alignement.
-- [ ] **#7** Rédiger 3/3 des guides
-- [ ] **V2** Combiné les guides ayant pour objectif la complétion d'un donjon
-- [ ] **V2** Repenser la structure pour les succès Tour du monde et Tornade des donjons
+
+- [ ] **V1.+** Combiné les guides ayant pour objectif la complétion d'un donjon
+- [ ] **V1.+** Repenser la structure pour les succès Tour du monde et Tornade des donjons
     - Ajouter un succès Tour du monde et y mettre les 27 quêtes (donjons ?)
     - Pareil pour Tornade des donjons, ça ne refletera pas le vrai succès mais il se terminera bien au même moment.
 
@@ -329,16 +332,12 @@ J'ai tout juste avancé la rédaction.
 
 #### Planning
 
-- 10h : **Rédaction** > *Rédiger* > #9 - MAJ guides + visu
-- 11h : **Frontend** > *Bogues* > #2 - Prévention utilisation clavier
-- 11h : **Frontend** > *Développer* > #3 - Icone Skyzio
-- 12h : **RELEASE 1.0**
-
 #### Notes
 Sortie à midi max et derniers préparatifs le matin. Prévoir absolument 1h pour *compress* / *compilation* / *test* / *upload*.
 
 #### Fin de journée
-C'EST LE RUSH !!!
+Au final midi était trop juste. Mais les serveurs étaient dispo qu'à 16h donc j'ai juste eu le temps de fignoler et sortir l'app. 
+Il manque une bonne partie des guides mais maintenant... C'EST LE RUSH !!!
 
 </details>
 

@@ -65,6 +65,7 @@ module.exports = {
           "owner": "AnthoB-Dev",
           "name": "GPODofus3-dev"
         },
+        "authToken": "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",
         "prerelease": false,
         "draft": false
       }

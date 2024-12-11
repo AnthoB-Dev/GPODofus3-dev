@@ -1,5 +1,6 @@
 (async () => {
   const { app, BrowserWindow, shell, dialog } = require("electron");
+  const { autoUpdater } = require('electron-updater');
   const { spawn } = require("child_process");
   const path = require("path");
   const fs = require("fs");
@@ -594,6 +595,7 @@
 
   // Gérer les événements de l'application
   app.whenReady().then(async () => {
+    autoUpdater.checkForUpdatesAndNotify();
     await startDjango();
     createWindow();
 
@@ -601,6 +603,27 @@
       log.info("app.on_activate : Application activée.");
       if (BrowserWindow.getAllWindows().length === 0) createWindow();
     });
+  });
+
+  autoUpdater.on('checking-for-update', () => {
+    console.log('Vérification des mises à jour...');
+  });
+
+  autoUpdater.on('update-available', (info) => {
+    console.log('Nouvelle mise à jour disponible :', info);
+  });
+
+  autoUpdater.on('update-not-available', (info) => {
+    console.log('Pas de mise à jour disponible.');
+  });
+
+  autoUpdater.on('error', (err) => {
+    console.error('Erreur pendant la mise à jour :', err);
+  });
+
+  autoUpdater.on('update-downloaded', (info) => {
+    console.log('Mise à jour téléchargée. Elle sera installée au prochain démarrage.');
+    autoUpdater.quitAndInstall(); // Redémarre l'application pour installer la mise à jour
   });
 
   app.on("window-all-closed", () => {

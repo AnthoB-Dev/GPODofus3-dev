@@ -153,7 +153,7 @@ staticfiles/debug_toolbar/
 staticfiles/fontawesomefree/
 !admin/css/**/*.css
 logs/
-db.sqlite3
+db.sqlite
 redaction.html
 out/
 staticfiles/

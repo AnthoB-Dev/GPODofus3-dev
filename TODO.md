@@ -203,7 +203,7 @@ Contenu de l'application.
 ### Rédiger :
 
 - [ ] **#8** Mettre à jour les guides selon le GPO v3.0 de Skyzio 
-    - Actuellement au guide id 26 "Quêtes d'Alignement : Bonta - 20 + Ordre 1"
+    - Actuellement au guide id 85 "Bleu Turquoise - 2 / 5 - Troisième Dofus Primordial"
 - [ ] **#1** Rédiger tous les Guides
     - Dernier : page 58: "Ali bonta 41"
 - [ ] **#3** Ajouter des guides de rappel de temps en temps

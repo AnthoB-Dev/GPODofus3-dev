@@ -706,7 +706,7 @@ body {
                     display: flex;
                     flex-direction: column;
                     gap: var(--gap-reg);
-
+                    
                     a {
                       color: revert;
                       transition: all 0.2s ease;
@@ -742,7 +742,22 @@ body {
                       color: var(--clr-red);
                       margin-left: 0;
                       font-size: 1.3em;
-                      margin: var(--gap-reg) 0;
+                      margin: var(--gap-reg) 0 0;
+                    }
+
+                    h4 ~ p,
+                    h4 ~ ul {
+                      margin-left: 4px;
+                    }
+
+                    h5 {
+                      margin-left: 4px;
+                    }
+
+                    h5 ~ * {
+                      &:not(h5) {
+                        margin-left: 8px !important;
+                      }
                     }
                     
                     .jsToggleSummaryBtn {

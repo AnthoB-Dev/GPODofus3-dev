@@ -202,6 +202,7 @@ Contenu de l'application.
 
 ### Rédiger :
 
+- [ ] **#10** Ajouter les numéros de quêtes aux quêtes d'alignement
 - [ ] **#8** Mettre à jour les guides selon le GPO v3.0 de Skyzio 
     - Actuellement au guide id 85 "Bleu Turquoise - 2 / 5 - Troisième Dofus Primordial"
 - [ ] **#1** Rédiger tous les Guides

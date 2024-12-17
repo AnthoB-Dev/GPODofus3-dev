@@ -14,9 +14,7 @@ Developpement backend **Django**.
         - A chaque changement de guide, ils sont tous récupérés alors qu'il ne pourrait y en a avoir qu'une dizaine, 10 avant, 10 après
         - Mais il est possible que le cache des guides empeche un quelconque soucis avec l'état actuel, à voir
     - [x] Reduire le nombre de redondance et de code inutile
-- [ ] Ajouter un champ position pour les quêtes / succès pour géré le triage dans le cas où y'a besoin de les changés de place.
-    - Valeur par défaut = id
-- [ ] Mettre en place expect_capture (sur donjon ?)
+- [ ] **V1.+** Mettre en place donjons
 - [ ] **V1.+** Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons
     - L'idée c'est de changer **Quêtes** en **Donjons** et que les succès affichent les donjons à la place des quêtes
 - [ ] **V1.+** Ajouter un champ level aux succès et permettre l'affichage des succès par niveaux
@@ -28,6 +26,7 @@ Developpement backend **Django**.
     - [x] Enlever le dossier staticfiles
     - [x] Enlever les compresseurs en dev
     - [x] Revoir les turbo frames
+- [x] Ajouter un champ position pour les quêtes / succès pour géré le triage dans le cas où y'a besoin de les changés de place.
 - [x] Faire une vérification complete de l'appli avec le django_debug.log
 - [x] Comprendre les fichier statiques en debug false + compression
 - [x] Finir le système de tri du contenu selon l'alignement - En cours
@@ -85,7 +84,7 @@ Distribution windows sous **Electron**.
 
 - [ ] **#1** Ajouter l'installation de Python pendant le script (avec l'installateur).
 - [ ] **#4** Éffacer le dossier *dependencies* une fois utilisé.
-- [ ] **#2** Retirer le dossier static si c'est possible.
+- [ ] **#2** Retirer le dossier static.
 - [ ] **#3** Ajouter un loading screen au lancer.
 
 <details>
@@ -206,7 +205,7 @@ Contenu de l'application.
 - [ ] **#8** Mettre à jour les guides selon le GPO v3.0 de Skyzio 
     - Actuellement au guide id 85 "Bleu Turquoise - 2 / 5 - Troisième Dofus Primordial"
 - [ ] **#1** Rédiger tous les Guides
-    - Dernier : guide id 178 : "Rush donjons 4"
+    - Dernier : guide id 35 : "Dofus Cawotte : Wa Wobot"
 - [ ] **#3** Ajouter des guides de rappel de temps en temps
     - Exemple : quelques guides avant le Veilleur pour rappeler de ne pas aller au dela du level 114
 - [ ] **#4** Ajouter un guide Rush Donjons après les Quêtes alignement Brak 41

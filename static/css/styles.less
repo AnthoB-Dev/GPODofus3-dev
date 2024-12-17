@@ -204,7 +204,7 @@ input {
 }
 
 .quest {
-  color: #1e90ff !important;
+  color: #1b78d2 !important;
   font-weight: 500;
 }
 
@@ -280,7 +280,7 @@ body {
   #header {
     align-items: center;
     display: flex;
-    padding: var(--gap-xl);
+    padding: var(--gap-xl) var(--gap-xl) var(--gap-reg);
     color: var(--clr-light);
     font-size: var(--fs-1);
 
@@ -610,6 +610,118 @@ body {
           gap: 10px;
           overflow: hidden;
 
+          #objectivesAndAchievements {
+            .flex(0.8);
+            flex-direction: column;
+            background-color: var(--clr-primary);
+            border-radius: var(--border-radius);
+    
+            #objectives {
+              .flex();
+              flex-direction: column;
+              overflow: hidden;
+    
+              #frame_objectives {
+                display: flex;
+                flex-direction: column;
+                gap: var(--gap-reg);
+                font-size: var(--fs-05);
+    
+                .objective_element {
+                  ul {
+                    gap: 0;
+                    li {
+                      box-shadow: none;
+                      border: none;
+                      border-radius: none;
+                      display: block;
+                    }
+                  }
+                }
+              }
+    
+            }
+    
+            #achievements {
+              .flex(2);
+              flex-direction: column;
+              overflow: hidden;
+    
+              .title {
+                border-radius: 0 0 0 0;
+                .imgBackground {
+                  border-radius: 0 0 0 0;
+                }
+              }
+    
+              .content {
+                #frame_achievements {
+                  
+                  ul {
+                    li {
+                      transition: background 0.3s ease-in-out;
+                      border-radius: 8px;
+                      &:hover {
+                        background: darken(@clr-primary, 10%);
+                      }
+      
+                      .achievementCompletion {
+                        padding-right: var(--gap-reg);
+                        margin-left: @gap-sm;
+                        font-family: @font-roboto-bold;
+                      }
+      
+                      .achievementName {
+                        .flex();
+                        flex-direction: column;
+                        min-height: 45px;
+                        justify-content: center;
+      
+                        .expectIcons {
+                          margin-right: auto;
+                          margin-left: @gap-sm;
+      
+                          .flex();
+                          gap: var(--gap-reg);
+                          img {
+                            width: 15px;
+                            height: 15px;
+                            object-fit: cover;
+                          }
+                        }
+      
+                        a {
+                          padding: var(--gap-sm) 0;
+                          .flex();
+                          justify-content: center;
+                          flex-direction: column;
+                          p {
+                            text-align: left;
+                          }
+                        }
+                      }
+                    }
+      
+                    .borders-green {
+                      border: solid 2px @clr-green;
+                    }
+                    .borders-red {
+                      border: solid 2px @clr-red;
+                    }
+                    .borders-orange {
+                      border: solid 2px @clr-orange;
+                    }
+      
+                    .active {
+                      background: darken(@clr-primary, 10%);
+                      box-shadow: 0 0 0 !important;
+                    }
+                  }
+                }
+              }
+            }
+          }
+
           #guide {
             .flex(2);
             background-color: var(--clr-primary);
@@ -808,15 +920,11 @@ body {
           }
 
           #quests {
-            .flex(1);
+            .flex(0.8);
             background-color: var(--clr-primary);
             border-radius: var(--border-radius);
             flex-direction: column;
-            overflow: hidden;
-
-              .flex();
-              flex-direction: column;
-              overflow-y: auto;
+            overflow-y: auto;
 
               .content {
                 padding: 0 0 var(--gap-reg);
@@ -921,117 +1029,7 @@ body {
           }
         }
       }
-      aside {
-        .flex();
-        flex-direction: column;
-        background-color: var(--clr-primary);
-        border-radius: var(--border-radius);
-
-        #objectives {
-          .flex();
-          flex-direction: column;
-          overflow: hidden;
-
-          #frame_objectives {
-            display: flex;
-            flex-direction: column;
-            gap: var(--gap-reg);
-            font-size: var(--fs-05);
-
-            .objective_element {
-              ul {
-                gap: 0;
-                li {
-                  box-shadow: none;
-                  border: none;
-                  border-radius: none;
-                  display: block;
-                }
-              }
-            }
-          }
-
-        }
-
-        #achievements {
-          .flex(2);
-          flex-direction: column;
-          overflow: hidden;
-
-          .title {
-            border-radius: 0 0 0 0;
-            .imgBackground {
-              border-radius: 0 0 0 0;
-            }
-          }
-
-          .content {
-            #frame_achievements {
-              
-              ul {
-                li {
-                  transition: background 0.3s ease-in-out;
-                  border-radius: 8px;
-                  &:hover {
-                    background: darken(@clr-primary, 10%);
-                  }
-  
-                  .achievementCompletion {
-                    padding-right: var(--gap-reg);
-                    margin-left: @gap-sm;
-                    font-family: @font-roboto-bold;
-                  }
-  
-                  .achievementName {
-                    .flex();
-                    flex-direction: column;
-                    min-height: 45px;
-                    justify-content: center;
-  
-                    .expectIcons {
-                      margin-right: auto;
-                      margin-left: @gap-sm;
-  
-                      .flex();
-                      gap: var(--gap-reg);
-                      img {
-                        width: 15px;
-                        height: 15px;
-                        object-fit: cover;
-                      }
-                    }
-  
-                    a {
-                      padding: var(--gap-sm) 0;
-                      .flex();
-                      justify-content: center;
-                      flex-direction: column;
-                      p {
-                        text-align: left;
-                      }
-                    }
-                  }
-                }
-  
-                .borders-green {
-                  border: solid 2px @clr-green;
-                }
-                .borders-red {
-                  border: solid 2px @clr-red;
-                }
-                .borders-orange {
-                  border: solid 2px @clr-orange;
-                }
-  
-                .active {
-                  background: darken(@clr-primary, 10%);
-                  box-shadow: 0 0 0 !important;
-                }
-              }
-            }
-          }
-        }
-      }
+      
     }
   }
 }

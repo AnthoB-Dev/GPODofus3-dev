@@ -557,15 +557,16 @@
     log.info("- Création de la fenêtre principale.");
 
     mainWindow = new BrowserWindow({
-      width: 1366,
-      height: 768,
+      width: 1600,
+      height: 900,
       resizable: true,
       minWidth: 1280,
       minHeight: 720,
-      maxWidth: 1600,
-      maxHeight: 900,
+      maxWidth: 1920,
+      maxHeight: 1080,
       autoHideMenuBar: true,
       icon: path.join(__dirname, "app.ico"),
+      
       webPreferences: {
         preload: path.join(__dirname, "preload.js"),
         nodeIntegration: false,

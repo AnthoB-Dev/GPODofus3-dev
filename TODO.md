@@ -205,7 +205,7 @@ Contenu de l'application.
 - [ ] **#8** Mettre à jour les guides selon le GPO v3.0 de Skyzio 
     - Actuellement au guide id 85 "Bleu Turquoise - 2 / 5 - Troisième Dofus Primordial"
 - [ ] **#1** Rédiger tous les Guides
-    - Dernier : guide id 35 : "Dofus Cawotte : Wa Wobot"
+    - Dernier : guide id 50 : "Port de Madrestam - Léchage de bottes"
 - [ ] **#3** Ajouter des guides de rappel de temps en temps
     - Exemple : quelques guides avant le Veilleur pour rappeler de ne pas aller au dela du level 114
 - [ ] **#4** Ajouter un guide Rush Donjons après les Quêtes alignement Brak 41

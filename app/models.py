@@ -163,6 +163,7 @@ class Guide(models.Model):
         Achievement, through="GuideAchievement", related_name="guides"
     )
     is_last_seen = models.BooleanField(default=False)
+    is_visible = models.BooleanField(default=True, verbose_name="Visible")
 
     def __str__(self):
         return self.title

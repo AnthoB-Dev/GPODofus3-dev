@@ -74,6 +74,7 @@ class GuideAdmin(admin.ModelAdmin):
         "page",
         "id",
         "recommended_level",
+        "is_visible",
     ]
     search_fields = ("title",)
 

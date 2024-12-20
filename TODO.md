@@ -206,11 +206,9 @@ Contenu de l'application.
     - Actuellement au guide id 85 "Bleu Turquoise - 2 / 5 - Troisième Dofus Primordial"
 - [ ] **#1** Rédiger tous les Guides
     - Dernier : guide id 51 : "Vert Émeraude : Premier Dofus Primordial"
-- [ ] **#3** Ajouter des guides de rappel de temps en temps
+- **#3** Ajouter des guides de rappel de temps en temps
     - Exemple : quelques guides avant le Veilleur pour rappeler de ne pas aller au dela du level 114
 - [ ] **#4** Ajouter un guide Rush Donjons après les Quêtes alignement Brak 41
-- [ ] **#5** Ajouter un guide Rush Donjons après les Quêtes alignement Brak 20
-- [ ] **#6** Dans le premier rush donjons entre alignement 0-4 et 4-16 : ajouter un if user.alignment = neutre pour afficher tous ceux à faire avec alignement.
 - [ ] **#9** Ajouter les copyrights 
     - Certaines illustrations sont la propriété d'Ankama Games, d'autre de <a href="https://icones8.fr/">Icones8</a> - Tous droits réservés.
 
@@ -222,6 +220,7 @@ Contenu de l'application.
 <details>
 <summary>Résolus</summary>
 
+- [x] **#5** Ajouter un guide Rush Donjons après les Quêtes alignement Brak 20
 - [x] **#8** Refaire les screens du tuto
 - [x] Ajouter un guide pour choisir son alignement
 - [x] Faire le _README_ de l'app - En cours

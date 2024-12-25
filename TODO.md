@@ -118,9 +118,6 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 - **#1** Optimiser le code 
     - [ ] Vérifier les events js - En cours
-    - Améliorer l'accessibilité
-        - [ ] Changer la plupart de mes ul / li en divs - En cours
-        - [ ] Remplir le alt des images - En cours
 - [ ] **#4** Media queries
 - **V1.+** Réimplémenter les *clickNextAchievement*, *clickCurrentAchievement*
 - **V1.+** Ajouter une recherche
@@ -135,6 +132,8 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 - Optimiser le code 
     - Améliorer l'accessibilité
+        - [x] Changer la plupart de mes ul / li en divs - En cours
+        - [x] Remplir le alt des images - En cours
         - [x] Aria label sur les liens
         - [x] Aria label sur les boutons
     - [x] Adapter le click JS en click sur la classe active seulement 
@@ -201,7 +200,6 @@ Contenu de l'application.
 
 ### Rédiger :
 
-- [ ] **#10** Ajouter les numéros de quêtes aux quêtes d'alignement
 - [ ] **#8** Mettre à jour les guides selon le GPO v3.0 de Skyzio 
     - Actuellement au guide id 85 "Bleu Turquoise - 2 / 5 - Troisième Dofus Primordial"
 - [ ] **#1** Rédiger tous les Guides
@@ -220,6 +218,7 @@ Contenu de l'application.
 <details>
 <summary>Résolus</summary>
 
+- [x] **#10** Ajouter les numéros de quêtes aux quêtes d'alignement
 - [x] **#5** Ajouter un guide Rush Donjons après les Quêtes alignement Brak 20
 - [x] **#8** Refaire les screens du tuto
 - [x] Ajouter un guide pour choisir son alignement

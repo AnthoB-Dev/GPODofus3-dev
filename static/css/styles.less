@@ -907,6 +907,39 @@ body {
                         }
                       }
                     }
+
+                    .groupTwoOrLessImages {
+                      display: flex;
+                      flex-wrap: wrap;
+
+                      img {
+                        width: 50%;
+                        padding: 2px;
+                      }
+                    }
+
+                    .groupTwoOrMoreImages {
+                      display: flex;
+                      flex-wrap: wrap;
+
+                      img {
+                        width: 33%;
+                        padding: 2px;
+                      }
+                    }
+
+                    .groupOneImageAndText {
+                      display: flex;
+                      gap: var(--gap-sm);
+
+                      img {
+                        width: 70%;
+                      }
+
+                      div {
+                        padding: 0 var(--gap-sm);
+                      }
+                    }
                   }
                 }
               }

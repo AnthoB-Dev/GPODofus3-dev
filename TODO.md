@@ -58,6 +58,9 @@ Developpement backend **Django**.
 
 ### Bogues :
 
+- [ ] **#1** Le *validate* des quêtes du succès **Donjons avancés** ne rafraichissent pas le succès et donc ni son pourcentages, ni sa bordure.
+    - Lorsque je suis en alignement Neutre, ça fonctionne.
+
 
 <details>
 <summary>Résolus</summary>
@@ -116,6 +119,7 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 ### Développer :
 
+- [ ] **#2** Au démarrage de l'application les liens du dernier guide, celui ouvert, ne sont pas cliquable.
 - **#1** Optimiser le code 
     - [ ] Vérifier les events js - En cours
 - [ ] **#4** Media queries

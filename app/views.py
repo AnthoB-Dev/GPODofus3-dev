@@ -15,7 +15,7 @@ from .utils import (
     calculate_completion_percentage,
 )
 
-ADMIN = False # DEBUG
+ADMIN = True # DEBUG
 ADMIN_FILTER_IDS = [1, 2, 3, 4]
 ALIGNED_FILTER_IDS = [3, 4]
 
@@ -229,3 +229,11 @@ def alignment_choice(request):
         user.save()
         
     return redirect('app:guide_detail', guide_id=174)
+
+
+def create_save():
+    pass
+
+
+def load_save():
+    pass

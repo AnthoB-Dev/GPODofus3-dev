@@ -324,6 +324,13 @@ body {
         }
       }
     }
+
+    #gear {
+      margin-left: auto;
+      font-size: var(--fs-3);
+      padding: 0 10px;
+      cursor: pointer;
+    }
   }
 
   .flex(@flex: 1) {
@@ -333,6 +340,11 @@ body {
 
   .hidden {
     display: none;
+  }
+
+  .active {
+    background: darken(@clr-primary, 10%);
+    box-shadow: 0 0 0 !important;
   }
 
   .title {
@@ -710,11 +722,6 @@ body {
                     }
                     .borders-orange {
                       border: solid 2px @clr-orange;
-                    }
-      
-                    .active {
-                      background: darken(@clr-primary, 10%);
-                      box-shadow: 0 0 0 !important;
                     }
                   }
                 }
@@ -1118,6 +1125,95 @@ body {
       border: solid 1px var(--clr-primary);
       border-radius: var(--border-radius);
       padding: 4px;
+    }
+  }
+}
+
+.optionModalBackground {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #181717ad;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .optionModal {
+    background: var(--clr-primary);
+    display: flex;
+    width: 50vw;
+    height: 50vh;
+    border-radius: var(--border-radius);
+  
+    .optionLeftPanel {
+      flex: 1;
+      padding: var(--gap-lg);
+      box-shadow: 2px 0px 2px #00000030;
+  
+      h4 {
+        margin-bottom: var(--gap-reg);
+        text-align: center;
+        margin-left: 0;
+        text-transform: uppercase;
+      }
+  
+      .leftOptionsContainer {
+        display: flex;
+        flex-direction: column;
+        gap: var(--gap-reg);
+  
+        .optionContainer {
+          display: flex;
+          gap: 5px;
+          align-items: center;
+          border-radius: var(--border-radius);
+          box-shadow: var(--box-shadow);
+          cursor: pointer;
+  
+          &:hover {
+            background: #cdc79b;
+          }
+
+          i {
+            padding: var(--gap-reg);
+          }
+        }
+      }
+    }
+  
+    .optionRightPanel {
+      flex: 4;
+      display: flex;
+      flex-direction: column;
+      gap: var(--gap-lg);
+      padding: var(--gap-lg);
+  
+      .settingsContainer {
+        display: flex;
+        gap: var(--gap-reg);
+        align-items: center;
+        cursor: pointer;
+        transition: background 0.3s ease-in-out;
+
+        &:hover {
+          background: #cdc79b91;
+          border-radius: var(--border-radius);
+        }
+  
+        i {
+          font-size: 20px;
+        }
+  
+        .settingTitle {
+          font-size: 20px;
+          font-family: 'Roboto-Bold';
+        }
+  
+        .settingDescription {
+          font-size: 13px;
+          color: #5c5c5c;
+        }
+      }
     }
   }
 }

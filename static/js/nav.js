@@ -34,6 +34,11 @@ export const updateSelectedGuide = () => {
     });
 };
 
+const handleOptionGearClick = async() => {
+    await createOptionsModal()
+    addOptionsListeners();
+};
+
 const handleGuideHeaderClick = (event) => {
     event.stopPropagation();
     toggleDropdown();
@@ -64,6 +69,7 @@ export const addNavEventListeners = () => {
     const guideHeader = topNav.querySelector(".guide-header");
     const dropDownContent = topNav.querySelector(".dropdown-content");
     const overflow = dropDownContent.querySelector(".overflow");
+    const optionGear = document.querySelector("#gear");
 
     if (!guideHeader.hasAttribute("data-initialized")) {
         guideHeader.setAttribute("data-initialized", "true");
@@ -75,6 +81,8 @@ export const addNavEventListeners = () => {
     });
 
     document.addEventListener("click", handleDocumentClick);
+
+    optionGear.addEventListener("click", handleOptionGearClick)
 
     // Ajout des écouteurs d'événements pour les boutons de navigation de la page
     addPageNavEventListeners();
@@ -100,6 +108,137 @@ export const removeNavEventListeners = () => {
     // Suppression des écouteurs d'événements pour les boutons de navigation de la page
     removePageNavEventListeners();
 };
+
+/**
+ * Ajoute la fenêtre des options.
+ */
+const createOptionsModal = () => {
+    return new Promise ((resolve) => {
+
+        const background = document.createElement('div');
+        background.classList.add('optionModalBackground');
+        const modal = document.createElement('div');
+        modal.classList.add('optionModal')
+    
+        const containerLeft = document.createElement('div');
+        containerLeft.classList.add('optionLeftPanel');
+        const leftTitle = document.createElement('h4');
+        leftTitle.innerText = "Options";
+        const leftOptionsContainer = document.createElement('div');
+        leftOptionsContainer.classList.add('leftOptionsContainer');
+        
+        const optionContainer1 = document.createElement('div');
+        optionContainer1.classList.add('optionContainer');
+        const iconTheme = document.createElement('i');
+        iconTheme.classList.add('fa-solid', 'fa-moon')
+        const pThemes = document.createElement('p');
+        pThemes.innerText = "Thèmes";
+        
+        optionContainer1.appendChild(iconTheme);
+        optionContainer1.appendChild(pThemes);
+    
+        const optionContainer2 = document.createElement('div');
+        optionContainer2.classList.add('optionContainer', 'active');
+        const iconSave = document.createElement('i');
+        iconSave.classList.add('fa-solid', 'fa-floppy-disk');
+        const pSave = document.createElement('p');
+        pSave.innerText = "Sauvegarde";
+    
+        optionContainer2.appendChild(iconSave);
+        optionContainer2.appendChild(pSave);
+    
+        leftOptionsContainer.appendChild(optionContainer2);
+        leftOptionsContainer.appendChild(optionContainer1);
+    
+        containerLeft.appendChild(leftTitle);
+        containerLeft.appendChild(leftOptionsContainer);
+    
+    
+        const containerRight = document.createElement('div');
+        containerRight.classList.add('optionRightPanel');
+        
+        const option1 = document.createElement('a');
+        option1.id = "option-save";
+        option1.href = "http://localhost:8000/create-save";
+        option1.target = "blank";
+        option1.classList.add('settingsContainer');
+        const iconCreateSave = document.createElement('i');
+        iconCreateSave.classList.add('fa-solid', 'fa-upload');
+        const option1TextDiv = document.createElement('div');
+        option1TextDiv.classList.add('settingTextsContainer');
+        const titleOption1 = document.createElement('p');
+        titleOption1.classList.add('settingTitle');
+        titleOption1.innerText = "Créer un fichier de sauvegarde";
+        const underTitleOption1 = document.createElement('p');
+        underTitleOption1.classList.add('settingDescription');
+        underTitleOption1.innerHTML = "Créer un fichier dans AppData\Roaming\GPODofus3 qui sauvegarde la progression des quêtes.<br/>À utiliser avant de mettre à jour l’application.";
+    
+        option1TextDiv.appendChild(titleOption1);
+        option1TextDiv.appendChild(underTitleOption1);
+        
+        option1.appendChild(iconCreateSave);
+        option1.appendChild(option1TextDiv);
+    
+        containerRight.appendChild(option1);
+        
+        const option2 = document.createElement('a');
+        option2.id = "option-load";
+        option2.href = "http://localhost:8000/load-save";
+        option2.target = "blank";
+        option2.classList.add('settingsContainer');
+        const iconLoadSave = document.createElement('i');
+        iconLoadSave.classList.add('fa-solid', 'fa-download');
+        const option2TextDiv = document.createElement('div');
+        option2TextDiv.classList.add('settingTextsContainer');
+        const titleOption2 = document.createElement('p');
+        titleOption2.classList.add('settingTitle');
+        titleOption2.innerText = "Charger la sauvegarde";
+        const underTitleOption2 = document.createElement('p');
+        underTitleOption2.classList.add('settingDescription');
+        underTitleOption2.innerHTML = "Charge le fichier de sauvegarde situé à l’emplacement AppData\Roaming\GPODofus3.<br/>À utiliser une fois l’application mise à jour.";
+    
+        option2TextDiv.appendChild(titleOption2);
+        option2TextDiv.appendChild(underTitleOption2);
+        
+        option2.appendChild(iconLoadSave);
+        option2.appendChild(option2TextDiv);
+    
+        containerRight.appendChild(option2);
+    
+    
+        modal.appendChild(containerLeft);
+        modal.appendChild(containerRight);
+    
+        background.appendChild(modal);
+
+        document.body.appendChild(background);
+        resolve();
+    })
+}
+
+const createSave = () => {
+    const isElectron = navigator.userAgent.toLowerCase().includes('electron');
+
+    if (isElectron) {
+        // Code pour Electron (Node.js modules disponibles)
+        const path = require('path');
+        console.log('Exécution dans Electron');
+        batFile = path.join(__dirname, '../scripts/create_save.bat');
+        exec(batFile)
+    } else {
+        // Code pour un navigateur (Node.js modules non disponibles)
+        console.log('Exécution dans un navigateur');
+    }
+}
+
+const loadSave = () => {
+    console.log("Chargement du fichier de sauvegarde");
+}
+
+const toggleOptionFunc = (option) => {
+    option == "option-save" ? createSave() : null;
+    option == "option-load" ? loadSave() : null;
+}
 
 const toggleDropdown = () => {
     const topNav = document.getElementById("topNav");
@@ -283,6 +422,7 @@ export const addKeysEventListeners = () => {
     document.addEventListener('keydown', handleKeys);
     document.addEventListener('keyup', handleKeys);
 };
+
 export const removeKeysEventListeners = () => {
     document.removeEventListener('keydown', handleKeys);
     document.removeEventListener('keyup', handleKeys);
@@ -303,3 +443,11 @@ const removePageNavEventListeners = () => {
         button.removeEventListener('click', handlePageNavButtonClick);
     });
 };
+
+const addOptionsListeners = () => {
+    const options = document.querySelectorAll('.settingsContainer');
+
+    options.forEach(option => {
+        option.addEventListener('click', () => { toggleOptionFunc(option.id) });
+    });
+}

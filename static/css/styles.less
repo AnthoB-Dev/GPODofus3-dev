@@ -330,6 +330,12 @@ body {
       font-size: var(--fs-3);
       padding: 0 10px;
       cursor: pointer;
+      transition: all 0.2s linear;
+
+      &:hover {
+        rotate: 180deg;
+        font-size: 1.5em;
+      }
     }
   }
 
@@ -339,7 +345,7 @@ body {
   }
 
   .hidden {
-    display: none;
+    display: none !important;
   }
 
   .active {
@@ -1137,6 +1143,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 9;
 
   .optionModal {
     background: var(--clr-primary);
@@ -1144,6 +1151,7 @@ body {
     width: 50vw;
     height: 50vh;
     border-radius: var(--border-radius);
+    position: relative;
   
     .optionLeftPanel {
       flex: 1;
@@ -1215,5 +1223,51 @@ body {
         }
       }
     }
+
+    .optionCloseButton {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--clr-primary);
+      border-radius: 50%;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        color: var(--clr-red);
+        font-size: 1.5em;
+      }
+    }
   }
+}
+
+#messages {
+  position: absolute;
+  top: var(--gap-lg);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 20px;
+  border-radius: var(--border-radius);
+  padding: 20px;
+  background: var(--clr-primary);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Roboto-Bold';
+  border: solid 2px var(--clr-light);
+}
+
+.success {
+  background: lighten(@clr-green, 60%) !important;
+  border: solid 2px var(--clr-light);
+}
+
+.failure {
+  background: lighten(@clr-red, 60%) !important;
 }

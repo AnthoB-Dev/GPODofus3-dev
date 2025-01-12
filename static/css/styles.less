@@ -1148,8 +1148,10 @@ body {
   .optionModal {
     background: var(--clr-primary);
     display: flex;
-    width: 50vw;
-    height: 50vh;
+    min-width: 70vw;
+    min-height: 70vh;
+    max-width: 50vw;
+    max-height: 50vh;
     border-radius: var(--border-radius);
     position: relative;
   
@@ -1165,7 +1167,7 @@ body {
         text-transform: uppercase;
       }
   
-      .leftOptionsContainer {
+      .settingsContainer {
         display: flex;
         flex-direction: column;
         gap: var(--gap-reg);
@@ -1199,7 +1201,6 @@ body {
       .settingsContainer {
         display: flex;
         gap: var(--gap-reg);
-        align-items: center;
         cursor: pointer;
         transition: background 0.3s ease-in-out;
 
@@ -1210,6 +1211,7 @@ body {
   
         i {
           font-size: 20px;
+          margin-top: 3px;
         }
   
         .settingTitle {
@@ -1220,6 +1222,7 @@ body {
         .settingDescription {
           font-size: 13px;
           color: #5c5c5c;
+          margin-left: var(--gap-reg);
         }
       }
     }
@@ -1251,9 +1254,8 @@ body {
   left: 50%;
   transform: translateX(-50%);
   width: 50%;
-  height: 20px;
   border-radius: var(--border-radius);
-  padding: 20px;
+  padding: 10px;
   background: var(--clr-primary);
   z-index: 10;
   display: flex;
@@ -1269,5 +1271,5 @@ body {
 }
 
 .failure {
-  background: lighten(@clr-red, 60%) !important;
+  background: lighten(@clr-red, 30%) !important;
 }

@@ -261,7 +261,7 @@ export const removeMessages = () => {
     const messages = document.querySelector('#messages');
     let timeout;
 
-    messages.classList.contains('failure') ? timeout = 10000 : 5000
+    messages.classList.contains('failure') ? timeout = 10000 : timeout = 6000
 
     setTimeout(() => {
         messages.classList.add('hidden');

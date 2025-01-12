@@ -128,9 +128,10 @@ const closeOptionsModal = () => {
 const createOptionsModal = () => {
     return new Promise ((resolve) => {
         const gearIcon = document.querySelector('#gear');
-        const createSAveUrl = gearIcon.getAttribute('data-create-save-url');
+        const createSaveUrl = gearIcon.getAttribute('data-create-save-url');
         const loadSaveUrl = gearIcon.getAttribute('data-load-save-url');
 
+        // Création du conteneur & background 50% black
         const background = document.createElement('div');
         background.classList.add('optionModalBackground');
         const modal = document.createElement('div');
@@ -145,95 +146,103 @@ const createOptionsModal = () => {
         closeButton.appendChild(closeIcon);
         modal.appendChild(closeButton);
     
+        // Création du conteneur des settings
         const containerLeft = document.createElement('div');
         containerLeft.classList.add('optionLeftPanel');
         const leftTitle = document.createElement('h4');
         leftTitle.innerText = "Options";
-        const leftOptionsContainer = document.createElement('div');
-        leftOptionsContainer.classList.add('leftOptionsContainer');
+        const settingsContainer = document.createElement('div');
+        settingsContainer.classList.add('settingsContainer');
         
-        const optionContainer1 = document.createElement('div');
-        optionContainer1.classList.add('optionContainer');
+        // Création du setting "Thèmes"
+        const settingThemes = document.createElement('button');
+        settingThemes.classList.add('optionContainer');
         const iconTheme = document.createElement('i');
         iconTheme.classList.add('fa-solid', 'fa-moon')
         const pThemes = document.createElement('p');
         pThemes.innerText = "Thèmes";
+        // Désactivé le temps de l'implémenter
+        settingThemes.disabled = true;
+        settingThemes.style.background = "#999da1";
+        settingThemes.style.cursor = "not-allowed";
         
-        optionContainer1.appendChild(iconTheme);
-        optionContainer1.appendChild(pThemes);
-    
-        const optionContainer2 = document.createElement('div');
-        optionContainer2.classList.add('optionContainer', 'active');
+        settingThemes.appendChild(iconTheme);
+        settingThemes.appendChild(pThemes);
+        
+        // Création du setting "Sauvegarde"
+        const settingSave = document.createElement('div');
+        settingSave.classList.add('optionContainer', 'active');
         const iconSave = document.createElement('i');
         iconSave.classList.add('fa-solid', 'fa-floppy-disk');
         const pSave = document.createElement('p');
         pSave.innerText = "Sauvegarde";
     
-        optionContainer2.appendChild(iconSave);
-        optionContainer2.appendChild(pSave);
+        settingSave.appendChild(iconSave);
+        settingSave.appendChild(pSave);
     
-        leftOptionsContainer.appendChild(optionContainer2);
-        leftOptionsContainer.appendChild(optionContainer1);
+        settingsContainer.appendChild(settingThemes);
+        settingsContainer.appendChild(settingSave);
     
         containerLeft.appendChild(leftTitle);
-        containerLeft.appendChild(leftOptionsContainer);
+        containerLeft.appendChild(settingsContainer);
     
-    
+        // Création du conteneur des options des settings
         const containerRight = document.createElement('div');
         containerRight.classList.add('optionRightPanel');
         
-        const option1 = document.createElement('a');
-        option1.id = "option-save";
-        option1.setAttribute('data-turbo-stream', '');
-        option1.setAttribute('data-turbo-method', 'post');
-        option1.href = createSAveUrl;
-        option1.target = "blank";
-        option1.classList.add('settingsContainer');
-        const iconCreateSave = document.createElement('i');
-        iconCreateSave.classList.add('fa-solid', 'fa-upload');
-        const option1TextDiv = document.createElement('div');
-        option1TextDiv.classList.add('settingTextsContainer');
-        const titleOption1 = document.createElement('p');
-        titleOption1.classList.add('settingTitle');
-        titleOption1.innerText = "Créer un fichier de sauvegarde";
-        const underTitleOption1 = document.createElement('p');
-        underTitleOption1.classList.add('settingDescription');
-        underTitleOption1.innerHTML = "Créer un fichier dans AppData\\Roaming\\GPODofus3 qui sauvegarde la progression des quêtes.<br/>À utiliser avant de mettre à jour l’application. Chaque nouvelle sauvegarde remplace l'ancienne mais l'avant dernière est gardée en étant renommée old_save. En cas de problèmes avec la dernière sauvegarde, rennomez old_save en save pour revenir en arrière.";
+        // Création de l'option de sauvegarde du setting sauvegarde
+        const settingSaveO1 = document.createElement('a');
+        settingSaveO1.id = "option-save";
+        settingSaveO1.setAttribute('data-turbo-stream', '');
+        settingSaveO1.setAttribute('data-turbo-method', 'post');
+        settingSaveO1.href = createSaveUrl;
+        settingSaveO1.target = "blank";
+        settingSaveO1.classList.add('settingsContainer');
+        const o1Icon = document.createElement('i');
+        o1Icon.classList.add('fa-solid', 'fa-upload');
+        const o1TextsContainer = document.createElement('div');
+        o1TextsContainer.classList.add('settingTextsContainer');
+        const o1Title = document.createElement('p');
+        o1Title.classList.add('settingTitle');
+        o1Title.innerText = "Créer un fichier de sauvegarde";
+        const o1UnderTitle = document.createElement('p');
+        o1UnderTitle.classList.add('settingDescription');
+        o1UnderTitle.innerHTML = "Créer un fichier dans AppData\\Roaming\\GPODofus3 qui sauvegarde la progression des quêtes.<br/>À utiliser avant de mettre à jour l’application. Chaque nouvelle sauvegarde remplace l'ancienne mais l'avant dernière est gardée en étant renommée old_save. En cas de problèmes avec la dernière sauvegarde, rennomez old_save en save pour revenir en arrière.";
     
-        option1TextDiv.appendChild(titleOption1);
-        option1TextDiv.appendChild(underTitleOption1);
+        o1TextsContainer.appendChild(o1Title);
+        o1TextsContainer.appendChild(o1UnderTitle);
         
-        option1.appendChild(iconCreateSave);
-        option1.appendChild(option1TextDiv);
+        settingSaveO1.appendChild(o1Icon);
+        settingSaveO1.appendChild(o1TextsContainer);
     
-        containerRight.appendChild(option1);
+        containerRight.appendChild(settingSaveO1);
         
-        const option2 = document.createElement('a');
-        option2.id = "option-load";
-        option2.setAttribute('data-turbo-stream', '');
-        option2.setAttribute('data-turbo-method', 'post');
-        option2.href = loadSaveUrl;
-        option2.target = "blank";
-        option2.classList.add('settingsContainer');
-        const iconLoadSave = document.createElement('i');
-        iconLoadSave.classList.add('fa-solid', 'fa-download');
-        const option2TextDiv = document.createElement('div');
-        option2TextDiv.classList.add('settingTextsContainer');
-        const titleOption2 = document.createElement('p');
-        titleOption2.classList.add('settingTitle');
-        titleOption2.innerText = "Charger la sauvegarde";
-        const underTitleOption2 = document.createElement('p');
-        underTitleOption2.classList.add('settingDescription');
-        underTitleOption2.innerHTML = "Charge le fichier de sauvegarde situé à l’emplacement AppData\\Roaming\\GPODofus3.<br/>À utiliser une fois l’application mise à jour.";
+        // Création de l'option de chargement du setting sauvegarde
+        const settingSaveO2 = document.createElement('a');
+        settingSaveO2.id = "option-load";
+        settingSaveO2.setAttribute('data-turbo-stream', '');
+        settingSaveO2.setAttribute('data-turbo-method', 'post');
+        settingSaveO2.href = loadSaveUrl;
+        settingSaveO2.target = "blank";
+        settingSaveO2.classList.add('settingsContainer');
+        const o2Icon = document.createElement('i');
+        o2Icon.classList.add('fa-solid', 'fa-download');
+        const o2TextsContainer = document.createElement('div');
+        o2TextsContainer.classList.add('settingTextsContainer');
+        const o2Title = document.createElement('p');
+        o2Title.classList.add('settingTitle');
+        o2Title.innerText = "Charger la sauvegarde";
+        const o2UnderTitle = document.createElement('p');
+        o2UnderTitle.classList.add('settingDescription');
+        o2UnderTitle.innerHTML = "Charge le fichier de sauvegarde situé à l’emplacement AppData\\Roaming\\GPODofus3.<br/>À utiliser une fois l’application mise à jour.";
     
-        option2TextDiv.appendChild(titleOption2);
-        option2TextDiv.appendChild(underTitleOption2);
+        o2TextsContainer.appendChild(o2Title);
+        o2TextsContainer.appendChild(o2UnderTitle);
         
-        option2.appendChild(iconLoadSave);
-        option2.appendChild(option2TextDiv);
+        settingSaveO2.appendChild(o2Icon);
+        settingSaveO2.appendChild(o2TextsContainer);
     
-        containerRight.appendChild(option2);
-    
+        containerRight.appendChild(settingSaveO2);
     
         modal.appendChild(containerLeft);
         modal.appendChild(containerRight);
@@ -250,10 +259,13 @@ const createOptionsModal = () => {
  */
 export const removeMessages = () => {
     const messages = document.querySelector('#messages');
-    
+    let timeout;
+
+    messages.classList.contains('failure') ? timeout = 10000 : 5000
+
     setTimeout(() => {
         messages.classList.add('hidden');
-    }, 5000);
+    }, timeout);
 }
 
 const toggleDropdown = () => {

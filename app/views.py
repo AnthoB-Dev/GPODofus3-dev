@@ -290,7 +290,7 @@ def create_save(request):
 @csrf_exempt
 def load_save(request):
     success = True
-    message = "Sauvegarde chargée avec succès. Redémarrez l'application pour que les changements prennent effet." 
+    message = "Sauvegarde chargée avec succès. Redémarrez l'application ou changez de guide pour que les changements prennent effet." 
     
     try:
         # Charger les données depuis le fichier JSON présent dans le dossier AppData\Roaming\GPODofus3
@@ -340,15 +340,17 @@ def load_save(request):
                 
     except Exception as e:
         success = False
-        message = f"Une erreur s'est produite lors du chargement : {str(e)}"
+        message = f"Une erreur s'est produite lors du chargement : {str(e)}. Vérifiez la présence de save.json à l'emplacement indiqué."
         print(f"Une erreur s'est produite lors du chargement : {str(e)}")
 
     if success:
+        print("Success")
         return render(request, 'sections/_messages.html', {
             'success': success,
             'message': message
         }, content_type="text/vnd.turbo-stream.html")
     else:
+        print(success, "Error")
         return render(request, 'sections/_messages.html', {
             'success': success,
             'message': message

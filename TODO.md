@@ -87,7 +87,6 @@ Distribution windows sous **Electron**.
 
 - [ ] **#1** Ajouter l'installation de Python pendant le script (avec l'installateur).
 - [ ] **#4** Éffacer le dossier *dependencies* une fois utilisé.
-- [ ] **#2** Retirer le dossier static.
 - [ ] **#3** Ajouter un loading screen au lancer.
 
 <details>

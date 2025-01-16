@@ -14,7 +14,8 @@ Developpement backend **Django**.
         - A chaque changement de guide, ils sont tous récupérés alors qu'il ne pourrait y en a avoir qu'une dizaine, 10 avant, 10 après
         - Mais il est possible que le cache des guides empeche un quelconque soucis avec l'état actuel, à voir
     - [x] Reduire le nombre de redondance et de code inutile
-- [ ] **V1.+** Ajouter un champ *icone* dans *Guide* pour afficher une icone **alignement** ou **donjon** ou **info** pour simplifier la navigation.
+- [ ] **V1.+** Ajouter un champ *icone* dans *Guide* et ainsi afficher une icone pour simplifier la navigation.
+    - Guides qui pourraient en bénéficier : **Alignements**, **donjons**, **informations**, **Dofus**
 - [ ] **V1.+** Retirer l'obligation d'avoir le champs *level* de rempli et enlever le niveau des guides **infos**.
 - [ ] **V1.+** Mettre en place donjons.
 - [ ] **V1.+** Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons.

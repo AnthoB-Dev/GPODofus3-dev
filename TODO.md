@@ -14,9 +14,11 @@ Developpement backend **Django**.
         - A chaque changement de guide, ils sont tous récupérés alors qu'il ne pourrait y en a avoir qu'une dizaine, 10 avant, 10 après
         - Mais il est possible que le cache des guides empeche un quelconque soucis avec l'état actuel, à voir
     - [x] Reduire le nombre de redondance et de code inutile
-- [ ] **V1.+** Ajouter un champ *icone* dans *Guide* et ainsi afficher une icone pour simplifier la navigation.
+- [ ] **V1.0.4^** Permettre l'arrivée sur le dernier guide vu de la version précédente lors d'un chargement de progression.
+    - Ça devrait être assez simple en sauvegardant le dernier guide vu dans *global* de mon JSON et une fois tout chargé depuis *views*, rediriger. L'autre avantage c'est qu'il n'y aurait pas à changer manuellement de guide pour refresh.
+- [ ] **V1.0.4^** Ajouter un champ *icone* dans *Guide* et ainsi afficher une icone pour simplifier la navigation.
     - Guides qui pourraient en bénéficier : **Alignements**, **donjons**, **informations**, **Dofus**
-- [ ] **V1.+** Retirer l'obligation d'avoir le champs *level* de rempli et enlever le niveau des guides **infos**.
+- [ ] **V1.0.4^** Retirer l'obligation d'avoir le champs *level* de rempli et enlever le niveau des guides **infos**.
 - [ ] **V1.+** Mettre en place donjons.
 - [ ] **V1.+** Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons.
     - L'idée c'est de changer **Quêtes** en **Donjons** et que les succès affichent les donjons à la place des quêtes.

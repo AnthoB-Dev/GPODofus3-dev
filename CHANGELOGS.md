@@ -1,19 +1,35 @@
-# v1.0.4 Release
+# v.1.0.4 Release
+**BIEN LIRE LA SECTION INSTALLATION DU README**
+- Améliorations des guides existants.
+- Ajout de nouveaux guides.
+- La sauvegarde de l'alignement choisi est à présent sauvegarder lors d'une sauvegarde de la progression.
+
+## Changelogs
+Cette fois-ci j'ai un vrai changelogs à proposer que voici.
+
+### v1.0.4 Release
 
 <details>
+<summary>Voir les détails</summary>
 
 ## Général
 
 ### Ajouts
-- [TODO] Ajout de la sauvegarde de l'alignement de l'utilisateur.
+- Ajout de la sauvegarde de l'alignement de l'utilisateur.
+- Ajustement du chemin du script d'installation dans install.vbs.
+- Ajout d'un "pause" dans le script de lancer run.bat.
 
 
 ## Guides
 
-### - Modifications
+### Modifications
+
+<details>
+<summary>Voir les détails</summary>
+
 - "Tutoriel - GPODofus3"
   - Retrait du bloc "Remarque" de "Changelogs".
-  - [TODO] Ajout du changelogs pour la version 1.0.4.
+  - Ajout du changelogs pour la version 1.0.4.
 - "Introduction aux dimensions divines"
   - Ajout du succès "Errances félines" et modifications du guide pour refléter cet ajout.
   - Quelques modifications dans les explications sur le Dofus des Veilleurs.
@@ -25,22 +41,26 @@
   - Retrait du mot "Fin" du titre car il n'y en a plus qu'un.
 - "Noir d'Ébène"
   - Changement du titre en "Dofus Ebène - 1 / 2"
-- [TODO] Les titres de tous les guides d'alignements ont été modifiés.
+- Les titres de tous les guides d'alignements ont été modifiés.
   - Ajout d'un [ A ] pour les différencier.
   - Retrait de la majuscule du mot "Alignement".
   - Retrait des mots "Bonta" ou "Brâkmar" qui étaient présent dans la plupart des guides alors que ce n'était pas nécessaire puisqu'ils ne sont de toute façon visible que pour l'alignement selectionné.
   - Uniformisation : Certains étaient séparés par des " - " d'autres par des " : ".
-- [TODO] Améliorations de tous les guides d'alignements
+- Améliorations de tous les guides d'alignements
   - Ajout des numéros des quêtes dans les titres de la section "Guide" pour s'y retrouver plus facilement.
-  - Ajout d'informations manquante entre autre sur des prérequis qui méritaient d'être mis en avant.
+  - [En cours] Ajout d'informations manquante entre autre sur des prérequis qui méritaient d'être mis en avant.
   - Changements de mots utilisés pour rester cohérent avec les autres guides (exemple "accomplir" lorsqu'il sagit de parler d'un donjon, "compléter" pour des quêtes / succès, etc.)
-- [TODO] "Quêtes d'alignement : 40 + Ordre 2" (Brâkmar)
-  - Retrait du succès "Jusqu'à nouvel ordre" et de la mention de l'Ordre 2 du titre et du Guide. Ce n'est en effet pas pertinent puisqu'il n'est pas possible de le passer lors de ce guide
-- [TODO] "Vert Émeraude : Premier Dofus Primordial"
-  - Ajout d'une précision pour les Brâkmariens concernant la quête d'alignement 40 + le passage de l'ordre 2.
-- [TODO] "Rush Donjons - 6" : Ajout d'un lien vers le chemin pour se rendre dans le donjon Koulosse.
+- "Quêtes d'alignement : 40 + Ordre 2" (Brâkmar)
+  - Changement du titre en "Quêtes d'alignement : 40"
+  - Retrait du succès "Jusqu'à nouvel ordre" et de la mention de l'Ordre 2 du titre et du Guide. Ce n'est en effet pas pertinent puisqu'il n'est pas possible de le passer lors de ce guide.
+- "Vert Émeraude : Premier Dofus Primordial"
+  - Ajout d'une précision pour les Brâkmariens concernant la quête d'alignement 40 + le passage de l'ordre 2 une fois le Meulou accompli.
+- "Rush Donjons - 6" : Ajout d'un lien vers le chemin pour se rendre dans le donjon Koulosse.
 
-### - Ajouts (Guides 110, 120)
+</details>
+
+### Ajouts (Guides 110, 120)
+
 - "110 - Eliocalypse - Résonance".
 - "110 - Quêtes d'Alignement : Bonta - 41".
 - "110 - Quêtes d'Alignement : Brâkmar - 41".
@@ -58,23 +78,25 @@
 - "120 - Xelorium Chapitre 1 : Fraktale".
 - "120 - Dofus Ebène - 1 / 2".
 
-### - Suppression
+### Suppression
+
 - "110 : Fratrie des Oubliés - 1 / 2".
 
+## Succès
 
-## Succès
+### Ajouts
 
-### - Ajouts
 - "Problèmes et solutions".
 - "Objets trouvés".
 
+## Quêtes
 
-## Quêtes
+### Modifications
 
-### - Modifications
 - Ajout d'un [P] ou [A] au titre des quêtes du succès "Agriculture ou Alchimie" pour indiquer si c'est une quête "Agriculture" [P] ou "Alchimie" [A].
 
-### - Ajouts
+### Ajouts
+
 - "Pauvre Kiki.".
 - "Star ski et Dutch.".
 - "Groméo et Ginette.".
@@ -96,7 +118,8 @@
 - "Glourmandise.".
 
 
-## CSS 
+## CSS 
+
 - Retrait du font-weight: 500; de ".quest"
 - Ajout des h6 avec font-size: 1em;
 - Ajout font-weight: 500; dans ".dungeon"

@@ -563,7 +563,7 @@
       minWidth: 1280,
       minHeight: 720,
       autoHideMenuBar: true,
-      icon: path.join(__dirname, "app.ico"),
+      icon: path.join(__dirname, "staticfiles", "medias", "icons", "favicons", "icon.ico"),
       
       webPreferences: {
         preload: path.join(__dirname, "preload.js"),

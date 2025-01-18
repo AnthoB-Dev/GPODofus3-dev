@@ -10,36 +10,62 @@
 
   let mainWindow;
   let djangoProcess;
-  let globalPythonPath;
   let stdOn = false; // Définir sur false pour désactiver la sortie standard
   let stdio;
+  let globalPythonPath;
+  let venvPath;
+  let venvPythonPath;
+  const appFolder = path.resolve(process.execPath, '..');
+  const rootFolder = path.resolve(appFolder, '..');
+  const updateExe = path.resolve(path.join(rootFolder, 'Update.exe'));
+  const exeName = path.basename(process.execPath);
+
   const installationMarker = path.join(app.getPath('userData'), '.installation_complete');
 
+  // Ferme l'application si c'est un event squirrel.
+  if (require('electron-squirrel-startup')) app.quit();
+
   log.info(`Arguments de lancement : ${process.argv.join(' ')}`);
+
+  const spawnUpdate = function(args) {
+    let spawnedProcess;
+    try {
+      spawnedProcess = spawn(updateExe, args, { detached: true });
+      spawnedProcess.on('close', (code) => {
+        log.info(`Update.exe terminé avec le code ${code}`);
+      });
+    } catch (error) {
+      log.error(`Erreur lors de l'exécution de Update.exe avec les arguments ${args}:`, error);
+    }
+    return spawnedProcess;
+  };
+
+  /**
+   * Défini le venvPath selon si l'installation est lancée via le setup.exe ("../../venv") ou via le script install.vbs ("venv").\
+   * Il change car je n'arrivais pas à faire en sorte que le venv soit crée où je le voulais soit : \AppData\Local\GPODofus3\app-1.0.5\resources\app, et me suis résolu à le laisser dans \AppData\Local\GPODofus3\app-1.0.5\ où il était crée malgré moi.\
+   * Pour ce qui est de cette fonction, je vérifie simplement le nom du parent pour savoir si oui ou non il commence par "app-" si c'est le cas, alors c'est une installation via setup.exe.
+   */
+  const defineVenvPath = () => {
+    const parentFolder = path.join(__dirname, "../");
+    const parentFolderName = path.basename(parentFolder);
+
+    if (parentFolderName.startsWith("app-")) {
+      venvPath = path.join(__dirname, "../../venv");
+    } else {
+      venvPath = path.join(__dirname, "venv");
+    }
+    log.info(`Set venvPath to : ${venvPath}`);
+    venvPythonPath = path.join(venvPath, "Scripts", "python.exe");
+  }
 
   const handleSquirrelEvent = async () => {
     if (process.argv.length > 1) {
       const squirrelEvent = process.argv[1];
-      log.info(`Événement Squirrel détecté : ${squirrelEvent}`);
-  
-      const appFolder = path.resolve(process.execPath, '..');
-      const rootFolder = path.resolve(appFolder, '..');
-      const updateExe = path.resolve(path.join(rootFolder, 'Update.exe'));
-      const exeName = path.basename(process.execPath);
-  
-      const spawnUpdate = function(args) {
-        let spawnedProcess;
-        try {
-          spawnedProcess = spawn(updateExe, args, { detached: true });
-          spawnedProcess.on('close', (code) => {
-            log.info(`Update.exe terminé avec le code ${code}`);
-          });
-        } catch (error) {
-          log.error(`Erreur lors de l'exécution de Update.exe avec les arguments ${args}:`, error);
-        }
-        return spawnedProcess;
-      };
+      defineVenvPath();
 
+      log.info(`Set venvPath to : ${venvPath}`);
+
+      // L'event firstrun est censé être le moment où on peut afficher un spalshscreen ou une UI de configuration d'options par exemple.
       if (squirrelEvent === '--squirrel-firstrun') {
         log.info("Événement --squirrel-firstrun détecté.");
       
@@ -173,7 +199,7 @@
     });
   };
 
-  // Fonction pour extraire la version de Python à partir de la sortie
+  // Fonction pour extraire la version de Python à partir de la sortie.
   const getPythonVersion = (versionOutput) => {
     const match = versionOutput.match(/Python (\d+)\.(\d+)\.(\d+)/);
     if (match) {
@@ -185,7 +211,7 @@
     return null;
   };
 
-  // Fonction pour trouver tous les chemins de Python
+  // Fonction pour trouver tous les chemins de Python présents sur la machine.
   const findAllPythonPaths = async () => {
     try {
       const pythonPathsRaw = await executeCommand("where", ["python"]);
@@ -201,7 +227,7 @@
     }
   };
 
-  // Fonction pour sélectionner le meilleur Python (>= 3.13)
+  // Fonction pour sélectionner le meilleur Python (>= 3.13.0)
   /**
    * @returns {Promise<string>} globalPythonPath (chemin global)
    */
@@ -243,18 +269,9 @@
     // Si aucun Python approprié n'est trouvé
     dialog.showErrorBox(
       "Erreur de version de Python",
-      "Aucune version de Python 3.13 ou supérieure n'a été trouvée. Veuillez installer Python 3.13 ou une version ultérieure avant d'utiliser cette application. Ouverture de la page de téléchargement de Python..."
+      "Aucune version de Python 3.13 ou supérieure n'a été trouvée. Veuillez installer Python 3.13 ou une version ultérieure avant d'utiliser cette application."
     );
-    link = "https://www.python.org/downloads/release/python-3130/";
-    setTimeout(() => {
-      shell.openExternal(link);
-    }, 3000);
-    app.quit();
   };
-
-  const getVenvPath = () => {
-    return path.join(__dirname, "../../venv");
-  }
 
   /**
    * Fonction pour créer le virtual environment (venv)
@@ -262,7 +279,6 @@
    * @returns {Promise<string>} venvPath
    */
   const createVenv = async (globalPythonPath) => {
-    const venvPath = getVenvPath();
     log.info(`Chemin du virtual environment : ${venvPath}`);
 
     if (fs.existsSync(venvPath)) {
@@ -421,16 +437,11 @@
     }
   };
 
-  const getVenvPythonPath = (venvPath) => {
-    return path.join(venvPath, "Scripts", "python.exe");
-  }
-
   const runInstaller = async () => {
-    
     try {
       globalPythonPath = await selectPythonPath();
       await createVenv(globalPythonPath);
-      await installDependencies(getVenvPath());
+      await installDependencies(venvPath);
       log.info("Environnement configuré avec succès.");
     } catch (error) {
       log.error("Erreur lors de la configuration de l'environnement :", error);
@@ -505,7 +516,7 @@
   // Fonction pour démarrer Django
   const startDjango = async () => {
     log.info("- Démarrage de Django. Début du processus.");
-    pythonPath = getVenvPythonPath(getVenvPath());
+    pythonPath = venvPythonPath;
     log.info(`__Python_path : ${pythonPath}`);
 
     try {

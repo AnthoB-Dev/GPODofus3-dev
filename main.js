@@ -10,20 +10,21 @@
 
   let mainWindow;
   let djangoProcess;
-  let stdOn = false; // Définir sur false pour désactiver la sortie standard
   let stdio;
-  let globalPythonPath;
   let venvPath;
   let venvPythonPath;
+  let pipPath;
+  const stdOn = false; // Définir sur false pour désactiver la sortie standard
+  const embeddablePython = path.join(__dirname, "libs", "python", "3131");
+  const embeddablePythonExec = path.join(__dirname, embeddablePython, "python.exe");
+  const embeddablePipExec = path.join(__dirname, embeddablePython, "Scripts", "pip.exe");
   const appFolder = path.resolve(process.execPath, '..');
   const rootFolder = path.resolve(appFolder, '..');
   const updateExe = path.resolve(path.join(rootFolder, 'Update.exe'));
   const exeName = path.basename(process.execPath);
+  const djangoProjectPath = path.join(__dirname);
 
   const installationMarker = path.join(app.getPath('userData'), '.installation_complete');
-
-  // Ferme l'application si c'est un event squirrel.
-  if (require('electron-squirrel-startup')) app.quit();
 
   log.info(`Arguments de lancement : ${process.argv.join(' ')}`);
 
@@ -163,6 +164,11 @@
     return false;
   };
 
+  // En cas d'event squirrel, lance la fonction handleSquirrelEvent().
+  if (require("electron-squirrel-startup")) {
+    handleSquirrelEvent();
+  }
+
   const executeCommand = (command, args) => {
     return new Promise((resolve, reject) => {
       const proc = spawn(command, args, { shell: true });
@@ -199,87 +205,13 @@
     });
   };
 
-  // Fonction pour extraire la version de Python à partir de la sortie.
-  const getPythonVersion = (versionOutput) => {
-    const match = versionOutput.match(/Python (\d+)\.(\d+)\.(\d+)/);
-    if (match) {
-      const major = parseInt(match[1], 10);
-      const minor = parseInt(match[2], 10);
-      const patch = parseInt(match[3], 10);
-      return { major, minor, patch };
-    }
-    return null;
-  };
-
-  // Fonction pour trouver tous les chemins de Python présents sur la machine.
-  const findAllPythonPaths = async () => {
-    try {
-      const pythonPathsRaw = await executeCommand("where", ["python"]);
-      const pythonPaths = pythonPathsRaw
-        .split("\n")
-        .map((p) => p.trim())
-        .filter((p) => p.length > 0);
-      log.info(`Un ou plusieurs chemins Python trouvé.`);
-      return pythonPaths;
-    } catch (error) {
-      log.error("Erreur lors de la recherche de Python :", error.message);
-      return [];
-    }
-  };
-
-  // Fonction pour sélectionner le meilleur Python (>= 3.13.0)
   /**
-   * @returns {Promise<string>} globalPythonPath (chemin global)
-   */
-  const selectPythonPath = async () => {
-    const pythonPaths = await findAllPythonPaths();
-    for (const pyPath of pythonPaths) {
-      try {
-        const versionOutput = await executeCommand(`"${pyPath}"`, [
-          "--version",
-        ]);
-        log.info(`Version détectée pour ${pyPath} : ${versionOutput}`);
-        const version = getPythonVersion(versionOutput);
-        if (
-          version &&
-          (version.major > 3 || (version.major === 3 && version.minor >= 13))
-        ) {
-          log.info(
-            `__ Python approprié trouvé : (Version ${version.major}.${version.minor}.${version.patch})`
-          );
-          globalPythonPath = pyPath;
-          return globalPythonPath;
-        } else {
-          log.warn(
-            `__ Python non approprié trouvé : (Version ${
-              version
-                ? `${version.major}.${version.minor}.${version.patch}`
-                : "Inconnue"
-            })`
-          );
-        }
-      } catch (error) {
-        log.warn(
-          `Impossible de déterminer la version de Python à ${pyPath} :`,
-          error.message
-        );
-      }
-    }
-
-    // Si aucun Python approprié n'est trouvé
-    dialog.showErrorBox(
-      "Erreur de version de Python",
-      "Aucune version de Python 3.13 ou supérieure n'a été trouvée. Veuillez installer Python 3.13 ou une version ultérieure avant d'utiliser cette application."
-    );
-  };
-
-  /**
-   * Fonction pour créer le virtual environment (venv)
-   * @param {globalPythonPath} globalPythonPath 
+   * Fonction pour créer le virtual environment (venv).\
+   * Utilise la version Python embarquée pour créer le virtual environment.
    * @returns {Promise<string>} venvPath
    */
-  const createVenv = async (globalPythonPath) => {
-    log.info(`Chemin du virtual environment : ${venvPath}`);
+  const createVenv = async () => {
+    log.info(`Chemin de création du virtual environment : ${venvPath}`);
 
     if (fs.existsSync(venvPath)) {
       log.info("Virtual environment déjà existant.");
@@ -288,8 +220,9 @@
 
     try {
       log.info("Création du virtual environment...");
-      await executeCommand(`"${globalPythonPath}"`, ["-m", "venv", venvPath]);
+      await executeCommand(`"${embeddablePythonExec}"`, ["-m", "venv", venvPath]);
       log.info("Virtual environment créé avec succès.");
+      pipPath = path.join(venvPath, "Scripts", "pip.exe")
       return venvPath;
     } catch (error) {
       log.error(`Erreur lors de la création du venv : ${error.message}`);
@@ -301,52 +234,24 @@
     }
   };
 
-  const getPipPath = async (venvPath) => {
-    return new Promise((resolve, reject) => {
+  const ensurePipIsInstalled = async() => {
+    if (!fs.existsSync(pipPath)) {
+      log.error(`pip.exe introuvable dans le venv à : ${pipPath}. Les dépendances Python ne peuvent pas être installées.`);
+
       try {
-        const ensurePipOutput = executeCommand(
-          `"${path.join(venvPath, "Scripts", "python.exe")}"`,
-          ["-m", "ensurepip", "--upgrade"]
-        );
-        log.info(`Sortie de ensurepip : ${ensurePipOutput}`);
-      } catch (ensurepipError) {
-        log.warn(
-          "Installation de pip via ensurepip a échoué. Essai avec get-pip.py..."
-        );
-
-        const getPipPath = path.join(venvPath, "get-pip.py");
-
-        // Télécharger get-pip.py
-        const file = fs.createWriteStream(getPipPath);
-        https
-          .get("https://bootstrap.pypa.io/get-pip.py", (response) => {
-            response.pipe(file);
-            file.on("finish", () => {
-              file.close(resolve);
-            });
-          })
-          .on("error", (err) => {
-            fs.unlinkSync(getPipPath);
-            reject(err);
-          });
-
-        // Exécuter get-pip.py
-        executeCommand(`"${path.join(venvPath, "Scripts", "python.exe")}"`, [
-          getPipPath,
-        ]);
-        log.info("pip installé avec succès via get-pip.py");
-
-        // Supprimer get-pip.py après installation
-        fs.unlinkSync(getPipPath);
-
-        // Réinitialiser pipPath après installation
-        return (pipPath = path.join(venvPath, "Scripts", "pip.exe"));
+        log.info('Tentative de purge du cache pip...')  
+        await executeCommand("pip", ["cache", "purge"]);
+        log.info('Le cache pip a été purgé.')  
+      } catch (error) {
+        log.error(`Erreur lors de la tentative de purge du cache pip`, error);
+        return false;
       }
-    });
-  };
+      return;
+    }
+  }
 
   // Fonction pour vérifier si les dépendances sont déjà installées
-  const areDependenciesInstalled = async (pipPath) => {
+  const areDependenciesInstalled = async () => {
     try {
       log.info("Vérification des dépendances avec pip freeze...");
       const installedPackagesRaw = await executeCommand(`"${pipPath}"`, [
@@ -375,40 +280,14 @@
   };
 
   // Fonction pour installer les dépendances du venv
-  const installDependencies = async (venvPath) => {
-    let pipPath = path.join(venvPath, "Scripts", "pip.exe");
-  
+  const installDependencies = async () => {
     log.info(`Vérification de pip à : ${pipPath}`);
+
+    await ensurePipIsInstalled();
+    if(!ensurePipIsInstalled()) { return; }
   
-    if (!fs.existsSync(pipPath)) {
-      log.error(`pip.exe introuvable dans le venv à : ${pipPath}`);
-      log.info("Installation de pip dans le virtual environment...");
-  
-      try {
-        pipPath = await getPipPath(venvPath);
-        log.info(`pip installé à : ${pipPath}`);
-      } catch (error) {
-        log.error(`Erreur lors de l'installation de pip : ${error.message}`);
-        dialog.showErrorBox(
-          "Erreur",
-          `Erreur lors de l'installation de pip : ${error.message}`
-        );
-        app.quit();
-        return;
-      }
-  
-      if (!fs.existsSync(pipPath)) {
-        log.error(`pip.exe n'a pas pu être trouvé après installation à : ${pipPath}`);
-        dialog.showErrorBox(
-          "Erreur",
-          `pip.exe n'a pas pu être trouvé dans le virtual environment à : ${pipPath}`
-        );
-        app.quit();
-        return;
-      }
-    }
-  
-    const dependenciesInstalled = await areDependenciesInstalled(pipPath);
+    const dependenciesInstalled = await areDependenciesInstalled();
+
     if (dependenciesInstalled) {
       log.info("Toutes les dépendances sont déjà installées.");
       return;
@@ -439,8 +318,7 @@
 
   const runInstaller = async () => {
     try {
-      globalPythonPath = await selectPythonPath();
-      await createVenv(globalPythonPath);
+      await createVenv();
       await installDependencies(venvPath);
       log.info("Environnement configuré avec succès.");
     } catch (error) {
@@ -453,23 +331,17 @@
     }
   };
 
-  // Appeler la fonction pour gérer les événements Squirrel
-  if (await handleSquirrelEvent()) {
-    // L'événement Squirrel a été traité, on arrête l'exécution
-    return;
-  }
-
   // Fonction pour exécuter le processus Django
-  const runDjangoProcess = (pythonPath, djangoProjectPath) => {
+  const runDjangoProcess = (venvPythonPath, djangoProjectPath) => {
     const managePyPath = path.join(djangoProjectPath, "manage.py");
 
     log.info("- Lancement du processus Django.");
-    log.info(`Chemin Python utilisé : ${pythonPath}`);
+    log.info(`Chemin Python utilisé : ${venvPythonPath}`);
     log.info(`Chemin manage.py utilisé : ${managePyPath}`);
 
     stdOn ? (stdio = "pipe") : (stdio = "ignore");
 
-    const django = spawn(pythonPath, ["manage.py", "runserver"], {
+    const django = spawn(venvPythonPath, ["manage.py", "runserver"], {
       cwd: djangoProjectPath,
       shell: false,
       stdio: stdio,
@@ -516,13 +388,11 @@
   // Fonction pour démarrer Django
   const startDjango = async () => {
     log.info("- Démarrage de Django. Début du processus.");
-    pythonPath = venvPythonPath;
-    log.info(`__Python_path : ${pythonPath}`);
+    log.info(`__Python_path : ${venvPythonPath}`);
 
     try {
-      const djangoProjectPath = path.join(__dirname);
       log.info(`__Django_project_path : ${djangoProjectPath}`);
-      djangoProcess = runDjangoProcess(pythonPath, djangoProjectPath);
+      djangoProcess = runDjangoProcess(venvPythonPath, djangoProjectPath);
       log.info("Processus Django démarré avec le PID :", djangoProcess.pid);
     } catch (error) {
       log.error("Erreur lors du démarrage du processus Django :", error);
@@ -654,6 +524,7 @@
 
   app.on("quit", async () => {
     log.info("app.on_quit : L'application s'est fermée.");
+    app.quit();
   });
 
   // Gestion des signaux de terminaison

@@ -41,12 +41,19 @@ h1 {
   font-family: "Roboto-regular";
 }
 
+html {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 #installer {
   background: var(--clr-primary);
   position: relative;
   overflow: hidden;
   border: solid 3px white;
-  height: 100vh;
+  border-radius: 8px;
 }
 
 #installer #installer-title {
@@ -57,11 +64,11 @@ h1 {
   position: relative;
   z-index: 2;
   color: var(--clr-text);
-  font-size: 1.8em;
-  padding: 15px;
-  border-bottom: solid 2px white;
-  border-radius: 8px 8px 0 0;
-  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25);
+  font-size: 1.6em;
+  padding: 15px 100px;
+  /* border-bottom: solid 2px white; */
+  border-radius: 8px;
+  /* box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.25); */
 }
 
 #installer #installer-title #installer-dots::after {

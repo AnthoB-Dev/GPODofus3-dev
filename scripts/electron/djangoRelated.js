@@ -24,16 +24,20 @@ let djangoPid = null;
 let stdio = false;
 
 
+/**
+ * Vérifie la présence de manage.py au chemin `managePyPath`. Ne gère pas les logs.
+ * @returns {boolean} `true` si manage.py existe, sinon `false`
+ */
 function doesManagePyExists() {
   return fs.existsSync(managePyPath);
 }
 
 /**
- * Vérifie la présence de manage.py.
+ * Vérifie la présence de manage.py grâce à `doesManagePyExists()` et gère les logs.
  * @returns {boolean} `true` s'il existe, `false` si ce n'est pas le cas.
  */
 function ensureManagePyFileExists() {
-  log.debug("ensureManagePyFileExists");
+  log.debug("Fn - ensureManagePyFileExists");
 
   try {
     if (doesManagePyExists()) {
@@ -48,19 +52,19 @@ function ensureManagePyFileExists() {
 }
 
 /**
- * Tuer les processus Django sous Windows qui exécutent `manage.py runserver`.
+ * Tue les processus Django sous Windows qui exécutent `manage.py runserver`.
  * @returns {boolean} `true` si au moins un processus a été tué, sinon `false`.
  */
 function killDjangoProcess() {
-  log.debug("killDjangoProcess");
+  log.debug("Fn - killDjangoProcess");
 
   try {
-    // Utiliser WMIC pour obtenir les lignes de commande des processus Python
+    // Utilise WMIC pour obtenir les lignes de commande des processus Python
     const processes = execSync(`wmic process where "name='python.exe'" get Commandline,ProcessId /FORMAT:LIST`, {
       encoding: "utf8",
     });
 
-    // Séparer les processus et extraire les lignes de commande
+    // Sépare les processus et extrait les lignes de commande
     const processEntries = processes.split(/\r?\n\r?\n/).filter(entry => entry.trim().length > 0);
     let killed = false;
 
@@ -72,10 +76,10 @@ function killDjangoProcess() {
         const commandLine = commandLineMatch[1].trim();
         const pid = pidMatch[1].trim();
 
-        // Vérifier si la ligne de commande contient `manage.py runserver`
+        // Vérifie si la ligne de commande contient `manage.py runserver`
         if (commandLine.includes("manage.py runserver")) {
           log.info(`Processus Django trouvé. PID : ${pid}, Commande : ${commandLine}`);
-          execSync(`taskkill /PID ${pid} /F`); // Terminer le processus
+          execSync(`taskkill /PID ${pid} /F`); // Termine le processus
           log.info(`Processus Django avec PID ${pid} arrêté.`);
           killed = true;
         }
@@ -97,12 +101,10 @@ function killDjangoProcess() {
  * Ferme le serveur Django. S'assure de tuer le processus python.
  */
 function closeDjango() {
-  log.debug("closeDjango");
+  log.debug("Fn - closeDjango");
 
   if (killDjangoProcess()) {
     log.info("Django fermé avec succès.");
-  } else if (killed || !killed) {
-    log.info("Aucun processus Django orphelin à fermer.")
   } else {
     log.error("Impossible de fermer Django.");
   }
@@ -112,7 +114,7 @@ function closeDjango() {
  * Lance le serveur Django.
  */
 function startDjango() {
-  log.debug("startDjango");
+  log.debug("Fn - startDjango");
 
   try {
     if (!ensureManagePyFileExists()) {

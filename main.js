@@ -1,5 +1,5 @@
 const path = require("path");
-const { app, BrowserWindow, shell } = require('electron');
+const { app, BrowserWindow, shell, dialog } = require('electron');
 const log = require("electron-log");
 
 const { handleShortcuts, handleVenv, handlePyDependencies } = require('./scripts/electron/squirrelEventsHandlers')
@@ -11,20 +11,33 @@ const rootFolder = path.resolve(appFolder, '..');                     // compil�
 const updateExe = path.resolve(path.join(rootFolder, 'Update.exe'));  // compilé ? C:\Users\USER\AppData\Local\GPODofus3\Update.exe           : C:\Users\USER\AppData\Roaming\npm\node_modules\electron\Update.exe
 const gpodExec = path.basename(process.execPath);                     // compilé ?                                       GPOD3.exe            : electron.exe
 
-let squirellEventVar = "";
 
 /**
  * Essaie de fermer toutes les fenêtres Electron puis tue les processus Node et Django.
  */
 function terminate() {
-  log.debug("terminate")
-  app.quit();
-  killDjangoProcess();
-  process.exit(0);
+  log.debug("Fn - terminate");
+
+  try {
+    // Arrête les processus externes, en l'occurence Django.
+    log.info("Arrêt du serveur Django...");
+    killDjangoProcess();
+
+    // Quitte proprement l'application Electron.
+    log.info("Quitte l'application...");
+    app.quit();
+  } catch (error) {
+    log.error("Erreur lors de la tentative de fermeture de l'application :", error);
+  } finally {
+    // Si tout échoue, force l'arrêt du processus Node.js.
+    process.exit(0);
+  }
 }
 
 // Fonction pour gérer les événements Squirrel
 function handleSquirrelEvent() {
+  log.debug("Fn - handleSquirrelEvent");
+
   if (process.argv.length === 1) {
     return false; // Pas d'argument Squirrel, exécution normale.
   }
@@ -45,9 +58,6 @@ function handleSquirrelEvent() {
 
       if (!handleShortcuts(squirrelEvent)) {      
         log.error("Échec lors de la gestion des raccourcis.");
-
-        terminate();
-        return true;
       }
 
       log.debug(`Processus ${squirrelEvent} terminé.`)
@@ -76,6 +86,7 @@ function handleSquirrelEvent() {
       app.whenReady().then(() => {
         log.debug("Application prête. Execution de handleFirstRun...");
         handleFirstRun().then(() => {
+          // TODO : Retirer le Python embarqué
           log.debug("handleFirstRun complété.");
         }).catch((err) => {
           log.error("Une erreur est survenue durant handleFirstRun:", err);
@@ -97,8 +108,13 @@ if (handleSquirrelEvent()) {
   return;
 }
 
+/**
+ * Lancée lors de l'évenement squirrel-firstrun et continue l'installation des éléments manquants.\
+ * Il m'était impossible de procéder à l'installation complète lors de squirrel-install car je cite : "I think people who are running >15sec hooks on install are Doing It Wrong". https://github.com/Squirrel/Squirrel.Windows/issues/501#issuecomment-158862334 - Rends moi mes jours perdus stp.
+ * - Ouvre la fenêtre installateur, installe les dépendances Python puis si aucune erreur n'est présente, ouvre la fenêtre principale.
+ */
 async function handleFirstRun() {
-  log.debug("handleFirstRun")
+  log.debug("Fn - handleFirstRun")
   
   await createInstallerWindow();
 
@@ -129,22 +145,27 @@ async function handleFirstRun() {
  * Fenêtre d'installation.
  */
 function createInstallerWindow() {
+  log.debug("Fn - createInstallerWindow")
   return new Promise((resolve) => {
-    log.debug("createInstallerWindow");
     log.info("Création de la fenêtre d'installation.")
     
     window = new BrowserWindow({
-      width: 400,
-      height: 500,
+      width: 445,
+      height: 68,
       resizable: false,
       autoHideMenuBar: true,
+      show: false,
+      frame: false,
+      focusable: true,
       icon: path.join(__dirname, "staticfiles", "medias", "icons", "favicons", "icon.ico"),
     })
   
     window.loadURL(path.join(__dirname, "app", "templates", "pages", "installer.html"));
-    
-    window.webContents.once("did-finish-load", () => {
-      log.info("Fenêtre d'installation prête.");
+
+    window.once("ready-to-show", () => {
+      log.info("Fenêtre prête à être affichée.");
+      window.show();
+      setTimeout(() => window.focus(), 200); // Ajoute un léger délai pour assurer le focus
       resolve();
     });
 
@@ -208,7 +229,11 @@ app.whenReady().then(() => {
     handleFirstRun();
   } else {
     if (!startDjango()) {
-      log.error("Le serveur Django ne peut démarré.")
+      log.error("Le serveur Django ne peut démarrer.")
+      dialog.showErrorBox(
+        "[Critique] Le serveur Django ne peut démarrer",
+        "Le serveur n'est pas parvenu à démarrer. Impossible de lancer GPOD3."
+      );
       terminate();
     }
     createWindow();

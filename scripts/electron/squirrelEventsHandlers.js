@@ -13,15 +13,13 @@ module.exports = {
 const fs = require("fs");
 const log = require("electron-log");
 const path = require("path");
-const { spawn, exec, spawnSync } = require("child_process");
+const { spawn, spawnSync } = require("child_process");
 
 const appFolder = path.resolve(process.execPath, '..'); 
 const rootFolder = path.resolve(appFolder, '..');
-const scriptPath = path.join(appFolder, "resources", "app", "scripts", "install_dep.bat")
 let pythonPath;
 let pythonExec;
 let venvPath = path.join(appFolder, "venv"); // TODO Ajuster le venvPath selon source code / compilé
-// const pipPath = path.join(venvPath, "Scripts");
 const pipPath = path.join(venvPath, "Scripts");
 const pipExec = path.resolve(path.join(pipPath, 'pip.exe'))
 const requirementsFile = path.join(appFolder, "resources", "app", "requirements.txt");
@@ -29,25 +27,33 @@ const updateExe = path.resolve(path.join(rootFolder, 'Update.exe'));
 const gpodExec = path.basename(process.execPath);
 
 
+/**
+ * Executeur de commande en asynchrone via spawn.
+ * @param {string} command Peut être, par exemple, simplement `pip.exe` ou bien le chemin complet vers `pip.exe`.
+ * @param {array} args Peut contenir plusieurs arguments.
+ * @param {array} options Peut contenir plusieurs options.
+ * @returns {Promise}
+ */
 function executeCommand(command, args, options) {
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, options);
+    log.info(`CMD ${command} ${args} ${options} exécutée.`);
 
     let output = "";
     child.stdout.on("data", (data) => {
       output += data.toString();
-      log.info(`stdout: ${data}`);
+      log.info(`stdout : ${data}`);
     });
 
     child.stderr.on("data", (data) => {
-      log.error(`stderr: ${data}`);
+      log.error(`stderr : ${data}`);
     });
 
     child.on("close", (code) => {
       if (code === 0) {
         resolve(output);
       } else {
-        reject(new Error(`Command failed with code ${code}`));
+        reject(new Error(`La commande a échouée avec le code ${code}`));
       }
     });
 
@@ -73,6 +79,10 @@ function doesPipExists() {
   return fs.existsSync(pipExec);
 }
 
+/**
+ * Défini la variable venvPath selon le '`type`' de l'installation de GPOD3.\
+ * `Type` = installation via setup.exe ou bien via install.vbs pour utilisation via source code.
+ */
 function defineVenvPath() {
   const parentFolder = path.join(__dirname, "..");
   const parentFolderName = path.basename(parentFolder);
@@ -93,7 +103,7 @@ function defineVenvPath() {
  * @returns {boolean} `true` si le venv a été créé avec succès, sinon `false`.
  */
 function createVenv() {
-  log.debug("createVenv");
+  log.debug("Fn - createVenv");
   
   pythonPath = path.join(appFolder, "resources", "app", "libs", "python", "WPy64-31310", "python");
   pythonExec = path.join(pythonPath, "python.exe")
@@ -130,7 +140,7 @@ function createVenv() {
  * @returns {boolean} `true` si l'installation réussit, sinon `false`.
  */
 function installPip() {
-  log.debug("installPip");
+  log.debug("Fn - installPip");
 
   // Vérification si Python est disponible
   try {
@@ -197,6 +207,7 @@ function installPip() {
  * @returns {*} `true` si le venv existe ou a été créé avec succès, sinon retourne la fonction de création du venv.
  */
 function ensureVenvExists() {
+  log.debug("Fn - ensureVenvExists")
   if (doesVenvExists()) {
     log.info("Dossier venv existant au chemin :", venvPath);
     pythonPath = path.join(appFolder, "venv", "Scripts");
@@ -217,7 +228,7 @@ function ensureVenvExists() {
  * @returns `true` si le venv existe ou a été créé avec succès, sinon retourne la fonction d'installation de pip.
  */
 function ensurePipExists() {
-  log.debug("ensurePipExists")
+  log.debug("Fn - ensurePipExists")
   
   if (!doesPipExists()) {
     log.warn("pip.exe introuvable dans :", pipPath);
@@ -235,7 +246,7 @@ function ensurePipExists() {
  * @returns {boolean} `true` si l'opération réussit, sinon `false`.
  */
 function handleVenv(squirrelEvent) {
-  log.debug("handleVenv appelé avec l'événement :", squirrelEvent);
+  log.debug("Fn - handleVenv appelé avec l'événement :", squirrelEvent);
 
   try {
     if (squirrelEvent === "--squirrel-install") {
@@ -261,6 +272,7 @@ function handleVenv(squirrelEvent) {
  * @returns {boolean} `true` si toute les dépendances sont installées, sinon `false`.
  */
 async function areDependenciesInstalled() {
+  log.debug("Fn - areDependenciesInstalled")
   try {
     log.info("Vérification des dépendances avec pip freeze...");
 
@@ -314,7 +326,7 @@ async function areDependenciesInstalled() {
  * @returns {boolean} `true` si l'opération réussit, sinon `false`.
  */
 async function installDependencies() {
-  log.debug("installDependencies");
+  log.debug("Fn - installDependencies");
   log.info("Installation des dépendances...");
 
   try {
@@ -327,8 +339,8 @@ async function installDependencies() {
       "--default-timeout=600",
     ];
 
-    const output = await executeCommand(pipExec, pipArgs, { encoding: "utf-8" });
-    log.debug(`Installation réussie : ${output}`);
+    await executeCommand(pipExec, pipArgs, { encoding: "utf-8" });
+    log.info(`Installation réussie.`);
     return true;
   } catch (error) {
     log.error("Erreur lors de l'installation des dépendances :", error);
@@ -341,7 +353,7 @@ async function installDependencies() {
  * @returns {boolean} `true` si toutes les dépendances sont installées, sinon `false`.
  */
 async function ensureDependencies() {
-  log.debug("ensureDependencies");
+  log.debug("Fn - ensureDependencies");
 
   if(!ensurePipExists()) {
     return false
@@ -365,17 +377,21 @@ async function ensureDependencies() {
  * @returns {boolean} `true` si l'opération réussit, sinon `false`.
  */
 async function handlePyDependencies(squirrelEvent) {
-  log.debug("handlePyDependencies appelé avec l'événement :", squirrelEvent);
+  squirrelEvent != "undefined" 
+  ? log.debug("Fn - handlePyDependencies appelé avec l'événement :", squirrelEvent) 
+  : log.debug("Fn - handlePyDependencies");
 
   try {
+    // La logique actuellement ne change pas peu importe l'event squirrel (ou même lorsque l'application démarre normalement)
     if (["--squirrel-install", "--squirrel-updated"].includes(squirrelEvent)) {
       return await ensureDependencies();
     } else {
-      log.debug("Événement non pris en charge :", squirrelEvent);
       return await ensureDependencies();
     }
   } catch (error) {
-    log.error("Une erreur s'est produite dans handlePyDependencies :", error);
+    squirrelEvent != "undefined" 
+    ? log.error(`Une erreur s'est produite dans handlePyDependencies lors de l'evenement ${squirrelEvent} : ${error}`)
+    : log.error(`Une erreur s'est produite dans handlePyDependencies du démarrage normal de l'application : ${error}`);
     return false;
   }
 }
@@ -386,15 +402,18 @@ async function handlePyDependencies(squirrelEvent) {
  * @returns {boolean} `true` si l'opération réussit, `false` si elle échoue.
  */
 function handleShortcuts(squirrelEvent) {
+  log.debug("Fn - handleShortcuts")
   if (squirrelEvent == "--squirrel-install" || squirrelEvent == "--squirrel-updated") {
     try {
       // Lancement du processus enfant pour créer les raccourcis
       const child = spawn(updateExe, ['--createShortcut', gpodExec], {
-        detached: true,  // Détache le processus
-        stdio: 'ignore', // Ignore les flux (pas besoin de feedback)
+        detached: true,
+        stdio: 'ignore',
       });
+
       // Permet au processus enfant de fonctionner indépendamment
       child.unref();
+
       log.info("Raccourci ajouté avec succès.")
       return true;
     } catch (error) {

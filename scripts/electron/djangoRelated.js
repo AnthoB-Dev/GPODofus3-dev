@@ -12,6 +12,7 @@ const fs = require("fs");
 const log = require("electron-log");
 const path = require("path");
 const { spawn, execSync } = require("child_process");
+const { handlePyDependencies } = require("./squirrelEventsHandlers")
 
 
 const djangoProjectPath = path.join(__dirname);
@@ -118,6 +119,10 @@ function startDjango() {
       log.error("Impossible de démarrer le processus Django car manage.py est introuvable.");
       return false;
     }
+    if (!handlePyDependencies()) {
+      log.error("Impossible de démarrer le processus Django car il manque des dépendances.");
+      return false;
+    }
 
     log.info("Lancement du processus Django.");
 
@@ -136,7 +141,7 @@ function startDjango() {
     djangoPid = django.pid;
     django.unref();
     
-    if (stdio) {
+    if (stdio == "pipe") {
       // Capture stdout et stderr pour afficher les logs du serveur Django
       django.stdout.on('data', (data) => {
         log.info("stdout: " + data.toString());

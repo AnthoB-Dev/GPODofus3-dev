@@ -1,11 +1,13 @@
 const _handleVenv = handleVenv;
 const _handlePyDependencies = handlePyDependencies;
 const _handleShortcuts = handleShortcuts;
+const _defineVenvPath = defineVenvPath;
 
 module.exports = {
   handleVenv: _handleVenv,
   handlePyDependencies: _handlePyDependencies,
-  handleShortcuts: _handleShortcuts
+  handleShortcuts: _handleShortcuts,
+  defineVenvPath: _defineVenvPath
 }
 
 const fs = require("fs");
@@ -20,12 +22,11 @@ let pythonPath;
 let pythonExec;
 let venvPath = path.join(appFolder, "venv"); // TODO Ajuster le venvPath selon source code / compilé
 // const pipPath = path.join(venvPath, "Scripts");
-const pipPath = path.join(venvPath, "Scripts", "pip.exe")
+const pipPath = path.join(venvPath, "Scripts");
 const pipExec = path.resolve(path.join(pipPath, 'pip.exe'))
 const requirementsFile = path.join(appFolder, "resources", "app", "requirements.txt");
 const updateExe = path.resolve(path.join(rootFolder, 'Update.exe'));
 const gpodExec = path.basename(process.execPath);
-const venvActivatePath = path.join(venvPath, "Scripts", "activate.bat"); // Chemin vers activate.bat
 
 
 /**
@@ -41,45 +42,23 @@ function doesVenvExists() {
  * @returns {boolean} - `true` si pip.exe existe, sinon `false`.
  */
 function doesPipExists() {
-  return fs.existsSync(pipPath);
+  return fs.existsSync(pipExec);
 }
 
-const executeCommand = (command, args) => {
-  return new Promise((resolve, reject) => {
-    const proc = spawn(command, args, { shell: true });
+function defineVenvPath() {
+  const parentFolder = path.join(__dirname, "..");
+  const parentFolderName = path.basename(parentFolder);
 
-    let stdout = "";
-    let stderr = "";
+  if (venvPath != "") return;
 
-    proc.stdout.on("data", (data) => {
-      const output = data.toString();
-      stdout += output;
-      log.info(`stdout: ${output}`);
-    });
-
-    proc.stderr.on("data", (data) => {
-      const errorOutput = data.toString();
-      stderr += errorOutput;
-      log.error(`stderr: ${errorOutput}`);
-    });
-
-    proc.on("close", (code) => {
-      log.info(`Processus terminé avec le code ${code}`);
-      if (code === 0) {
-        resolve(stdout.trim());
-      } else {
-        const errorMessage = `Commande "${command} ${args.join(' ')}" échouée avec le code ${code}`;
-        log.error(errorMessage);
-        reject(new Error(stderr.trim() || errorMessage));
-      }
-    });
-
-    proc.on("error", (err) => {
-      log.error(`Erreur lors de l'exécution de la commande : ${err.message}`);
-      reject(err);
-    });
-  });
-};
+  if (parentFolderName.startsWith("resources")) {
+    log.info("Dossier parent : '" + parentFolderName + "'. Environnement 'compilé' detecté.");
+    venvPath = path.join(__dirname, "../../venv");
+  } else {
+    log.info("Dossier parent : '" + parentFolderName + "'. Environnement 'source code' detecté.");
+    venvPath = path.join(__dirname, "venv");
+  }
+}
 
 /**
  * Crée un environnement virtuel (venv).
@@ -210,14 +189,16 @@ function ensureVenvExists() {
  * @returns `true` si le venv existe ou a été créé avec succès, sinon retourne la fonction d'installation de pip.
  */
 function ensurePipExists() {
-  if (doesPipExists()) {
-    log.info(`pip.exe existant dans ${pipPath} : ${pipPath}`);
-    return true;
+  log.debug("ensurePipExists")
+  
+  if (!doesPipExists()) {
+    log.warn("pip.exe introuvable dans :", pipPath);
+    log.info("Tentative d'installation de pip...");
+    return installPip();
   }
 
-  log.warn("pip.exe introuvable dans :", pipPath);
-  log.info("Tentative d'installation de pip...");
-  return installPip();
+  log.info(`pip.exe existant dans ${pipPath} : ${pipExec}`);
+  return true;
 }
 
 /**
@@ -252,62 +233,95 @@ function handleVenv(squirrelEvent) {
  * @returns {boolean} `true` si toute les dépendances sont installées, sinon `false`.
  */
 function areDependenciesInstalled() {
-  log.debug("areDependenciesInstalled");
-
   try {
     log.info("Vérification des dépendances avec pip freeze...");
-    const result = spawnSync(pipPath, ["freeze"], { 
-      encoding: "utf-8",
-      stdio: ['pipe', 'pipe', 'pipe'], 
-    });
-    log.info(result.stdout);
 
-    if (result.error || result.status !== 0) {
-      log.error("Erreur lors de l'exécution de pip freeze :", result.error);
+    const installedPackagesRaw = spawnSync(pipExec, ["freeze"], {
+      encoding: "utf-8",
+      shell: true
+    });
+
+    if (installedPackagesRaw.error) {
+      log.error("Une erreur est survenue lors de pip freeze :", installedPackagesRaw.error);
       return false;
     }
 
-    const installedPackages = result.stdout
-      .split("\n")
-      .map((line) => line.trim().toLowerCase());
+    const installedPackages = installedPackagesRaw.stdout.split("\n").map((line) => line.trim().toLowerCase());
+
+    
+    if(process.argv.includes('--squirrel-firstrun')) {
+      log.debug("installedPackages :", installedPackages);
+    }
+
+    if (!installedPackages.some(line => line.trim() !== '')) {
+      log.warn("Les dépendances ne sont pas installées.");
+      return false;
+    }
 
     const requirements = fs
       .readFileSync(requirementsFile, "utf-8")
       .split("\n")
       .map((line) => line.trim().toLowerCase());
 
+      if(process.argv.includes('--squirrel-firstrun')) {
+        log.debug("requirements :", requirements);
+      }
+
     for (const requirement of requirements) {
-      if (requirement && !installedPackages.some((pkg) => pkg.startsWith(requirement))) {
-        log.warn(`Dépendance manquante : ${requirement}`);
+      if (requirement && !installedPackages.includes(requirement)) {
+        log.info(`Dépendance ${requirement} manquante.`);
         return false;
       }
     }
 
-    log.info("Toutes les dépendances sont installées.");
     return true;
   } catch (error) {
-    log.error("Une erreur s'est produite dans areDependenciesInstalled :", error);
+    log.error(
+      `Erreur lors de la vérification des dépendances : ${error.message}`
+    );
     return false;
   }
-}
+};
 
 /**
  * Installe les dépendances Python grâce à la commande "pip install --no-cache-dir -r requirements.txt".\
  * Vérifie sur les dépendances existe déjà, puis si pip.exe est présent dans pipPath puis s'exécute.
  * @returns {boolean} `true` si l'opération réussit, sinon `false`.
  */
-async function installDependencies() {
-  log.debug("Installation des dépendances");
+function installDependencies() {
+  log.debug("installDependencies");
+  log.info("Installation des dépendances...");
 
   try {
-    // Lancer le venv et installer les dépendances avec pip
-    log.info("Activation du venv et installation des dépendances...");
-    log.info(`Chemin vers activate.bat : ${venvActivatePath}`);
-    log.info(`Chemin vers requirements.txt : ${requirementsFile}`);
-    
-    spawnSync('cmd.exe', ['/c', scriptPath], {
-      stdio: ['pipe', 'pipe', 'pipe'],
+    log.info("Installation via pip...");
+    let result = "";
+    result = spawnSync(pipExec, [
+      "install", 
+      "--no-cache-dir",
+      "-r", 
+      requirementsFile,
+      "--default-timeout=600"
+    ], 
+    {
+      encoding: "utf-8",
+      stdio: ["pipe", "pipe", "pipe"],
+      timeout: 300000,
     });
+
+    if (result.stdout) {
+      log.debug(`stdout : ${result.stdout}`);
+    } else {
+      log.warn("L'installation via pip n'a pas fonctionné. Essai avec le batch...");
+      result = spawnSync('cmd.exe', ['/c', scriptPath], {
+        encoding: "utf-8",
+        shell: true
+      });
+    }
+
+    if (result.status !== 0) {
+      log.error(`Echec de l'installation des dépendances Python. Echec code ${result.status}.`)
+      return false;
+    }
 
     log.info("Dépendances installées avec succès.");
     return true;
@@ -322,6 +336,12 @@ async function installDependencies() {
  * @returns {boolean} `true` si toutes les dépendances sont installées, sinon `false`.
  */
 function ensureDependencies() {
+  log.debug("ensureDependencies");
+
+  if(!ensurePipExists()) {
+    return false
+  }
+
   if (areDependenciesInstalled()) {
     log.info("Les dépendances sont déjà installées.");
     return true;
@@ -342,11 +362,10 @@ function handlePyDependencies(squirrelEvent) {
 
   try {
     if (["--squirrel-install", "--squirrel-updated"].includes(squirrelEvent)) {
-      log.debug(`Gestion de l'événement : ${squirrelEvent}`);
       return ensureDependencies();
     } else {
-      log.debug("Événement Squirrel non pris en charge :", squirrelEvent);
-      return true; // Aucun problème pour les événements non pris en charge
+      log.debug("Événement non pris en charge :", squirrelEvent);
+      return ensureDependencies();
     }
   } catch (error) {
     log.error("Une erreur s'est produite dans handlePyDependencies :", error);
@@ -370,6 +389,7 @@ function handleShortcuts(squirrelEvent) {
       // Permet au processus enfant de fonctionner indépendamment
       child.unref();
       log.info("Raccourci ajouté avec succès.")
+      return true;
     } catch (error) {
       log.error('Erreur lors du traitement des raccourcis Squirrel:', error);
     }

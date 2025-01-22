@@ -29,6 +29,34 @@ const updateExe = path.resolve(path.join(rootFolder, 'Update.exe'));
 const gpodExec = path.basename(process.execPath);
 
 
+function executeCommand(command, args, options) {
+  return new Promise((resolve, reject) => {
+    const child = spawn(command, args, options);
+
+    let output = "";
+    child.stdout.on("data", (data) => {
+      output += data.toString();
+      log.info(`stdout: ${data}`);
+    });
+
+    child.stderr.on("data", (data) => {
+      log.error(`stderr: ${data}`);
+    });
+
+    child.on("close", (code) => {
+      if (code === 0) {
+        resolve(output);
+      } else {
+        reject(new Error(`Command failed with code ${code}`));
+      }
+    });
+
+    child.on("error", (err) => {
+      reject(err);
+    });
+  });
+}
+
 /**
  * Vérifie si le venv existe.
  * @returns {boolean} - `true` si le venv existe, sinon `false`.
@@ -232,28 +260,24 @@ function handleVenv(squirrelEvent) {
  * Vérifie si toute les dépendances de requirements.txt sont installées mais s'interromp si une d'elles ne l'est pas.
  * @returns {boolean} `true` si toute les dépendances sont installées, sinon `false`.
  */
-function areDependenciesInstalled() {
+async function areDependenciesInstalled() {
   try {
     log.info("Vérification des dépendances avec pip freeze...");
 
-    const installedPackagesRaw = spawnSync(pipExec, ["freeze"], {
+    const installedPackagesRaw = await executeCommand(pipExec, ["freeze"], {
       encoding: "utf-8",
-      shell: true
+      shell: true,
     });
 
-    if (installedPackagesRaw.error) {
-      log.error("Une erreur est survenue lors de pip freeze :", installedPackagesRaw.error);
-      return false;
-    }
+    const installedPackages = installedPackagesRaw
+      .split("\n")
+      .map((line) => line.trim().toLowerCase());
 
-    const installedPackages = installedPackagesRaw.stdout.split("\n").map((line) => line.trim().toLowerCase());
-
-    
-    if(process.argv.includes('--squirrel-firstrun')) {
+    if (process.argv.includes("--squirrel-firstrun")) {
       log.debug("installedPackages :", installedPackages);
     }
 
-    if (!installedPackages.some(line => line.trim() !== '')) {
+    if (!installedPackages.some((line) => line.trim() !== "")) {
       log.warn("Les dépendances ne sont pas installées.");
       return false;
     }
@@ -263,9 +287,9 @@ function areDependenciesInstalled() {
       .split("\n")
       .map((line) => line.trim().toLowerCase());
 
-      if(process.argv.includes('--squirrel-firstrun')) {
-        log.debug("requirements :", requirements);
-      }
+    if (process.argv.includes("--squirrel-firstrun")) {
+      log.debug("requirements :", requirements);
+    }
 
     for (const requirement of requirements) {
       if (requirement && !installedPackages.includes(requirement)) {
@@ -281,52 +305,33 @@ function areDependenciesInstalled() {
     );
     return false;
   }
-};
+}
+
 
 /**
  * Installe les dépendances Python grâce à la commande "pip install --no-cache-dir -r requirements.txt".\
  * Vérifie sur les dépendances existe déjà, puis si pip.exe est présent dans pipPath puis s'exécute.
  * @returns {boolean} `true` si l'opération réussit, sinon `false`.
  */
-function installDependencies() {
+async function installDependencies() {
   log.debug("installDependencies");
   log.info("Installation des dépendances...");
 
   try {
     log.info("Installation via pip...");
-    let result = "";
-    result = spawnSync(pipExec, [
-      "install", 
+    const pipArgs = [
+      "install",
       "--no-cache-dir",
-      "-r", 
+      "-r",
       requirementsFile,
-      "--default-timeout=600"
-    ], 
-    {
-      encoding: "utf-8",
-      stdio: ["pipe", "pipe", "pipe"],
-      timeout: 300000,
-    });
+      "--default-timeout=600",
+    ];
 
-    if (result.stdout) {
-      log.debug(`stdout : ${result.stdout}`);
-    } else {
-      log.warn("L'installation via pip n'a pas fonctionné. Essai avec le batch...");
-      result = spawnSync('cmd.exe', ['/c', scriptPath], {
-        encoding: "utf-8",
-        shell: true
-      });
-    }
-
-    if (result.status !== 0) {
-      log.error(`Echec de l'installation des dépendances Python. Echec code ${result.status}.`)
-      return false;
-    }
-
-    log.info("Dépendances installées avec succès.");
+    const output = await executeCommand(pipExec, pipArgs, { encoding: "utf-8" });
+    log.debug(`Installation réussie : ${output}`);
     return true;
   } catch (error) {
-    log.error("Erreur lors de l'installation des dépendances : ", error);
+    log.error("Erreur lors de l'installation des dépendances :", error);
     return false;
   }
 }
@@ -335,20 +340,22 @@ function installDependencies() {
  * Vérifie et installe les dépendances si nécessaire.
  * @returns {boolean} `true` si toutes les dépendances sont installées, sinon `false`.
  */
-function ensureDependencies() {
+async function ensureDependencies() {
   log.debug("ensureDependencies");
 
   if(!ensurePipExists()) {
     return false
   }
 
-  if (areDependenciesInstalled()) {
+  const dependenciesInstalled = await areDependenciesInstalled();
+
+  if (dependenciesInstalled) {
     log.info("Les dépendances sont déjà installées.");
     return true;
   }
 
   log.info("Une ou plusieurs dépendances sont manquantes. Installation...");
-  return installDependencies();
+  return await installDependencies();
 }
 
 
@@ -357,15 +364,15 @@ function ensureDependencies() {
  * @param {string} squirrelEvent - L'événement Squirrel (e.g., "--squirrel-install").
  * @returns {boolean} `true` si l'opération réussit, sinon `false`.
  */
-function handlePyDependencies(squirrelEvent) {
+async function handlePyDependencies(squirrelEvent) {
   log.debug("handlePyDependencies appelé avec l'événement :", squirrelEvent);
 
   try {
     if (["--squirrel-install", "--squirrel-updated"].includes(squirrelEvent)) {
-      return ensureDependencies();
+      return await ensureDependencies();
     } else {
       log.debug("Événement non pris en charge :", squirrelEvent);
-      return ensureDependencies();
+      return await ensureDependencies();
     }
   } catch (error) {
     log.error("Une erreur s'est produite dans handlePyDependencies :", error);

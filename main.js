@@ -74,12 +74,11 @@ function handleSquirrelEvent() {
       log.debug(`handleSquirrelEvent : ${squirrelEvent}.`)
 
       app.whenReady().then(() => {
-        log.debug("App is ready. Executing handleFirstRun...");
+        log.debug("Application prête. Execution de handleFirstRun...");
         handleFirstRun().then(() => {
-          log.debug("handleFirstRun completed. Terminating app...");
-          terminate();
+          log.debug("handleFirstRun complété.");
         }).catch((err) => {
-          log.error("Error during handleFirstRun:", err);
+          log.error("Une erreur est survenue durant handleFirstRun:", err);
           terminate();
         });
       });
@@ -104,7 +103,8 @@ async function handleFirstRun() {
   await createInstallerWindow();
 
   try {
-    if (!handlePyDependencies()) {
+    const checkPyDependencies = await handlePyDependencies();
+    if (!checkPyDependencies) {
       log.error("handlePyDependencies à retourner `false`.")
       return false;
     }
@@ -138,7 +138,6 @@ function createInstallerWindow() {
       height: 500,
       resizable: false,
       autoHideMenuBar: true,
-      frame: false,
       icon: path.join(__dirname, "staticfiles", "medias", "icons", "favicons", "icon.ico"),
     })
   

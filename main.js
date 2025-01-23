@@ -1,8 +1,9 @@
+const fs = require("fs");
 const path = require("path");
 const { app, BrowserWindow, shell, dialog } = require('electron');
 const log = require("electron-log");
 
-const { handleShortcuts, handleVenv, handlePyDependencies } = require('./scripts/electron/squirrelEventsHandlers')
+const { handleShortcuts, handleVenv, handlePyDependencies, ensureVenvExists } = require('./scripts/electron/squirrelEventsHandlers')
 const { startDjango, closeDjango, killDjangoProcess } = require("./scripts/electron/djangoRelated");
 
 
@@ -10,18 +11,19 @@ const appFolder = path.resolve(process.execPath, '..');               // compil�
 const rootFolder = path.resolve(appFolder, '..');                     // compilé ? C:\Users\USER\AppData\Local\GPODofus3\                     : C:\Users\USER\AppData\Roaming\npm\node_modules\electron\
 const updateExe = path.resolve(path.join(rootFolder, 'Update.exe'));  // compilé ? C:\Users\USER\AppData\Local\GPODofus3\Update.exe           : C:\Users\USER\AppData\Roaming\npm\node_modules\electron\Update.exe
 const gpodExec = path.basename(process.execPath);                     // compilé ?                                       GPOD3.exe            : electron.exe
+const libsFolder = path.resolve(path.join(appFolder, "resources", "app", "libs"));
 
 
 /**
  * Essaie de fermer toutes les fenêtres Electron puis tue les processus Node et Django.
  */
 function terminate() {
-  log.debug("Fn - terminate");
+  log.debug("=== Fn - terminate ===");
 
   try {
     // Arrête les processus externes, en l'occurence Django.
     log.info("Arrêt du serveur Django...");
-    killDjangoProcess();
+    closeDjango();
 
     // Quitte proprement l'application Electron.
     log.info("Quitte l'application...");
@@ -34,9 +36,40 @@ function terminate() {
   }
 }
 
+async function deleteFolders(...folders) {
+  log.debug("=== Fn - deleteFolders ===");
+
+  const venvFolder = ensureVenvExists();
+
+  if (!venvFolder) {
+    throw new Error(`Echec de la suppression car le dossier venv n'existe pas.`);
+  }
+
+  const deletionPromises = folders.map(async (folder) => {
+    if (fs.existsSync(folder)) {
+      try {
+        await fs.promises.rm(folder, { recursive: true, force: true });
+        log.info(`Le dossier ${folder} a été supprimé avec succès.`);
+      } catch (error) {
+        throw new Error(`Erreur lors de la suppression du dossier ${folder} : ${error}`);
+      }
+    } else {
+      log.warn(`Le dossier ${folder} n'existe pas.`);
+    }
+  });
+
+  try {
+    await Promise.all(deletionPromises);
+    log.info("Tous les dossiers ont été supprimés avec succès.");
+  } catch (error) {
+    log.error(`Erreur lors de la suppression de dossiers : ${error.message}`);
+    throw error;
+  }
+}
+
 // Fonction pour gérer les événements Squirrel
 function handleSquirrelEvent() {
-  log.debug("Fn - handleSquirrelEvent");
+  log.debug("=== Fn - handleSquirrelEvent ===");
 
   if (process.argv.length === 1) {
     return false; // Pas d'argument Squirrel, exécution normale.
@@ -114,7 +147,7 @@ if (handleSquirrelEvent()) {
  * - Ouvre la fenêtre installateur, installe les dépendances Python puis si aucune erreur n'est présente, ouvre la fenêtre principale.
  */
 async function handleFirstRun() {
-  log.debug("Fn - handleFirstRun")
+  log.debug("=== Fn - handleFirstRun ===")
   
   await createInstallerWindow();
 
@@ -145,7 +178,7 @@ async function handleFirstRun() {
  * Fenêtre d'installation.
  */
 function createInstallerWindow() {
-  log.debug("Fn - createInstallerWindow")
+  log.debug("=== Fn - createInstallerWindow ===")
   return new Promise((resolve) => {
     log.info("Création de la fenêtre d'installation.")
     
@@ -177,11 +210,32 @@ function createInstallerWindow() {
   })
 }
 
+function createSplashScreenWindow() {
+  log.debug("=== Fn - createSplashScreenWindow ===")
+  log.info("Création de la fenêtre d'installation.")
+  
+  splash = new BrowserWindow({
+    width: 350,
+    height: 450,
+    resizable: false,
+    autoHideMenuBar: true,
+    frame: false, 
+    alwaysOnTop: true,
+    backgroundColor: "#202020",
+    icon: path.join(__dirname, "staticfiles", "medias", "icons", "favicons", "icon.ico"),
+  })
+
+  splash.loadURL(path.join(__dirname, "app", "templates", "pages", "splashScreen.html"));
+  splash.center();
+
+  return splash;
+}
+
 /**
  * Créer la fenêtre principale de l'application.
  */
 function createWindow() {
-  log.debug("createWindow");
+  log.debug("=== Fn - createWindow ===");
   log.info("Création de la fenêtre principale.");
 
   mainWindow = new BrowserWindow({
@@ -192,6 +246,7 @@ function createWindow() {
     minHeight: 720,
     autoHideMenuBar: true,
     icon: path.join(__dirname, "staticfiles", "medias", "icons", "favicons", "icon.ico"),
+    show: false,
     backgroundColor: "#202020",
     
     webPreferences: {
@@ -204,6 +259,14 @@ function createWindow() {
   });
 
   mainWindow.loadURL("http://localhost:8000/");
+
+  const splash = createSplashScreenWindow();
+
+  mainWindow.once("ready-to-show", () => {
+    log.info("Fenêtre prête à être affichée.");
+    splash.close();
+    mainWindow.show();
+  });
 
   mainWindow.on("close", () => {
     log.info("Fermeture de la fenêtre principale.");
@@ -245,18 +308,6 @@ app.whenReady().then(() => {
   });
 });
 
-app.on('window-all-closed', function () {
-  if (process.platform !== 'darwin') terminate();
-});
-
-app.on("before-quit", async () => {
-  log.info(
-    "app.on_before-quit : Tentative de fermeture de l'application, arrêt du processus Django."
-  );
-  closeDjango();
-});
-
 app.on("quit", async () => {
   log.info("app.on_quit : L'application s'est fermée.");
-  terminate()
 });

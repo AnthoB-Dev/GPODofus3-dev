@@ -2,12 +2,14 @@ const _handleVenv = handleVenv;
 const _handlePyDependencies = handlePyDependencies;
 const _handleShortcuts = handleShortcuts;
 const _defineVenvPath = defineVenvPath;
+const _ensureVenvExists = ensureVenvExists;
 
 module.exports = {
   handleVenv: _handleVenv,
   handlePyDependencies: _handlePyDependencies,
   handleShortcuts: _handleShortcuts,
-  defineVenvPath: _defineVenvPath
+  defineVenvPath: _defineVenvPath,
+  ensureVenvExists: _ensureVenvExists,
 }
 
 const fs = require("fs");
@@ -35,6 +37,7 @@ const gpodExec = path.basename(process.execPath);
  * @returns {Promise}
  */
 function executeCommand(command, args, options) {
+  log.debug("=== Fn - executeCommand ===");
   return new Promise((resolve, reject) => {
     const child = spawn(command, args, options);
     log.info(`CMD ${command} ${args} ${options} exécutée.`);
@@ -68,6 +71,7 @@ function executeCommand(command, args, options) {
  * @returns {boolean} - `true` si le venv existe, sinon `false`.
  */
 function doesVenvExists() {
+  log.debug("=== Fn - doesVenvExists ===");
   return fs.existsSync(venvPath);
 }
 
@@ -76,6 +80,7 @@ function doesVenvExists() {
  * @returns {boolean} - `true` si pip.exe existe, sinon `false`.
  */
 function doesPipExists() {
+  log.debug("=== Fn - doesPipExists ===");
   return fs.existsSync(pipExec);
 }
 
@@ -84,6 +89,7 @@ function doesPipExists() {
  * `Type` = installation via setup.exe ou bien via install.vbs pour utilisation via source code.
  */
 function defineVenvPath() {
+  log.debug("=== Fn - defineVenvPath ===");
   const parentFolder = path.join(__dirname, "..");
   const parentFolderName = path.basename(parentFolder);
 
@@ -103,7 +109,7 @@ function defineVenvPath() {
  * @returns {boolean} `true` si le venv a été créé avec succès, sinon `false`.
  */
 function createVenv() {
-  log.debug("Fn - createVenv");
+  log.debug("=== Fn - createVenv ===");
   
   pythonPath = path.join(appFolder, "resources", "app", "libs", "python", "WPy64-31310", "python");
   pythonExec = path.join(pythonPath, "python.exe")
@@ -140,7 +146,7 @@ function createVenv() {
  * @returns {boolean} `true` si l'installation réussit, sinon `false`.
  */
 function installPip() {
-  log.debug("Fn - installPip");
+  log.debug("=== Fn - installPip ===");
 
   // Vérification si Python est disponible
   try {
@@ -203,11 +209,12 @@ function installPip() {
 }
 
 /**
- * Vérifie ou crée le venv si nécessaire.
+ * Vérifie ou crée le venv si nécessaire. S'il existe, redéfini les variables `pythonPath` et `pythonExec` pour pointer sur le venv.
  * @returns {*} `true` si le venv existe ou a été créé avec succès, sinon retourne la fonction de création du venv.
  */
 function ensureVenvExists() {
-  log.debug("Fn - ensureVenvExists")
+  log.debug("=== Fn - ensureVenvExists ===")
+
   if (doesVenvExists()) {
     log.info("Dossier venv existant au chemin :", venvPath);
     pythonPath = path.join(appFolder, "venv", "Scripts");
@@ -228,7 +235,7 @@ function ensureVenvExists() {
  * @returns `true` si le venv existe ou a été créé avec succès, sinon retourne la fonction d'installation de pip.
  */
 function ensurePipExists() {
-  log.debug("Fn - ensurePipExists")
+  log.debug("=== Fn - ensurePipExists ===")
   
   if (!doesPipExists()) {
     log.warn("pip.exe introuvable dans :", pipPath);
@@ -246,7 +253,9 @@ function ensurePipExists() {
  * @returns {boolean} `true` si l'opération réussit, sinon `false`.
  */
 function handleVenv(squirrelEvent) {
-  log.debug("Fn - handleVenv appelé avec l'événement :", squirrelEvent);
+  squirrelEvent !== "undefined" 
+  ? log.debug(`=== Fn - handleVenv appelé avec l'événement : ${squirrelEvent} ===`)
+  : log.debug(`=== Fn - handleVenv ===`);
 
   try {
     if (squirrelEvent === "--squirrel-install") {
@@ -272,7 +281,7 @@ function handleVenv(squirrelEvent) {
  * @returns {boolean} `true` si toute les dépendances sont installées, sinon `false`.
  */
 async function areDependenciesInstalled() {
-  log.debug("Fn - areDependenciesInstalled")
+  log.debug("=== Fn - areDependenciesInstalled ===")
   try {
     log.info("Vérification des dépendances avec pip freeze...");
 
@@ -326,7 +335,7 @@ async function areDependenciesInstalled() {
  * @returns {boolean} `true` si l'opération réussit, sinon `false`.
  */
 async function installDependencies() {
-  log.debug("Fn - installDependencies");
+  log.debug("=== Fn - installDependencies ===");
   log.info("Installation des dépendances...");
 
   try {
@@ -353,7 +362,7 @@ async function installDependencies() {
  * @returns {boolean} `true` si toutes les dépendances sont installées, sinon `false`.
  */
 async function ensureDependencies() {
-  log.debug("Fn - ensureDependencies");
+  log.debug("=== Fn - ensureDependencies ===");
 
   if(!ensurePipExists()) {
     return false
@@ -378,8 +387,8 @@ async function ensureDependencies() {
  */
 async function handlePyDependencies(squirrelEvent) {
   squirrelEvent != "undefined" 
-  ? log.debug("Fn - handlePyDependencies appelé avec l'événement :", squirrelEvent) 
-  : log.debug("Fn - handlePyDependencies");
+  ? log.debug(`=== Fn - handlePyDependencies appelé avec l'événement : ${squirrelEvent} ===`) 
+  : log.debug("=== Fn - handlePyDependencies ===");
 
   try {
     // La logique actuellement ne change pas peu importe l'event squirrel (ou même lorsque l'application démarre normalement)
@@ -402,7 +411,7 @@ async function handlePyDependencies(squirrelEvent) {
  * @returns {boolean} `true` si l'opération réussit, `false` si elle échoue.
  */
 function handleShortcuts(squirrelEvent) {
-  log.debug("Fn - handleShortcuts")
+  log.debug("=== Fn - handleShortcuts ===")
   if (squirrelEvent == "--squirrel-install" || squirrelEvent == "--squirrel-updated") {
     try {
       // Lancement du processus enfant pour créer les raccourcis

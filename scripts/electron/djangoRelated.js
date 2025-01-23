@@ -29,6 +29,7 @@ let stdio = false;
  * @returns {boolean} `true` si manage.py existe, sinon `false`
  */
 function doesManagePyExists() {
+  log.debug("=== Fn - doesManagePyExists ===");
   return fs.existsSync(managePyPath);
 }
 
@@ -37,7 +38,7 @@ function doesManagePyExists() {
  * @returns {boolean} `true` s'il existe, `false` si ce n'est pas le cas.
  */
 function ensureManagePyFileExists() {
-  log.debug("Fn - ensureManagePyFileExists");
+  log.debug("=== Fn - ensureManagePyFileExists ===");
 
   try {
     if (doesManagePyExists()) {
@@ -56,7 +57,7 @@ function ensureManagePyFileExists() {
  * @returns {boolean} `true` si au moins un processus a été tué, sinon `false`.
  */
 function killDjangoProcess() {
-  log.debug("Fn - killDjangoProcess");
+  log.debug("=== Fn - killDjangoProcess ===");
 
   try {
     // Utilise WMIC pour obtenir les lignes de commande des processus Python
@@ -101,7 +102,7 @@ function killDjangoProcess() {
  * Ferme le serveur Django. S'assure de tuer le processus python.
  */
 function closeDjango() {
-  log.debug("Fn - closeDjango");
+  log.debug("=== Fn - closeDjango ===");
 
   if (killDjangoProcess()) {
     log.info("Django fermé avec succès.");
@@ -114,7 +115,7 @@ function closeDjango() {
  * Lance le serveur Django.
  */
 function startDjango() {
-  log.debug("Fn - startDjango");
+  log.debug("=== Fn - startDjango ===");
 
   try {
     if (!ensureManagePyFileExists()) {

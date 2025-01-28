@@ -1,3 +1,197 @@
+# v.1.0.6 Release
+
+
+## Changelogs
+
+### v1.0.6 Release
+
+<details>
+<summary>Voir les détails</summary>
+
+## Général
+
+
+### Modifications
+
+
+### Ajouts
+
+
+
+## Guides
+
+
+### Modifications
+- Mise à jour des titres de certains guides pour correspondre à ceux de Skyzio. Je ne met pas le détail puisque ça concerne des guides qui n'étaient plus visible depuis la 1.0.2
+- Frigost : Le Royalmouth
+  - Amélioration des instructions globales du guide + du passage du donjon.
+  - Ajout de la mention de la quête Antiroyaliste.
+  - Correction sur les instructions donnés pour la quête Bienvenue à Frigost.
+  - Ajout d'une explication quant au choix concernant la quête Agriculture ou Alchimie.
+  - Ajustement des Objectifs.
+
+### Ajouts
+- Frigost : Les Pins Perdus & Le Lac Gelé
+- Quêtes d'alignement : 60 + Ordre 3 (Bonta / Brâk)
+- Bleu Turquoise - 2 / 5 - Troisième Dofus Primordial
+- Royaume d'Amakna : L'art de la langue de bois
+- Pandala : Sous des nuages de cendre 
+
+### Suppression
+- Quêtes de Silvosse - Partie 2
+- Rush Donjons - 8
+- Tour du Monde - Fin
+
+
+## Succès
+
+### Modifications 
+
+
+### Ajouts
+- Forage à tout va
+- Les carrières de glace
+
+
+## Quêtes
+
+### Ajouts
+- Pêche en eaux gelées
+- Il est frais mon pichon
+- Hôtel de glace
+- La fonte des glaces
+- L'ombre et la glace
+- Lumière sur l'ombre
+- Qu'est-ce qu'on a fait des tuyaux ?
+- Lâcher les gaz
+
+
+## CSS
+
+
+
+</details>
+
+
+
+
+### v1.0.5 Release
+
+<details>
+<summary>Voir les détails</summary>
+
+## Général
+
+Plus de détails sur la [refonte de l'installation](#refonte-de-linstallation) plus bas. 
+
+### Modifications
+- Refonte total du fichier de configuration de l'application Electron. Et particulièrement l'installation.
+- Ajustement de la partie Installation du README.
+
+### Ajouts
+- Ajout d'une fenêtre indiquant que l'installation est en cours.
+- Ajout d'un "splash screen" qui est une fenêtre de chargement qui s'affiche le temps que l'app se charge.
+- Ajout de Python 3.13.1 dans l'application et ainsi retirer cette dépendance.
+
+
+## Guides
+Ajout de tous les guides 130.
+
+### Modifications
+
+- "Astrub : Introduction au background et avancée du personnage" 
+  - Paragraphes oubliés ajoutés.
+  - Ajout de section à dévoiler via "Afficher" pour rendre le guide plus digeste.
+  - Affinement des explications et du formatage des paragraphes liés aux donjons.
+  - Ajout des changelogs de la version 1.0.5.
+- "Frigost : Le Royalmouth"
+  - Ajout de la mention "accomplir le donjon"
+- "Pourpre Profond - 2 / 3 - Second Dofus Primordial"
+  - Correction de plusieurs fautes dans les explications par rapport à la quête "Le trésor de Totankama" principalement.
+- "Cania : Ça en valait la plaine"
+  - Ajout de la mention de la quête "Jeu de Trooll"
+- "Le Campement des Bworks et Gobelins"
+  - Ajout de la mention de la quête "Jeu de Trooll" et du succès "Ça en valait la plaine"
+
+### Ajouts
+
+- "Srambad Chapitre 1 : Capitaine Ekarlatte"
+- "Pourpre Profond - 3 / 3 - Second Dofus Primordial"
+- "Cania : Ça en valait la plaine - Fin"
+- "Saharach : Territoire Cacterre"
+- "Pandala : Des larmes de pierres"
+
+### Suppression
+
+- "Pandala 1 - Le Dojo"
+
+
+## Succès
+
+### Modifications 
+- "Au clair de la dune"
+  - Ajout de demande : donjon.
+- "Des larmes de pierres"
+  - Changement de l'ordre d'affichage des quêtes pour refléter les directives du guide.
+- "La tornade des donjons"
+  - Ajout de la quête "Tour de passe-passe" qui avait été oubliée.
+
+
+## CSS
+- Ajout de marges dans les sections à dévoiler via le bouton "Afficher"
+
+
+
+</details>
+
+## Refonte de l'installation
+Ça aura été un casse tête mais au moins c'est fait, et puis c'était nécessaire. J'ai donc :
+ - Intégrer la dépendance Python à l'application, ce qui à pour conséquence d'avoir augmenté la taille de GPOD3.
+ - Refonte en totalité mon fichier de configuration de l'application Electron. Traduction : L'installation et le lancement de l'app.
+ - Ajouter une fenêtre "installateur" qui suit celle de Squirrel (Le gif vert au début de l'installation).
+ - Ajouter un écran de démarrage pour le style.
+ 
+La majeur partie des problèmes venaient du fait que l'installateur Squirrel se fermait précocement. Et j'ai autant galérer à cause de ma méconnaissance d'Electron et surtout ici de Squirrel. 
+Il se trouve que l'évènement "--squirrel-install" dans lequel j'imaginais pouvoir faire toutes les opérations d'installations, à une durée de vie fixe de 15s puis s'arrête et passe au suivant, or selon le PC et la connexion, GPOD3 met plus de temps que ça à s'installer. 
+Donc j'ai passé des jours, littéralement, à chercher une solution à un problème qui ne pouvait être résolu. 
+
+Mais j'ai pu commencer à avancer des lors que j'ai eu cette info et résultat j'ai remplacé le vide par une petite fenêtre indiquant que l'installation se déroule. C'est très minimaliste pour l'instant mais fonctionnel. Ce sera amélioré ultérieurement.
+
+J'en ai profité pour ajouter une fenêtre de démarrage pendant que l'app charge. Là encore rien de bien tape à l'œil mais au moins il y a quelque chose.
+ 
+Globalement c'est encore loin d'être parfait mais je m'y retrouve donc c'est pas mal pour avancer.
+J'ai encore à améliorer certaines choses mais je ne devrais plus avoir trop de retour négatifs en ce qui concerne l'installation qui échouée régulièrement. Si vous avez un problème lors de l'installation en **version ≥ 1.0.5** n'hésitez pas à me le faire savoir.
+
+## Sauvegarde de la progression
+Il est à présent possible depuis la **version 1.0.3** de sauvegarder et charger sa progression via un menu d'option situé en haut à droite de l'application. 
+- Pour les utilisateurs de la **version ≥ 1.0.3** ou si c'est votre première utilisation, alors tout va bien pour vous. Vous trouverez quand même des explications sur comment ça fonctionne tout en bas "Version ≥ 1.0.3" ou dans le premier guide de GPOD3.
+- Pour les utilisateurs des versions précédentes ( **version ≤ 1.0.2** ) voir la section "Version ≤ 1.0.2" un peu plus bas.
+
+**Remarque** : La mise à jour n'est pas encore un procédé très abouti. Idéalement il faudra que je rende tout ça in-app automatique. Techniquement c'est déjà possible avec les deux autres fichiers que je fourni, le .nupkg et le RELEASES mais il faut encore que je comprenne comment.
+
+### Version ≤ 1.0.2
+Pour ceux ayant utilisé une version inférieur ou égale à la **1.0.2** et qui ne souhaitent pas perdre leurs progression en mettant l'app à jour, il vous faudra faire quelques manipulations. Pas de panique voici la marche à suivre :
+1. Téléchargez le dossier "creation_sauvegarde.7z" et dézippez le où vous voulez.
+2. Vous aurez deux fichiers : "save.bat" et "create_save.py".
+3. Ouvrez les fichiers locaux de l'application en faisant un clique droit sur l'icone de l'application présente sur votre bureau > "Ouvrir l'emplacement du fichier". Ou bien faites la combinaison de touches "Windows" + "R" et collez %LocalAppData% puis faites entrer et ouvrez le dossier "GPODofus3".
+4. Allez dans le dossier app-1.X.X (les X correspondent à votre version) notez que vous y êtes déjà si vous avez êtes passer par "Ouvrir l'emplacement du fichier" > "resources" > "app". Glissez dans ce dernier le fichier "create_save.py".
+5. Retournez 2 fois en arrière dans le dossier app-1.X.X et glissez y le fichier "save.bat".
+6. Enfin, double cliquez sur "save.bat" et cela vous créera la sauvegarde de votre progression.
+
+Vous pouvez maintenant installer la nouvelle version de l'application. 
+Une fois dans l'application nouvellement installée puis lancée, ouvrez le menu via l'icone située en haut à droite de l'application et cliquez sur "Charger". Cela ira chercher le fichier de sauvegarde crée précédemment. 
+Maintenant plus de panique puisque vous n'aurez plus besoin de faire cette opération manuellement il vous faudra simplement cliquer sur "Sauvegarder" et cela fera la même chose.
+
+### Version ≥ 1.0.3
+1. Cliquez sur le menu d'option en haut à droite de l'application. 
+2. Dans la section "Sauvegarde" vous avez 2 options : 
+    - La première créera la sauvegarde. 
+    - La seconde la chargera.
+    
+C'est aussi simple que ça. Une fois la sauvegarde créée, vous pourrez mettre l'application à jour en installant les nouvelle version et une fois l'application lancée vous n'aurez qu'à appuyer sur "Charger" et vous retrouverez votre progression (une fois l'application redémarrée ou si vous passez au guide suivant ou précédent).
+
+
+
 # v.1.0.4 Release
 **BIEN LIRE LA SECTION INSTALLATION DU README**
 - Améliorations des guides existants.

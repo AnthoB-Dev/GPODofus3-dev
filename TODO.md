@@ -107,7 +107,36 @@ Distribution windows sous **Electron**.
 
 ### Bogues :
 
-- [ ] **#4** Les processus *Python* continuent de se réouvrir à la fermeture de l'app. (Semble s'être réglé, à observer)
+- [ ] **#5** Supprimer le Python embarqué puisqu'il ne sert à rien une fois installé (A voir néanmoins si ça ne va pas poser de problèmes avec l'updating) 135Mo à libéré
+    J'ai perdu pas mal de temps à essayer, le problème c'est que j'ai besoin de redéfinir les variables pathExec et pythonPath (qui se fait actuellement dans ensureVenvExists()) car si je n'appel pas ensureVenvExists() avant de suppr libs, j'ai des erreurs :
+      [debug] createWindow
+      [info]  Création de la fenêtre principale.
+      [info]  Fenêtre principale créée. Fin du processus.
+      [debug] Fn - deleteFolders
+      [debug] handleFirstRun complété.
+      [error] stderr : did not find executable at 'C:\Users\bonis\AppData\Local\GPODofus3\app-1.0.5\resources\app\libs\python\WPy64-31310\python\python.exe': Le fichier sp�cifi� est introuvable.
+
+
+
+      [error] Erreur lors de la vérification des dépendances : La commande a échouée avec le code 103
+      [info]  Une ou plusieurs dépendances sont manquantes. Installation...
+      [debug] Fn - installDependencies
+      [info]  Installation des dépendances...
+      [info]  Installation via pip...
+      [info]  CMD C:\Users\bonis\AppData\Local\GPODofus3\app-1.0.5\venv\Scripts\pip.exe install,--no-cache-dir,-r,C:\Users\bonis\AppData\Local\GPODofus3\app-1.0.5\resources\app\requirements.txt,--default-timeout=600 [object Object] exécutée.
+      [error] stderr : did not find executable at 'C:\Users\bonis\AppData\Local\GPODofus3\app-1.0.5\resources\app\libs\python\WPy64-31310\python\python.exe': Le fichier sp�cifi� est introuvable.
+
+
+
+      [error] Erreur lors de l'installation des dépendances : Error: La commande a échouée avec le code 103
+          at ChildProcess.<anonymous> (C:\Users\bonis\AppData\Local\GPODofus3\app-1.0.5\resources\app\scripts\electron\squirrelEventsHandlers.js:58:16)
+          at ChildProcess.emit (node:events:518:28)
+          at maybeClose (node:internal/child_process:1104:16)
+          at ChildProcess._handle.onexit (node:internal/child_process:304:5)
+
+    Il faut que je les redéfinissent mais avant de les appelés dans deleteFolders()
+- [ ] **#6** Réabiliter l'installation via source code (N'est plus prio puisque l'installeur fonctionne)
+- [x] **#4** Les processus *Python* continuent de se réouvrir à la fermeture de l'app. (Semble s'être réglé, à observer)
 - [x] **#1** L'installation demande des permissions *admin* pour installer les dépendences avec *pip*. 
 - [x] **#2** Revoir la logique du script dans une certaine mesure. Il faudrait partager correctement la logique d'installation avec celle du lancement.
 - [x] **#3** Dans le cas où le *#2* ne suffit pas, il faut revoir les events squirrel qui la plupart du temps empêche de lancer l'app du premier coup.

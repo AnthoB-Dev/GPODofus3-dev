@@ -3,63 +3,54 @@
 ![Image du projet](https://github.com/AnthoB-Dev/GPODofus3/blob/main/staticfiles/medias/project.png)
 
 ## Mises à jour
-### Dernière : version 1.0.3
-- Suite des guides (assez peu cependant mais le rythme va augmenter maintenant le rush passé)
-- Beaucoup d'améliorations sur les guides déjà présent (Je remercie mon testeur Aïhoko, noob complet de Dofus, pour ses retours constructifs)
-- Et enfin une option de sauvegarde d'avancée pour ne pas perdre la progression lors d'une mise à jour de l'application.
+MàJ tous les vendredi 18h (environ) jusqu'à ce que tous les guides soient rédigés.
 
-Détails dans [Release](https://github.com/AnthoB-Dev/GPODofus3/releases).
+### Dernière : version 1.0.6
+- Grosse percée dans la rédaction avec tous les guides de niveaux 140, 150 et 160.
+- Quelques modifications sur le guide 120 - Frigost : Le Royalmouth.
 
-### version 1.0.2
-Apporte beaucoup de changements qualitatifs en terme de rédaction et une disposition modifiée de la structure pour une meilleure logique de lecture. 
+Détails dans [Release](https://github.com/AnthoB-Dev/GPODofus3/releases/tag/v1.0.6).
+
+### version 1.0.5
+- Refonte totale de l'installation de GPOD3.
+- Ajout des guides de niveau 130. 
+
+Détails dans [Release](https://github.com/AnthoB-Dev/GPODofus3/releases/tag/v1.0.5).
+ 
+### version 1.0.4
+- Suite des guides. Tous les guides 120 ont été rédigés.
+- Beaucoup d'améliorations sur les guides déjà présent notamment sur les guides d'alignements.
+- Correction d'un oublie de sauvegarder l'alignement de l'utilisateur lors d'une sauvegarde de la progression.
+
+Détails dans [Release](https://github.com/AnthoB-Dev/GPODofus3/releases/tag/v1.0.4).
+
 
 ## Bienvenu sur GPODofus3.
-
 
 **GPODofus3** (*GPOD3 pour les intimes*) a été développé dans le but **d'apporter** ce qui, à mon humble avis et avec toute la **subjectivité** que cela implique, **manque** au guide du -presque- même nom de [Skyzio](https://docs.google.com/spreadsheets/d/1X7rrozrDZDepncPr8AZXV7oLT_xEa6dkASjLmVFOLwA/edit?gid=1858873548#gid=1858873548).
 
 **N'hésitez pas** à mettre une **étoile** sur [le Github du projet](https://github.com/AnthoB-Dev/GPODofus3) si vous **appréciez** l'application, ou simplement si l'**initiative** vous interesse.
 J'ai déjà en tête des axes d'améliorations en termes de fonctionnalités, de qualité de vie, d'optimisations structurelles de l'application, et bien plus !
 
-- **<span style="color:red;">LIRE ATTENTIVEMENT LA SECTION INSTALLATION SVP.</span>**
 - **<span style="color:red;">Ne supporte que Windows pour le moment.</span>**
 
 
 ## Sommaire
-<ul>
-    <li>
-        <a href="#présentations">Présentations</a>
-    </li>
-    <li>
-        <a href="#le-guide-de-progression-optimisée-de-skyzio">Le guide de progression optimisée de Skyzio</a>
-        <ul>
-            <li><a href="#les-défauts-qui-mont-inspirés">Les défauts qui m'ont inspirés</a></li>
-        </ul>
-    </li>
-    <li>
-        <a href="#guide-de-progression-optimisée-dofus-3-1">Le Guide de Progression Optimisée: Dofus 3</a>
-        <ul>
-            <li><a href="#ce-quapporte-gpod3">Ce qu'apporte GPOD3</a></li>
-            <li><a href="#ce-que-ça-napporte-pas">Ce que ça n'apporte pas</a></li>
-        </ul>
-    </li>
-    <li>
-        <a href="#installation">Installation</a>
-        <ul>
-            <li><a href="#téléchargement">Téléchargement</a></li>
-            <li><a href="#installation-1">Installation</a></li>
-        </ul>
-    </li>
-    <li>
-        <a href="#utilisation">Utilisation</a>
-    </li>
-    <li>
-        <a href="#remerciements">Remerciements</a>
-    </li>
-    <li>
-        <a href="#contact">Contact</a>
-    </li>
-</ul>
+- <a href="#présentations">Présentations</a>
+- <a href="#le-guide-de-progression-optimisée-de-skyzio">Le guide de progression optimisée de Skyzio</a>
+    - <a href="#les-défauts-qui-mont-inspirés">Les défauts qui m'ont inspirés</a>
+- <a href="#guide-de-progression-optimisée-dofus-3-1">Le Guide de Progression Optimisée: Dofus 3</a>
+    - <a href="#ce-quapporte-gpod3">Ce qu'apporte GPOD3</a>
+    - <a href="#ce-que-ça-napporte-pas">Ce que ça n'apporte pas</a>
+- <a href="#installation">Installation</a>
+    - <a href="#téléchargement">Téléchargement</a>
+    - <a href="#installation-1">Installation</a>
+- <a href="#mise-à-jour">Mise à jour</a>
+- <a href="#désinstallation">Désinstallation</a>
+- <a href="#utilisation">Utilisation</a>
+- <a href="#remerciements">Remerciements</a>
+- <a href="#contact">Contact</a>
+
 
 
 ## Présentations
@@ -145,40 +136,28 @@ Mais j'ai quand même fait en sorte, au meilleur de mes compétences, de **rédu
 
 
 ## Installation
-**<span style="color:red;">LIRE ATTENTIVEMENT CETTE SECTION SVP</span>**
-
-Notez qu'il n'y a pour l'instant pas de moyen de mettre à jour l'application automatiquement. Il faut donc répéter presque toute les étapes présentes ci-dessous à chaque fois.
 
 ### Téléchargement
-À droite de cette page, section **Release** latest ou [en cliquant ici](https://github.com/AnthoB-Dev/GPODofus3/releases).
-Tout en bas de la Release la section "Assets".
+- À droite de cette page, section **Release** latest ou [en cliquant ici](https://github.com/AnthoB-Dev/GPODofus3/releases). Puis tout en bas de la Release la section "Assets".
 
 ### Installation
 #### Via l'installateur
-Faites **<span style="color: red;">attention à 3 points</span>** avec l'installateur :
-
-1. Vous **<span style="color: red;">DEVEZ</span>** télécharger [Python 3.13](https://www.python.org/downloads/release/python-3130/) et l'installer.
-    - Lorsque l'installateur Python s'ouvre, sélectionnez bien "<span style="color: red;">Ajouter Python au Path</span>" ainsi qu'en <span style="color: red;">privilège administrateur</span>. Ceci devrait vous évitez de relancer votre session (ou redémarrer l'ordi).
-2. Une fois **Python installé**, vous pouvez lancer le **Setup.exe** mais attention sur un point : Lorsque non lancer en administrateur, il est possible que les dépendances ne s'installent pas correctement. Si c'est votre cas, lancer le **Setup.exe en administrateur** devrait résoudre le problème.
-    - J'utilise le conditionnel car sur les 5 machines où a été tester l'application, il y en a une pour laquelle le lancement en admin n'a pas fonctionné. Je ne connais pas la raison et j'ai manqué de temps pour la trouver. Si c'est votre cas, malheureusement vous ne pourrez pas utiliser **GPODofus3**, je m'en excuse.
-3. L'installateur **se ferme AVANT la fin de l'installation**. Attendez bien que la fenêtre de l'application s'ouvre d'elle même. L'attente dépendra de la vitesse de votre connexion mais comptez au minimum **30 secondes**.
+- Lancez le Setup.exe.
 
 #### Avec le source code (zip)
-La procédure est plus simple mais **demande un terminal d'ouvert** lorsque l'application est lancée : 
+Je ne supporte pour l'instant plus l'utilisation via source code.
 
-1. Dézippez le dossier où vous voulez.
-2. Lancez **install** (.vbs)
-    - Attention, si le script vous annonce une quelconque erreur à l'étape 1 ou 2 en lien avec les installations de Python ou Node, et qu'elle persiste après avoir relancer le script, installez manuellement Python et Node via les installateurs fournis dans le dossier "dependencies".
-    - Si le script vous annonce une erreur au niveau de l'étape 3 "**Création de l'environnement virtuel**", fermez et relancez le.
-3. Lancez **run** (.bat)
+### Mise à jour
+Pour mettre à jour l'application vous devez :
+1. Sauvegarder votre progression depuis les options de GPOD3.
+2. Télécharger et installer le Setup.exe de la nouvelle version.
+3. Charger sa sauvegarde depuis les options de GPOD3.
  
 ### Désinstallation 
 
 #### Si installé via Setup.exe
-Vous pouvez supprimer l'application depuis "**Ajouter ou supprimer des programmes**" sous Windows.
+- Vous pouvez supprimer l'application depuis "**Ajouter ou supprimer des programmes**" sous Windows.
 
-#### Si via source code (zip)
-Simplement **supprimer le dossier** où vous l'avez décompressé, et si vous le souhaitez, désinstallez **Python** puis **Node** depuis "Ajouter ou supprimer des programmes" sous Windows. 
 
 ## Utilisation
 Le tout premier Guide de l'application est un guide tutoriel expliquant "qui fait quoi" dans l'application. Je vous invite donc à vous rendre sur celui-ci lorsque vous avez un questionnement quelconque sur les fonctionnalités de l'app.
@@ -186,13 +165,13 @@ Le tout premier Guide de l'application est un guide tutoriel expliquant "qui fai
 
 ## Remerciements
 Je vais évidemment commencer par remercier **Ankama Games** pour cet incroyable univers qu'est Dofus. On a grandit avec, le temps passe... Nous l'aimons voir le detestont... et pourtant nous sommes encore là. 
-Je souhaite toute la réussite possible à Dofus 3 en esperant que ce soit le début d'une nouvelle jeunesse pour cet ancien du jeux vidéo qu'est Dofus (mais attention, le jour où Dofus commence à perdre son âme, ça va barder)
+Je souhaite toute la réussite possible à Dofus 3 en esperant que ce soit le début d'une nouvelle jeunesse pour cet ancien du jeux vidéo qu'est Dofus (Mais attention à ne pas faire n'importe quoi non plus).
 
-Ensuite à **Skyzio** pour avoir mis à disposition de la communauté un guide qui a assurément demander des mois de travail. 
+Ensuite à **Skyzio** pour avoir mis à disposition de la communauté un guide qui a assurément demandé des mois de travail. 
 Merci à toi, je vais enfin pouvoir jouer de façon plus optimale (et mettre les mains sur autre chose que le Cawotte !)
 
-Et enfin, à **toi** l'utilisateur de cette application. Ou bien **toi** qui envisagerait de l'utilisée.
-Je vous remercie d'être les premiers utilisateurs hors entourage à utiliser une de mes création.
+Et enfin, à **toi** l'utilisateur de cette application. Ou bien **toi** qui envisagerait de l'utiliser.
+Je vous remercie d'être les premiers utilisateurs hors entourage à utiliser une de mes créations.
 
 
 ## Contact
@@ -200,3 +179,5 @@ Pour tout contact au sujet de l'application, vous pouvez :
 - Me mp sur Discord : **shiinasan.**
 - M'envoyer un email : **bonis.anthony.dev@gmail.com**
 - Ou bien me mp sur le serveur Brial 2 : **/w Fecashiina GPOD3 -**
+
+Certaines illustrations sont la propriété d'Ankama Games, d'autre de <a href="https://icones8.fr/">Icones8</a> - Tous droits réservés.

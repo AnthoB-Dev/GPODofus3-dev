@@ -237,16 +237,8 @@ Contenu de l'application.
 
 ### Rédiger :
 
-- [ ] **#8** Mettre à jour les guides selon le GPO v3.0 de Skyzio 
-    - Actuellement au guide id 85 "Bleu Turquoise - 2 / 5 - Troisième Dofus Primordial"
 - [ ] **#1** Rédiger tous les Guides
-    - Dernier : guide id 51 : "Vert Émeraude : Premier Dofus Primordial"
-- **#3** Ajouter des guides de rappel de temps en temps
-    - Exemple : quelques guides avant le Veilleur pour rappeler de ne pas aller au dela du level 114
 - [ ] **#4** Ajouter un guide Rush Donjons après les Quêtes alignement Brak 41
-- [ ] **#9** Ajouter les copyrights 
-    - Certaines illustrations sont la propriété d'Ankama Games, d'autre de <a href="https://icones8.fr/">Icones8</a> - Tous droits réservés.
-
 - [ ] **V1.+** Combiné les guides ayant pour objectif la complétion d'un donjon
 - [ ] **V1.+** Repenser la structure pour les succès Tour du monde et Tornade des donjons
     - Ajouter un succès Tour du monde et y mettre les 27 quêtes (donjons ?)
@@ -255,6 +247,9 @@ Contenu de l'application.
 <details>
 <summary>Résolus</summary>
 
+- [x] **#9** Ajouter les copyrights 
+- **#3** Ajouter des guides de rappel de temps en temps
+- [x] **#8** Mettre à jour les guides selon le GPO v3.0 de Skyzio 
 - [x] **#10** Ajouter les numéros de quêtes aux quêtes d'alignement
 - [x] **#5** Ajouter un guide Rush Donjons après les Quêtes alignement Brak 20
 - [x] **#8** Refaire les screens du tuto

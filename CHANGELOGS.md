@@ -1,4 +1,9 @@
 # v.1.0.6 Release
+Comme j'ai pu me concentrer sur la rédaction cette semaine, j'ai pu bien avancer et voilà donc tous les guides de niveau 140, 150 et 160.
+
+À vu de nez je dirais qu'il me reste 2 semaines de travail pour finir la rédaction de ce qu'il manque, maitenant pas sûr que ce soit fini sous 2 semaines avec la sortie de Kingdome Come : Deliverance II qui arrive... Je vais faire de mon mieux, promis.
+
+Ensuite j'ai réutilisé les premiers guides pour test un perso et me suis me rendu compte qu'ils pourraient être améliorés, une nouvelle fois, avec plus de directives pour faciliter la compréhension. Comme c'est le cas dans mes dernières rédactions où j'ai pas eu le choix vu le casse tête des guides Frigost et Pandala...
 
 
 ## Changelogs
@@ -10,16 +15,12 @@
 
 ## Général
 
-
-### Modifications
-
-
 ### Ajouts
-
+- Ajout des copyrights
 
 
 ## Guides
-
+Les guides 140, 150 et 160 ont été rédigés.
 
 ### Modifications
 - Mise à jour des titres de certains guides pour correspondre à ceux de Skyzio. Je ne met pas le détail puisque ça concerne des guides qui n'étaient plus visible depuis la 1.0.2
@@ -32,21 +33,30 @@
 
 ### Ajouts
 - Frigost : Les Pins Perdus & Le Lac Gelé
-- Quêtes d'alignement : 60 + Ordre 3 (Bonta / Brâk)
+- Quêtes d'alignement : 60 + Ordre 3 (Bonta)
+- Quêtes d'alignement : 60 + Ordre 3 (Brâkmar)
 - Bleu Turquoise - 2 / 5 - Troisième Dofus Primordial
 - Royaume d'Amakna : L'art de la langue de bois
 - Pandala : Sous des nuages de cendre 
+- Frigost - Le Berceau d'Alma
+- Bleu Turquoise - 3 / 5 - Troisième Dofus Primordial
+- Frigost - Les Larmes d'Ouronigride
+- Quêtes d'alignement : 70 (Bonta)
+- Quêtes d'alignement : 70 (Brâkmar)
+- Forêt Maléfique - Fin
 
 ### Suppression
 - Quêtes de Silvosse - Partie 2
 - Rush Donjons - 8
 - Tour du Monde - Fin
+- Frigost - Le Berceau d'Alma Pt 2
 
 
 ## Succès
 
 ### Modifications 
-
+- Les survivants de Frigost
+  - Ajout de l'icone à prévoir : Capture.
 
 ### Ajouts
 - Forage à tout va
@@ -64,10 +74,6 @@
 - Lumière sur l'ombre
 - Qu'est-ce qu'on a fait des tuyaux ?
 - Lâcher les gaz
-
-
-## CSS
-
 
 
 </details>

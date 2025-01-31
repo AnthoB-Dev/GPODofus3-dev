@@ -1,9 +1,10 @@
 # v.1.0.6 Release
-Comme j'ai pu me concentrer sur la rédaction cette semaine, j'ai pu bien avancer et voilà donc tous les guides de niveau 140, 150 et 160.
+Comme j'ai pû me concentrer sur la rédaction cette semaine, j'ai bien avancer et voilà donc tous les guides de niveau 140, 150 et 160.
 
-À vu de nez je dirais qu'il me reste 2 semaines de travail pour finir la rédaction de ce qu'il manque, maitenant pas sûr que ce soit fini sous 2 semaines avec la sortie de Kingdome Come : Deliverance II qui arrive... Je vais faire de mon mieux, promis.
+À vu de nez je dirais qu'il me reste 3 semaines de travail pour finir la rédaction de ce qu'il manque, maitenant pas sûr que ce soit fini dans ce délai avec la sortie de Kingdome Come : Deliverance II qui arrive... Je vais faire de mon mieux, promis.
 
-Ensuite j'ai réutilisé les premiers guides pour test un perso et me suis me rendu compte qu'ils pourraient être améliorés, une nouvelle fois, avec plus de directives pour faciliter la compréhension. Comme c'est le cas dans mes dernières rédactions où j'ai pas eu le choix vu le casse tête des guides Frigost et Pandala...
+Ensuite j'ai réutilisé les premiers guides pour test un perso et je me suis me rendu compte qu'ils pourraient être améliorés, une nouvelle fois, avec plus de directives pour faciliter la compréhension. Comme c'est le cas dans mes dernières rédactions où j'ai pas eu le choix vu le casse tête des guides Frigost et Pandala...
+J'ai d'ailleurs eu le temps de commencer à les améliorers.
 
 
 ## Changelogs
@@ -14,6 +15,9 @@ Ensuite j'ai réutilisé les premiers guides pour test un perso et me suis me re
 <summary>Voir les détails</summary>
 
 ## Général
+
+### Modifications
+- Le titre du guide est à présent affiché en nom de fenêtre.
 
 ### Ajouts
 - Ajout des copyrights
@@ -30,6 +34,37 @@ Les guides 140, 150 et 160 ont été rédigés.
   - Correction sur les instructions donnés pour la quête Bienvenue à Frigost.
   - Ajout d'une explication quant au choix concernant la quête Agriculture ou Alchimie.
   - Ajustement des Objectifs.
+- Rush Donjons - 1
+  - Ajout des donjons à accomplir dans Objectifs
+  - Éclaircissement quant au "bon moment" pour accomplir les donjons.
+- Pandala : Introduction aux Dofus
+  - Ajout de directives quant aux quêtes à compléter.
+- Sidimote : Les landes mortes - Début
+  - Changement du contenu d'information importantes.
+  - Reformatage du guide pour comprendre le titre du succès et ajout de l'ancien contenu d'informations importantes dans le guide + quelques modifications.
+- Le Campement des Bworks et Gobelins
+  - Reformatage global.
+  - Ajout d'un paragraphe de directives.
+  - Ajout de la mention du succès Première édition de donjons.
+  - Retrait du paragraphe sur le donjon.
+- Caniablanca : Exploration des plaines
+  - Retrait de la section informations importantes
+  - Retrait du paragraphe sur La foire au gobs
+  - Modification des Objectifs
+- Quêtes d'alignement : 19 (Bonta)
+  - Ajout de directives selon le sens d'accomplissement des donjons choisi.
+- Rush Donjons - 2
+  - Ajout de la mention du Nid du Kwakwa dans Informations importantes.
+  - Éclaircissement quant au "bon moment" pour accomplir les donjons.
+- Archipel de Valonia - Albuera
+  - Reformatage pour uniformiser le style de la rédaction.
+- Sufokia : Accéder à l'ile d'Otomaï
+  - Reformatage pour uniformiser le style de la rédaction.
+  - Ajout de l'objectif "Compléter le succès".
+  - Retrait de l'objectif "Sauvegarder les zaaps".
+- Dofus Ocre : L'Éternelle Moisson
+  - Reformatage pour uniformiser le style de la rédaction.
+  - Ajout d'un paragraphe de directives.
 
 ### Ajouts
 - Frigost : Les Pins Perdus & Le Lac Gelé
@@ -44,6 +79,12 @@ Les guides 140, 150 et 160 ont été rédigés.
 - Quêtes d'alignement : 70 (Bonta)
 - Quêtes d'alignement : 70 (Brâkmar)
 - Forêt Maléfique - Fin
+- Otomaï : l'Arbre Hakam
+- Bleu Turquoise - 4 / 5 - Troisième Dofus Primordial
+- Cania : La Voyageuse Imprudente
+- Enutrosor Chapitre 2 : Phossile
+- Ecaflipus Chapitre 2 : Ush
+- Rush Donjons - 7 - Minotot
 
 ### Suppression
 - Quêtes de Silvosse - Partie 2
@@ -64,6 +105,10 @@ Les guides 140, 150 et 160 ont été rédigés.
 
 
 ## Quêtes
+
+### Modifications
+- GaBuZoMeu
+  - Le lien n'était pas celui de la quête.
 
 ### Ajouts
 - Pêche en eaux gelées

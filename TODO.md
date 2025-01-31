@@ -23,6 +23,7 @@ Developpement backend **Django**.
 - [ ] **V1.+** Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons.
     - L'idée c'est de changer **Quêtes** en **Donjons** et que les succès affichent les donjons à la place des quêtes.
 - [ ] **V1.+** Ajouter un champ level aux succès et permettre un tri des succès par niveaux.
+- [ ] **V1.+** Ajouter un système de rappel activable / désactivable comme pour les quêtes pandala qui demande 24h d'attente.
 
 <details>
 <summary>Résolus</summary>
@@ -200,7 +201,8 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 ### Bogues :
 
 - [ ] **#2** La *navigation clavier* : Je la laisse mais il faut prévenir de pas trop spam comme des dératés au risque de devoir relancer l'app.
-- [ ] **#4** Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés
+- [ ] **#4** Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés.
+- [ ] **#5** *Valider tout* reste disabled en cas de changement de guide alors que la validation des guides n'est pas fini.
 
 <details>
 <summary>Résolus</summary>

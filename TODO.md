@@ -66,6 +66,7 @@ Developpement backend **Django**.
 
 - [ ] **#1** Le *validate* des quêtes du succès **Donjons avancés** ne rafraichissent pas le succès et donc ni son pourcentages, ni sa bordure.
     - Lorsque je suis en alignement Neutre, ça fonctionne.
+- [ ] Le succès **Adjugé glandu** dans le guide ali 29 est bloqué à 50% car il compte les quêtes de l'autre alignement. Par contre dans le guide 33 le même succès est à 100%.
 
 
 <details>

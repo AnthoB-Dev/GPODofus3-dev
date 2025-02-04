@@ -1,10 +1,117 @@
-# v.1.0.6 Release
-Comme j'ai pû me concentrer sur la rédaction cette semaine, j'ai bien avancer et voilà donc tous les guides de niveau 140, 150 et 160.
+# v.1.0.7 Release
 
-À vu de nez je dirais qu'il me reste 3 semaines de travail pour finir la rédaction de ce qu'il manque, maitenant pas sûr que ce soit fini dans ce délai avec la sortie de Kingdome Come : Deliverance II qui arrive... Je vais faire de mon mieux, promis.
+
+## Changelogs
+
+### v1.0.7 Release
+
+<details>
+<summary>Voir les détails</summary>
+
+
+## Guides
+
+
+### Modifications
+- À travers le Krosmoz 
+  - Correction du titre du guide "A" -> "À".
+  - Uniformisation de la section Objectifs.
+  - Ajout d'explications quant à la quête "Du rire en barre".
+- Faire le kéké
+  - Uniformisation.
+  - Ajout d'un lien vers DofusDB pour les Poils de Kerubim.
+- Amakna : Premières quêtes
+  - Retrait de la section Informations importantes
+  - Ajout d'un paragraphe de directives.
+  - Ajout d'un lien vers DofusDB pour les Pelles de Boisailles
+  - Modifications des Objectifs
+- Captain Amakna : À la poursuite des Vilaines
+  - Correction du titre du guide "A" -> "À".
+  - Uniformisation global.
+  - Ajout d'un lien vers DofusDB pour les Étoffes Mystérieuses.
+  - Éclaircissement des directives.
+- Sufokia : Le bon air de la mer d'Asse - Début
+  - Uniformisation global.
+  - Ajout d'un lien DofusDB vers les Étoiles de la Mer d'Asse.
+  - Ajout d'un paragraphe sur la quête Des étoiles dans l'estomac.
+  - Amélioration des directives.
+- Choix de l'alignement
+  - Légère amélioration de la section Pourquoi s'aligner.
+- Rush Donjons - 1
+  - Uniformisation de Objectifs
+  - Éclaircissement des directives.
+- Pandala : Introduction aux Dofus
+  - Ajout du succès Partie prise pour la quête Intrusion chez les wabbits.
+  - Ajout d'un objectif pour Mortelle randonnée et Partie prise.
+  - Ajout d'une section pour Partie prise et modifications des paragraphes existant pour le prendre en compte.
+  - Retrait d'un objectif.
+  - Uniformisation de la section Informations importantes.
+- Sidimote : Les landes mortes - Début
+  - Ajout de liens DofusDB pour les potions Breuvage d'Erazal et le monstre Vampire Omane.
+- Le Campement des Bworks et Gobelins
+  - Améliorations des Objectifs
+  - Ajout de liens DofusDB pour les Bière bwork et DPLN pour le sort commun Foudroiement de Grunob.
+- Rush Donjons - 2 
+  - Uniformisation de Objectifs
+- Archipel de Valonia - Albuera
+  - Retrait d'un objectif.
+  - Ajout de la position du bateau pour se rendre sur l'archipel.
+  - Uniformisation de Informations importantes.
+- Dofus Ocre : L'Éternelle Moisson
+  - Ajout du succès Service de dépannage. (Fait lors de la précédente MàJ)
+- Ocre d'Ambre - Akadémie des Gobs & Grotte Hesque
+  - Uniformisation des Objectifs.
+  - Uniformisation du Guide.
+- Ile de Moon : Territoire Kanniboule
+  - Uniformisation des Objectifs.
+  - Uniformisation de Informations importantes.
+  - Ajout de liens DofusBook vers la Panoplie Tortue, Caracoiffe. DofusDB vers la ressource Bananagrume. DPLN vers le sort Kannibulle.
+  - Ajout d'un paragraphe sur le succès Donjons avancés et uniformisation du Guide.
+
+
+### Ajouts
+- Pandala 2 - Dojo
+- Saharach : La gorge des vents hurlants & La cité détruite
+- Xelorium Chapitre 2 : XLII
+- Frigost - La Crevasse Perge
+- Ocre d'Ambre : Quand les esprits s'échauffent
+- Pandala : Le Gardien de l'Immaculé
+- Ocre d'Ambre : Fin
+- Srambad Chapitre 2 : Toxoliath
+- Royaume d'Amakna : Les derniers d'entre nous
+- Quêtes d'alignement : 85 + Ordre 4 (Bonta)
+- Quêtes d'alignement : 85 + Ordre 4 (Brâkmar)
+
+
+
+## Succès
+
+### Modifications
+- Le gardien de l'immaculé 
+  - Changement de l'ordre d'affichage de deux des quêtes pour refléter le sens de complétion.
+
+
+### Ajouts
+- Slip ou caleçon
+
+
+## Quêtes
+
+### Ajouts 
+- Chaud du S.L.I.P.
+
+
+
+
+
+
+# v.1.0.6 Release
+Comme j'ai pu me concentrer sur la rédaction cette semaine, j'ai bien avancer et voilà donc tous les guides de niveau 140, 150 et 160.
+
+À vu de nez je dirais qu'il me reste 3 semaines de travail pour finir la rédaction de ce qu'il manque, maintenant pas sûr que ce soit fini dans ce délai avec la sortie de Kingdome Come : Deliverance II qui arrive... Je vais faire de mon mieux, promis.
 
 Ensuite j'ai réutilisé les premiers guides pour test un perso et je me suis me rendu compte qu'ils pourraient être améliorés, une nouvelle fois, avec plus de directives pour faciliter la compréhension. Comme c'est le cas dans mes dernières rédactions où j'ai pas eu le choix vu le casse tête des guides Frigost et Pandala...
-J'ai d'ailleurs eu le temps de commencer à les améliorers.
+J'ai d'ailleurs eu le temps de commencer à les améliorer.
 
 
 ## Changelogs

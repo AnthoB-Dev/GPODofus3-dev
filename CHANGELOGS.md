@@ -1,9 +1,34 @@
 # v.1.0.7 Release
+De retour après 80h sur Kingdome Come: Deliverance II. Navré pour ce délais.
+
+J'ai ajouté tous les guides 170 et 180 et ai modifié pas mal d'anciens guides. J'avais eu le temps de commencer le week-end précédent le 4 février donc je peux vous proposer pas mal de choses malgré tout.
+
+J'ai aussi enfin réussi à faire quelque chose de satisfaisant avec la section Objectifs, qui était auparavent pas franchement utile car souvent redondante.
+Maintenant ça permet de savoir concrètement et rapidement ce qu'il faudra accomplir durant le guide. Ce qui sera le plus commun dans cette section est :
+  - "Compléter le succès X" qui indique implicitement de compléter toutes les quêtes du succès "X".
+  - "Avancer le succès Y" qui lui indique implicitement que seul certaines quêtes du succès "Y" seront à compléter.
+  - "Accomplir le donjon Z" qui était déjà présent et qui reste inchangé, donc lorsqu'un donjon est à accomplir lors du guide, il sera indiqué ici.
+
+Si plusieurs succès ou donjons sont à compléter ou accomplir, ils seront tous indiqués. Exemple :
+
+Compléter les succès :
+- Succès X
+- Succès Y
+- Succès Z
+
+Accomplir les donjons :
+- Donjon 1
+- Donjon 2
+- Donjon 3
+
+Les quêtes à compléter lorsque "Avancer le succès X" seront indiquées dans le Guide.
+
+Bref, je suis satisfait de la section Objectifs qui a, à présent, un intérêt. Ne me reste plus qu'à appliquer les changements dans tous les guides.
 
 
 ## Changelogs
 
-### v1.0.7 Release
+### v1.0.7
 
 <details>
 <summary>Voir les détails</summary>
@@ -13,6 +38,11 @@
 
 
 ### Modifications
+Beaucoup de modifications.
+
+<details>
+<summary>Voir les détails</summary>
+
 - À travers le Krosmoz 
   - Correction du titre du guide "A" -> "À".
   - Uniformisation de la section Objectifs.
@@ -61,15 +91,71 @@
   - Ajout du succès Service de dépannage. (Fait lors de la précédente MàJ)
 - Ocre d'Ambre - Akadémie des Gobs & Grotte Hesque
   - Uniformisation des Objectifs.
-  - Uniformisation du Guide.
+  - Uniformisation de la rédaction du Guide.
 - Ile de Moon : Territoire Kanniboule
   - Uniformisation des Objectifs.
   - Uniformisation de Informations importantes.
   - Ajout de liens DofusBook vers la Panoplie Tortue, Caracoiffe. DofusDB vers la ressource Bananagrume. DPLN vers le sort Kannibulle.
-  - Ajout d'un paragraphe sur le succès Donjons avancés et uniformisation du Guide.
+  - Ajout d'un paragraphe sur le succès Donjons avancés.
+  - Uniformisation de la rédaction du Guide.
+- Quêtes d'alignement : 20 + Ordre 1 (Bonta)
+  - Correction d'une faute sur le numéro de la quête Le Tabi d'Amayiro qui était 20 alors que c'est la 19.
+  - Ajout de directives pour la quête 20 Le fantôme de Tsog.
+  - Modification du titre du paragraphe "Ordre" en "À vos Ordres !" & Mention de complétion de la quête d'Ordre.
+  - Ajout du succès Mot d'Ordre au guide et de directives le concernant.
+  - Uniformisation de la section Objectifs.
+- Quêtes d'alignement : 20 + Ordre 1 (Brâkmar)
+  - Modification du titre du paragraphe "Ordre" en "À vos Ordres !" & Mention de complétion de la quête d'Ordre.
+  - Ajout du succès Mot d'Ordre au guide et de directives le concernant.
+  - Légère modification des directives pour la quête 20.
+  - Uniformisation de la section Objectifs.
+- Dofus Cawotte - 1 - Wa Wabbit
+  - Amélioration de la section Objectifs
+  - Uniformisation de la rédaction du Guide.
+  - Ajout d'un paragraphe sur les raccourcis ajoutés avec Dofus 3.
+- Rush Donjons - 4 - Gélaxième dimension
+  - Uniformisation de la rédaction du Guide.
+- Sufokia : Le bon air de la mer d'Asse - Fin
+  - Uniformisation des sections Objectifs et Guide.
+- Rush Donjons - 5 - Épreuve de Draegnerys
+  - Uniformisation de la rédation du Guide & Ajout du bon moment pour accomplir le donjon.
+- Île d'Otomaï : Les Pirates
+  - Amélioration de la section Objectifs
+  - Uniformisation de la rédation du Guide & Ajout du bon moment pour accomplir le donjon.
+- Quêtes d'alignement : 29
+  - Changement de l'alignement du guide en Bonta.
+  - Uniformisation de la rédaction du Guide & de la section Objectifs.
+  - Les titres des quêtes dans le guide correspondent donc maintenant aux noms des quêtes de Bonta.
+- Sidimote : Les landes mortes - Fin
+  - Amélioration de la section Informations importantes.
+  - Uniformisation de la rédaction du Guide.
+- Saharach : la Dune des Ossements
+  - Uniformisation de la section Objectifs.
+  - Ajout de ressources à prévoir.
+  - Améliorations du Guide via l'ajout d'informations manquantes.
+  - Ajout d'un lien DofusDB pour la Flûte de Mastodonte.
+- Dofus Cawotte - 2 - Wa Wobot
+  - Uniformisation de la section Objectifs
+  - Uniformisation de la rédaction du Guide.
+  - Retrait du paragraphe concernant la quête Intrusion chez les wabbits.
+- Montagne des Koalaks : Tout ça pour du kaliptus
+  - Uniformisation globale.
+  - Ajout de directives concernant le succès l'osmose.
+- Île de Moon : Les Pirates du Chouque
+  - Uniformisation globale.
+  - Ajouts de directives concernants les succès & Amélioration de la directive globale.
+- Route des Roulottes : Hurlements de rire
+  - Uniformisation globale.
+  - Ajout de directives globales.
+  - Ajout du bon moment pour accomplir le donjon.
+  - Retrait d'un paragraphe d'Informations importantes concernant les quêtes.
+  - Ajout de la mention de la complétion du succès Donjons trois point cinq.
+
+</details>
 
 
 ### Ajouts
+- Quêtes d'alignement : 29 (Brâkmar)
 - Pandala 2 - Dojo
 - Saharach : La gorge des vents hurlants & La cité détruite
 - Xelorium Chapitre 2 : XLII
@@ -89,6 +175,11 @@
 ### Modifications
 - Le gardien de l'immaculé 
   - Changement de l'ordre d'affichage de deux des quêtes pour refléter le sens de complétion.
+- À vos Ordres !
+  - Correction du titre "A" -> "À" & "ordres!" -> "Ordres !".
+- Mot d'Ordre
+  - Correction du titre "ordre" -> "Ordre".
+
 
 
 ### Ajouts

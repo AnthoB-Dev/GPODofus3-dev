@@ -92,13 +92,14 @@ Distribution windows sous **Electron**.
 
 ### Développer :
 
+- [ ] **#2** Me débarasser complétement de l'event squirrel-install car sur une machine peu puissante, les 15 secondes sont insuffisante. La creation du shortcut est bypass.
 - [ ] **#1** Ajouter l'installation de Python pendant le script (avec l'installateur).
-- [ ] **#4** Éffacer le dossier *dependencies* une fois utilisé.
-- [ ] **#3** Ajouter un loading screen au lancer.
+- [ ] **#4** Effacer le dossier *dependencies* une fois utilisé.
 
 <details>
 <summary>Résolus</summary>
 
+- [x] Ajouter un loading screen au lancer.
 - [x] Comprendre comment utiliser Electron Forge
 - [x] Faire un test de build
 - [x] Le *validateAll* sur spam du bouton finit par ralentir un des processus, peut être le *clickNextAchievement*, ou peut être le render de quests    

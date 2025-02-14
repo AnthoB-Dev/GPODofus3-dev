@@ -3,28 +3,7 @@ De retour après 80h sur Kingdome Come: Deliverance II. Navré pour ce délais.
 
 J'ai ajouté tous les guides 170 et 180 et ai modifié pas mal d'anciens guides. J'avais eu le temps de commencer le week-end précédent le 4 février donc je peux vous proposer pas mal de choses malgré tout.
 
-J'ai aussi enfin réussi à faire quelque chose de satisfaisant avec la section Objectifs, qui était auparavent pas franchement utile car souvent redondante.
-Maintenant ça permet de savoir concrètement et rapidement ce qu'il faudra accomplir durant le guide. Ce qui sera le plus commun dans cette section est :
-  - "Compléter le succès X" qui indique implicitement de compléter toutes les quêtes du succès "X".
-  - "Avancer le succès Y" qui lui indique implicitement que seul certaines quêtes du succès "Y" seront à compléter.
-  - "Accomplir le donjon Z" qui était déjà présent et qui reste inchangé, donc lorsqu'un donjon est à accomplir lors du guide, il sera indiqué ici.
-
-Si plusieurs succès ou donjons sont à compléter ou accomplir, ils seront tous indiqués. Exemple :
-
-Compléter les succès :
-- Succès X
-- Succès Y
-- Succès Z
-
-Accomplir les donjons :
-- Donjon 1
-- Donjon 2
-- Donjon 3
-
-Les quêtes à compléter lorsque "Avancer le succès X" seront indiquées dans le Guide.
-
-Bref, je suis satisfait de la section Objectifs qui a, à présent, un intérêt. Ne me reste plus qu'à appliquer les changements dans tous les guides.
-
+J'ai aussi enfin réussi à faire quelque chose de satisfaisant avec la section Objectifs, qui était auparavent pas franchement utile car souvent redondante. Détails dans "Section Objectifs".
 
 ## Changelogs
 
@@ -43,6 +22,13 @@ Beaucoup de modifications.
 <details>
 <summary>Voir les détails</summary>
 
+- Tutoriel : GPODofus 3
+  - Ajout du changelog de la version 1.0.7
+- Incarnam : Premiers mécanismes et premiers niveaux
+  - Uniformisation de la section Objectifs
+- Astrub : Introduction au background et avancée du personnage
+  - Ajout de l'objectif "Obtenir le Dofus Argenté".
+  - Ajout d'une section dans le guide le concernant.
 - À travers le Krosmoz 
   - Correction du titre du guide "A" -> "À".
   - Uniformisation de la section Objectifs.
@@ -209,7 +195,32 @@ Beaucoup de modifications.
 ### Ajouts 
 - Chaud du S.L.I.P.
 
+</details>
 
+
+## Section Objectifs
+Comme dit plus haut, j'ai finalement réussi à faire quelque chose de satisfaisant avec cette section.
+
+Maintenant elle permet de savoir concrètement et rapidement ce qu'il faudra accomplir durant le guide. Ce qui sera le plus commun dans cette section est :
+- "Compléter le succès X" qui indique implicitement de compléter toutes les quêtes du succès "X".
+- "Avancer le succès Y" qui lui indique implicitement que seul certaines quêtes du succès "Y" seront à compléter.
+- "Accomplir le donjon Z" qui était déjà présent et qui reste inchangé, donc lorsqu'un donjon est à accomplir lors du guide, il sera indiqué ici.
+
+Si plusieurs succès ou donjons sont à compléter ou accomplir, ils seront tous indiqués. Exemple :
+
+Compléter les succès :
+- Succès X
+- Succès Y
+- Succès Z
+
+Accomplir les donjons :
+- Donjon 1
+- Donjon 2
+- Donjon 3
+
+Les quêtes à compléter lorsque "Avancer le succès X" seront indiquées dans le Guide.
+
+Bref, je suis satisfait de la section Objectifs qui a, à présent, un intérêt. Ne me reste plus qu'à appliquer les changements dans tous les guides.
 
 
 

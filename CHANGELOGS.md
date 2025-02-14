@@ -150,6 +150,16 @@ Beaucoup de modifications.
   - Ajout du bon moment pour accomplir le donjon.
   - Retrait d'un paragraphe d'Informations importantes concernant les quêtes.
   - Ajout de la mention de la complétion du succès Donjons trois point cinq.
+- Dofus Ocre : L'Éternelle Moisson
+  - Ajout d'un paragraphe sur le Dofus Ocre & Explication de comment l'éternelle moisson fonctionne.
+  - Ajout d'un lien DofusDB sur le Dofus Ocre & Un lien vers Metamob.
+- Quêtes d'alignement : 40 + Ordre 2 (Bonta)
+  - Ajout du succès Ordre du jour au guide et un paragraphe le concernant.
+  - Modification des Objectifs.
+- Quêtes d'alignement : 41 + Ordre 2 (Brâkmar)
+  - Ajout de "+ Ordre 2" au titre.
+  - Ajout du succès Ordre du jour au guide et un paragraphe le concernant.
+
 
 </details>
 
@@ -167,7 +177,12 @@ Beaucoup de modifications.
 - Royaume d'Amakna : Les derniers d'entre nous
 - Quêtes d'alignement : 85 + Ordre 4 (Bonta)
 - Quêtes d'alignement : 85 + Ordre 4 (Brâkmar)
-
+- Frigost - La Crevasse Perge 2
+- Bleu Turquoise - 5 / 5 - Troisième Dofus Primordial
+- Dofus Ocre - Quatrième Dofus Primordial
+- Quatre sur Six : La dernière pierre & Les coûts du sort
+- Sidimote : Le double effet Gisgoul
+- Sidimote : Les spores, c'est la santé
 
 
 ## Succès
@@ -179,7 +194,10 @@ Beaucoup de modifications.
   - Correction du titre "A" -> "À" & "ordres!" -> "Ordres !".
 - Mot d'Ordre
   - Correction du titre "ordre" -> "Ordre".
-
+- La fin de l'éternité
+  - Ajout de l'icone "prévoir" capture.
+- Jusqu'à nouvel Ordre
+  - Correction du titre "ordre" -> "Ordre".
 
 
 ### Ajouts

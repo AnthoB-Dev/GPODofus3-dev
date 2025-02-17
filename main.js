@@ -12,7 +12,21 @@ const rootFolder = path.resolve(appFolder, '..');                     // compil�
 const updateExe = path.resolve(path.join(rootFolder, 'Update.exe'));  // compilé ? C:\Users\USER\AppData\Local\GPODofus3\Update.exe           : C:\Users\USER\AppData\Roaming\npm\node_modules\electron\Update.exe
 const gpodExec = path.basename(process.execPath);                     // compilé ?                                       GPOD3.exe            : electron.exe
 const libsFolder = path.resolve(path.join(appFolder, "resources", "app", "libs"));
+const isFirstRun = process.argv.includes('--squirrel-firstrun');
+const OS = process.platform;
+const os = require("os");
 
+log.debug("---------------")
+log.debug(OS)
+log.debug("---------------")
+log.debug("appFolder", appFolder);
+log.debug("---------------")
+log.debug("rootFolder", rootFolder);
+log.debug("---------------")
+log.debug("updateExe", updateExe);
+log.debug("---------------")
+log.debug("gpodExec", gpodExec);
+log.debug("---------------")
 
 /**
  * Essaie de fermer toutes les fenêtres Electron puis tue les processus Node et Django.
@@ -20,18 +34,27 @@ const libsFolder = path.resolve(path.join(appFolder, "resources", "app", "libs")
 function terminate() {
   log.debug("=== Fn - terminate ===");
 
-  try {
-    // Arrête les processus externes, en l'occurence Django.
-    log.info("Arrêt du serveur Django...");
-    closeDjango();
-
-    // Quitte proprement l'application Electron.
-    log.info("Quitte l'application...");
-    app.quit();
-  } catch (error) {
-    log.error("Erreur lors de la tentative de fermeture de l'application :", error);
-  } finally {
-    // Si tout échoue, force l'arrêt du processus Node.js.
+  if (OS === "win32") {
+    try {
+      // Arrête les processus externes, en l'occurence Django.
+      log.info("Arrêt du serveur Django...");
+      closeDjango();
+  
+      if (isFirstRun && OS === "win32") {
+        log.debug("Suppression du dossier libs et du Python embarqué")
+        deleteFolders(libsFolder);
+      }
+  
+      // Quitte proprement l'application Electron.
+      log.info("Quitte l'application...");
+      app.quit();
+    } catch (error) {
+      log.error("Erreur lors de la tentative de fermeture de l'application :", error);
+    } finally {
+      // Si tout échoue, force l'arrêt du processus Node.js.
+      process.exit(0);
+    }
+  } else if (OS === "linux") {
     process.exit(0);
   }
 }
@@ -134,8 +157,26 @@ function handleSquirrelEvent() {
   }
 }
 
+function virtualEnvLinux() {
+  ensureVenvExists(); 
+}
+
+function handleLinuxInstall() {
+  // 1. Créer le venv
+  // 2. Lancer handleFirstRun(linux)
+  log.debug("=== Fn - handleLinuxInstall ===")
+
+  if (!virtualEnvLinux()) {
+    log.error("Échec lors de la gestion du venv. Interruption de l'installation.");
+    
+    terminate();
+    return true;
+  }
+  log.debug("if handleVenv")
+}
+
 // Appel la fonction de gestion des événements Squirrel
-if (handleSquirrelEvent()) {
+if (OS === "win32" && handleSquirrelEvent()) {
   // Si handleSquirrelEvent retourne "true", app.quit() a déjà été appelé.
   // Le flux d'exécution est terminé.
   return;
@@ -286,19 +327,29 @@ function createWindow() {
 };
 
 app.whenReady().then(() => {
-  const isFirstRun = process.argv.includes('--squirrel-firstrun');
-
   if (isFirstRun) {
-    handleFirstRun();
-  } else {
-    if (!startDjango()) {
-      log.error("Le serveur Django ne peut démarrer.")
-      dialog.showErrorBox(
-        "[Critique] Le serveur Django ne peut démarrer",
-        "Le serveur n'est pas parvenu à démarrer. Impossible de lancer GPOD3."
-      );
-      terminate();
+    if (OS === "win32") {
+      handleFirstRun();
+    } else if (OS === "linux") {
+      handleLinuxInstall();
     }
+  } else {
+    if (OS === "win32") {
+      if (!startDjango()) {
+        log.error("Le serveur Django ne peut démarrer.")
+        dialog.showErrorBox(
+          "[Critique] Le serveur Django ne peut démarrer",
+          "Le serveur n'est pas parvenu à démarrer. Impossible de lancer GPOD3."
+        );
+        terminate();
+      }
+    } else if (OS === "linux") {
+      if (!handleLinuxInstall()) {
+        log.error("L'installation Linux s'est terminé avec une erreur.")
+        terminate();
+      }
+    }
+
     createWindow();
   }
   

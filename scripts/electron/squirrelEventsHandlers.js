@@ -15,18 +15,20 @@ module.exports = {
 const fs = require("fs");
 const log = require("electron-log");
 const path = require("path");
-const { spawn, spawnSync } = require("child_process");
+const os = require("os");
+const { spawn, spawnSync, execSync } = require("child_process");
 
 const appFolder = path.resolve(process.execPath, '..'); 
 const rootFolder = path.resolve(appFolder, '..');
 let pythonPath;
 let pythonExec;
-let venvPath = path.join(appFolder, "venv"); // TODO Ajuster le venvPath selon source code / compilé
+let venvPath;
 const pipPath = path.join(venvPath, "Scripts");
-const pipExec = path.resolve(path.join(pipPath, 'pip.exe'))
+let pipExec = path.resolve(path.join(pipPath, 'pip.exe'))
 const requirementsFile = path.join(appFolder, "resources", "app", "requirements.txt");
 const updateExe = path.resolve(path.join(rootFolder, 'Update.exe'));
 const gpodExec = path.basename(process.execPath);
+const OS = process.platform;
 
 
 /**
@@ -81,7 +83,16 @@ function doesVenvExists() {
  */
 function doesPipExists() {
   log.debug("=== Fn - doesPipExists ===");
-  return fs.existsSync(pipExec);
+  if (OS === "win32") {
+    return fs.existsSync(pipExec);
+  } else if (OS === "linux") {
+    try {
+      execSync("which pip3", { stdio: "ignore" });
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
 }
 
 /**
@@ -95,12 +106,18 @@ function defineVenvPath() {
 
   if (venvPath != "") return;
 
-  if (parentFolderName.startsWith("resources")) {
-    log.info("Dossier parent : '" + parentFolderName + "'. Environnement 'compilé' detecté.");
-    venvPath = path.join(__dirname, "../../venv");
-  } else {
-    log.info("Dossier parent : '" + parentFolderName + "'. Environnement 'source code' detecté.");
-    venvPath = path.join(__dirname, "venv");
+  if (OS === "linux") {
+    venvPath = path.join(os.homedir(), ".config", "GPODofus3", "venv");
+    log.debug(`Chemin venv défini à ${venvPath}.`)
+  } else if (OS === "win32") {
+    if (parentFolderName.startsWith("resources")) {
+      log.info("Dossier parent : '" + parentFolderName + "'. Environnement 'compilé' detecté.");
+      venvPath = path.join(__dirname, "../../venv");
+    } else {
+      log.info("Dossier parent : '" + parentFolderName + "'. Environnement 'source code' detecté.");
+      venvPath = path.join(__dirname, "venv");
+    }
+    log.debug(`Chemin venv défini à ${venvPath}.`)
   }
 }
 
@@ -110,9 +127,17 @@ function defineVenvPath() {
  */
 function createVenv() {
   log.debug("=== Fn - createVenv ===");
+
+  defineVenvPath();
   
-  pythonPath = path.join(appFolder, "resources", "app", "libs", "python", "WPy64-31310", "python");
-  pythonExec = path.join(pythonPath, "python.exe")
+  if (OS === "win32") {
+    pythonPath = path.join(appFolder, "resources", "app", "libs", "python", "WPy64-31310", "python");
+    pythonExec = path.join(pythonPath, "python.exe")
+  } else if (OS === "linux") {
+    pythonPath =  execSync("which python3").toString().trim();
+    pythonExec = pythonPath;
+  }
+
   log.info("Variables pythonPath & pythonExec modifiées pour la création du venv.")
   log.debug("Variable pythonPath :", pythonPath);
   log.debug("Variable pythonExec :", pythonExec);
@@ -120,7 +145,7 @@ function createVenv() {
   try {
     log.info("Création du venv au chemin :", venvPath);
     const result = spawnSync(pythonExec, ["-m", "venv", venvPath], { 
-      stdio: ['pipe', 'pipe', 'pipe'], 
+      stdio: ['inherit', 'inherit', 'inherit'], 
     });
 
     if (result.error) {
@@ -237,10 +262,14 @@ function ensureVenvExists() {
 function ensurePipExists() {
   log.debug("=== Fn - ensurePipExists ===")
   
-  if (!doesPipExists()) {
-    log.warn("pip.exe introuvable dans :", pipPath);
-    log.info("Tentative d'installation de pip...");
-    return installPip();
+  if (OS === "win32") {
+    if (!doesPipExists()) {
+      log.warn("pip.exe introuvable dans :", pipPath);
+      log.info("Tentative d'installation de pip...");
+      return installPip();
+    }
+  } else if (OS === "linux") {
+    pipExec = execSync("which pip3").toString().trim();
   }
 
   log.info(`pip.exe existant dans ${pipPath} : ${pipExec}`);
@@ -260,16 +289,16 @@ function handleVenv(squirrelEvent) {
   try {
     if (squirrelEvent === "--squirrel-install") {
       log.debug("Gestion de l'événement : --squirrel-install");
-      return ensureVenvExists();
-
     } else if (squirrelEvent === "--squirrel-updated") {
       log.debug("Gestion de l'événement : --squirrel-updated");
-      return ensureVenvExists();
-
+    } else if (squirrelEvent === "undefined" && OS === "linux") {
+      log.debug("handleVenv sous Linux...")
     } else {
       log.debug("Événement Squirrel non pris en charge :", squirrelEvent);
       return true; // Aucun problème pour les événements non pris en charge
     }
+    return ensureVenvExists();
+
   } catch (error) {
     log.error("Une erreur s'est produite dans handleVenv :", error);
     return false;

@@ -53,6 +53,7 @@ function ensureManagePyFileExists() {
 }
 
 /**
+ * TODO : À adapter pour Linux
  * Tue les processus Django sous Windows qui exécutent `manage.py runserver`.
  * @returns {boolean} `true` si au moins un processus a été tué, sinon `false`.
  */

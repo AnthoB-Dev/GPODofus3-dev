@@ -2,19 +2,29 @@ const fs = require("fs");
 const path = require("path");
 const { app, BrowserWindow, shell, dialog } = require('electron');
 const log = require("electron-log");
+const os = require('os');
 
 const { handleShortcuts, handleVenv, handlePyDependencies, ensureVenvExists } = require('./scripts/electron/squirrelEventsHandlers')
 const { startDjango, closeDjango, killDjangoProcess } = require("./scripts/electron/djangoRelated");
 
 
-const appFolder = path.resolve(process.execPath, '..');               // compilé ? C:\Users\USER\AppData\Local\GPODofus3\app-1.0.5\           : C:\Users\USER\AppData\Roaming\npm\node_modules\electron\dist
-const rootFolder = path.resolve(appFolder, '..');                     // compilé ? C:\Users\USER\AppData\Local\GPODofus3\                     : C:\Users\USER\AppData\Roaming\npm\node_modules\electron\
-const updateExe = path.resolve(path.join(rootFolder, 'Update.exe'));  // compilé ? C:\Users\USER\AppData\Local\GPODofus3\Update.exe           : C:\Users\USER\AppData\Roaming\npm\node_modules\electron\Update.exe
-const gpodExec = path.basename(process.execPath);                     // compilé ?                                       GPOD3.exe            : electron.exe
-const libsFolder = path.resolve(path.join(appFolder, "resources", "app", "libs"));
-const isFirstRun = process.argv.includes('--squirrel-firstrun');
 const OS = process.platform;
-const os = require("os");
+const appFolder = path.resolve(process.execPath, '..');               
+const rootFolder = path.resolve(appFolder, '..');  
+const updateExe = path.resolve(path.join(rootFolder, 'Update.exe'));
+const gpodExec = path.basename(process.execPath);                     
+const flagPath = fs.existsSync(path.join(os.homedir(), ".config", "GPODofus3", "installed.flag"));
+let libsFolder;
+let isFirstRun;
+let icon;
+
+if (OS === 'win32') {
+  libsFolder = path.resolve(path.join(appFolder, "resources", "app", "libs"));
+  isFirstRun = process.argv.includes('--squirrel-firstrun');
+  icon = "icon.ico"; 
+} else if (OS === 'linux') { 
+  icon = "icon.png";
+}
 
 log.debug("---------------")
 log.debug(OS)
@@ -27,6 +37,7 @@ log.debug("updateExe", updateExe);
 log.debug("---------------")
 log.debug("gpodExec", gpodExec);
 log.debug("---------------")
+log.debug("");
 
 /**
  * Essaie de fermer toutes les fenêtres Electron puis tue les processus Node et Django.
@@ -157,22 +168,16 @@ function handleSquirrelEvent() {
   }
 }
 
-function virtualEnvLinux() {
-  ensureVenvExists(); 
-}
-
 function handleLinuxInstall() {
-  // 1. Créer le venv
-  // 2. Lancer handleFirstRun(linux)
   log.debug("=== Fn - handleLinuxInstall ===")
 
-  if (!virtualEnvLinux()) {
-    log.error("Échec lors de la gestion du venv. Interruption de l'installation.");
-    
-    terminate();
-    return true;
+  try {
+    handleVenv();
+    handleFirstRun();
+  } catch (error) {
+    log.error(`Une erreur est survenue lors de handleLinuxInstall : ${error}`);
   }
-  log.debug("if handleVenv")
+  return true;
 }
 
 // Appel la fonction de gestion des événements Squirrel
@@ -195,7 +200,6 @@ async function handleFirstRun() {
   try {
     const checkPyDependencies = await handlePyDependencies();
     if (!checkPyDependencies) {
-      log.error("handlePyDependencies à retourner `false`.")
       return false;
     }
 
@@ -207,8 +211,13 @@ async function handleFirstRun() {
       terminate();
       return false;
     }
+
+    if (OS === 'linux') {
+      fs.mkdirSync(path.dirname(flagPath), { recursive: true });
+      fs.writeFileSync(flagPath, "installed", "utf8");
+    }
     
-    createWindow();
+    createMainWindow();
 
   } catch (error) {
     log.error("Une exception est survenue lors de handleFirstRun :", error);
@@ -231,7 +240,7 @@ function createInstallerWindow() {
       show: false,
       frame: false,
       focusable: true,
-      icon: path.join(__dirname, "staticfiles", "medias", "icons", "favicons", "icon.ico"),
+      icon: path.join(__dirname, "staticfiles", "medias", "icons", "favicons", icon),
     })
   
     window.loadURL(path.join(__dirname, "app", "templates", "pages", "installer.html"));
@@ -263,7 +272,7 @@ function createSplashScreenWindow() {
     frame: false, 
     alwaysOnTop: true,
     backgroundColor: "#202020",
-    icon: path.join(__dirname, "staticfiles", "medias", "icons", "favicons", "icon.ico"),
+    icon: path.join(__dirname, "staticfiles", "medias", "icons", "favicons", icon),
   })
 
   splash.loadURL(path.join(__dirname, "app", "templates", "pages", "splashScreen.html"));
@@ -275,8 +284,8 @@ function createSplashScreenWindow() {
 /**
  * Créer la fenêtre principale de l'application.
  */
-function createWindow() {
-  log.debug("=== Fn - createWindow ===");
+function createMainWindow() {
+  log.debug("=== Fn - createMainWindow ===");
   log.info("Création de la fenêtre principale.");
 
   mainWindow = new BrowserWindow({
@@ -286,7 +295,7 @@ function createWindow() {
     minWidth: 1280,
     minHeight: 720,
     autoHideMenuBar: true,
-    icon: path.join(__dirname, "staticfiles", "medias", "icons", "favicons", "icon.ico"),
+    icon: path.join(__dirname, "staticfiles", "medias", "icons", "favicons", icon),
     show: false,
     backgroundColor: "#202020",
     
@@ -326,36 +335,78 @@ function createWindow() {
   log.info("Fenêtre principale créée. Fin du processus.");
 };
 
-app.whenReady().then(() => {
-  if (isFirstRun) {
-    if (OS === "win32") {
-      handleFirstRun();
-    } else if (OS === "linux") {
-      handleLinuxInstall();
-    }
-  } else {
-    if (OS === "win32") {
-      if (!startDjango()) {
-        log.error("Le serveur Django ne peut démarrer.")
-        dialog.showErrorBox(
-          "[Critique] Le serveur Django ne peut démarrer",
-          "Le serveur n'est pas parvenu à démarrer. Impossible de lancer GPOD3."
-        );
-        terminate();
-      }
-    } else if (OS === "linux") {
-      if (!handleLinuxInstall()) {
-        log.error("L'installation Linux s'est terminé avec une erreur.")
-        terminate();
-      }
-    }
+//app.whenReady().then(() => {
+//  log.debug(`Variable isFirstRun dans app.whenReady : ${isFirstRun}`)
+//  if (isFirstRun) {
+//    // Ne devrait jamais entrer dans cette condition dans une installation Linux.
+//    log.debug(`app.whenReady - isFirstRun : ${isFirstRun}; OS : ${OS}`);
+//    if (OS === "win32") {
+//      handleFirstRun();
+//    } else if (OS === "linux") {
+//      handleLinuxInstall();
+//    }
+//  } else {
+//    if (OS === "win32") {
+//      if (!startDjango()) {
+//        log.error("Le serveur Django ne peut démarrer.")
+//        dialog.showErrorBox(
+//          "[Critique] Le serveur Django ne peut démarrer",
+//          "Le serveur n'est pas parvenu à démarrer. Impossible de lancer GPOD3."
+//        );
+//        terminate();
+//      }
+//    } else if (OS === "linux") {
+//      log.debug("Entre dans app.whenReady OS === linux pour lancer handleLinuxInstall()");
+//      if (!handleLinuxInstall()) {
+//        log.error("L'installation Linux s'est terminé avec une erreur.")
+//        terminate();
+//      }
+//      log.debug("Sort de app.whenReady OS === linux après avoir géré handleLinuxInstall() avec succès.");
+//    }
+//
+//    log.debug("Ne s'affiche seulement si OS === 'win32' ou 'linux' et que les actions se sont déroulé sans emcombres")
+//
+//    createMainWindow();
+//  }
+//  
+//  app.on("activate", () => {
+//    log.info("app.on_activate : Application activée.");
+//    if (BrowserWindow.getAllWindows().length === 0) createMainWindow();
+//  });
+//});
 
-    createWindow();
+app.whenReady().then(() => {
+  log.debug("Entre dans app.whenReady")
+  if (OS === "win32") {
+    log.debug("app.whenReady.win32")
+    if (isFirstRun) {
+      log.debug("app.whenReady.isFirstRun");
+      handleFirstRun();
+    }
+  } else if (OS === "linux" && !flagPath) {
+    log.debug("app.whenReady.linux")
+    handleLinuxInstall();
+  } else {
+    log.error(`Le système d'exploitation ${OS} n'est pas pris en charge.`);
+    terminate();
   }
-  
+
+  log.debug("Opérations 'handle...' complétés, startDjango()");
+  if (!startDjango()) {
+    log.error("Le serveur Django ne peut démarrer.")
+    dialog.showErrorBox(
+      "[Critique] Le serveur Django ne peut démarrer",
+      "Le serveur n'est pas parvenu à démarrer. Impossible de lancer GPOD3."
+    );
+    terminate();
+  }
+
+  log.debug("Django démarré. createWindows()");
+  createMainWindow()
+
   app.on("activate", () => {
     log.info("app.on_activate : Application activée.");
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    if (BrowserWindow.getAllWindows().length === 0) createMainWindow();
   });
 });
 

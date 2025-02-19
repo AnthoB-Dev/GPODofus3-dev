@@ -11,17 +11,27 @@ module.exports = {
 const fs = require("fs");
 const log = require("electron-log");
 const path = require("path");
+const os = require("os");
 const { spawn, execSync } = require("child_process");
-const { handlePyDependencies } = require("./squirrelEventsHandlers")
+const { handlePyDependencies, defineVenvPath } = require("./squirrelEventsHandlers")
 
 
+const OS = process.platform;
 const djangoProjectPath = path.join(__dirname);
 const appFolder = path.resolve(process.execPath, '..'); 
-let venvPath = path.join(appFolder, "venv");
-let pythonExec = path.join(venvPath, "Scripts", "python.exe");
+let venvPath = defineVenvPath();
+const linuxConfigPath = path.join(os.homedir(), ".config", "GPODofus3");
+const linuxVenvPath = path.join(linuxConfigPath, "venv");
+let pythonExec;
 const managePyPath = path.join(appFolder,"resources", "app", "manage.py");
 let djangoPid = null;
 let stdio = false;
+
+if (OS === "win32") {
+  pythonExec = path.join(venvPath, "Scripts", "python.exe");
+} else if (OS === "linux") {
+  pythonExec = path.join(linuxVenvPath, "bin", "python3");
+}
 
 
 /**
@@ -131,8 +141,6 @@ function startDjango() {
     log.info("Lancement du processus Django.");
 
     stdio ? stdio = "pipe" : stdio = "ignore";
-
-    // Vérifiez que pythonExec et managePyPath sont corrects
     log.debug("pythonExec : ", pythonExec);
     log.debug("managePyPath : ", managePyPath);
 

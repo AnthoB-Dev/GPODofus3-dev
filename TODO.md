@@ -112,7 +112,7 @@ Distribution windows sous **Electron**.
 
 - [ ] **#5** Supprimer le Python embarqué puisqu'il ne sert à rien une fois installé (A voir néanmoins si ça ne va pas poser de problèmes avec l'updating) 135Mo à libéré
     J'ai perdu pas mal de temps à essayer, le problème c'est que j'ai besoin de redéfinir les variables pathExec et pythonPath (qui se fait actuellement dans ensureVenvExists()) car si je n'appel pas ensureVenvExists() avant de suppr libs, j'ai des erreurs :
-      [debug] createWindow
+      [debug] createMainWindow
       [info]  Création de la fenêtre principale.
       [info]  Fenêtre principale créée. Fin du processus.
       [debug] Fn - deleteFolders

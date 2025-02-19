@@ -2,6 +2,9 @@ const path = require("path");
 const { FusesPlugin } = require("@electron-forge/plugin-fuses");
 const { FuseV1Options, FuseVersion } = require("@electron/fuses");
 const isLinux = process.platform === "linux";
+let icon;
+
+isLinux ? icon = "icon.png" : icon = "icon.ico"
 
 module.exports = {
   packagerConfig: {
@@ -13,7 +16,7 @@ module.exports = {
       "medias",
       "icons",
       "favicons",
-      isLinux ? "icon.png" : "icon.ico",
+      icon,
     ),
     executableName: "GPODofus3",
     strip: false,
@@ -65,7 +68,7 @@ module.exports = {
         homepage: "https://github.com/AnthoB-Dev/GPODofus3",
         section: "utility",
         categories: ["Game", "Utility"],
-        icon: path.join(__dirname, "staticfiles", "medias", "icons", "favicons", "icon.png"),
+        icon: path.join(__dirname, "staticfiles", "medias", "icons", "favicons", icon),
         maintainer: "AnthoB-Dev <bonis.anthony.dev@gmail.com>",
       },
     },

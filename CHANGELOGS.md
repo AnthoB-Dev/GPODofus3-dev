@@ -1,3 +1,114 @@
+# v.1.0.8 Release
+
+
+## Changelogs
+
+### v1.0.8 Release
+
+<details>
+<summary>Voir les détails</summary>
+
+## Général
+
+
+##### Modifications
+- Sauvegarde de la progression 
+  [x] - Les sauvegardes sont à présent dans un dossier "saves", toujours à l'emplacement \AppData\Roaming\GPODofus3\.
+  [x] - Ajout d'un *timestamp* et de la *version* de l'application dans le nom de la sauvegarde.
+  [x] - Les anciennes sauvegardes "*old_save*" suivent à présent la même nomenclature. 
+  [ ] - Les anciennes sauvegardes peuvent maintenant se cumuler 5 fois. Une fois les 5 sauvegardes atteintes, les plus anciennes seront supprimées en première à chaque nouvelle sauvegarde. 
+  [x] - Ajout d'une confirmation lors de la sauvegarde.
+  [ ] - Ajout de la possibilité d'ouvrir le dossier où se trouve la sauvegarde depuis les options.
+  [x] - Sauvegarde aussi désormais le dernier guide vu, ce qui redirige directement vers ce dernier lors du chargement de la sauvegarde.
+
+
+##### Ajouts
+
+
+
+## Guides
+
+
+##### Modifications
+Suite de l'amélioration de tous les guides les plus anciens. Il sagit pour beaucoup d'entre eux d'uniformiser la section Objectifs.
+
+<details>
+<summary>Voir les détails</summary>
+
+- Astrub : Introduction au background et avancée du personnage
+  - Ajout de précisions quant aux succès à compléter.
+  - Ajout du succès "Les grands esprits se rencontrent" ainsi qu'un paragraphe le concernant.
+  - Ajout des liens DofusDB de Fouduglen et Frakacia.
+- Sufokia : Le bon air de la mer d'Asse - Fin
+  - Uniformisation des Objectifs.
+- Sidimote : Les landes mortes - Fin
+  - Uniformisation des Objectifs.
+- Montagne des Koalaks : Tout ça pour du kaliptus
+  - Uniformisation des Objectifs.
+- Île de Moon : Les Pirates du Chouque
+  - Uniformisation des Objectifs.
+- Quêtes d'alignement : 33 (Bonta & Brâk)
+  - Retrait de la quête où s'arreter de Objectifs.
+- Ocre d'Ambre - Reine Nyée
+  - Uniformisation des Objectifs.
+- Introduction aux dimensions divines
+  - Uniformisation des Objectifs.
+- Bleu Turquoise - 1 / 5 - Troisième Dofus Primordial
+  - Uniformisation des Objectifs.
+- Quêtes d'alignement : 40 + Ordre 2
+  - Uniformisation des Objectifs.
+- Rush Donjons - 6
+  - Retrait de la ligne concernant les ressources à récupérer de Objectifs.
+- Port de Madrestam - Léchage de bottes
+  - Uniformisation des Objectifs.
+- Vert Émeraude : Premier Dofus Primordial
+  - Uniformisation des Objectifs.
+  - Retrait de la ligne concernant les chasses aux trésors de Objectifs.
+- Pandala : À la croisée des mondes
+  - Uniformisation des Objectifs et du Guide.
+- Captain Amakna : Le Manigancien
+  - Uniformisation des Objectifs et du Guide.
+  - Ajout de la mention de la quête "Ainsi font les petites marionnettes" dans le guide.
+- Ile de Moon : Jungle Interdite
+  - Uniformisation des Objectifs.
+- Enutrosor Chapitre 1 : Même pas Malle
+  - Uniformisation des Objectifs.
+  - Amélioration des Informations importantes.
+  - Amélioration du contenu du Guide.
+- Dofus des Veilleurs : Odyssée en Trois dimensions
+  - Correction d'une erreur dans le Guide concernant le succès "Même pas malle" où j'avais renseigné comme titre du succès "Par-delà les apparences" à la place de "Même pas malle". 
+  - Amélioration du contenu du Guide, notamment en ajoutant les liens DofusDB du Diamant Dimensionnel et des différents donjons où il est dropable.
+  - Uniformisation des Objectifs.
+- Eliocalypse : Résonance
+  - Rédaction du guide qui ne l'était pratiquement pas.
+
+
+</details>
+  
+
+##### Ajouts
+- Ça va faire du vilain : L'armée des Ombres
+- Quatre sur Six : Une Ombre au tableau
+
+
+
+## Succès
+
+##### Modifications 
+- Ça va faire du vilain
+  - Ajout de l'icone prévoir donjon.
+
+
+## CSS
+
+
+
+
+
+
+
+
+
 # v.1.0.7 Release
 De retour après 80h sur Kingdome Come: Deliverance II. Navré pour ce délais.
 

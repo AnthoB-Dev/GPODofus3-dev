@@ -118,6 +118,8 @@ Pour une expérience "application de bureau" comme je l'ai pensé initialement.
 1. Téléchargez le Setup.exe dans la section **Release** latest (**1.1**) ou [en cliquant ici](https://github.com/AnthoB-Dev/GPODofus3/releases). Puis tout en bas de la Release la section "Assets".
 2. Puis lancez le Setup.exe pour installer GPOD3.
 
+##### L'installation peut prendre plusieurs minutes selon votre connexion internet et/ou vitesse d'écriture de votre stockage.
+
 ### Via source code
 Si vous souhaitez utiliser une version "navigateur" ou simplement ne pas installer d'applications inconnues :
 

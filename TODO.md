@@ -10,20 +10,20 @@ Developpement backend **Django**.
 
 - Optimiser le code
     - [ ] Enlever les dépendences non utilisées
-    - [ ] Trouver un moyen de réduire la query pour les guides dans *guide_detail*
-        - A chaque changement de guide, ils sont tous récupérés alors qu'il ne pourrait y en a avoir qu'une dizaine, 10 avant, 10 après
-        - Mais il est possible que le cache des guides empeche un quelconque soucis avec l'état actuel, à voir
     - [x] Reduire le nombre de redondance et de code inutile
 - [ ] **V1.0.4^** Permettre l'arrivée sur le dernier guide vu de la version précédente lors d'un chargement de progression.
     - Ça devrait être assez simple en sauvegardant le dernier guide vu dans *global* de mon JSON et une fois tout chargé depuis *views*, rediriger. L'autre avantage c'est qu'il n'y aurait pas à changer manuellement de guide pour refresh.
 - [ ] **V1.0.4^** Ajouter un champ *icone* dans *Guide* et ainsi afficher une icone pour simplifier la navigation.
     - Guides qui pourraient en bénéficier : **Alignements**, **donjons**, **informations**, **Dofus**
 - [ ] **V1.0.4^** Retirer l'obligation d'avoir le champs *level* de rempli et enlever le niveau des guides **infos**.
+    - Obligation retirée, mais lorsque je touche à l'affichage et ajoute une condition d'affichage de "Nv." dans **nav.html**, le focus du guide actuel se perd dans la nav. Donc pour le moment j'ai ajouter un filtre django |default="0" lorsque j'ai un champs vide dans la BDD.
 - [ ] **V1.+** Mettre en place donjons.
+    - Un donjon devrait pouvoir être associé à une quête, ou bien pouvoir apparaitre comme une quête.
+    - Un donjon ne sera pas unique comme le sont les quêtes actuellement ce qui au contraire des quêtes qui se valident dans tous les guides où elles sont présentent, les donjons seront à valider à chaque fois qu'il doit être accompli.
+- [ ] **V1.+** Ajouter un système de rappel activable / désactivable comme pour les quêtes pandala qui demande 24h d'attente.
+- [ ] **V1.+** Ajouter un champ level aux succès et permettre un tri des succès par niveaux.
 - [ ] **V1.+** Revoir toute la section **Quêtes** lorsque le guide est en rapport avec Tour du monde et Tornade des donjons.
     - L'idée c'est de changer **Quêtes** en **Donjons** et que les succès affichent les donjons à la place des quêtes.
-- [ ] **V1.+** Ajouter un champ level aux succès et permettre un tri des succès par niveaux.
-- [ ] **V1.+** Ajouter un système de rappel activable / désactivable comme pour les quêtes pandala qui demande 24h d'attente.
 
 <details>
 <summary>Résolus</summary>
@@ -85,7 +85,7 @@ Developpement backend **Django**.
 
 
 ## Electron 
-Distribution windows sous **Electron**.
+Distribution bureau sous **Electron**.
 
 <details>
 <summary>Ouvrir</summary>
@@ -93,7 +93,7 @@ Distribution windows sous **Electron**.
 ### Développer :
 
 - [ ] **#2** Me débarasser complétement de l'event squirrel-install car sur une machine peu puissante, les 15 secondes sont insuffisante. La creation du shortcut est bypass.
-- [ ] **#1** Ajouter l'installation de Python pendant le script (avec l'installateur).
+- [ ] **#3** Portage Linux.
 - [ ] **#4** Effacer le dossier *dependencies* une fois utilisé.
 
 <details>
@@ -112,6 +112,9 @@ Distribution windows sous **Electron**.
 
 - [ ] **#5** Supprimer le Python embarqué puisqu'il ne sert à rien une fois installé (A voir néanmoins si ça ne va pas poser de problèmes avec l'updating) 135Mo à libéré
     J'ai perdu pas mal de temps à essayer, le problème c'est que j'ai besoin de redéfinir les variables pathExec et pythonPath (qui se fait actuellement dans ensureVenvExists()) car si je n'appel pas ensureVenvExists() avant de suppr libs, j'ai des erreurs :
+      
+      
+      
       [debug] createWindow
       [info]  Création de la fenêtre principale.
       [info]  Fenêtre principale créée. Fin du processus.
@@ -139,10 +142,15 @@ Distribution windows sous **Electron**.
 
     Il faut que je les redéfinissent mais avant de les appelés dans deleteFolders()
 - [ ] **#6** Réabiliter l'installation via source code (N'est plus prio puisque l'installeur fonctionne)
+
+<details>
+<summary>Résolus</summary>
+
 - [x] **#4** Les processus *Python* continuent de se réouvrir à la fermeture de l'app. (Semble s'être réglé, à observer)
 - [x] **#1** L'installation demande des permissions *admin* pour installer les dépendences avec *pip*. 
 - [x] **#2** Revoir la logique du script dans une certaine mesure. Il faudrait partager correctement la logique d'installation avec celle du lancement.
 - [x] **#3** Dans le cas où le *#2* ne suffit pas, il faut revoir les events squirrel qui la plupart du temps empêche de lancer l'app du premier coup.
+</details>
 
 </details>
 
@@ -155,17 +163,16 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 ### Développer :
 
-- [ ] **#2** Au démarrage de l'application les liens du dernier guide, celui ouvert, ne sont pas cliquable.
+- **V1.+** Ajouter une recherche
+    - [ ] De guide
+    - [ ] De quête
 - **#1** Optimiser le code 
     - [ ] Vérifier les events js - En cours
 - [ ] **#4** Media queries
 - **V1.+** Réimplémenter les *clickNextAchievement*, *clickCurrentAchievement*
-- **V1.+** Ajouter une recherche
-    - De guide
-    - De quête
 - **V1.+** Implémenter d'autres themes
     - Changer l'image background selon le thème
-- **V1.+** Au survol d'une quête ou d'un succès dans les guides, mettre en surbrillance la quête et le succès.
+- [ ] **V1.+** Au survol d'une quête ou d'un succès dans les guides, mettre en surbrillance la quête et le succès.
 
 <details>
 <summary>Résolus</summary>
@@ -202,8 +209,9 @@ Développement frontend **templates Django**, **JavaScript**, **CSS / Less**.
 
 ### Bogues :
 
-- [ ] **#2** La *navigation clavier* : Je la laisse mais il faut prévenir de pas trop spam comme des dératés au risque de devoir relancer l'app.
-- [ ] **#4** Le background du titre de l'achievement se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés.
+- [ ] **#3** Au démarrage de l'application les liens du dernier guide, celui ouvert, ne sont pas cliquable.
+- [ ] **#2** La *navigation clavier* : Doit être améliorée.
+- [ ] **#4** Le background du titre de l'achievement dans Quêtes se perd lors du clique sur un achievement si plus de 2 quêtes sont complétés.
 - [ ] **#5** *Valider tout* reste disabled en cas de changement de guide alors que la validation des guides n'est pas fini.
 
 <details>
@@ -242,11 +250,7 @@ Contenu de l'application.
 ### Rédiger :
 
 - [ ] **#1** Rédiger tous les Guides
-- [ ] **#4** Ajouter un guide Rush Donjons après les Quêtes alignement Brak 41
-- [ ] **V1.+** Combiné les guides ayant pour objectif la complétion d'un donjon
-- [ ] **V1.+** Repenser la structure pour les succès Tour du monde et Tornade des donjons
-    - Ajouter un succès Tour du monde et y mettre les 27 quêtes (donjons ?)
-    - Pareil pour Tornade des donjons, ça ne refletera pas le vrai succès mais il se terminera bien au même moment.
+
 
 <details>
 <summary>Résolus</summary>

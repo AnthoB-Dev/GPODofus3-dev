@@ -1,3 +1,5 @@
+import { getAchievements } from "./achievements.js";
+
 const createModal = (image) => {
     const modal = document.createElement('div');
     const img = document.createElement('img');
@@ -126,6 +128,32 @@ export const addGuideEventListeners = async () => {
     if (guideId === choseAlignmentGuideId) {
         addGuideAlignmentFormEventListener();
     }
+
+    const achievements = await getAchievements();
+    const guideAchievementSpans = document.querySelectorAll(".guide_element .achievement");
+
+    // Events JS sur les titres des guides dans Guide.
+    guideAchievementSpans.forEach((guideAchievement) => {
+        guideAchievement.addEventListener("mouseover", () => {
+            guideAchievement.classList.add("highlightInGuide");
+            achievements.forEach((achievement) => {
+                // Si les titres correspondent, ajout des classes pour mettre en surbrillance.
+                if (achievement.querySelector(".achievementName").textContent.trim().toLocaleLowerCase() === guideAchievement.textContent.trim().toLocaleLowerCase()) {
+                    achievement.classList.add("highlight");
+                };
+            })
+        })
+    })
+
+    // Event JS sur les titres des guides dans Guide.
+    guideAchievementSpans.forEach((guideAchievement) => {
+        guideAchievement.addEventListener("mouseout", () => {
+            guideAchievement.classList.remove("highlightInGuide");
+            achievements.forEach((achievement) => {
+                achievement.classList.remove("highlight");
+            })
+        })
+    })
 }
 
 export const removeGuideEventListeners = async () => {

@@ -1291,3 +1291,14 @@ body {
 .failure {
   background: lighten(@clr-red, 30%) !important;
 }
+
+.highlightInGuide {
+  transition: background 0.2s ease-in-out;
+  background: darken(@clr-primary, 5%);
+  cursor: pointer;
+}
+
+.highlight {
+  transition: background 0.2s ease-in-out;
+  border: solid 2px lighten(@clr-green, 20%);
+}

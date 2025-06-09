@@ -1,5 +1,8 @@
 import { getAchievements } from './achievements.js';
 
+/**
+ * Met à jour le titre visible sur la topNav (dropdown menu).
+ */
 export const updateTopNavTitle = (event = null) => {
     let newTitle;
 
@@ -19,6 +22,12 @@ export const updateTopNavTitle = (event = null) => {
     }
 };
 
+/**
+ * Met à jour le guide selectionné.
+ * - Boucle sur les "guide-item" qui sont les guides cliquables dans le dropdown.
+ * - Supprime les 8 premiers caractères "Nv.XX - ".
+ * - Ajoute la classe "selected" au nouceau guide selectionné dans le dropdown. (Fond blanc).
+ */
 export const updateSelectedGuide = () => {
     const currentTitle = document.querySelector("#topNav .guide-header h2")?.textContent;
     const guideItems = document.querySelectorAll(".guide-item");
@@ -35,18 +44,30 @@ export const updateSelectedGuide = () => {
 };
 
 /**
- * Gère le clique sur l'icone des options.
+ * Gère la modal des options suite au clique sur l'icone des options.
+ * - Lance la func de création de la modal d'options `createOptionsModal`.
+ * - Lance la func d'ajout de listeners sur la modal `addOptionsListeners`.
  */
 const handleOptionGearClick = async() => {
     await createOptionsModal()
     addOptionsListeners();
 };
 
-const handleGuideHeaderClick = (event) => {
+/**
+ * Gère le clique pour ouvrir le dropdown menu.
+ * - Lance `toggleDropdown`.
+ */
+const handleGuideHeaderClick = (event) => {    
     event.stopPropagation();
     toggleDropdown();
 };
 
+/**
+ * Gère le clique sur un des items de la liste du dropdown.
+ * - Retire `selected` à tous les elements `.guide-item` puis l'ajoute à l'item cliqué (le guide souhaité).
+ * - Suite à 100ms de Timeout, lance `toggleDropdown` pour fermer le dropdown.
+ * - Remplace la frame actuelle par la nouvelle via Turbo.
+ */
 const handleGuideItemClick = (e) => {
     e.preventDefault();
     document.querySelectorAll(".guide-item").forEach((i) => i.classList.remove("selected"));
@@ -60,6 +81,9 @@ const handleGuideItemClick = (e) => {
     });
 };
 
+/**
+ * Gère le clique en dehors du dropdown pour pour le fermer rapidement.
+ */
 const handleDocumentClick = (e) => {
     const topNav = document.getElementById("topNav");
     if (!topNav.contains(e.target) && !e.target.classList.contains("guide-item") && topNav.classList.contains("js-open")) {
@@ -73,6 +97,7 @@ export const addNavEventListeners = () => {
     const dropDownContent = topNav.querySelector(".dropdown-content");
     const overflow = dropDownContent.querySelector(".overflow");
     const optionsGear = document.querySelector("#gear");
+    const searchIcon = document.querySelector(".fa-magnifying-glass");
 
     if (!guideHeader.hasAttribute("data-initialized")) {
         guideHeader.setAttribute("data-initialized", "true");
@@ -85,7 +110,9 @@ export const addNavEventListeners = () => {
 
     document.addEventListener("click", handleDocumentClick);
 
-    optionsGear.addEventListener("click", handleOptionGearClick)
+    optionsGear.addEventListener("click", handleOptionGearClick);
+
+    searchIcon.addEventListener("click", handleSearchIconClick);
 
     // Ajout des écouteurs d'événements pour les boutons de navigation de la page
     addPageNavEventListeners();
@@ -96,6 +123,7 @@ export const removeNavEventListeners = () => {
     const guideHeader = topNav.querySelector(".guide-header");
     const dropDownContent = topNav.querySelector(".dropdown-content");
     const overflow = dropDownContent.querySelector(".overflow");
+    const searchIcon = document.querySelector(".fa-magnifying-glass");
 
     if (guideHeader.hasAttribute("data-initialized")) {
         guideHeader.removeAttribute("data-initialized");
@@ -107,6 +135,8 @@ export const removeNavEventListeners = () => {
     });
 
     document.removeEventListener("click", handleDocumentClick);
+
+    searchIcon.removeEventListener("click", handleSearchIconClick);
 
     // Suppression des écouteurs d'événements pour les boutons de navigation de la page
     removePageNavEventListeners();
@@ -124,6 +154,8 @@ const closeOptionsModal = () => {
 
 /**
  * Crée la fenêtre des options.
+ * - Résous la promesse seulement lorsque la modal est finie d'être créer.
+ * @returns {Promise}
  */
 const createOptionsModal = () => {
     return new Promise ((resolve) => {
@@ -275,10 +307,14 @@ export const removeMessages = () => {
     }, timeout);
 }
 
+/**
+ * Gère la visibilité du dropdown.
+ */
 const toggleDropdown = () => {
     const topNav = document.getElementById("topNav");
     const overflow = document.querySelector('.overflow');
     const dropDownContent = topNav.querySelector(".dropdown-content");
+    const searchDiv = topNav.querySelector("#searchDiv");
 
     if (!topNav.classList.contains("js-open")) {
         topNav.classList.remove('js-close');
@@ -288,17 +324,21 @@ const toggleDropdown = () => {
         overflow.offsetHeight;
         overflow.classList.add('overflowOpen');
         overflow.classList.remove('overflowClose');
+        searchDiv.classList.remove("hidden");
 
         // Assurer que l'élément sélectionné est visible
         const selected = document.querySelector('.guide-item.selected');
         if (selected) {
             selected.scrollIntoView({  block: 'nearest' });
         }
+
     } else {
         topNav.classList.remove('js-open');
         topNav.classList.add('js-close');
         overflow.classList.remove('overflowOpen');
         overflow.classList.add('overflowClose');
+        searchDiv.classList.add("hidden");
+
         setTimeout(() => {
             overflow.classList.add('hidden');
             dropDownContent.classList.add('hidden');
@@ -327,141 +367,141 @@ const handlePageNavButtonClick = (e) => {
     }
 };
 
-let shiftActivated = false;
-let ctrlActivated = false;
-let altActivated = false;
+// let shiftActivated = false;
+// let ctrlActivated = false;
+// let altActivated = false;
 
-const handleKeys = async (e) => {
-    const pageNavLeft = document.querySelector('#pageNavLeft');
-    const pageNavRight = document.querySelector('#pageNavRight');
-    const topNav = document.getElementById("topNav");
-    const selected = document.querySelector('.selected');
-    const openAllbtn = document.querySelector('#openAll');
-    const validateAllBtn = document.querySelector('#validateAll');
-    const achievements = await getAchievements();
-    const activeAchievement = [...achievements].find(achievement => achievement.classList.contains("active"));
-    const guideScrollable = document.querySelector('#guide .content');
-    const achievementsScrollable = document.querySelector('#achievements .content');
-    const guideTitle= document.querySelector('#guide h3');
-    const achievementTitle = document.querySelector('#achievements h3');
+// const handleKeys = async (e) => {
+//     const pageNavLeft = document.querySelector('#pageNavLeft');
+//     const pageNavRight = document.querySelector('#pageNavRight');
+//     const topNav = document.getElementById("topNav");
+//     const selected = document.querySelector('.selected');
+//     const openAllbtn = document.querySelector('#openAll');
+//     const validateAllBtn = document.querySelector('#validateAll');
+//     const achievements = await getAchievements();
+//     const activeAchievement = [...achievements].find(achievement => achievement.classList.contains("active"));
+//     const guideScrollable = document.querySelector('#guide .content');
+//     const achievementsScrollable = document.querySelector('#achievements .content');
+//     const guideTitle= document.querySelector('#guide h3');
+//     const achievementTitle = document.querySelector('#achievements h3');
 
-    document.removeEventListener('keyup', handleKeys);
+//     document.removeEventListener('keyup', handleKeys);
 
-    // Mettre à jour l'état des touches modificateurs
-    if (e.type === 'keydown') {
-        if (e.key === 'Shift') {
-            if (!shiftActivated) {
-                shiftActivated = true;
-                achievementTitle.classList.add('keyboardFocusedElement');
-                guideTitle.classList.remove('keyboardFocusedElement');
-                topNav.classList.contains("js-open") ? toggleDropdown() : null;
-                ctrlActivated = false;
-            } else {
-                shiftActivated = false;
-                achievementTitle.classList.remove('keyboardFocusedElement');
-            }
-        } 
-        if (e.key === 'Control') {
-            if (!ctrlActivated) {
-                ctrlActivated = true;
-                guideTitle.classList.add('keyboardFocusedElement');
-                achievementTitle.classList.remove('keyboardFocusedElement');
-                topNav.classList.contains("js-open") ? toggleDropdown() : null;
-                shiftActivated = false;
-            } else {
-                ctrlActivated = false;
-                guideTitle.classList.remove('keyboardFocusedElement');
-            }
-        };
-        if (e.key === 'Tab') {
-            e.preventDefault();
-            if (ctrlActivated || shiftActivated) {
-                ctrlActivated = false;
-                shiftActivated = false
-            }
-        };
-        if (e.key === 'Alt') altActivated = true;
-    } else if (e.type === 'keyup') {
-        if (e.key === 'Alt') altActivated = false;
-    }
+//     // Mettre à jour l'état des touches modificateurs
+//     if (e.type === 'keydown') {
+//         if (e.key === 'Shift') {
+//             if (!shiftActivated) {
+//                 shiftActivated = true;
+//                 achievementTitle.classList.add('keyboardFocusedElement');
+//                 guideTitle.classList.remove('keyboardFocusedElement');
+//                 topNav.classList.contains("js-open") ? toggleDropdown() : null;
+//                 ctrlActivated = false;
+//             } else {
+//                 shiftActivated = false;
+//                 achievementTitle.classList.remove('keyboardFocusedElement');
+//             }
+//         } 
+//         if (e.key === 'Control') {
+//             if (!ctrlActivated) {
+//                 ctrlActivated = true;
+//                 guideTitle.classList.add('keyboardFocusedElement');
+//                 achievementTitle.classList.remove('keyboardFocusedElement');
+//                 topNav.classList.contains("js-open") ? toggleDropdown() : null;
+//                 shiftActivated = false;
+//             } else {
+//                 ctrlActivated = false;
+//                 guideTitle.classList.remove('keyboardFocusedElement');
+//             }
+//         };
+//         if (e.key === 'Tab') {
+//             e.preventDefault();
+//             if (ctrlActivated || shiftActivated) {
+//                 ctrlActivated = false;
+//                 shiftActivated = false
+//             }
+//         };
+//         if (e.key === 'Alt') altActivated = true;
+//     } else if (e.type === 'keyup') {
+//         if (e.key === 'Alt') altActivated = false;
+//     }
 
-    const shiftIsActivated = !ctrlActivated && shiftActivated;
-    const ctrlIsActivated = ctrlActivated && !shiftActivated;
-    const nothingActivated = !ctrlActivated && !shiftActivated;
+//     const shiftIsActivated = !ctrlActivated && shiftActivated;
+//     const ctrlIsActivated = ctrlActivated && !shiftActivated;
+//     const nothingActivated = !ctrlActivated && !shiftActivated;
 
-    const arrowDown = e.type === 'keydown' && e.key === 'ArrowDown';
-    const arrowUp = e.type === 'keydown' && e.key === 'ArrowUp';
-    const arrowLeft = e.type === 'keydown' && e.key === 'ArrowLeft';
-    const arrowRight = e.type === 'keydown' && e.key === 'ArrowRight';
-    const enterKey = e.key === 'Enter';
-    const escapeKey = e.key === 'Escape';
-    const oKey = e.key === 'o';
-    const vKey = e.key === 'v';
+//     const arrowDown = e.type === 'keydown' && e.key === 'ArrowDown';
+//     const arrowUp = e.type === 'keydown' && e.key === 'ArrowUp';
+//     const arrowLeft = e.type === 'keydown' && e.key === 'ArrowLeft';
+//     const arrowRight = e.type === 'keydown' && e.key === 'ArrowRight';
+//     const enterKey = e.key === 'Enter';
+//     const escapeKey = e.key === 'Escape';
+//     const oKey = e.key === 'o';
+//     const vKey = e.key === 'v';
 
-    if (nothingActivated && arrowLeft) {
-        pageNavLeft.click();
-    } else if (nothingActivated && arrowRight) {
-        pageNavRight.click();
-    } else if (nothingActivated && arrowDown) {
-        if (!topNav.classList.contains('js-open')) {
-            toggleDropdown();
-        } else {
-            if (selected.nextElementSibling) {
-                selected.nextElementSibling?.classList.add('selected');
-                selected.classList.remove('selected');
-                selected.nextElementSibling?.scrollIntoView({ block: 'nearest' });
-            }
-        }
-    } else if (nothingActivated && arrowUp) {
-        if (topNav.classList.contains('js-open')) {
-            if (selected.previousElementSibling) {
-                selected.previousElementSibling.classList.add('selected');
-                selected.classList.remove('selected');
-                selected.previousElementSibling.scrollIntoView({ block: 'nearest' });
-            } else if (selected.previousElementSibling === null) {
-                toggleDropdown();
-            }
-        }
-    } else if (shiftIsActivated && arrowDown) {
-        if (achievementsScrollable) {
-            achievementsScrollable.scrollBy({ top: 30, behavior: 'smooth' });
-        }
-        activeAchievement.parentElement.nextElementSibling?.querySelector('.achievementName a').click();
-    } else if (shiftIsActivated && arrowUp) {
-        if (achievementsScrollable) {
-            achievementsScrollable.scrollBy({ top: -30, behavior: 'smooth' });
-        }
-        activeAchievement.parentElement.previousElementSibling?.querySelector('.achievementName a').click();
-    } else if (nothingActivated && enterKey && topNav.classList.contains('js-open')) {
-        selected.click();
-    } else if (escapeKey && topNav.classList.contains('js-open')) {
-        if (topNav.classList.contains('js-open')) {
-            toggleDropdown();
-        }
-    } else if (nothingActivated && oKey) {
-        openAllbtn.click();
-    } else if (nothingActivated && vKey) {
-        validateAllBtn.click();
-    } else if (ctrlIsActivated && arrowDown) {
-        if (guideScrollable) {
-            guideScrollable.scrollBy({ top: 250, behavior: 'smooth' });
-        }
-    } else if (shiftIsActivated && arrowUp) {
-        if (guideScrollable) {
-            guideScrollable.scrollBy({ top: -250, behavior: 'smooth' });
-        }
-    }
-}
+//     if (nothingActivated && arrowLeft) {
+//         pageNavLeft.click();
+//     } else if (nothingActivated && arrowRight) {
+//         pageNavRight.click();
+//     } else if (nothingActivated && arrowDown) {
+//         if (!topNav.classList.contains('js-open')) {
+//             toggleDropdown();
+//         } else {
+//             if (selected.nextElementSibling) {
+//                 selected.nextElementSibling?.classList.add('selected');
+//                 selected.classList.remove('selected');
+//                 selected.nextElementSibling?.scrollIntoView({ block: 'nearest' });
+//             }
+//         }
+//     } else if (nothingActivated && arrowUp) {
+//         if (topNav.classList.contains('js-open')) {
+//             if (selected.previousElementSibling) {
+//                 selected.previousElementSibling.classList.add('selected');
+//                 selected.classList.remove('selected');
+//                 selected.previousElementSibling.scrollIntoView({ block: 'nearest' });
+//             } else if (selected.previousElementSibling === null) {
+//                 toggleDropdown();
+//             }
+//         }
+//     } else if (shiftIsActivated && arrowDown) {
+//         if (achievementsScrollable) {
+//             achievementsScrollable.scrollBy({ top: 30, behavior: 'smooth' });
+//         }
+//         activeAchievement.parentElement.nextElementSibling?.querySelector('.achievementName a').click();
+//     } else if (shiftIsActivated && arrowUp) {
+//         if (achievementsScrollable) {
+//             achievementsScrollable.scrollBy({ top: -30, behavior: 'smooth' });
+//         }
+//         activeAchievement.parentElement.previousElementSibling?.querySelector('.achievementName a').click();
+//     } else if (nothingActivated && enterKey && topNav.classList.contains('js-open')) {
+//         selected.click();
+//     } else if (escapeKey && topNav.classList.contains('js-open')) {
+//         if (topNav.classList.contains('js-open')) {
+//             toggleDropdown();
+//         }
+//     } else if (nothingActivated && oKey) {
+//         openAllbtn.click();
+//     } else if (nothingActivated && vKey) {
+//         validateAllBtn.click();
+//     } else if (ctrlIsActivated && arrowDown) {
+//         if (guideScrollable) {
+//             guideScrollable.scrollBy({ top: 250, behavior: 'smooth' });
+//         }
+//     } else if (shiftIsActivated && arrowUp) {
+//         if (guideScrollable) {
+//             guideScrollable.scrollBy({ top: -250, behavior: 'smooth' });
+//         }
+//     }
+// }
 
-export const addKeysEventListeners = () => {
-    document.addEventListener('keydown', handleKeys);
-    document.addEventListener('keyup', handleKeys);
-};
+// export const addKeysEventListeners = () => {
+//     document.addEventListener('keydown', handleKeys);
+//     document.addEventListener('keyup', handleKeys);
+// };
 
-export const removeKeysEventListeners = () => {
-    document.removeEventListener('keydown', handleKeys);
-    document.removeEventListener('keyup', handleKeys);
-};
+// export const removeKeysEventListeners = () => {
+//     document.removeEventListener('keydown', handleKeys);
+//     document.removeEventListener('keyup', handleKeys);
+// };
 
 const addPageNavEventListeners = () => {
     const navButtons = document.querySelectorAll('.page-nav-button');
@@ -480,7 +520,7 @@ const removePageNavEventListeners = () => {
 };
 
 /**
- * Gère le clique sur la X de fermeture des options.
+ * Gère le clique sur la croix de fermeture des options.
  * TODO - Gérer la fermeture en cliquant en dehors de la fenêtre
  */
 const addOptionsListeners = () => {
@@ -503,3 +543,50 @@ const addOptionsListeners = () => {
     //     closeOptionsModal();
     // });
 }
+
+const handleSearchIconClick = (e) => {
+    e.stopPropagation();
+    addSearchListeners();
+}
+
+const addSearchListeners = async() => {
+    const searchIcon = document.querySelector(".fa-magnifying-glass");
+    let searchInput = document.querySelector("#search");
+    const searchList = await getGuideItemsFormatted();
+
+    searchInput.addEventListener("input", () => {
+        let input = searchInput.value.trim().toLowerCase();
+        searchGuides(input, searchList);
+    })
+}
+
+const getGuideItemsFormatted = () => {
+    return new Promise ((resolve) => {
+        const guideItems = document.querySelectorAll(".guide-item");
+        resolve(guideItems);
+    })
+}
+
+const searchGuides = async (searchInput, searchList) => {
+    searchList.forEach(item => {
+        const originalText = item.textContent.trim();
+        const lowerText = originalText.toLowerCase();
+        const index = lowerText.indexOf(searchInput);
+
+        if (index !== -1 && searchInput !== "") {
+            item.style.display = "list-item";
+
+            // Découpe et entoure le texte correspondant avec <mark>
+            const beforeMatch = originalText.slice(0, index);
+            const match = originalText.slice(index, index + searchInput.length);
+            const afterMatch = originalText.slice(index + searchInput.length);
+
+            item.innerHTML = `${beforeMatch}<mark>${match}</mark>${afterMatch}`;
+        } else if (searchInput === "") {
+            item.style.display = "list-item";
+            item.innerHTML = originalText; // Réinitialise l'affichage
+        } else {
+            item.style.display = "none";
+        }
+    });
+};

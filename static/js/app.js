@@ -12,7 +12,7 @@ const initializeEvents = () => {
 
     nav.updateSelectedGuide();
     nav.addNavEventListeners();
-    nav.addKeysEventListeners();
+    // nav.addKeysEventListeners();
     quests.addQuestEventListeners();
     achievements.addAchievementBtnClickEventListeners();
     guide.addGuideEventListeners();

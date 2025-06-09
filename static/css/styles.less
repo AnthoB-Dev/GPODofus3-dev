@@ -183,69 +183,6 @@ input {
   height: 100%;
 }
 
-.modalImage {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.3s ease-in-out;
-  cursor: pointer;
-  opacity: 1;
-}
-
-.modal-close {
-  transition: all .3s ease-in-out;
-}
-
-.modal-open {
-  cursor: pointer;
-  transition: all .3s ease-in-out;
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-.is-open {
-  max-width: 70vw;
-}
-
-.quest {
-  color: #1b78d2 !important;
-}
-
-.achievement {
-  font-weight: 600;
-  color: #006400 !important;
-}
-
-.dungeon {
-  font-style: oblique !important;
-  color: #b700df !important;
-  font-weight: 500 !important;
-}
-
-.warning {
-  color: red !important;
-}
-
-.keyboardFocusedElement {
-  position: relative;
-  
-  &::before {
-    content: "";
-    position: absolute;
-    width: 95%;
-    height: 0px;
-    bottom: -3px;
-    left: 0;
-    border: outset 2px var(--clr-red);
-    border-radius: 4px;
-  }
-}
-
 body {
   color: var(--clr-text);
   display: flex;
@@ -604,6 +541,7 @@ body {
               overflow-y: auto;
               scrollbar-color: #7b6939 #00000000;
               margin: var(--gap-sm);
+              position: relative;
           
               .guide-item {
                 padding: var(--gap-reg) var(--gap-lg);
@@ -629,6 +567,34 @@ body {
           
             .overflowClose {
               max-height: 0;
+            }
+
+            #searchDiv {
+              display: flex;
+              align-items: center;
+              gap: var(--gap-reg);
+              padding: var(--gap-reg);
+              position: sticky;
+              top: 0;
+              z-index: 10;
+              width: 100%;
+              background-color: var(--clr-light);
+              border-radius: calc(var(--border-radius) / 2);
+              margin-bottom: 5px;
+
+              #search {
+                font-size: var(--fs-1);
+                padding: 5px;
+                border-radius: var(--border-radius);
+                
+                &:focus {
+                  background: #e7e7e7;
+                }
+              }
+
+              #searchLabel {
+                cursor: pointer;
+              }
             }
           }
         }
@@ -1271,6 +1237,69 @@ body {
   }
 }
 
+.modalImage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  opacity: 1;
+}
+
+.modal-close {
+  transition: all .3s ease-in-out;
+}
+
+.modal-open {
+  cursor: pointer;
+  transition: all .3s ease-in-out;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.is-open {
+  max-width: 70vw;
+}
+
+.quest {
+  color: #1b78d2 !important;
+}
+
+.achievement {
+  font-weight: 600;
+  color: #006400 !important;
+}
+
+.dungeon {
+  font-style: oblique !important;
+  color: #b700df !important;
+  font-weight: 500 !important;
+}
+
+.warning {
+  color: red !important;
+}
+
+.keyboardFocusedElement {
+  position: relative;
+  
+  &::before {
+    content: "";
+    position: absolute;
+    width: 95%;
+    height: 0px;
+    bottom: -3px;
+    left: 0;
+    border: outset 2px var(--clr-red);
+    border-radius: 4px;
+  }
+}
+
 #messages {
   position: absolute;
   top: var(--gap-lg);
@@ -1352,6 +1381,10 @@ body {
 .tooltip:focus .tooltip-text {
   visibility: visible;
   opacity: 1;
+}
+
+.fa-magnifying-glass {
+  font-size: var(--fs-2) !important;
 }
 
 

@@ -1,5 +1,6 @@
 @font-path: "../fonts/";
 @font-roboto-regular: "Roboto-Regular";
+@font-roboto-medium: "Roboto-Medium";
 @font-roboto-bold: "Roboto-Bold";
 
 @box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.35);
@@ -70,6 +71,11 @@
   @font-face {
     font-family: @font-roboto-regular;
     src: url("@{font-path}@{font-roboto-regular}.ttf");
+    font-display: block;
+  }
+  @font-face {
+    font-family: @font-roboto-medium;
+    src: url("@{font-path}@{font-roboto-medium}.ttf");
     font-display: block;
   }
   @font-face {
@@ -245,7 +251,7 @@ body {
   display: flex;
   font-family: @font-roboto-regular;
   flex-direction: column;
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   position: relative;
 
@@ -1300,4 +1306,301 @@ body {
 .highlight {
   transition: background 0.2s ease-in-out;
   border: solid 2px lighten(@clr-green, 20%) !important;
+}
+
+.tooltip {
+  position: relative;
+  cursor: help;
+  background: none;
+  border: none;
+}
+
+/* Cache la bulle par défaut */
+.tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  width: max-content;
+  background-color: #fff;
+  color: #333;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 10;
+  bottom: 125%; /* Positionne au-dessus de l’élément */
+  left: 50%;
+  transform: translateX(-50%);
+  transition: opacity 0.3s ease;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+/* Triangle en bas de la bulle */
+.tooltip-text::after {
+  content: "";
+  position: absolute;
+  top: 100%; /* En bas de la bulle */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+/* Affiche la bulle au survol */
+.tooltip:hover .tooltip-text,
+.tooltip:focus .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+@media only screen and (max-width: 1590px) {
+  @gap-xl: 16px;
+  @gap-lg: 13px;
+  @gap-md: 12px;
+  @gap-reg: 8px;
+  @gap-sm: 5px;
+
+  @fs--2: 9px;
+  @fs--1: 11px;
+  @fs-0: 12px;
+  @fs-05: 14px;
+  @fs-1: 16px;
+  @fs-2: 20px;
+  @fs-3: 22px;
+  @fs-4: 38px;
+
+  :root {
+    --fs--2: @fs--2;
+    --fs--1: @fs--1;
+    --fs-0: @fs-0;
+    --fs-05: @fs-05;
+    --fs-1: @fs-1;
+    --fs-2: @fs-2;
+    --fs-3: @fs-3;
+    --fs-4: @fs-4;
+
+    --gap-xl: @gap-xl;
+    --gap-lg: @gap-lg;
+    --gap-md: @gap-md;
+    --gap-reg: @gap-reg;
+    --gap-sm: @gap-sm;
+
+    h2 {
+      font-size: 1.7em !important;
+    }
+    h3 {
+      font-size: 1.5em !important;
+    }
+    h4 {
+      font-size: 1.4em !important;
+    }
+    h5 {
+      font-size: 1.2em !important;
+    }
+    h6 {
+      font-size: 1.1em !important;
+    }
+  }
+  body #content #frame_main main #centerContent #objectivesAndAchievements #achievements .content #frame_achievements ul li .achievementName {
+    min-height: 40px;
+  }
+  body #content #frame_main main #topNav .dropdown-content .overflowOpen {
+    max-height: 350px;
+  }
+  body .content ul li i {
+    font-size: 13px;
+  }
+  body #content #frame_main main #centerContent #objectivesAndAchievements #achievements .content #frame_achievements ul li .achievementName .expectIcons img {
+    width: 13px;
+    height: 13px;
+  }
+  body #content #frame_main main #topNav .guide-header .imgBackground {
+    width: 35px;
+    height: 35px;
+  }
+  body .title .imgBackground {
+    width: 35px;
+    height: 35px;
+  }
+  .interactable button {
+    font-size: 1.05em;
+  }
+  .interactable button i {
+    font-size: 13px;
+  }
+  body #content #frame_main main #centerContent #guide .content #frame_guide #guide_content .guide_element .jsToggleSummaryBtn {
+    padding: 9px 0;
+    font-size: 0.9em;
+  }
+}
+
+@media only screen and (max-width: 1100px) {
+  @gap-xl: 16px;
+  @gap-lg: 13px;
+  @gap-md: 12px;
+  @gap-reg: 8px;
+  @gap-sm: 5px;
+
+  @fs--2: 8px;
+  @fs--1: 10px;
+  @fs-0: 11px;
+  @fs-05: 12px;
+  @fs-1: 14px;
+  @fs-2: 18px;
+  @fs-3: 20px;
+  @fs-4: 30px;
+
+  :root {
+    --fs--2: @fs--2;
+    --fs--1: @fs--1;
+    --fs-0: @fs-0;
+    --fs-05: @fs-05;
+    --fs-1: @fs-1;
+    --fs-2: @fs-2;
+    --fs-3: @fs-3;
+    --fs-4: @fs-4;
+
+    --gap-xl: @gap-xl;
+    --gap-lg: @gap-lg;
+    --gap-md: @gap-md;
+    --gap-reg: @gap-reg;
+    --gap-sm: @gap-sm;
+
+    h2 {
+      font-size: 1.5em !important;
+    }
+    h3 {
+      font-size: 1.3em !important;
+    }
+    h4 {
+      font-size: 1.2em !important;
+    }
+    h5 {
+      font-size: 1.1em !important;
+    }
+    h6 {
+      font-size: 1em !important;
+    }
+  }
+  body #content #frame_main main #centerContent #objectivesAndAchievements #achievements .content #frame_achievements ul li .achievementName {
+    min-height: 35px;
+  }
+  body #content #frame_main main #topNav .dropdown-content .overflowOpen {
+    max-height: 300px;
+  }
+  body .content ul li i {
+    font-size: 11px;
+  }
+  body #content #frame_main main #centerContent #objectivesAndAchievements #achievements .content #frame_achievements ul li .achievementName .expectIcons img {
+    width: 11px;
+    height: 11px;
+  }
+  body #content #frame_main main #topNav .guide-header .imgBackground {
+    width: 35px;
+    height: 35px;
+  }
+  body .title .imgBackground {
+    width: 35px;
+    height: 35px;
+  }
+  .interactable button {
+    font-size: 0.9em;
+    font-family: @font-roboto-medium;
+  }
+  .interactable button i {
+    font-size: 10px !important;
+  }
+  body #content #frame_main main #centerContent #guide .content #frame_guide #guide_content .guide_element .jsToggleSummaryBtn {
+    padding: 8px 0;
+    font-size: 0.9em;
+  }
+}
+
+@media only screen and (min-width: 2190px) {
+  @fs--2: 14px;
+  @fs--1: 16px;
+  @fs-0: 20px;
+  @fs-05: 20px;
+  @fs-1: 22px;
+  @fs-2: 24px;
+  @fs-3: 26px;
+  @fs-4: 56px;
+
+  @gap-xl: 30px;
+  @gap-lg: 25px;
+  @gap-md: 24px;
+  @gap-reg: 18px;
+  @gap-sm: 8px;
+
+  :root {
+    --fs--2: @fs--2;
+    --fs--1: @fs--1;
+    --fs-0: @fs-0;
+    --fs-05: @fs-05;
+    --fs-1: @fs-1;
+    --fs-2: @fs-2;
+    --fs-3: @fs-3;
+    --fs-4: @fs-4;
+
+    --gap-xl: @gap-xl;
+    --gap-lg: @gap-lg;
+    --gap-md: @gap-md;
+    --gap-reg: @gap-reg;
+    --gap-sm: @gap-sm;
+
+    h2 {
+      font-size: 1.7em !important;
+    }
+    h3 {
+      font-size: 1.5em !important;
+    }
+    h4 {
+      font-size: 1.4em !important;
+    }
+    h5 {
+      font-size: 1.2em !important;
+    }
+    h6 {
+      font-size: 1.1em !important;
+    }
+  }
+
+  body {
+    font-family: @font-roboto-medium;
+  }
+
+  body #content #frame_main main #centerContent #objectivesAndAchievements #achievements .content #frame_achievements ul li .achievementName {
+    min-height: 55px;
+  }
+  body #content #frame_main main #topNav .dropdown-content .overflowOpen {
+    max-height: 700px;
+  }
+  body .content ul li i {
+    font-size: 18px;
+  }
+  body #content #frame_main main #centerContent #objectivesAndAchievements #achievements .content #frame_achievements ul li .achievementName .expectIcons img {
+    width: 20px;
+    height: 20px;
+  }
+  body #content #frame_main main #topNav .guide-header .imgBackground {
+    width: 65px;
+    height: 65px;
+  }
+  body .title .imgBackground {
+    width: 65px;
+    height: 65px;
+  }
+  .interactable button {
+    font-size: 1.05em;
+    font-family: @font-roboto-medium;
+  }
+  .interactable button i {
+    font-size: 18px;
+  }
+  body #content #frame_main main #centerContent #guide .content #frame_guide #guide_content .guide_element .jsToggleSummaryBtn {
+    padding: 10px 0;
+    font-size: 0.9em;
+  }
 }

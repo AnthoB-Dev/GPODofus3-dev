@@ -3,7 +3,7 @@ from django.db import models
 from django.core.exceptions import ValidationError
 
 
-GAME_VERSION = Decimal("3.0")
+GAME_VERSION = Decimal("3.1")
 DEFAULT_ALIGNMENT_ID = 3
 
 

@@ -1,7 +1,9 @@
 import glob
 import json
 import os
+import datetime as dt
 from datetime import datetime
+import re
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST
 from django.shortcuts import render, redirect, get_object_or_404
@@ -239,6 +241,14 @@ def alignment_choice(request):
     return redirect('app:guide_detail', guide_id=174)
 
 
+# Fonction d'extraction de date/heure
+def datetime_extract(file_name):
+    match = re.search(r"(\d{2})_(\d{2})_(\d{4})-(\d{2})_(\d{2})_(\d{2})", file_name)
+    if match:
+        day, month, year, h, m, s = map(int, match.groups())
+        return dt.datetime(year, month, day, h, m, s)
+    return dt.datetime.min
+
 @csrf_exempt
 def create_save(request):
     success = True
@@ -277,14 +287,10 @@ def create_save(request):
         if not os.path.exists(saves_folder):
             os.makedirs(saves_folder)
             
-        with open("package.json", "r", encoding="utf-8") as file:
-            data = json.load(file)
-            
-        app_version = data.get("version")
         timestamp = datetime.now().strftime("%d_%m_%Y")
         hour = datetime.now().strftime("%H_%M_%S")
         
-        save_name = f"save-{app_version}-{timestamp}-{hour}.json"
+        save_name = f"save-{timestamp}-{hour}.json"
         
         message = f"La sauvegarde '{save_name}' a été créée avec succès dans \\AppData\\Roaming\\GPODofus3\\saves."
 
@@ -322,9 +328,8 @@ def load_save(request):
     try:
         # Charge les données depuis le fichier save.json le plus récent présent dans le dossier AppData\Roaming\GPODofus3\saves
         saves_folder = os.path.join(os.environ.get('APPDATA'), 'GPODofus3', 'saves')
-        save_files = glob.glob(os.path.join(saves_folder, "save-*-*-*.json"))
-        save_files.sort()
-        save_files = save_files[::-1]
+        save_files = glob.glob(os.path.join(saves_folder, "*-*-*.json"))
+        save_files.sort(key=datetime_extract, reverse=True)
 
         if save_files:
             save_file = save_files[0]

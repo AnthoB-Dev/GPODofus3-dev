@@ -586,6 +586,7 @@ body {
                 font-size: var(--fs-1);
                 padding: 5px;
                 border-radius: var(--border-radius);
+                width: 100%;
                 
                 &:focus {
                   background: #e7e7e7;
@@ -1334,7 +1335,7 @@ body {
 
 .highlight {
   transition: background 0.2s ease-in-out;
-  border: solid 2px lighten(@clr-green, 20%) !important;
+  border: solid 2px #0fbd0f !important;
 }
 
 .tooltip {
@@ -1385,6 +1386,17 @@ body {
 
 .fa-magnifying-glass {
   font-size: var(--fs-2) !important;
+}
+
+.js-clipboard {
+  cursor: pointer;
+  background: darken(@clr-primary, 5%);
+  text-decoration: underline;
+
+  &:hover {
+    text-decoration: none;
+    background: var(--clr-primary);
+  }
 }
 
 

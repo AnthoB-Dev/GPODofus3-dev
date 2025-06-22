@@ -1,47 +1,4 @@
-import { getAchievements } from './achievements.js';
-
-/**
- * Met à jour le titre visible sur la topNav (dropdown menu).
- */
-export const updateTopNavTitle = (event = null) => {
-    let newTitle;
-
-    if (event && event.detail && event.detail.newBody) {
-        // Si event.detail.newBody est disponible (dans turbo:before-render)
-        newTitle = event.detail.newBody.querySelector("#topNav .guide-header h2")?.textContent;
-    } else {
-        // Sinon, on prend le titre actuel
-        newTitle = document.querySelector("#topNav .guide-header h2")?.textContent;
-    }
-
-    if (newTitle) {
-        const currentTitle = document.querySelector("#topNav .guide-header h2");
-        if (currentTitle) {
-            currentTitle.textContent = newTitle;
-        }
-    }
-};
-
-/**
- * Met à jour le guide selectionné.
- * - Boucle sur les "guide-item" qui sont les guides cliquables dans le dropdown.
- * - Supprime les 8 premiers caractères "Nv.XX - ".
- * - Ajoute la classe "selected" au nouceau guide selectionné dans le dropdown. (Fond blanc).
- */
-export const updateSelectedGuide = () => {
-    const currentTitle = document.querySelector("#topNav .guide-header h2")?.textContent;
-    const guideItems = document.querySelectorAll(".guide-item");
-
-    guideItems.forEach((item) => {
-        const itemTitle = item.textContent.trim().split(" ").slice(7).join(" ");
-
-        if (itemTitle == currentTitle?.trim()) {
-            item.classList.add("selected");
-        } else {
-            item.classList.remove("selected");
-        }
-    });
-};
+import { addClipBoardEventListeners } from './guide.js';
 
 /**
  * Gère la modal des options suite au clique sur l'icone des options.
@@ -89,57 +46,6 @@ const handleDocumentClick = (e) => {
     if (!topNav.contains(e.target) && !e.target.classList.contains("guide-item") && topNav.classList.contains("js-open")) {
         toggleDropdown();
     }
-};
-
-export const addNavEventListeners = () => {
-    const topNav = document.getElementById("topNav");
-    const guideHeader = topNav.querySelector(".guide-header");
-    const dropDownContent = topNav.querySelector(".dropdown-content");
-    const overflow = dropDownContent.querySelector(".overflow");
-    const optionsGear = document.querySelector("#gear");
-    const searchIcon = document.querySelector(".fa-magnifying-glass");
-
-    if (!guideHeader.hasAttribute("data-initialized")) {
-        guideHeader.setAttribute("data-initialized", "true");
-        guideHeader.addEventListener("click", handleGuideHeaderClick);
-    }
-
-    overflow.querySelectorAll(".guide-item").forEach((item) => {
-        item.addEventListener("click", handleGuideItemClick);
-    });
-
-    document.addEventListener("click", handleDocumentClick);
-
-    optionsGear.addEventListener("click", handleOptionGearClick);
-
-    searchIcon.addEventListener("click", handleSearchIconClick);
-
-    // Ajout des écouteurs d'événements pour les boutons de navigation de la page
-    addPageNavEventListeners();
-};
-
-export const removeNavEventListeners = () => {
-    const topNav = document.getElementById("topNav");
-    const guideHeader = topNav.querySelector(".guide-header");
-    const dropDownContent = topNav.querySelector(".dropdown-content");
-    const overflow = dropDownContent.querySelector(".overflow");
-    const searchIcon = document.querySelector(".fa-magnifying-glass");
-
-    if (guideHeader.hasAttribute("data-initialized")) {
-        guideHeader.removeAttribute("data-initialized");
-        guideHeader.removeEventListener("click", handleGuideHeaderClick);
-    }
-
-    overflow.querySelectorAll(".guide-item").forEach((item) => {
-        item.removeEventListener("click", handleGuideItemClick);
-    });
-
-    document.removeEventListener("click", handleDocumentClick);
-
-    searchIcon.removeEventListener("click", handleSearchIconClick);
-
-    // Suppression des écouteurs d'événements pour les boutons de navigation de la page
-    removePageNavEventListeners();
 };
 
 /**
@@ -246,7 +152,7 @@ const createOptionsModal = () => {
         const o1UnderTitle = document.createElement('p');
         o1UnderTitle.classList.add('settingDescription');
         
-        o1UnderTitle.innerHTML = `Créer un fichier dans ${savesPath} qui sauvegarde la progression générale.<br/>À utiliser avant de mettre à jour l’application. Chaque nouvelle sauvegarde remplace l'ancienne mais l'avant dernière est gardée en étant renommée old_save. En cas de problèmes avec la dernière sauvegarde, rennomez le fichier de sauvegarde '<em>old_save-</em>' en '<em>save-</em>' pour revenir en arrière.`;;
+        o1UnderTitle.innerHTML = `Créer un fichier dans ${savesPath} qui sauvegarde la progression générale.<br/>À utiliser avant de mettre à jour l’application.`;
     
         o1TextsContainer.appendChild(o1Title);
         o1TextsContainer.appendChild(o1UnderTitle);
@@ -273,7 +179,7 @@ const createOptionsModal = () => {
         o2Title.innerText = "Charger la sauvegarde";
         const o2UnderTitle = document.createElement('p');
         o2UnderTitle.classList.add('settingDescription');
-        o2UnderTitle.innerHTML = `Charge le fichier de sauvegarde situé à l’emplacement ${savesPath}.<br/>À utiliser une fois l’application mise à jour.`;
+        o2UnderTitle.innerHTML = `Charge le fichier de sauvegarde le plus récent situé à l’emplacement ${savesPath}.<br/>À utiliser une fois l’application mise à jour.<br>Pour charger une sauvegarde antérieur, renommez la sauvegarde souhaité de sorte a ce qu'elle soit la plus récente.`;
     
         o2TextsContainer.appendChild(o2Title);
         o2TextsContainer.appendChild(o2UnderTitle);
@@ -282,6 +188,28 @@ const createOptionsModal = () => {
         settingSaveO2.appendChild(o2TextsContainer);
     
         containerRight.appendChild(settingSaveO2);
+
+        // Création de l'information comment trouver le dossier saves
+        const settingSaveInfo = document.createElement('span');
+        settingSaveInfo.id = "option-info";
+        settingSaveInfo.classList.add('settingsContainer');
+        settingSaveInfo.style.cursor="initial";
+        settingSaveInfo.style.background="initial";
+        const oInfoTextsContainer = document.createElement('div');
+        oInfoTextsContainer.classList.add('settingTextsContainer');
+        const oInfoTitle = document.createElement('p');
+        oInfoTitle.classList.add('settingTitle');
+        oInfoTitle.innerText = "Trouver le dossier de sauvegarde";
+        const oInfoUnderTitle = document.createElement('p');
+        oInfoUnderTitle.classList.add('settingDescription');
+        oInfoUnderTitle.innerHTML = `Pour accéder au dossier de sauvegarde, vous pouvez faire la combinaison de touches <strong>WINDOWS</strong> + <strong>R</strong> et entrer <span class="js-clipboard">%AppData%/GPODofus3/saves</span>`;
+
+        oInfoTextsContainer.appendChild(oInfoTitle);
+        oInfoTextsContainer.appendChild(oInfoUnderTitle);
+        
+        settingSaveInfo.appendChild(oInfoTextsContainer);
+    
+        containerRight.appendChild(settingSaveInfo);
     
         modal.appendChild(containerLeft);
         modal.appendChild(containerRight);
@@ -291,20 +219,6 @@ const createOptionsModal = () => {
         document.body.appendChild(background);
         resolve();
     })
-}
-
-/**
- * Supprime les messages de confirmation de réussite ou d'échec.
- */
-export const removeMessages = () => {
-    const messages = document.querySelector('#messages');
-    let timeout;
-
-    messages.classList.contains('failure') ? timeout = 10000 : timeout = 6000
-
-    setTimeout(() => {
-        messages.classList.add('hidden');
-    }, timeout);
 }
 
 /**
@@ -367,142 +281,6 @@ const handlePageNavButtonClick = (e) => {
     }
 };
 
-// let shiftActivated = false;
-// let ctrlActivated = false;
-// let altActivated = false;
-
-// const handleKeys = async (e) => {
-//     const pageNavLeft = document.querySelector('#pageNavLeft');
-//     const pageNavRight = document.querySelector('#pageNavRight');
-//     const topNav = document.getElementById("topNav");
-//     const selected = document.querySelector('.selected');
-//     const openAllbtn = document.querySelector('#openAll');
-//     const validateAllBtn = document.querySelector('#validateAll');
-//     const achievements = await getAchievements();
-//     const activeAchievement = [...achievements].find(achievement => achievement.classList.contains("active"));
-//     const guideScrollable = document.querySelector('#guide .content');
-//     const achievementsScrollable = document.querySelector('#achievements .content');
-//     const guideTitle= document.querySelector('#guide h3');
-//     const achievementTitle = document.querySelector('#achievements h3');
-
-//     document.removeEventListener('keyup', handleKeys);
-
-//     // Mettre à jour l'état des touches modificateurs
-//     if (e.type === 'keydown') {
-//         if (e.key === 'Shift') {
-//             if (!shiftActivated) {
-//                 shiftActivated = true;
-//                 achievementTitle.classList.add('keyboardFocusedElement');
-//                 guideTitle.classList.remove('keyboardFocusedElement');
-//                 topNav.classList.contains("js-open") ? toggleDropdown() : null;
-//                 ctrlActivated = false;
-//             } else {
-//                 shiftActivated = false;
-//                 achievementTitle.classList.remove('keyboardFocusedElement');
-//             }
-//         } 
-//         if (e.key === 'Control') {
-//             if (!ctrlActivated) {
-//                 ctrlActivated = true;
-//                 guideTitle.classList.add('keyboardFocusedElement');
-//                 achievementTitle.classList.remove('keyboardFocusedElement');
-//                 topNav.classList.contains("js-open") ? toggleDropdown() : null;
-//                 shiftActivated = false;
-//             } else {
-//                 ctrlActivated = false;
-//                 guideTitle.classList.remove('keyboardFocusedElement');
-//             }
-//         };
-//         if (e.key === 'Tab') {
-//             e.preventDefault();
-//             if (ctrlActivated || shiftActivated) {
-//                 ctrlActivated = false;
-//                 shiftActivated = false
-//             }
-//         };
-//         if (e.key === 'Alt') altActivated = true;
-//     } else if (e.type === 'keyup') {
-//         if (e.key === 'Alt') altActivated = false;
-//     }
-
-//     const shiftIsActivated = !ctrlActivated && shiftActivated;
-//     const ctrlIsActivated = ctrlActivated && !shiftActivated;
-//     const nothingActivated = !ctrlActivated && !shiftActivated;
-
-//     const arrowDown = e.type === 'keydown' && e.key === 'ArrowDown';
-//     const arrowUp = e.type === 'keydown' && e.key === 'ArrowUp';
-//     const arrowLeft = e.type === 'keydown' && e.key === 'ArrowLeft';
-//     const arrowRight = e.type === 'keydown' && e.key === 'ArrowRight';
-//     const enterKey = e.key === 'Enter';
-//     const escapeKey = e.key === 'Escape';
-//     const oKey = e.key === 'o';
-//     const vKey = e.key === 'v';
-
-//     if (nothingActivated && arrowLeft) {
-//         pageNavLeft.click();
-//     } else if (nothingActivated && arrowRight) {
-//         pageNavRight.click();
-//     } else if (nothingActivated && arrowDown) {
-//         if (!topNav.classList.contains('js-open')) {
-//             toggleDropdown();
-//         } else {
-//             if (selected.nextElementSibling) {
-//                 selected.nextElementSibling?.classList.add('selected');
-//                 selected.classList.remove('selected');
-//                 selected.nextElementSibling?.scrollIntoView({ block: 'nearest' });
-//             }
-//         }
-//     } else if (nothingActivated && arrowUp) {
-//         if (topNav.classList.contains('js-open')) {
-//             if (selected.previousElementSibling) {
-//                 selected.previousElementSibling.classList.add('selected');
-//                 selected.classList.remove('selected');
-//                 selected.previousElementSibling.scrollIntoView({ block: 'nearest' });
-//             } else if (selected.previousElementSibling === null) {
-//                 toggleDropdown();
-//             }
-//         }
-//     } else if (shiftIsActivated && arrowDown) {
-//         if (achievementsScrollable) {
-//             achievementsScrollable.scrollBy({ top: 30, behavior: 'smooth' });
-//         }
-//         activeAchievement.parentElement.nextElementSibling?.querySelector('.achievementName a').click();
-//     } else if (shiftIsActivated && arrowUp) {
-//         if (achievementsScrollable) {
-//             achievementsScrollable.scrollBy({ top: -30, behavior: 'smooth' });
-//         }
-//         activeAchievement.parentElement.previousElementSibling?.querySelector('.achievementName a').click();
-//     } else if (nothingActivated && enterKey && topNav.classList.contains('js-open')) {
-//         selected.click();
-//     } else if (escapeKey && topNav.classList.contains('js-open')) {
-//         if (topNav.classList.contains('js-open')) {
-//             toggleDropdown();
-//         }
-//     } else if (nothingActivated && oKey) {
-//         openAllbtn.click();
-//     } else if (nothingActivated && vKey) {
-//         validateAllBtn.click();
-//     } else if (ctrlIsActivated && arrowDown) {
-//         if (guideScrollable) {
-//             guideScrollable.scrollBy({ top: 250, behavior: 'smooth' });
-//         }
-//     } else if (shiftIsActivated && arrowUp) {
-//         if (guideScrollable) {
-//             guideScrollable.scrollBy({ top: -250, behavior: 'smooth' });
-//         }
-//     }
-// }
-
-// export const addKeysEventListeners = () => {
-//     document.addEventListener('keydown', handleKeys);
-//     document.addEventListener('keyup', handleKeys);
-// };
-
-// export const removeKeysEventListeners = () => {
-//     document.removeEventListener('keydown', handleKeys);
-//     document.removeEventListener('keyup', handleKeys);
-// };
-
 const addPageNavEventListeners = () => {
     const navButtons = document.querySelectorAll('.page-nav-button');
 
@@ -520,40 +298,40 @@ const removePageNavEventListeners = () => {
 };
 
 /**
- * Gère le clique sur la croix de fermeture des options.
+ * Gère les listeners de la modal d'options.
  * TODO - Gérer la fermeture en cliquant en dehors de la fenêtre
  */
 const addOptionsListeners = () => {
     const optionsCloseBtn = document.querySelector('#optionsCloseBtn');
-    const confirmDelete = document.querySelector('#option-save');
+    // const confirmDelete = document.querySelector('#option-save');
     // const backgroundModal = document.querySelector('.optionModalBackground');
 
     optionsCloseBtn.addEventListener('click', () => {
         closeOptionsModal();
     });
 
-    confirmDelete.addEventListener('click', (e) => {
-        const confirmSave = confirm("Êtes-vous sûr de vouloir créer un fichier de sauvegarde ? Le fichier précédent sera renommé en old_save.");
-        if (!confirmSave) {
-            e.preventDefault();
-        }
-    })
+    // confirmDelete.addEventListener('click', (e) => {
+    //     const confirmSave = confirm("Êtes-vous sûr de vouloir créer un fichier de sauvegarde ? Le fichier précédent sera renommé en old_save.");
+    //     if (!confirmSave) {
+    //         e.preventDefault();
+    //     }
+    // })
 
     // backgroundModal.addEventListener('click', () => {
     //     closeOptionsModal();
     // });
+
+    addClipBoardEventListeners();
 }
 
-const handleSearchIconClick = (e) => {
-    e.stopPropagation();
+const handleSearchDivClick = (e) => {
     addSearchListeners();
 }
 
 const addSearchListeners = async() => {
-    const searchIcon = document.querySelector(".fa-magnifying-glass");
     let searchInput = document.querySelector("#search");
     const searchList = await getGuideItemsFormatted();
-
+    
     searchInput.addEventListener("input", () => {
         let input = searchInput.value.trim().toLowerCase();
         searchGuides(input, searchList);
@@ -576,7 +354,6 @@ const searchGuides = async (searchInput, searchList) => {
         if (index !== -1 && searchInput !== "") {
             item.style.display = "list-item";
 
-            // Découpe et entoure le texte correspondant avec <mark>
             const beforeMatch = originalText.slice(0, index);
             const match = originalText.slice(index, index + searchInput.length);
             const afterMatch = originalText.slice(index + searchInput.length);
@@ -589,4 +366,113 @@ const searchGuides = async (searchInput, searchList) => {
             item.style.display = "none";
         }
     });
+};
+
+
+/**
+ * Supprime les messages de confirmation de réussite ou d'échec.
+ */
+export const removeMessages = () => {
+    const messages = document.querySelector('#messages');
+    let timeout;
+
+    messages.classList.contains('failure') ? timeout = 10000 : timeout = 6000
+
+    setTimeout(() => {
+        messages.classList.add('hidden');
+    }, timeout);
+}
+
+/**
+ * Met à jour le titre visible sur la topNav (dropdown menu).
+ */
+export const updateTopNavTitle = (event = null) => {
+    let newTitle;
+
+    if (event && event.detail && event.detail.newBody) {
+        // Si event.detail.newBody est disponible (dans turbo:before-render)
+        newTitle = event.detail.newBody.querySelector("#topNav .guide-header h2")?.textContent;
+    } else {
+        // Sinon, on prend le titre actuel
+        newTitle = document.querySelector("#topNav .guide-header h2")?.textContent;
+    }
+
+    if (newTitle) {
+        const currentTitle = document.querySelector("#topNav .guide-header h2");
+        if (currentTitle) {
+            currentTitle.textContent = newTitle;
+        }
+    }
+};
+
+/**
+ * Met à jour le guide selectionné.
+ * - Boucle sur les "guide-item" qui sont les guides cliquables dans le dropdown.
+ * - Supprime les 8 premiers caractères "Nv.XX - ".
+ * - Ajoute la classe "selected" au nouceau guide selectionné dans le dropdown. (Fond blanc).
+ */
+export const updateSelectedGuide = () => {
+    const currentTitle = document.querySelector("#topNav .guide-header h2")?.textContent;
+    const guideItems = document.querySelectorAll(".guide-item");
+
+    guideItems.forEach((item) => {
+        const itemTitle = item.textContent.trim().split(" ").slice(7).join(" ");
+
+        if (itemTitle == currentTitle?.trim()) {
+            item.classList.add("selected");
+        } else {
+            item.classList.remove("selected");
+        }
+    });
+};
+
+export const addNavEventListeners = () => {
+    const topNav = document.getElementById("topNav");
+    const guideHeader = topNav.querySelector(".guide-header");
+    const dropDownContent = topNav.querySelector(".dropdown-content");
+    const overflow = dropDownContent.querySelector(".overflow");
+    const optionsGear = document.querySelector("#gear");
+    const searchDiv = document.querySelector("#search");
+
+    if (!guideHeader.hasAttribute("data-initialized")) {
+        guideHeader.setAttribute("data-initialized", "true");
+        guideHeader.addEventListener("click", handleGuideHeaderClick);
+    }
+
+    overflow.querySelectorAll(".guide-item").forEach((item) => {
+        item.addEventListener("click", handleGuideItemClick);
+    });
+
+    document.addEventListener("click", handleDocumentClick);
+
+    optionsGear.addEventListener("click", handleOptionGearClick);
+
+    searchDiv.addEventListener("click", handleSearchDivClick);
+
+    // Ajout des écouteurs d'événements pour les boutons de navigation de la page
+    addPageNavEventListeners();
+};
+
+export const removeNavEventListeners = () => {
+    const topNav = document.getElementById("topNav");
+    const guideHeader = topNav.querySelector(".guide-header");
+    const dropDownContent = topNav.querySelector(".dropdown-content");
+    const overflow = dropDownContent.querySelector(".overflow");
+    const searchDiv = document.querySelector("#search");
+
+    if (guideHeader.hasAttribute("data-initialized")) {
+        guideHeader.removeAttribute("data-initialized");
+        guideHeader.removeEventListener("click", handleGuideHeaderClick);
+    }
+
+    overflow.querySelectorAll(".guide-item").forEach((item) => {
+        item.removeEventListener("click", handleGuideItemClick);
+    });
+
+    document.removeEventListener("click", handleDocumentClick);
+
+    searchDiv.removeEventListener("click", handleSearchDivClick);
+
+    // Suppression des écouteurs d'événements pour les boutons de navigation de la page
+    removePageNavEventListeners();
 };

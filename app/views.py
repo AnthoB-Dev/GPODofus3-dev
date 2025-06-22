@@ -282,18 +282,14 @@ def create_save(request):
             
         app_version = data.get("version")
         timestamp = datetime.now().strftime("%d_%m_%Y")
+        hour = datetime.now().strftime("%H_%M_%S")
         
-        save_name = f"save-{app_version}-{timestamp}.json"
+        save_name = f"save-{app_version}-{timestamp}-{hour}.json"
+        
+        message = f"La sauvegarde '{save_name}' a été créée avec succès dans \\AppData\\Roaming\\GPODofus3\\saves."
 
         output_file = os.path.join(saves_folder, save_name)
         old_save_file = os.path.join(saves_folder, f'old_{save_name}')
-        
-        # Mettre en place une verification de fichiers qui commencent par "save-" et "old_save-"
-        # Il ne peut y avoir qu'une seul "save-"
-        # Il peut y avoir jusqu'à 5 "old_save-"
-
-        if os.path.exists(old_save_file):
-            os.remove(old_save_file)
 
         if os.path.exists(output_file):
             os.rename(output_file, old_save_file)
@@ -324,9 +320,11 @@ def load_save(request):
     message = "Sauvegarde chargée avec succès.<br/>Redémarrez l'application ou changez de guide pour que les changements prennent effet." 
     
     try:
-        # Charger les données depuis le fichier JSON présent dans le dossier AppData\Roaming\GPODofus3
+        # Charge les données depuis le fichier save.json le plus récent présent dans le dossier AppData\Roaming\GPODofus3\saves
         saves_folder = os.path.join(os.environ.get('APPDATA'), 'GPODofus3', 'saves')
-        save_files = glob.glob(os.path.join(saves_folder, "save-*.json"))
+        save_files = glob.glob(os.path.join(saves_folder, "save-*-*-*.json"))
+        save_files.sort()
+        save_files = save_files[::-1]
 
         if save_files:
             save_file = save_files[0]

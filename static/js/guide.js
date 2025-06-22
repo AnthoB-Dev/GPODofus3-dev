@@ -1,5 +1,8 @@
 import { getAchievements } from "./achievements.js";
 
+/**
+ * Créer une modal pour enlargir les images.
+ */
 const createModal = (image) => {
     const modal = document.createElement('div');
     const img = document.createElement('img');
@@ -28,6 +31,9 @@ const createModal = (image) => {
     modal.addEventListener('click', removeModal);
 }
 
+/**
+ * Supprime la modal du DOM.
+ */
 const removeModal = () => {
     const modal = document.querySelector('.modalImage');
     if (modal) {
@@ -40,6 +46,10 @@ const removeModal = () => {
     modal.removeEventListener('click', removeModal);
 }
 
+/**
+ * Ouvre les boutons `Afficher`.
+ * @param {*} button 
+ */
 const toggleSummary = async (button) => {
     const summaryBtns = await getSummaryBtns();
     
@@ -64,6 +74,9 @@ const toggleSummary = async (button) => {
     })
 }
 
+/**
+ * Récupère tous les boutons `Afficher` du guide. 
+ */
 const getSummaryBtns = () => {
     return new Promise((resolve) => {
         const summaryBtns = document.querySelectorAll('.jsToggleSummaryBtn');
@@ -71,6 +84,9 @@ const getSummaryBtns = () => {
     })
 }
 
+/**
+ * Récupères toute les images du guide.
+ */
 const getImages = () => {
     return new Promise((resolve) => {
         const images = document.querySelectorAll('.guide_element img');
@@ -78,6 +94,9 @@ const getImages = () => {
     })
 }
 
+/**
+ * Récupère l'id du guide actuel.
+ */
 const getGuideId = () => {
     return new Promise((resolve) => {
         const guideId = document.querySelector('main').dataset.guide;
@@ -85,6 +104,10 @@ const getGuideId = () => {
     })
 }
 
+/**
+ * Met en surbrillance le succès actuellement pointer par le curseur et le met en surbrillance dans la section `Succès`.
+ * - Récupère le nom du guide via mouseover et le cherche dans la liste de succès présent dans le guide. Si il y a match, ajoute la classe pour surbrillance.
+ */
 const toggleHighlight = async(event, guideAchievement) => {
     const achievements = await getAchievements();
 
@@ -145,6 +168,9 @@ const toggleHighlight = async(event, guideAchievement) => {
     
 }
 
+/**
+ * Récupère les succès balisés `.achievement` présents dans le DOM.
+ */
 const getGuideAchievements = () => {
     return new Promise ((resolve) => {
         const guideAchievementSpans = document.querySelectorAll(".achievement");
@@ -237,4 +263,50 @@ export const removeGuideEventListeners = async () => {
         })
     })
     removeGuideAlignmentFormEventListener();
+}
+
+/**
+ * Copie le contenu de l'élement cliqué dans le clipboard.
+ * @param {*} text 
+ */
+export const addToClipboard = (text) => {
+    navigator.clipboard.writeText(text);
+}
+
+/**
+ * Event listeners lié à la fonction de clipboard.
+ * - mouseover : Ajoute une infobulle.
+ * - click : Appel `addToClipBoard` et change le text de l'infobulle.
+ * - mouseout : Après un clique, retire la span de text de l'infobulle.
+ */
+export const addClipBoardEventListeners = () => {
+    const clipBoardElements = document.querySelectorAll(".js-clipboard");
+    
+    clipBoardElements.forEach(e => {
+        e.addEventListener("mouseover", () => {
+            const toolTipText = document.createElement("span");
+            toolTipText.classList.add("tooltip-text");
+            toolTipText.innerHTML = `🗒️ Cliquez pour copier.`;
+            
+            e.classList.add("tooltip");
+            e.appendChild(toolTipText);
+        })
+    })
+
+    clipBoardElements.forEach(e => {
+        e.addEventListener("click", () => {
+            addToClipboard(e.firstChild.textContent);
+            const toolTipText = document.querySelector(".tooltip-text");
+            toolTipText.innerHTML = `✅ Copié.`;
+        })
+    })
+
+    clipBoardElements.forEach(e => {
+        e.addEventListener("mouseout", () => {
+            if (e.querySelector(".tooltip-text")) {
+                e.querySelector(".tooltip-text").remove();
+            } 
+            e.classList.remove("tooltip");
+        })
+    })
 }
